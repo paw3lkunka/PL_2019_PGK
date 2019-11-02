@@ -130,6 +130,8 @@ GameObject:
   m_Component:
   - component: {fileID: 125555734}
   - component: {fileID: 125555733}
+  - component: {fileID: 125555735}
+  - component: {fileID: 125555736}
   m_Layer: 0
   m_Name: TMP PatrollingEnemy
   m_TagString: Untagged
@@ -194,12 +196,50 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125555732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.645, y: 1.856, z: 0}
+  m_LocalPosition: {x: 8.3, y: 5.71, z: 0}
   m_LocalScale: {x: 0.21600854, y: 0.21014404, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &125555735
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125555732}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 4.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 15.84
+  m_BaseOffset: 7.92
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &125555736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125555732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ed6fd392b57664c8888aef4a4cca6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {x: 7.369229e+17, y: 6.96e-43}
+  - {x: NaN, y: NaN}
+  - {x: 1.7812404e-16, y: 6.96e-43}
 --- !u!1 &380698744
 GameObject:
   m_ObjectHideFlags: 0
