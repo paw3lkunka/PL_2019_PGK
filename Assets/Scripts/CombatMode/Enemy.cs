@@ -19,6 +19,7 @@ public abstract class Enemy : Character
     protected GameObject chasedObject;
     protected Shooter shooterComponent;
 
+    protected override void Start()
     {
         base.Start();
     }
