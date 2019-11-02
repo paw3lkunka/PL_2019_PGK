@@ -35,10 +35,16 @@ public class TmpController : MonoBehaviour
             agent.SetDestination(target.transform.position);
         }
     }
-
+    
     public void GoToMousePosition()
     {
-        agent.destination = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        agent.destination = MousePos;
     }
+    public void AimToMousePosition()
+    {
+        GetComponent<Shooter>().target = MousePos;
+    }
+
+    Vector2 MousePos => Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 }
