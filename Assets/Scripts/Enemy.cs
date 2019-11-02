@@ -74,5 +74,5 @@ public abstract class Enemy : Character
 
     private bool ShouldShoot() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) <= this.shootingRange : false;
 
-    private bool ShouldChase() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) > this.chaseRange : false;
+    private bool ShouldChase() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) < this.chaseRange : false;
 }
