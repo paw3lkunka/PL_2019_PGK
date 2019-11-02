@@ -11,11 +11,13 @@ public class Character : MonoBehaviour
     
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if(hp<=0)
         {
             Destroy(gameObject);
+            GameManager.Instance.ourCrew.Remove(gameObject);
+            GameManager.Instance.enemies.Remove(gameObject);
         }
     }
 

@@ -16,7 +16,15 @@ public class Shooter : MonoBehaviour
 
     public void ShootTo( Vector2 target )
     {
-        Instantiate(bulletPrefab,transform.position,Quaternion.identity).GetComponent<Bullet>().Shoot( target - (Vector2)transform.position);
+        GameObject obj = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+
+        if (gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
+            obj.layer = LayerMask.NameToLayer("PlayerBullets");
+
+        if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            obj.layer = LayerMask.NameToLayer("EnemiesBullets");
+
+        obj.GetComponent<Bullet>().Shoot( target - (Vector2)transform.position);
     }
 
     private IEnumerator ShootingRoutine()
@@ -31,7 +39,6 @@ public class Shooter : MonoBehaviour
 
     public void StartShooting()
     {
-        Debug.Log("Start");
         if( shooting == null)
         {
             shooting = StartCoroutine(ShootingRoutine());
@@ -39,11 +46,8 @@ public class Shooter : MonoBehaviour
     }
     public void StopShooting()
     {
-        Debug.Log("Stop");
         if (shooting != null)
         {
-
-            Debug.Log("Real");
             StopCoroutine(shooting);
         }
         shooting = null;

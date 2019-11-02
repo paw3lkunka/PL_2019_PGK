@@ -47,7 +47,6 @@ public class TmpController : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.Instance.enemies.Remove(gameObject);
     }
     
 }
