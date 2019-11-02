@@ -5,17 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Character : MonoBehaviour
 {
-
     public int hp;
     [Range(0,20)]
     public int defence;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -31,4 +24,6 @@ public class Character : MonoBehaviour
         hp -= Mathf.Max( damage / (defence+1) , 0);
 
     }
+
+
 }
