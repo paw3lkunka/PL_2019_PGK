@@ -13,8 +13,10 @@ public class Cultist : Character
 
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         shooter = GetComponent<Shooter>();
         agent = GetComponent<NavMeshAgent>();
 
@@ -22,8 +24,10 @@ public class Cultist : Character
         agent.updateUpAxis = false;
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         GameManager.Instance.ourCrew.Add(gameObject);
 
         GameManager.Instance.OnLeftButton.AddListener(GoToMousePosition);

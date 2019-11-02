@@ -5,10 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Character : MonoBehaviour
 {
-    public int hp;
-    [Range(0,20)]
-    public int defence;
+#pragma warning disable
+    [SerializeField]
+    private int hp;
+    [SerializeField]
+    [Range(0, 20)]
+    private int defence;
+#pragma warning restore
     
+    private int maxHp;
+    private HealthBar healthBar;
+
+    protected virtual void Awake()
+    {
+        maxHp = hp;
+    }
+
+    protected virtual void Start()
+    {
+        healthBar = transform.Find("HealthBar")?.GetComponent<HealthBar>();
+    }
 
     // Update is called once per frame
     protected virtual void Update()
@@ -19,12 +35,13 @@ public class Character : MonoBehaviour
             GameManager.Instance.ourCrew.Remove(gameObject);
             GameManager.Instance.enemies.Remove(gameObject);
         }
+
+        healthBar?.SetBar(hp, maxHp);
     }
 
     public void takeDamage(int damage)
     {
         hp -= Mathf.Max( damage / (defence+1) , 0);
-
     }
 
 

@@ -14,8 +14,9 @@ public class PatrollingEnemy : Enemy
         base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         GotoNextPoint();
     }
 
