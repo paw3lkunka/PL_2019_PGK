@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
-using System.Collections;
+﻿using UnityEngine;
 
 public class PatrollingEnemy : Enemy
 {
@@ -12,27 +8,25 @@ public class PatrollingEnemy : Enemy
 #pragma warning restore
 
     private int destPoint = 0;
-    private NavMeshAgent agent;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
-        agent.autoBraking = false;
         GotoNextPoint();
     }
 
-    private void Update()
+    protected override void Update()
     {
         base.Update();
 
-        if(!agent.pathPending && agent.remainingDistance < 0.5f)
+        if(!chasedObject && !agent.pathPending && agent.remainingDistance < 0.5f)
         {
             GotoNextPoint();
         }
-
     }
 
     private void GotoNextPoint()
@@ -42,9 +36,8 @@ public class PatrollingEnemy : Enemy
             return;
         }
 
-        agent.destination = (Vector3)points[destPoint];
+        agent.destination = points[destPoint];
 
         destPoint = (destPoint + 1) % points.Length;
     }
-
 }

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(Shooter))]
 public abstract class Enemy : MonoBehaviour
 {
 #pragma warning disable
@@ -13,19 +15,26 @@ public abstract class Enemy : MonoBehaviour
     private float chaseRange;
 #pragma warning restore
 
-    private GameObject chasedObject;
+    protected NavMeshAgent agent;
+    protected GameObject chasedObject;
+    protected Shooter shooterComponent;
 
-    private void Start()
+    protected virtual void Awake()
     {
-        
+        shooterComponent = GetComponent<Shooter>();
+        agent = GetComponent<NavMeshAgent>();
+
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+        agent.autoBraking = false;
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
-        var nearestDistance = GameManager.Instance.ourCrew.GetDistanceFromNearest(this.transform.position);
+        var nearestDistance = GameManager.Instance.ourCrew.GetDistanceFromNearest(transform.position);
         if(!nearestDistance.Key)
         {
-            return ;
+            return;
         }
 
         if(!chasedObject)
@@ -41,15 +50,23 @@ public abstract class Enemy : MonoBehaviour
             
             if(IsShooting())
             {
-                // TODO: How enemy shoots
+                agent.isStopped = true;
+                shooterComponent.target = chasedObject.transform.position;
+                shooterComponent.StartShooting();
+                return;
             }
 
-            if(IsChasing())
+            shooterComponent.StopShooting();
+
+            if (IsChasing())
             {
-                // TODO: How enemy chase
+                agent.isStopped = false;
+                agent.destination = chasedObject.transform.position;
+                return;
             }
 
             chasedObject = null;
+            agent.isStopped = false;
         }
     }
 
