@@ -199,7 +199,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125555732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.54, y: -1.64, z: 0}
+  m_LocalPosition: {x: 19.25, y: -5.81, z: 0}
   m_LocalScale: {x: 0.21600854, y: 0.21014404, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -241,13 +241,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   defence: 0
-  eyesightRange: 4
-  shootingRange: 3
-  chaseRange: 7
-  points:
-  - {x: 18, y: 4}
+  eyesightRange: 3
+  shootingRange: 1
+  chaseRange: 3
+  patrolPoints:
+  - {x: 19, y: 3}
   - {x: 20, y: -1}
-  - {x: 18, y: -6}
+  - {x: 19, y: -6}
 --- !u!50 &125555737
 Rigidbody2D:
   serializedVersion: 4

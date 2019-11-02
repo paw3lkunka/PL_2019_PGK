@@ -4,7 +4,7 @@ public class PatrollingEnemy : Enemy
 {
 #pragma warning disable
     [SerializeField]
-    private Vector2[] points;
+    private Vector2[] patrolPoints;
 #pragma warning restore
 
     private int destPoint = 0;
@@ -31,13 +31,13 @@ public class PatrollingEnemy : Enemy
 
     private void GotoNextPoint()
     {
-        if(points.Length == 0)
+        if(patrolPoints.Length == 0)
         {
             return;
         }
 
-        agent.destination = points[destPoint];
+        agent.destination = patrolPoints[destPoint];
 
-        destPoint = (destPoint + 1) % points.Length;
+        destPoint = (destPoint + 1) % patrolPoints.Length;
     }
 }
