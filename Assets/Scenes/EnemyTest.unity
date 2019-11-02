@@ -199,7 +199,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125555732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.25, y: -5.81, z: 0}
+  m_LocalPosition: {x: 19.25, y: -5.85, z: 0}
   m_LocalScale: {x: 0.21600854, y: 0.21014404, z: 1}
   m_Children:
   - {fileID: 8563721103349938249}
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ed6fd392b57664c8888aef4a4cca6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 10
+  hp: 100
   defence: 0
   eyesightRange: 3
   shootingRange: 1
@@ -301,7 +301,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: -0.3, y: 0.6}
+  m_Offset: {x: -0.3, y: 3.32}
   m_SpriteTilingProperty:
     border: {x: 2.45, y: 0.32, z: 2.44, w: 0.29}
     pivot: {x: 0.5, y: 0.12}
@@ -312,7 +312,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.5, y: 2.8}
+  m_Size: {x: 3.5, y: 8}
   m_EdgeRadius: 0
 --- !u!1 &380698744
 GameObject:
@@ -17888,7 +17888,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.06666667
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: b8b0c7f58d0a6a4459415efef5201a9a, type: 2}
 --- !u!4 &1552847587
