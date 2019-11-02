@@ -11,6 +11,12 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent OnLeftButton, OnRigthButton;
 
+    public GameObject walkTargetIndicator;
+    public GameObject shootTargetIndicator;
+
+    public void PlaceWalkTargetIndicator() => walkTargetIndicator.transform.position = MousePos;
+    public void PlaceShootTargetIndicator() => shootTargetIndicator.transform.position = MousePos;
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))

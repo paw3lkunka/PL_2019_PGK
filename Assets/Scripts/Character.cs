@@ -11,7 +11,7 @@ public class Character : MonoBehaviour
     
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if(hp<=0)
         {
