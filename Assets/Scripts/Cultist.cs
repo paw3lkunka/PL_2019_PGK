@@ -29,6 +29,7 @@ public class Cultist : Character
 
     private void Update()
     {
+        base.Update();
         if( Vector2.Distance( transform.position, GameManager.Instance.enemies.NearestFrom(transform.position)?.transform.position ?? Vector2.positiveInfinity ) > 10)
         {
             shooter.StopShooting();
