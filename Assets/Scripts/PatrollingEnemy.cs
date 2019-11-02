@@ -26,6 +26,8 @@ public class PatrollingEnemy : Enemy
 
     private void Update()
     {
+        base.Update();
+
         if(!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             GotoNextPoint();

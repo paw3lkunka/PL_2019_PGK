@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
 public static class Extensions
 {
-    public static GameObject NearestFrom(this List<GameObject> objs, Vector2 from)
+    public static GameObject GetNearestFrom(this List<GameObject> objs, Vector2 from)
     {
         GameObject target = null;
         float distance = float.PositiveInfinity;
@@ -71,5 +71,18 @@ public static class Extensions
             }
         }
         return target;
+    }
+
+    public static KeyValuePair<GameObject, float> GetDistanceFromNearest(this List<GameObject> objs, Vector2 from)
+    {
+        var nearest = objs.GetNearestFrom(from);
+        if(!nearest)
+        {
+            return new KeyValuePair<GameObject, float>(null, 0.0f);
+        }
+
+        var distance = Vector2.Distance(nearest.transform.position, from);
+        
+        return new KeyValuePair<GameObject, float>(nearest, distance);
     }
 }
