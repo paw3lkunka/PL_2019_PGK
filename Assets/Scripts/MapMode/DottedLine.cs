@@ -73,7 +73,6 @@ public class DottedLine : MonoBehaviour
 
     private void Render()
     {
-        SpriteRenderer rend;
         foreach (var position in positions)
         {
             var g = GetOneDot();
