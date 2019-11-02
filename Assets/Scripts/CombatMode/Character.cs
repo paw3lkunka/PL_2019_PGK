@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Collider2D),typeof(SpriteRenderer))]
+[RequireComponent(typeof(Collider2D), typeof(SpriteRenderer), typeof(NavMeshAgent))]
 public class Character : MonoBehaviour
 {
     [SerializeField]
@@ -23,13 +23,13 @@ public class Character : MonoBehaviour
     protected virtual void Awake()
     {
         maxHp = hp;
+        renderer = GetComponent<SpriteRenderer>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     protected virtual void Start()
     {
         healthBar = transform.Find("HealthBar")?.GetComponent<HealthBar>();
-        renderer = GetComponent<SpriteRenderer>();
-        agent = GetComponent<NavMeshAgent>();
     }
 
     protected virtual void Update()

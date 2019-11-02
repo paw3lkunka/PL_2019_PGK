@@ -15,9 +15,8 @@ public abstract class Enemy : Character
     private float chaseRange;
 #pragma warning restore
 
-    protected NavMeshAgent agent;
     protected GameObject chasedObject;
-    protected Shooter shooterComponent;
+    protected Shooter shooter;
 
     protected override void Start()
     {
@@ -27,6 +26,9 @@ public abstract class Enemy : Character
     protected override void Awake()
     {
         base.Awake();
+
+        shooter = GetComponent<Shooter>();
+
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.autoBraking = false;
@@ -56,12 +58,12 @@ public abstract class Enemy : Character
             if(ShouldShoot())
             {
                 agent.isStopped = true;
-                shooterComponent.target = chasedObject.transform.position;
-                shooterComponent.StartShooting();
+                shooter.target = chasedObject.transform.position;
+                shooter.StartShooting();
                 return;
             }
 
-            shooterComponent.StopShooting();
+            shooter.StopShooting();
 
             if (ShouldChase())
             {

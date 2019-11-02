@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Shooter), typeof(NavMeshAgent))]
+[RequireComponent(typeof(Shooter))]
 public class Cultist : Character
 {
     private Shooter shooter;
-    private NavMeshAgent agent;
 
 
     private void OnValidate()
@@ -17,7 +16,6 @@ public class Cultist : Character
     {
         base.Awake();
         shooter = GetComponent<Shooter>();
-        agent = GetComponent<NavMeshAgent>();
 
         agent.updateRotation = false;
         agent.updateUpAxis = false;
