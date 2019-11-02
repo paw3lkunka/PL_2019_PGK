@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Obsolete]
 public class TmpController : MonoBehaviour
 {
     public float speed;
@@ -35,16 +36,18 @@ public class TmpController : MonoBehaviour
             agent.SetDestination(target.transform.position);
         }
     }
+
+    private void OnEnable()
+    {
+        if (!playerControlled)
+        {
+            GameManager.Instance.enemies.Add(gameObject);
+        }
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.enemies.Remove(gameObject);
+    }
     
-    public void GoToMousePosition()
-    {
-        agent.destination = MousePos;
-    }
-    public void AimToMousePosition()
-    {
-        GetComponent<Shooter>().target = MousePos;
-    }
-
-    Vector2 MousePos => Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
 }
