@@ -21,7 +21,8 @@ public class IndicatorUsage : MonoBehaviour
         indicatorImage = indicator.GetComponent<RawImage>();
         if(isFaith)
         {
-            indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight / 2);
+            indicatorAmount = 0.5f;
+            indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * indicatorAmount);
         }
         playerLastPosition = transform.position;
     }
@@ -29,32 +30,32 @@ public class IndicatorUsage : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            indicatorAmount = 1.0f;
+        }
         if(playerLastPosition.x != transform.position.x || playerLastPosition.y != transform.position.y)
         {
+            indicatorAmount -= usageFactor * (GetComponent<CrewMembers>().crewSize / 5);
             if(isFaith)
             {
-                indicatorAmount -= usageFactor * (GetComponent<CrewMembers>().crewSize / 5);
                 //"Faith strenghtening"
                 indicatorAmount += usageFactor * (GetComponent<CrewMembers>().crewSize / 7);
-                indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, (maxHeight / 2) * indicatorAmount);
             }
-            else
-            {
-                indicatorAmount -= usageFactor * (GetComponent<CrewMembers>().crewSize / 5);
-                indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * indicatorAmount);
-            }
+            indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * indicatorAmount);
+            
 
             if( indicatorAmount < 0.3f && 
-                (Time.time - timeLastMemberDied) > (20.0f * (indicatorAmount / 0.3f)) )
+                (Time.time - timeLastMemberDied) > (25.0f * (indicatorAmount / 0.3f)) )
             {
                 GetComponent<CrewMembers>().crewSize -= 1;
                 timeLastMemberDied = Time.time;
             }
 
-            //UNCHECKED!!!
             if( isFaith && indicatorAmount > 0.9f 
-            && (Time.time - timeLastMemberDied) > (20.0f * (indicatorAmount / 0.9f - 1.0f)) )
+            && (Time.time - timeLastMemberDied) > ( 15.0f * (1.0 - (indicatorAmount / 0.9f - 1.0f)) ) )
             {
+                Debug.Log("New time: " + 15.0f * (1.0 - (indicatorAmount / 0.9f - 1.0f)));
                 GetComponent<CrewMembers>().crewSize -= 1;
                 timeLastMemberDied = Time.time;
             }
