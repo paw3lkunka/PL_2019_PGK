@@ -13,8 +13,9 @@ public class Cultist : Character
 
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         shooter = GetComponent<Shooter>();
         agent = GetComponent<NavMeshAgent>();
 

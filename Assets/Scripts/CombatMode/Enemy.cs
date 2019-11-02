@@ -19,8 +19,10 @@ public abstract class Enemy : Character
     protected GameObject chasedObject;
     protected Shooter shooterComponent;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         shooterComponent = GetComponent<Shooter>();
         agent = GetComponent<NavMeshAgent>();
 

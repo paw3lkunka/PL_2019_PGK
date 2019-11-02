@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Collider2D),typeof(SpriteRenderer))]
 public class Character : MonoBehaviour
 {
     public int hp;
     [Range(0,20)]
     public int defence;
-    
+
+    private SpriteRenderer renderer;
+
+    protected virtual void Awake()
+    {
+        renderer = GetComponent<SpriteRenderer>();
+    }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        if(hp<=0)
+        if( hp <= 0 )
         {
             Destroy(gameObject);
             GameManager.Instance.ourCrew.Remove(gameObject);
