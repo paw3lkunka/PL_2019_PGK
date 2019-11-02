@@ -27,7 +27,7 @@ public class Cultist : Character
         GameManager.Instance.OnRigthButton.AddListener( shooter.StartShooting );
     }
 
-    private void Update()
+    protected override void Update()
     {
         base.Update();
         if( Vector2.Distance( transform.position, GameManager.Instance.enemies.GetNearestFrom(transform.position)?.transform.position ?? Vector2.positiveInfinity ) > 10)
