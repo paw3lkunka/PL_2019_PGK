@@ -2,76 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Character))]
 public class Shooter : MonoBehaviour
 {
-    public bool enemy = true;
+    public float range = 10;
     public float baseDamage = 5;
     public float attackInterval = 1.5f;
 
     public GameObject bulletPrefab;
     public Vector2 target;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if( enemy )
-        {
-            GameManager.Instance.enemies.Add(gameObject);
-        }
-        else
-        {
-            GameManager.Instance.ourCrew.Add(gameObject);
-        }
-
-        IEnumerator aaa()
-        {
-            while (true)
-            {
-                Debug.Log("Aaa");
-                ShootTo(target);
-                yield return new WaitForSeconds(attackInterval);
-            }
-        }
-
-        StartCoroutine(aaa());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private Coroutine shooting;    
 
     public void ShootTo( Vector2 target )
     {
-        Instantiate(bulletPrefab,transform).GetComponent<Bullet>().Shoot( target - (Vector2)transform.position);
+        Instantiate(bulletPrefab,transform.position,Quaternion.identity).GetComponent<Bullet>().Shoot( target - (Vector2)transform.position);
     }
 
-    public GameObject Nearstemy
+    private IEnumerator ShootingRoutine()
     {
-        get
+        while (true)
         {
-            GameObject target = null;
-            float distance = float.PositiveInfinity;
-            foreach (GameObject enemy in Enemies)
-            {
-                if (Vector2.Distance(transform.position, enemy.transform.position) < distance)
-                {
-                    target = enemy;
-                }
-            }
-            return target;
+            ShootTo(target);
+
+            yield return new WaitForSeconds(attackInterval);
         }
     }
 
-    public List<GameObject> Enemies
+    public void StartShooting()
     {
-        get
+        Debug.Log("Start");
+        if( shooting == null)
         {
-            if (!enemy)
-                return GameManager.Instance.enemies;
-            else
-                return GameManager.Instance.ourCrew;
+            shooting = StartCoroutine(ShootingRoutine());
         }
+    }
+    public void StopShooting()
+    {
+        Debug.Log("Stop");
+        if (shooting != null)
+        {
+
+            Debug.Log("Real");
+            StopCoroutine(shooting);
+        }
+        shooting = null;
     }
 }
