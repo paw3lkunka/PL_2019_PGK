@@ -1,15 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Shooter),typeof(NavMeshAgent))]
+[RequireComponent(typeof(Shooter), typeof(NavMeshAgent))]
 public class Cultist : Character
 {
     public float speed;
     private Shooter shooter;
     private NavMeshAgent agent;
 
+
+    private void OnValidate()
+    {
+
+    }
 
     private void Awake()
     {
@@ -22,15 +25,17 @@ public class Cultist : Character
 
     private void Start()
     {
-        GameManager.Instance.OnLeftButton.AddListener( GoToMousePosition );
-        GameManager.Instance.OnRigthButton.AddListener( AimToMousePosition );
-        GameManager.Instance.OnRigthButton.AddListener( shooter.StartShooting );
+        GameManager.Instance.ourCrew.Add(this.gameObject);
+
+        GameManager.Instance.OnLeftButton.AddListener(GoToMousePosition);
+        GameManager.Instance.OnRigthButton.AddListener(AimToMousePosition);
+        GameManager.Instance.OnRigthButton.AddListener(shooter.StartShooting);
     }
 
     protected override void Update()
     {
         base.Update();
-        if( Vector2.Distance( transform.position, GameManager.Instance.enemies.GetNearestFrom(transform.position)?.transform.position ?? Vector2.positiveInfinity ) > 10)
+        if (Vector2.Distance(transform.position, GameManager.Instance.enemies.GetNearestFrom(transform.position)?.transform.position ?? Vector2.positiveInfinity) > 10)
         {
             shooter.StopShooting();
         }
@@ -44,6 +49,4 @@ public class Cultist : Character
     {
         GetComponent<Shooter>().target = GameManager.Instance.MousePos;
     }
-
-
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Shooter))]
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : Character
 {
 #pragma warning disable
     [SerializeField]
@@ -29,8 +29,10 @@ public abstract class Enemy : MonoBehaviour
         agent.autoBraking = false;
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
+        base.Update();
+
         var nearestDistance = GameManager.Instance.ourCrew.GetDistanceFromNearest(transform.position);
         if(!nearestDistance.Key)
         {
