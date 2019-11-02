@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public GameObject walkTargetIndicator;
     public GameObject shootTargetIndicator;
 
+    public StartArena startArea;
+    public Collider2D[] escapeAreas; 
+
     public void PlaceWalkTargetIndicator() => walkTargetIndicator.transform.position = MousePos;
     public void PlaceShootTargetIndicator() => shootTargetIndicator.transform.position = MousePos;
 

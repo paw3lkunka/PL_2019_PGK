@@ -11,6 +11,11 @@ public class Cultist : Character
     private NavMeshAgent agent;
 
 
+    private void OnValidate()
+    {
+        
+    }
+
     private void Awake()
     {
         shooter = GetComponent<Shooter>();
