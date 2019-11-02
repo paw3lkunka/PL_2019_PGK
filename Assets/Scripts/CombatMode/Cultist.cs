@@ -6,7 +6,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Shooter),typeof(NavMeshAgent))]
 public class Cultist : Character
 {
-    public float speed;
     private Shooter shooter;
     private NavMeshAgent agent;
 
@@ -27,15 +26,22 @@ public class Cultist : Character
 
     private void Start()
     {
+        GameManager.Instance.ourCrew.Add(gameObject);
+
         GameManager.Instance.OnLeftButton.AddListener( GoToMousePosition );
         GameManager.Instance.OnRigthButton.AddListener( AimToMousePosition );
         GameManager.Instance.OnRigthButton.AddListener( shooter.StartShooting );
     }
 
-    private void Update()
+    protected override void Update()
     {
         base.Update();
-        if( Vector2.Distance( transform.position, GameManager.Instance.enemies.NearestFrom(transform.position)?.transform.position ?? Vector2.positiveInfinity ) > 10)
+
+        (GameObject, float) aaa = GameManager.Instance.enemies.NearestFrom(transform.position);
+
+        Debug.Log(aaa.Item1 + " " + aaa.Item2);
+
+        if ( aaa.Item2 > shooter.range )
         {
             shooter.StopShooting();
         }

@@ -39,7 +39,6 @@ public class Shooter : MonoBehaviour
 
     public void StartShooting()
     {
-        Debug.Log("Start");
         if( shooting == null)
         {
             shooting = StartCoroutine(ShootingRoutine());
@@ -47,11 +46,8 @@ public class Shooter : MonoBehaviour
     }
     public void StopShooting()
     {
-        Debug.Log("Stop");
         if (shooting != null)
         {
-
-            Debug.Log("Real");
             StopCoroutine(shooting);
         }
         shooting = null;

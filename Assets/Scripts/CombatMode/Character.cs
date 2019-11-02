@@ -16,6 +16,8 @@ public class Character : MonoBehaviour
         if(hp<=0)
         {
             Destroy(gameObject);
+            GameManager.Instance.ourCrew.Remove(gameObject);
+            GameManager.Instance.enemies.Remove(gameObject);
         }
     }
 

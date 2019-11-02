@@ -48,37 +48,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnValidate()
+    private void Awake()
     {
-        if( instance == null )
-        {
-            instance = this;
-        }
-        else if( instance != this )
-        {
-            Debug.LogError("Duplicated GameManager");
-        }
+        DontDestroyOnLoad(gameObject);
     }
 
 
+    private void OnValidate()
+    {
+        instance = this;
+    }
+
     public Vector2 MousePos => Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-
 }
 
 public static class Extensions
 {
-    public static GameObject NearestFrom(this List<GameObject> objs, Vector2 from)
+    public static (GameObject, float) NearestFrom(this List<GameObject> objs, Vector2 from)
     {
         GameObject target = null;
-        float distance = float.PositiveInfinity;
+        float minimum = float.PositiveInfinity;
+
         foreach (GameObject enemy in objs)
         {
-            if (Vector2.Distance(from, enemy.transform.position) < distance)
+            float distance = Vector2.Distance(from, enemy.transform.position);
+            if ( distance < minimum)
             {
                 target = enemy;
+                minimum = distance;
             }
         }
-        return target;
+
+        return (target, minimum);
     }
 }
