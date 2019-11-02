@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Collider2D),typeof(SpriteRenderer))]
 public class Character : MonoBehaviour
 {
-#pragma warning disable
     [SerializeField]
     private int hp;
     [SerializeField]
@@ -14,6 +13,7 @@ public class Character : MonoBehaviour
 #pragma warning restore
     
     private int maxHp;
+    private SpriteRenderer renderer;
     private HealthBar healthBar;
 
     protected virtual void Awake()
@@ -24,18 +24,8 @@ public class Character : MonoBehaviour
     protected virtual void Start()
     {
         healthBar = transform.Find("HealthBar")?.GetComponent<HealthBar>();
+        renderer = GetComponent<SpriteRenderer>();
     }
-
-    // Update is called once per frame
-    protected virtual void Update()
-    {
-        if(hp<=0)
-        {
-            Destroy(gameObject);
-            GameManager.Instance.ourCrew.Remove(gameObject);
-            GameManager.Instance.enemies.Remove(gameObject);
-        }
-
         healthBar?.SetBar(hp, maxHp);
     }
 

@@ -19,7 +19,6 @@ public abstract class Enemy : Character
     protected GameObject chasedObject;
     protected Shooter shooterComponent;
 
-    protected override void Start()
     {
         base.Start();
     }
@@ -27,10 +26,6 @@ public abstract class Enemy : Character
     protected override void Awake()
     {
         base.Awake();
-
-        shooterComponent = GetComponent<Shooter>();
-        agent = GetComponent<NavMeshAgent>();
-
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.autoBraking = false;
