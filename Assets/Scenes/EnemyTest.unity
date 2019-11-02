@@ -130,6 +130,11 @@ GameObject:
   m_Component:
   - component: {fileID: 125555734}
   - component: {fileID: 125555733}
+  - component: {fileID: 125555737}
+  - component: {fileID: 125555739}
+  - component: {fileID: 125555735}
+  - component: {fileID: 125555736}
+  - component: {fileID: 125555738}
   m_Layer: 0
   m_Name: TMP PatrollingEnemy
   m_TagString: Untagged
@@ -194,12 +199,119 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125555732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.645, y: 1.856, z: 0}
+  m_LocalPosition: {x: 18.54, y: -1.64, z: 0}
   m_LocalScale: {x: 0.21600854, y: 0.21014404, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &125555735
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125555732}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 5
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &125555736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125555732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ed6fd392b57664c8888aef4a4cca6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  defence: 0
+  eyesightRange: 4
+  shootingRange: 3
+  chaseRange: 7
+  points:
+  - {x: 18, y: 4}
+  - {x: 20, y: -1}
+  - {x: 18, y: -6}
+--- !u!50 &125555737
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125555732}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &125555738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125555732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9927ce9d04f5b147bfdd1d827ab2bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 10
+  baseDamage: 5
+  attackInterval: 1.5
+  bulletPrefab: {fileID: 0}
+  target: {x: 0, y: 0}
+--- !u!61 &125555739
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125555732}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 3.42}
+  m_SpriteTilingProperty:
+    border: {x: 2.45, y: 0.32, z: 2.44, w: 0.29}
+    pivot: {x: 0.5, y: 0.12}
+    oldSize: {x: 9, y: 9}
+    newSize: {x: 9, y: 9}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 9, y: 9}
+  m_EdgeRadius: 0
 --- !u!1 &380698744
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,10 +322,11 @@ GameObject:
   m_Component:
   - component: {fileID: 380698750}
   - component: {fileID: 380698749}
-  - component: {fileID: 380698748}
   - component: {fileID: 380698747}
   - component: {fileID: 380698746}
   - component: {fileID: 380698745}
+  - component: {fileID: 380698752}
+  - component: {fileID: 380698751}
   m_Layer: 0
   m_Name: TMP player
   m_TagString: Untagged
@@ -231,7 +344,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -290,21 +403,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &380698748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 380698744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aab4ae6af7a1d374e8e8a960eee50c11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  playerControlled: 1
-  target: {fileID: 0}
 --- !u!212 &380698749
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -369,6 +467,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &380698751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380698744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ef4f8b2233a844587a4b8c592de668, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 40
+  defence: 0
+  speed: 0
+--- !u!114 &380698752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380698744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9927ce9d04f5b147bfdd1d827ab2bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 10
+  baseDamage: 5
+  attackInterval: 1.5
+  bulletPrefab: {fileID: 0}
+  target: {x: 0, y: 0}
 --- !u!1 &506092494
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,23 +612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7197d6498525f4ea3181fd3b0f6a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnLeftButton:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 380698748}
-        m_MethodName: GoToMousePosition
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnRigthButton:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!156049354 &550043226
 Grid:
   m_ObjectHideFlags: 0
@@ -7830,12 +7943,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7197d6498525f4ea3181fd3b0f6a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnLeftButton:
-    m_PersistentCalls:
-      m_Calls: []
-  OnRigthButton:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1492743530
 MonoBehaviour:
   m_ObjectHideFlags: 0

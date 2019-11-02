@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Shooter),typeof(NavMeshAgent))]
+[RequireComponent(typeof(Shooter), typeof(NavMeshAgent))]
 public class Cultist : Character
 {
     private Shooter shooter;
@@ -12,7 +10,7 @@ public class Cultist : Character
 
     private void OnValidate()
     {
-        
+
     }
 
     private void Awake()
@@ -39,8 +37,6 @@ public class Cultist : Character
 
         (GameObject, float) aaa = GameManager.Instance.enemies.NearestFrom(transform.position);
 
-        Debug.Log(aaa.Item1 + " " + aaa.Item2);
-
         if ( aaa.Item2 > shooter.range )
         {
             shooter.StopShooting();
@@ -55,6 +51,4 @@ public class Cultist : Character
     {
         GetComponent<Shooter>().target = GameManager.Instance.MousePos;
     }
-
-
 }
