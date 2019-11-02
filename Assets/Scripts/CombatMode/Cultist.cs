@@ -26,9 +26,9 @@ public class Cultist : Character
     {
         GameManager.Instance.ourCrew.Add(gameObject);
 
-        GameManager.Instance.OnLeftButton.AddListener( GoToMousePosition );
-        GameManager.Instance.OnRigthButton.AddListener( AimToMousePosition );
-        GameManager.Instance.OnRigthButton.AddListener( shooter.StartShooting );
+        GameManager.Instance.OnLeftButton.AddListener(GoToMousePosition);
+        GameManager.Instance.OnRigthButton.AddListener(AimToMousePosition);
+        GameManager.Instance.OnRigthButton.AddListener(shooter.StartShooting);
     }
 
     protected override void Update()
@@ -43,12 +43,6 @@ public class Cultist : Character
         }
     }
 
-    public void GoToMousePosition()
-    {
-        agent.destination = GameManager.Instance.MousePos;
-    }
-    public void AimToMousePosition()
-    {
-        GetComponent<Shooter>().target = GameManager.Instance.MousePos;
-    }
+    public void GoToMousePosition() => agent.destination = GameManager.Instance.MousePos;
+    public void AimToMousePosition() => GetComponent<Shooter>().target = GameManager.Instance.MousePos;
 }

@@ -50,7 +50,7 @@ public abstract class Enemy : Character
         {
             chasedObject = nearestDistance.Item1;
             
-            if(IsShooting())
+            if(ShouldShoot())
             {
                 agent.isStopped = true;
                 shooterComponent.target = chasedObject.transform.position;
@@ -60,7 +60,7 @@ public abstract class Enemy : Character
 
             shooterComponent.StopShooting();
 
-            if (IsChasing())
+            if (ShouldChase())
             {
                 agent.isStopped = false;
                 agent.destination = chasedObject.transform.position;
@@ -72,7 +72,7 @@ public abstract class Enemy : Character
         }
     }
 
-    private bool IsShooting() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) <= this.shootingRange : false;
+    private bool ShouldShoot() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) <= this.shootingRange : false;
 
-    private bool IsChasing() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) > this.chaseRange : false;
+    private bool ShouldChase() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) > this.chaseRange : false;
 }
