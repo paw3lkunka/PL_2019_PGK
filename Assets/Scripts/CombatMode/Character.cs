@@ -35,8 +35,8 @@ public class Character : MonoBehaviour
         if (hp <= 0)
         {
             Destroy(gameObject);
-            GameManager.Instance.ourCrew.Remove(gameObject);
-            GameManager.Instance.enemies.Remove(gameObject);
+            CombatSceneManager.Instance.ourCrew.Remove(gameObject);
+            CombatSceneManager.Instance.enemies.Remove(gameObject);
         }
 
         healthBar?.SetBar(hp, maxHp);

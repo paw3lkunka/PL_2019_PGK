@@ -2,66 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 public class GameManager : MonoBehaviour
 {
+    public GameObject cultistPrefab;
+    public int initialCultistsNumber;
 
-    public List<GameObject> ourCrew = new List<GameObject>();
-    public List<GameObject> enemies = new List<GameObject>();
+    [Range(0, 1)]
+    public float water = 1;
+    [Range(0, 1)]
+    public float faith = .5f;
 
-
-    public StartArena startArea;
-
-    public MouseInput levelInput;
-
-    private static GameManager instance;
-
-    public static GameManager Instance
-    {
-        get
-        {
-            if( instance == null )
-            {
-                GameObject obj = new GameObject("GameManager");
-                return instance = obj.AddComponent<GameManager>();
-            }
-            return instance;
-        }
-    }
-
-    private void OnValidate()
-    {
-        instance = this;
-    }
-
-    
+    public static GameManager Instance { get; private set; }
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if(Instance == null)
+        {
+            Instance = this;
+            Initialize();
+        }
     }
 
-
-    public Vector2 MousePos => Camera.main.ScreenToWorldPoint(Input.mousePosition);
-}
-
-public static class Extensions
-{
-    public static (GameObject, float) NearestFrom(this List<GameObject> objs, Vector2 from)
+    private void Initialize()
     {
-        GameObject target = null;
-        float minimum = float.PositiveInfinity;
+        DontDestroyOnLoad(gameObject);
 
-        foreach (GameObject enemy in objs)
+        for (int i = 0; i < initialCultistsNumber; i++)
         {
-            float distance = Vector2.Distance(from, enemy.transform.position);
-            if ( distance < minimum)
-            {
-                target = enemy;
-                minimum = distance;
-            }
+            Debug.Log("LOOOOOOOOOOOOOOOOOOOOOOP");
+            Instantiate(cultistPrefab);
         }
-
-        return (target, minimum);
     }
 }

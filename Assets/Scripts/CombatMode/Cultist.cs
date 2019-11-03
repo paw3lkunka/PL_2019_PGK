@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+using UnityEngine;
 
 [RequireComponent(typeof(Shooter))]
 public class Cultist : Character
@@ -14,31 +15,55 @@ public class Cultist : Character
 
     protected override void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            gameObject.SetActive(false);
+        }
+
         base.Awake();
         shooter = GetComponent<Shooter>();
 
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+
+        SceneManager.sceneLoaded += OnSceneLoad;
+        SceneManager.sceneUnloaded += OnSceneUnload;
     }
 
     protected override void Start()
     {
         base.Start();
 
-        GameManager.Instance.ourCrew.Add(gameObject);
+    }
 
-        MouseInput.Instance.OnLeftButton.AddListener(GoToMousePosition);
-        MouseInput.Instance.OnRigthButton.AddListener(AimToMousePosition);
-        MouseInput.Instance.OnRigthButton.AddListener(shooter.StartShooting);
+    public void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        if( scene.buildIndex != 0 )
+        {
+            gameObject.SetActive(true);
 
-        transform.position = GameManager.Instance.startArea.transform.position + (Vector3)FormationOffset;
+            CombatSceneManager.Instance.ourCrew.Add(gameObject);
+
+            CombatSceneManager.Instance.OnLeftButton.AddListener(GoToMousePosition);
+            CombatSceneManager.Instance.OnRigthButton.AddListener(AimToMousePosition);
+            CombatSceneManager.Instance.OnRigthButton.AddListener(shooter.StartShooting);
+
+            agent.Warp(CombatSceneManager.Instance.startArea.transform.position + (Vector3)FormationOffset);
+        }
+    }
+
+    public void OnSceneUnload(Scene scene)
+    {
+        gameObject.SetActive(false);
     }
 
     protected override void Update()
     {
         base.Update();
 
-        (GameObject, float) aaa = GameManager.Instance.enemies.NearestFrom(transform.position);
+        (GameObject, float) aaa = CombatSceneManager.Instance.enemies.NearestFrom(transform.position);
 
         if ( aaa.Item2 > shooter.range )
         {
@@ -48,15 +73,15 @@ public class Cultist : Character
 
     public void GoToMousePosition()
     {
-        agent.SetDestination(GameManager.Instance.MousePos + FormationOffset);
+        agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
     }    
-    public void AimToMousePosition() => GetComponent<Shooter>().target = GameManager.Instance.MousePos;
+    public void AimToMousePosition() => GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos;
 
     public Vector2 FormationOffset
     {
         get
         {
-            int index = GameManager.Instance.ourCrew.IndexOf(gameObject);
+            int index = CombatSceneManager.Instance.ourCrew.IndexOf(gameObject);
             switch (index)
             {
                 default:

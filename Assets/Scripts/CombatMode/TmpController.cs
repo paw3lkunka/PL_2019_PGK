@@ -41,7 +41,7 @@ public class TmpController : MonoBehaviour
     {
         if (!playerControlled)
         {
-            GameManager.Instance.enemies.Add(gameObject);
+            CombatSceneManager.Instance.enemies.Add(gameObject);
         }
     }
 

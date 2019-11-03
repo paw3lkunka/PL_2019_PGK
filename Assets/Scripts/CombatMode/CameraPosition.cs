@@ -13,7 +13,7 @@ public class CameraPosition : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        var crew = GameManager.Instance.ourCrew;
+        var crew = CombatSceneManager.Instance.ourCrew;
         if( crew.Count == 0 )
         {
             return;

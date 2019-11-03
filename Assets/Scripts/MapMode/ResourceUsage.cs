@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IndicatorUsage : MonoBehaviour
+public class ResourceUsage : MonoBehaviour
 {
     private const int maxHeight = 128;
     public float usageFactor = 0.0002f;
@@ -11,9 +11,26 @@ public class IndicatorUsage : MonoBehaviour
     public bool isFaith = false;
     
     private RawImage indicatorImage;
-    private float indicatorAmount = 1.0f;
     private Vector2 playerLastPosition;
     private float timeLastMemberDied = 0.0f;
+
+    private float Amount
+    {
+        get => isFaith ? GameManager.Instance.faith : GameManager.Instance.water;
+        set
+        {
+            if (isFaith)
+            {
+                GameManager.Instance.faith = value;
+            }
+            else
+            {
+                GameManager.Instance.water = value;
+            }
+        }
+    }
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +38,8 @@ public class IndicatorUsage : MonoBehaviour
         indicatorImage = indicator.GetComponent<RawImage>();
         if(isFaith)
         {
-            indicatorAmount = 0.5f;
-            indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * indicatorAmount);
+            Amount = 0.5f;
+            indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * Amount);
         }
         playerLastPosition = transform.position;
     }
@@ -32,30 +49,30 @@ public class IndicatorUsage : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.C))
         {
-            indicatorAmount = 1.0f;
+            Amount = 1.0f;
         }
         if(playerLastPosition.x != transform.position.x || playerLastPosition.y != transform.position.y)
         {
-            indicatorAmount -= usageFactor * (GetComponent<CrewMembers>().crewSize / 5);
+            Amount -= usageFactor * (GetComponent<CrewMembers>().crewSize / 5);
             if(isFaith)
             {
                 //"Faith strenghtening"
-                indicatorAmount += usageFactor * (GetComponent<CrewMembers>().crewSize / 7);
+                Amount += usageFactor * (GetComponent<CrewMembers>().crewSize / 7);
             }
-            indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * indicatorAmount);
+            indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * Amount);
             
 
-            if( indicatorAmount < 0.3f && 
-                (Time.time - timeLastMemberDied) > (25.0f * (indicatorAmount / 0.3f)) )
+            if( Amount < 0.3f && 
+                (Time.time - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) )
             {
                 GetComponent<CrewMembers>().crewSize -= 1;
                 timeLastMemberDied = Time.time;
             }
 
-            if( isFaith && indicatorAmount > 0.9f 
-            && (Time.time - timeLastMemberDied) > ( 15.0f * (1.0 - (indicatorAmount / 0.9f - 1.0f)) ) )
+            if( isFaith && Amount > 0.9f 
+            && (Time.time - timeLastMemberDied) > ( 15.0f * (1.0 - (Amount / 0.9f - 1.0f)) ) )
             {
-                Debug.Log("New time: " + 15.0f * (1.0 - (indicatorAmount / 0.9f - 1.0f)));
+                Debug.Log("New time: " + 15.0f * (1.0 - (Amount / 0.9f - 1.0f)));
                 GetComponent<CrewMembers>().crewSize -= 1;
                 timeLastMemberDied = Time.time;
             }
