@@ -1,36 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Events;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class GameManager : MonoBehaviour
 {
+
     public List<GameObject> ourCrew = new List<GameObject>();
     public List<GameObject> enemies = new List<GameObject>();
 
-    public UnityEvent OnLeftButton, OnRigthButton;
-
-    public GameObject walkTargetIndicator;
-    public GameObject shootTargetIndicator;
 
     public StartArena startArea;
 
-    public void PlaceWalkTargetIndicator() => walkTargetIndicator.transform.position = MousePos;
-    public void PlaceShootTargetIndicator() => shootTargetIndicator.transform.position = MousePos;
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnLeftButton.Invoke();
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            OnRigthButton.Invoke();
-        }
-    }
+    public MouseInput levelInput;
 
     private static GameManager instance;
 
@@ -47,16 +29,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnValidate()
+    {
+        instance = this;
+    }
+
+    
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
 
-
-    private void OnValidate()
-    {
-        instance = this;
-    }
 
     public Vector2 MousePos => Camera.main.ScreenToWorldPoint(Input.mousePosition);
 }

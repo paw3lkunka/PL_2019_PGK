@@ -27,9 +27,9 @@ public class Cultist : Character
 
         GameManager.Instance.ourCrew.Add(gameObject);
 
-        GameManager.Instance.OnLeftButton.AddListener(GoToMousePosition);
-        GameManager.Instance.OnRigthButton.AddListener(AimToMousePosition);
-        GameManager.Instance.OnRigthButton.AddListener(shooter.StartShooting);
+        MouseInput.Instance.OnLeftButton.AddListener(GoToMousePosition);
+        MouseInput.Instance.OnRigthButton.AddListener(AimToMousePosition);
+        MouseInput.Instance.OnRigthButton.AddListener(shooter.StartShooting);
 
         transform.position = GameManager.Instance.startArea.transform.position + (Vector3)FormationOffset;
     }

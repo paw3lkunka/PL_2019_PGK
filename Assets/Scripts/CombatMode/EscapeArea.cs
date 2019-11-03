@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -9,7 +10,7 @@ public class EscapeArea : MonoBehaviour
     {
         if( GameManager.Instance.ourCrew.IndexOf(collision.gameObject) != -1 )
         {
-            Debug.Log("Escape");
+            SceneManager.LoadScene(0);
         }
     }
 
