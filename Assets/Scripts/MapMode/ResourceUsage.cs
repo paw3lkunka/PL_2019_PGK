@@ -16,16 +16,16 @@ public class ResourceUsage : MonoBehaviour
 
     private float Amount
     {
-        get => isFaith ? GameManager.Instance.faith : GameManager.Instance.water;
+        get => isFaith ? GameManager.Instance.Faith : GameManager.Instance.Water;
         set
         {
             if (isFaith)
             {
-                GameManager.Instance.faith = value;
+                GameManager.Instance.Faith = value;
             }
             else
             {
-                GameManager.Instance.water = value;
+                GameManager.Instance.Water = value;
             }
         }
     }

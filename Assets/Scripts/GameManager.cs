@@ -7,10 +7,22 @@ public class GameManager : MonoBehaviour
     public GameObject cultistPrefab;
     public int initialCultistsNumber;
 
-    [Range(0, 1)]
-    public float water = 1;
-    [Range(0, 1)]
-    public float faith = .5f;
+    [Range(0, 1),SerializeField]
+    private float water = 1;
+    [Range(0, 1), SerializeField]
+    private float faith = .5f;
+
+    public float Water
+    {
+        get => water;
+        set => water = Mathf.Clamp(value, 0, 1);
+    }
+
+    public float Faith
+    {
+        get => faith;
+        set => faith = Mathf.Clamp(value, 0, 1);
+    }
 
     public static GameManager Instance { get; private set; }
 
@@ -29,7 +41,6 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < initialCultistsNumber; i++)
         {
-            Debug.Log("LOOOOOOOOOOOOOOOOOOOOOOP");
             Instantiate(cultistPrefab);
         }
     }
