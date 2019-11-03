@@ -242,9 +242,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   defence: 0
-  eyesightRange: 3
-  shootingRange: 1
-  chaseRange: 3
+  eyesightRange: 4
+  shootingRange: 2
+  chaseRange: 7
   patrolPoints:
   - {x: 19, y: 3}
   - {x: 20, y: -1}
@@ -568,7 +568,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -594,7 +594,6 @@ GameObject:
   m_Component:
   - component: {fileID: 550043227}
   - component: {fileID: 550043226}
-  - component: {fileID: 550043225}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -602,18 +601,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &550043225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 550043224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae7197d6498525f4ea3181fd3b0f6a45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!156049354 &550043226
 Grid:
   m_ObjectHideFlags: 0
@@ -7911,7 +7898,6 @@ GameObject:
   - component: {fileID: 1492743532}
   - component: {fileID: 1492743531}
   - component: {fileID: 1492743530}
-  - component: {fileID: 1492743529}
   m_Layer: 0
   m_Name: Walkable
   m_TagString: Untagged
@@ -7933,18 +7919,6 @@ Transform:
   m_Father: {fileID: 550043227}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1492743529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1492743527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae7197d6498525f4ea3181fd3b0f6a45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1492743530
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,6 +17,8 @@ public class PatrollingEnemy : Enemy
     protected override void Start()
     {
         base.Start();
+        agent.autoBraking = false;
+
         GotoNextPoint();
     }
 
@@ -24,7 +26,7 @@ public class PatrollingEnemy : Enemy
     {
         base.Update();
 
-        if(!chasedObject && !agent.pathPending && agent.remainingDistance < 0.5f)
+        if(ShouldPatrol())
         {
             GotoNextPoint();
         }
@@ -41,4 +43,6 @@ public class PatrollingEnemy : Enemy
 
         destPoint = (destPoint + 1) % patrolPoints.Length;
     }
+
+    private bool ShouldPatrol() => !chasedObject && !(agent?.pathPending ?? false) && (agent?.remainingDistance ?? float.PositiveInfinity) < 0.5f;
 }

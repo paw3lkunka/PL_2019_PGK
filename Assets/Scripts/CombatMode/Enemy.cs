@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Shooter))]
-public abstract class Enemy : Character
+public class Enemy : Character
 {
 #pragma warning disable
     [SerializeField]
@@ -31,7 +31,6 @@ public abstract class Enemy : Character
 
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        agent.autoBraking = false;
     }
 
     protected override void Update()
