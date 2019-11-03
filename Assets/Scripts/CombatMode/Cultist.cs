@@ -30,6 +30,8 @@ public class Cultist : Character
         GameManager.Instance.OnLeftButton.AddListener(GoToMousePosition);
         GameManager.Instance.OnRigthButton.AddListener(AimToMousePosition);
         GameManager.Instance.OnRigthButton.AddListener(shooter.StartShooting);
+
+        transform.position = GameManager.Instance.startArea.transform.position + (Vector3)FormationOffset;
     }
 
     protected override void Update()
@@ -46,46 +48,37 @@ public class Cultist : Character
 
     public void GoToMousePosition()
     {
-        
-
-        int index = GameManager.Instance.ourCrew.IndexOf(gameObject);
-
-        switch(index)
-        {
-            case 0:
-                agent.destination = GameManager.Instance.MousePos;
-                break;
-            case 1:
-                agent.destination = GameManager.Instance.MousePos + Vector2.down;
-                break;
-            case 2:
-                agent.destination = GameManager.Instance.MousePos + Vector2.right;
-                break;
-            case 3:
-                agent.destination = GameManager.Instance.MousePos + Vector2.right + Vector2.down;
-                break;
-            case 4:
-                agent.destination = GameManager.Instance.MousePos + Vector2.up;
-                break;
-            case 5:
-                agent.destination = GameManager.Instance.MousePos + Vector2.right + Vector2.up;
-                break;
-            case 6:
-                agent.destination = GameManager.Instance.MousePos + Vector2.left;
-                break;
-            case 7:
-                agent.destination = GameManager.Instance.MousePos + Vector2.left + Vector2.down;
-                break;
-            case 8:
-                agent.destination = GameManager.Instance.MousePos + Vector2.left + Vector2.up;
-                break;
-            default:
-                agent.destination = GameManager.Instance.MousePos;
-                break;
-
-
-        }
-
+        agent.SetDestination(GameManager.Instance.MousePos + FormationOffset);
     }    
     public void AimToMousePosition() => GetComponent<Shooter>().target = GameManager.Instance.MousePos;
+
+    public Vector2 FormationOffset
+    {
+        get
+        {
+            int index = GameManager.Instance.ourCrew.IndexOf(gameObject);
+            switch (index)
+            {
+                default:
+                case 0:
+                    return Vector2.zero;
+                case 1:
+                    return Vector2.down;
+                case 2:
+                    return Vector2.right;
+                case 3:
+                    return Vector2.right + Vector2.down;
+                case 4:
+                    return Vector2.up;
+                case 5:
+                    return Vector2.right + Vector2.up;
+                case 6:
+                    return Vector2.left;
+                case 7:
+                    return Vector2.left + Vector2.down;
+                case 8:
+                    return Vector2.left + Vector2.up;
+            }
+        }
+    }
 }
