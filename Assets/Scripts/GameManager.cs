@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < initialCultistsNumber; i++)
         {
-            Instantiate(cultistPrefab);
+            Instantiate(cultistPrefab,Vector3.zero,Quaternion.identity);
         }
     }
 }

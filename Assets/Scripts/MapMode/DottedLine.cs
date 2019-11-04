@@ -6,8 +6,8 @@ public class DottedLine : MonoBehaviour
 {
     public Sprite Dot;
 
-    private float Size = 0.3f;
-    private float Delta = 0.5f;
+    private float size = 0.3f;
+    private float delta = 0.5f;
 
     private static DottedLine instance;
     public static DottedLine Instance
@@ -47,7 +47,7 @@ public class DottedLine : MonoBehaviour
     GameObject GetOneDot()
     {
         var gameObject = new GameObject();
-        gameObject.transform.localScale = Vector3.one * Size;
+        gameObject.transform.localScale = transform.localScale * size;
         gameObject.transform.parent = transform;
 
         var spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
@@ -65,7 +65,7 @@ public class DottedLine : MonoBehaviour
         while ((end - start).magnitude > (point - start).magnitude)
         {
             positions.Add(point);
-            point += (direction * Delta);
+            point += (direction * transform.localScale.x * delta);
         }
 
         Render();

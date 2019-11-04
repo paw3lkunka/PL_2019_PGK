@@ -35,8 +35,6 @@ public class Enemy : Character
 
     protected override void Update()
     {
-        base.Update();
-
         var nearestDistance = CombatSceneManager.Instance.ourCrew.NearestFrom(transform.position);
         if(!nearestDistance.Item1)
         {
@@ -74,6 +72,8 @@ public class Enemy : Character
             chasedObject = null;
             agent.isStopped = false;
         }
+
+        base.Update();
     }
 
     private bool ShouldShoot() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) <= this.shootingRange : false;
