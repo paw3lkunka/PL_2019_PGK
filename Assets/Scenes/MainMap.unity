@@ -133,8 +133,9 @@ GameObject:
   - component: {fileID: 94289131}
   - component: {fileID: 94289130}
   - component: {fileID: 94289129}
+  - component: {fileID: 94289133}
   m_Layer: 0
-  m_Name: Encounters (2)
+  m_Name: Canion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1149,6 +1150,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &94289133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94289127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d142a6e3c7b3c54db253cb1a65aa410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneIndex: 2
 --- !u!1 &570698677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,7 +2749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d142a6e3c7b3c54db253cb1a65aa410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneIndex: 2
+  sceneIndex: 1
 --- !u!1 &893278153
 GameObject:
   m_ObjectHideFlags: 0
@@ -2820,7 +2834,7 @@ GameObject:
   - component: {fileID: 936362874}
   - component: {fileID: 936362873}
   m_Layer: 0
-  m_Name: Encounters (1)
+  m_Name: Village
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
