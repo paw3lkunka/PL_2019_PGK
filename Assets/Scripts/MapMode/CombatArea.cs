@@ -10,7 +10,6 @@ public class CombatArea : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("enter");
         SceneManager.LoadScene(sceneIndex);
     }
 }

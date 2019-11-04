@@ -7,7 +7,6 @@ public class Cultist : Character
 {
     private Shooter shooter;
 
-
     private void OnValidate()
     {
 

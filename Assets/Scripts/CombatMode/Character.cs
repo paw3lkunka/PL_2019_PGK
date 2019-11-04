@@ -47,5 +47,15 @@ public class Character : MonoBehaviour
         hp -= Mathf.Max( damage / (defence+1) , 0);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+
+        if (bullet)
+        {
+            takeDamage(bullet.damege);
+            Destroy(bullet.gameObject);
+        }
+    }
 
 }

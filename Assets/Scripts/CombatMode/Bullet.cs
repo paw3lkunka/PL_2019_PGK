@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     public float startSpeed;
     public float timeToDestroy;
 
-    private Collider2D collider;
+    private new Collider2D collider;
 
 
 
@@ -48,12 +48,6 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Character victim = collision.gameObject.GetComponent<Character>();
-
-        if (victim)
-        {
-            victim.takeDamage(damege);
-        }
         Destroy(gameObject);
     }
 
