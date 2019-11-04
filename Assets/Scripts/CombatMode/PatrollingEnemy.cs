@@ -24,12 +24,13 @@ public class PatrollingEnemy : Enemy
 
     protected override void Update()
     {
-        base.Update();
 
         if(ShouldPatrol())
         {
             GotoNextPoint();
         }
+
+        base.Update();
     }
 
     private void GotoNextPoint()

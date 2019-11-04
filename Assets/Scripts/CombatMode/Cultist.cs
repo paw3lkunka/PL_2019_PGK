@@ -61,14 +61,14 @@ public class Cultist : Character
 
     protected override void Update()
     {
-        base.Update();
-
         (GameObject, float) aaa = CombatSceneManager.Instance.enemies.NearestFrom(transform.position);
 
         if ( aaa.Item2 > shooter.range )
         {
             shooter.StopShooting();
         }
+
+        base.Update();
     }
 
     public void GoToMousePosition()
