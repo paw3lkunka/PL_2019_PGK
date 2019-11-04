@@ -48,7 +48,14 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Hitbox victim = collision.gameObject.GetComponent<Hitbox>();
+
+        if (victim)
+        {
+            victim.TakeDamage(damege);
+        }
         Destroy(gameObject);
+
     }
 
 

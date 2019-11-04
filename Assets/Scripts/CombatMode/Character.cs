@@ -34,28 +34,19 @@ public class Character : MonoBehaviour
     {
         if (hp <= 0)
         {
-            Destroy(gameObject);
             CombatSceneManager.Instance.ourCrew.Remove(gameObject);
             CombatSceneManager.Instance.enemies.Remove(gameObject);
+            Destroy(gameObject);
+            Debug.Log("Dead");
         }
 
         healthBar?.SetBar(hp, maxHp);
     }
 
-    public void takeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         hp -= Mathf.Max( damage / (defence+1) , 0);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Bullet bullet = collision.gameObject.GetComponent<Bullet>();
-
-        if (bullet)
-        {
-            takeDamage(bullet.damege);
-            Destroy(bullet.gameObject);
-        }
-    }
 
 }
