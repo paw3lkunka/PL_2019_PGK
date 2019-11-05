@@ -17,6 +17,7 @@ public class ResourceUsage : MonoBehaviour
     private Text indicatorInfo;
     private Vector2 playerLastPosition;
     private float timeLastMemberDied = 0.0f;
+    private float timeLastMemberCome = 0.0f;
 
     private float Amount
     {
@@ -92,7 +93,12 @@ public class ResourceUsage : MonoBehaviour
                 timeLastMemberDied = Time.time;
             }
 
-            
+            if( isFaith && Amount > 0.7f
+            && (Time.time - timeLastMemberCome) >  15.0f )
+            {
+                crewSize += 1;
+                timeLastMemberCome = Time.time;
+            }
             
             playerLastPosition = transform.position;
             
@@ -101,6 +107,8 @@ public class ResourceUsage : MonoBehaviour
                 indicatorInfo.text = "Faith: " + (int)(Amount * 100) + "%";
             else
                 indicatorInfo.text = "Water: " + (int)(Amount * 100) + "%";
+
+            if(crewSize > 25) crewSize = 25;
         }
     }
 }
