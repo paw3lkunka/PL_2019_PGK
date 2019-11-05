@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,7 +26,8 @@ public class Enemy : Character
 
     protected override void Awake()
     {
-        base.Awake();
+        base.Awake(); 
+        CombatSceneManager.Instance.enemies.Add(gameObject);
 
         shooter = GetComponent<Shooter>();
 
@@ -35,6 +37,8 @@ public class Enemy : Character
 
     protected override void Update()
     {
+        base.Update();
+
         var nearestDistance = CombatSceneManager.Instance.ourCrew.NearestFrom(transform.position);
         if(!nearestDistance.Item1)
         {
@@ -73,9 +77,8 @@ public class Enemy : Character
             agent.isStopped = false;
         }
 
-        base.Update();
     }
-
+    
     private bool ShouldShoot() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) <= this.shootingRange : false;
 
     private bool ShouldChase() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) < this.chaseRange : false;
