@@ -2833,6 +2833,7 @@ GameObject:
   - component: {fileID: 936362875}
   - component: {fileID: 936362874}
   - component: {fileID: 936362873}
+  - component: {fileID: 936362877}
   m_Layer: 0
   m_Name: Village
   m_TagString: Untagged
@@ -3918,6 +3919,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &936362877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936362871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d142a6e3c7b3c54db253cb1a65aa410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneIndex: 3
 --- !u!1 &976622669
 GameObject:
   m_ObjectHideFlags: 0
