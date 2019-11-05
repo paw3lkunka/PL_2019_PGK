@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [Range(0, 1),SerializeField]
     private float water = 1;
     [Range(0, 1), SerializeField]
-    private float faith = .5f;
+    private float faith = .6f;
 
     public float Water
     {

@@ -8,9 +8,13 @@ public class ResourceUsage : MonoBehaviour
     private const int maxHeight = 128;
     public float usageFactor = 0.0002f;
     public GameObject indicator;
+    public GameObject TextInformation;
+    public GameObject indicatorInfoText;
     public bool isFaith = false;
     
     private RawImage indicatorImage;
+    private Text crewInfo;
+    private Text indicatorInfo;
     private Vector2 playerLastPosition;
     private float timeLastMemberDied = 0.0f;
 
@@ -30,17 +34,29 @@ public class ResourceUsage : MonoBehaviour
         }
     }
 
+    private int crewSize
+    {
+        get => GameManager.Instance.initialCultistsNumber;
+        set => GameManager.Instance.initialCultistsNumber = value;
+    }
 
 
     // Start is called before the first frame update
     void Start()
     {
         indicatorImage = indicator.GetComponent<RawImage>();
+        crewInfo = TextInformation.GetComponent<Text>();
+        indicatorInfo = indicatorInfoText.GetComponent<Text>();
         if(isFaith)
         {
             Amount = 0.5f;
             indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * Amount);
         }
+        crewInfo.text = "Actual number of cult members: " + crewSize;
+        if(isFaith) 
+            indicatorInfo.text = "Faith: " + (int)(Amount * 100) + "%";
+        else
+            indicatorInfo.text = "Water: " + (int)(Amount * 100) + "%";
         playerLastPosition = transform.position;
     }
 
@@ -53,31 +69,35 @@ public class ResourceUsage : MonoBehaviour
         }
         if(playerLastPosition.x != transform.position.x || playerLastPosition.y != transform.position.y)
         {
-            Amount -= usageFactor * (GetComponent<CrewMembers>().crewSize / 5);
+            Amount -= usageFactor * (crewSize > 5.0f ? (crewSize / 5) : 1.0f);
             if(isFaith)
             {
                 //"Faith strenghtening"
-                Amount += usageFactor * (GetComponent<CrewMembers>().crewSize / 7);
+                Amount += usageFactor * (crewSize > 7.0f ? (crewSize / 7) : 0.0f);
             }
             indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * Amount);
             
 
-            if( Amount < 0.3f && 
+            if( Amount < 0.25f && 
                 (Time.time - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) )
             {
-                GetComponent<CrewMembers>().crewSize -= 1;
+                crewSize -= 1;
                 timeLastMemberDied = Time.time;
             }
 
             if( isFaith && Amount > 0.9f 
-            && (Time.time - timeLastMemberDied) > ( 15.0f * (1.0 - (Amount / 0.9f - 1.0f)) ) )
+            && (Time.time - timeLastMemberDied) > ( 25.0f * (1.0 - (Amount / 0.9f - 1.0f)) ) )
             {
-                Debug.Log("New time: " + 15.0f * (1.0 - (Amount / 0.9f - 1.0f)));
-                GetComponent<CrewMembers>().crewSize -= 1;
+                crewSize -= 1;
                 timeLastMemberDied = Time.time;
             }
             
             playerLastPosition = transform.position;
+            crewInfo.text = "Actual number of cult members: " + crewSize;
+            if(isFaith) 
+                indicatorInfo.text = "Faith: " + (int)(Amount * 100) + "%";
+            else
+                indicatorInfo.text = "Water: " + (int)(Amount * 100) + "%";
         }
     }
 }
