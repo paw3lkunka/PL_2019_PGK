@@ -26,9 +26,6 @@ public class Cultist : Character
 
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-
-        SceneManager.sceneLoaded += OnSceneLoad;
-        SceneManager.sceneUnloaded += OnSceneUnload;
     }
 
     protected override void Start()
@@ -37,7 +34,7 @@ public class Cultist : Character
 
     }
 
-    public void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    protected override void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
         if( scene.buildIndex != 0 )
         {
@@ -53,7 +50,7 @@ public class Cultist : Character
         }
     }
 
-    public void OnSceneUnload(Scene scene)
+    protected override void OnSceneUnload(Scene scene)
     {
         gameObject.SetActive(false);
     }

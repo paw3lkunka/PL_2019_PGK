@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,7 +24,13 @@ public class Character : MonoBehaviour
     {
         maxHp = hp;
         agent = GetComponent<NavMeshAgent>();
+
+        SceneManager.sceneLoaded += OnSceneLoad;
+        SceneManager.sceneUnloaded += OnSceneUnload;
     }
+
+    protected virtual void OnSceneUnload(Scene scene) { }
+    protected virtual void OnSceneLoad(Scene scene, LoadSceneMode mode) { }
 
     protected virtual void Start()
     {
@@ -34,10 +41,7 @@ public class Character : MonoBehaviour
     {
         if (hp <= 0)
         {
-            CombatSceneManager.Instance.ourCrew.Remove(gameObject);
-            CombatSceneManager.Instance.enemies.Remove(gameObject);
-            Destroy(gameObject);
-            Debug.Log("Dead");
+            Die();
         }
 
         healthBar?.SetBar(hp, maxHp);
@@ -48,5 +52,18 @@ public class Character : MonoBehaviour
         hp -= Mathf.Max( damage / (defence+1) , 0);
     }
 
+    public void Die()
+    {
+        CombatSceneManager.Instance.ourCrew.Remove(gameObject);
+        CombatSceneManager.Instance.enemies.Remove(gameObject);
+        StartCoroutine(Routine());
+        Debug.Log("Dead");
+
+        IEnumerator Routine()
+        {
+            yield return new WaitForEndOfFrame();
+            Destroy(gameObject);
+        }
+    }
 
 }

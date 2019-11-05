@@ -20,7 +20,8 @@ public class CameraPosition : MonoBehaviour
         }
         else if( crew.Count == 1 )
         {
-            transform.position = crew[0].transform.position;
+            transform.position = (Vector2)crew[0].transform.position;
+            transform.position += Vector3.back * 10;
         }
         else
         {
