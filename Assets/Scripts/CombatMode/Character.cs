@@ -47,12 +47,12 @@ public class Character : MonoBehaviour
         healthBar?.SetBar(hp, maxHp);
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         hp -= Mathf.Max( damage / (defence+1) , 0);
     }
 
-    public void Die()
+    public virtual void Die()
     {
         CombatSceneManager.Instance.ourCrew.Remove(gameObject);
         CombatSceneManager.Instance.enemies.Remove(gameObject);
@@ -66,4 +66,9 @@ public class Character : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+        SceneManager.sceneUnloaded -= OnSceneUnload;
+    }
 }

@@ -6,12 +6,7 @@ using UnityEngine;
 public class Cultist : Character
 {
     private Shooter shooter;
-
-    private void OnValidate()
-    {
-
-    }
-
+   
     protected override void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -32,27 +27,30 @@ public class Cultist : Character
     {
         base.Start();
 
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            CombatSceneManager.Instance.ourCrew.Add(gameObject);
+            agent.Warp( CombatSceneManager.Instance.startPoint + FormationOffset );
+        }
+
     }
 
     protected override void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if( scene.buildIndex != 0 )
-        {
-            gameObject.SetActive(true);
+        
 
-            CombatSceneManager.Instance.ourCrew.Add(gameObject);
-
-            CombatSceneManager.Instance.OnLeftButton.AddListener(GoToMousePosition);
-            CombatSceneManager.Instance.OnRigthButton.AddListener(AimToMousePosition);
-            CombatSceneManager.Instance.OnRigthButton.AddListener(shooter.StartShooting);
-
-            agent.Warp(CombatSceneManager.Instance.startArea.transform.position + (Vector3)FormationOffset);
-        }
     }
 
     protected override void OnSceneUnload(Scene scene)
     {
-        gameObject.SetActive(false);
+        if (scene.buildIndex == 0)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     protected override void Update()
@@ -64,6 +62,17 @@ public class Cultist : Character
             shooter.StopShooting();
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            GoToMousePosition();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            AimToMousePosition();
+            shooter.StartShooting();
+        }
+
         base.Update();
     }
 
@@ -72,6 +81,18 @@ public class Cultist : Character
         agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
     }    
     public void AimToMousePosition() => GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos;
+
+    public override void TakeDamage(int damage)
+    {
+        GameManager.Instance.Faith -= GameManager.Instance.FaithForWoundedCultist;
+        base.TakeDamage(damage);
+    }
+
+    public override void Die()
+    {
+        GameManager.Instance.Faith -= GameManager.Instance.FaithForKilledCultist;
+        base.Die();
+    }
 
     public Vector2 FormationOffset
     {

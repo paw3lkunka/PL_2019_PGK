@@ -22,12 +22,12 @@ public class Enemy : Character
     protected override void Start()
     {
         base.Start();
+        CombatSceneManager.Instance.enemies.Add(gameObject);
     }
 
     protected override void Awake()
     {
         base.Awake(); 
-        CombatSceneManager.Instance.enemies.Add(gameObject);
 
         shooter = GetComponent<Shooter>();
 

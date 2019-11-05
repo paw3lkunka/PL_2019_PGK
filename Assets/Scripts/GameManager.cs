@@ -7,10 +7,26 @@ public class GameManager : MonoBehaviour
     public GameObject cultistPrefab;
     public int initialCultistsNumber;
 
+    [SerializeField]
+    private float faithForKilledEnemy = 0.1f;
+    [SerializeField]
+    private float faithForKilledCultist = 0.2f;
+    [SerializeField]
+    private float faithForWoundedCultist = 0.01f;
+
+    public float FaithForKilledEnemy { get => faithForKilledEnemy; private set => faithForKilledEnemy = value; }
+    public float FaithForKilledCultist { get => faithForKilledCultist; private set => faithForKilledCultist = value; }
+    public float FaithForWoundedCultist { get => faithForWoundedCultist; private set => faithForWoundedCultist = value; }
+
+    public event System.Action OnWaterLow;
+    public event System.Action OnFaithLow;
+    public event System.Action OnFaithHigh;
+
+
     [Range(0, 1),SerializeField]
     private float water = 1;
     [Range(0, 1), SerializeField]
-    private float faith = .6f;
+    private float faith = .5f;
 
     public float Water
     {
@@ -39,9 +55,13 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 
+        water = 1.0f;
+        faith = 0.5f;
+
         for (int i = 0; i < initialCultistsNumber; i++)
         {
             Instantiate(cultistPrefab,Vector3.zero,Quaternion.identity);
         }
     }
+
 }

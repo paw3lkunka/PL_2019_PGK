@@ -49,7 +49,6 @@ public class ResourceUsage : MonoBehaviour
         indicatorInfo = indicatorInfoText.GetComponent<Text>();
         if(isFaith)
         {
-            Amount = 0.5f;
             indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * Amount);
         }
         crewInfo.text = "Actual number of cult members: " + crewSize;

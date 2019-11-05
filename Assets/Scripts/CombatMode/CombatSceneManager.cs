@@ -15,10 +15,11 @@ public class CombatSceneManager : MonoBehaviour
     public GameObject walkTargetIndicator;
     public GameObject shootTargetIndicator;
 
+    public Vector2 startPoint;
+
     public void PlaceWalkTargetIndicator() => walkTargetIndicator.transform.position = CombatSceneManager.Instance.MousePos;
     public void PlaceShootTargetIndicator() => shootTargetIndicator.transform.position = CombatSceneManager.Instance.MousePos;
 
-    public StartArena startArea;
 
     private void Update()
     {
@@ -33,26 +34,19 @@ public class CombatSceneManager : MonoBehaviour
         }
     }
     
-    private static CombatSceneManager instance;
 
-    public static CombatSceneManager Instance
+    public static CombatSceneManager Instance { get; private set; }
+
+    private void Awake()
     {
-        get
-        {
-            if( instance == null )
-            {
-                GameObject obj = new GameObject("CombatSceneManager");
-                return instance = obj.AddComponent<CombatSceneManager>();
-            }
-            return instance;
-        }
+        Instance = this;
     }
 
-    private void OnValidate()
+    private void OnDrawGizmos()
     {
-        instance = this;
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(startPoint, .2f);
     }
-    
 
     public Vector2 MousePos => Camera.main.ScreenToWorldPoint(Input.mousePosition);
 }
@@ -76,4 +70,5 @@ public static class Extensions
 
         return (target, minimum);
     }
+
 }
