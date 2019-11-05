@@ -17,6 +17,7 @@ public class ResourceUsage : MonoBehaviour
     private Text indicatorInfo;
     private Vector2 playerLastPosition;
     private float timeLastMemberDied = 0.0f;
+    private float timeLastMemberCome = 0.0f;
 
     private float Amount
     {
@@ -36,8 +37,8 @@ public class ResourceUsage : MonoBehaviour
 
     private int crewSize
     {
-        get => GameManager.Instance.initialCultistsNumber;
-        set => GameManager.Instance.initialCultistsNumber = value;
+        get => GameManager.Instance.cultistNumber;
+        set => GameManager.Instance.cultistNumber = value;
     }
 
 
@@ -90,13 +91,23 @@ public class ResourceUsage : MonoBehaviour
                 crewSize -= 1;
                 timeLastMemberDied = Time.time;
             }
+
+            if( isFaith && Amount > 0.7f
+            && (Time.time - timeLastMemberCome) >  15.0f )
+            {
+                crewSize += 1;
+                timeLastMemberCome = Time.time;
+            }
             
             playerLastPosition = transform.position;
+            
             crewInfo.text = "Actual number of cult members: " + crewSize;
             if(isFaith) 
                 indicatorInfo.text = "Faith: " + (int)(Amount * 100) + "%";
             else
                 indicatorInfo.text = "Water: " + (int)(Amount * 100) + "%";
+
+            if(crewSize > 25) crewSize = 25;
         }
     }
 }

@@ -10,6 +10,9 @@ public enum Beat { None, Bad, Good, Great };
 public class RhythmController : MonoBehaviour
 {
 #pragma warning disable
+    [SerializeField] private AudioSource lightGuitar;
+    [SerializeField] private AudioSource heavyGuitar;
+
     [SerializeField] private int startOffset = 0;
     [SerializeField] private float fineTune = 0.0f;
     [SerializeField] private float songBpm;
@@ -89,15 +92,21 @@ public class RhythmController : MonoBehaviour
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.Play();
-
         thisMeasureBeats = new Beat[timeSignature.x];
         beatTime = 60.0f / songBpm;
         if (greatTolerance > goodTolerance)
         {
             throw new BadBeatToleranceException("Great tolerance was set to higher than good tolerance, which is illegal. Fix this issue in the inspector");
         }
+    }
+
+
+    private void OnEnable()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
+        lightGuitar.Play();
+        heavyGuitar.Play();
 
         nextBeatMoment += startOffset * beatTime + fineTune;
     }

@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject cultistPrefab;
     public int initialCultistsNumber;
+    public int cultistNumber;
+
 
     [SerializeField]
     private float faithForKilledEnemy = 0.1f;
@@ -41,6 +44,7 @@ public class GameManager : MonoBehaviour
     }
 
     public static GameManager Instance { get; private set; }
+    
 
     private void Awake()
     {
@@ -54,6 +58,7 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         DontDestroyOnLoad(gameObject);
+        cultistNumber = initialCultistsNumber;
 
         water = 1.0f;
         faith = 0.5f;
@@ -64,4 +69,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
+        water = 1f;
+        faith = 0.6f;
+        Awake();
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
 }
