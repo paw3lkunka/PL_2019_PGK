@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject cultistPrefab;
     public int initialCultistsNumber;
+    public int cultistNumber;
+
 
     [Range(0, 1),SerializeField]
     private float water = 1;
@@ -25,6 +28,7 @@ public class GameManager : MonoBehaviour
     }
 
     public static GameManager Instance { get; private set; }
+    
 
     private void Awake()
     {
@@ -38,10 +42,24 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         DontDestroyOnLoad(gameObject);
+        cultistNumber = initialCultistsNumber;
 
         for (int i = 0; i < initialCultistsNumber; i++)
         {
             Instantiate(cultistPrefab,Vector3.zero,Quaternion.identity);
         }
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
+        water = 1f;
+        faith = 0.6f;
+        Awake();
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 }

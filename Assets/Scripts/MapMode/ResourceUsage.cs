@@ -36,8 +36,8 @@ public class ResourceUsage : MonoBehaviour
 
     private int crewSize
     {
-        get => GameManager.Instance.initialCultistsNumber;
-        set => GameManager.Instance.initialCultistsNumber = value;
+        get => GameManager.Instance.cultistNumber;
+        set => GameManager.Instance.cultistNumber = value;
     }
 
 
@@ -91,8 +91,11 @@ public class ResourceUsage : MonoBehaviour
                 crewSize -= 1;
                 timeLastMemberDied = Time.time;
             }
+
+            
             
             playerLastPosition = transform.position;
+            
             crewInfo.text = "Actual number of cult members: " + crewSize;
             if(isFaith) 
                 indicatorInfo.text = "Faith: " + (int)(Amount * 100) + "%";
