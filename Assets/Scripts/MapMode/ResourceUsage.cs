@@ -48,7 +48,11 @@ public class ResourceUsage : MonoBehaviour
         {
             GameManager.Instance.Gui.FaithIndicator = Amount;
         }
-        GameManager.Instance.Gui.FaithIndicator = crewSize;
+        else
+        {
+            GameManager.Instance.Gui.WaterIndicator = Amount;
+        }
+        GameManager.Instance.Gui.CrewIndicator = crewSize;
         playerLastPosition = transform.position;
     }
 
@@ -61,11 +65,16 @@ public class ResourceUsage : MonoBehaviour
         }
         if(playerLastPosition.x != transform.position.x || playerLastPosition.y != transform.position.y)
         {
-            Amount -= usageFactor * (crewSize > 5.0f ? (crewSize / 5) : 1.0f);
+            
             if(isFaith)
             {
+                Amount -= usageFactor * (crewSize > 5.0f ? (crewSize / 5) : 1.0f);
                 //"Faith strenghtening"
                 Amount += usageFactor * (crewSize > 7.0f ? (crewSize / 7) : 0.0f);
+            }
+            else
+            {
+                Amount -= usageFactor * (crewSize > 3.0f ? (crewSize / 3) : 1.0f);
             }
             
 
