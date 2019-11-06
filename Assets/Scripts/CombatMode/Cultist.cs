@@ -6,10 +6,9 @@ using UnityEngine;
 public class Cultist : Character
 {
     private Shooter shooter;
-   
+
     protected override void Awake()
     {
-        Debug.Log("Awake");
         SceneManager.sceneLoaded += OnSceneLoad;
         SceneManager.sceneUnloaded += OnSceneUnload;
 

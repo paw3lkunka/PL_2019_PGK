@@ -1,24 +1,37 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
+
+[System.Flags]
+public enum CharacterState
+{
+    CanMove     = 0b_0000_0001,
+    CanAttack   = 0b_0000_0010
+}
 
 [RequireComponent(typeof(Collider2D), typeof(NavMeshAgent))]
 public class Character : MonoBehaviour
 {
-    [SerializeField]
-    private int hp;
-    [SerializeField]
+    // Unity Editor accesible fields
+#pragma warning disable
+    [SerializeField] private int hp;
     [Range(0, 20)]
-    private int defence;
+    [SerializeField] private int defence;
+    [Header("Read Only")]
+    [SerializeField] private CharacterState characterState;
 #pragma warning restore
+
+    // Public field accesors
+    public CharacterState CharacterState
+    {
+        get => characterState;
+        set => characterState = value;
+    }
 
     protected NavMeshAgent agent;
 
     private int maxHp;
     private HealthBar healthBar;
-
 
     protected virtual void Awake()
     {
@@ -28,7 +41,7 @@ public class Character : MonoBehaviour
 
     protected virtual void Start()
     {
-        healthBar = transform.Find("HealthBar")?.GetComponent<HealthBar>();
+        healthBar = GetComponentInChildren<HealthBar>();
     }
 
     protected virtual void Update()
@@ -43,7 +56,7 @@ public class Character : MonoBehaviour
 
     public virtual void TakeDamage(int damage)
     {
-        hp -= Mathf.Max( damage / (defence+1) , 0);
+        hp -= Mathf.Max( damage / (defence + 1) , 0);
     }
 
     public virtual void Die()
@@ -51,7 +64,6 @@ public class Character : MonoBehaviour
         CombatSceneManager.Instance.ourCrew.Remove(gameObject);
         CombatSceneManager.Instance.enemies.Remove(gameObject);
         StartCoroutine(Routine());
-        Debug.Log("Dead");
 
         IEnumerator Routine()
         {
