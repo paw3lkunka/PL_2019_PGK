@@ -148,7 +148,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2659117062321255298}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2
+  m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -157,7 +157,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
+  m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -193,6 +193,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   defence: 0
+  canWalk: 1
+  canShoot: 1
 --- !u!58 &2659117062321255352
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -291,16 +293,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2659117062321255302}
     m_Modifications:
-    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
-        type: 3}
-      propertyPath: m_Name
-      value: Hitbox
-      objectReference: {fileID: 0}
-    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 3181841589084581550, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -355,6 +347,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
+        type: 3}
+      propertyPath: m_Name
+      value: Hitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9116633672492137837, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f, type: 3}

@@ -6,7 +6,11 @@ using UnityEngine;
 public class Cultist : Character
 {
     private Shooter shooter;
-   
+
+    public bool canWalk;
+
+    public bool canShoot;
+
     protected override void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -63,15 +67,31 @@ public class Cultist : Character
             shooter.StopShooting();
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if(canWalk)
         {
-            GoToMousePosition();
+            agent.isStopped = false;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                GoToMousePosition();
+            }
+        }
+        else
+        {
+            agent.isStopped = true;
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if(canShoot)
         {
-            AimToMousePosition();
-            shooter.StartShooting();
+            if (Input.GetMouseButtonDown(1))
+            {
+                AimToMousePosition();
+                shooter.StartShooting();
+            }
+        }
+        else
+        {
+            shooter.StopShooting();
         }
 
         base.Update();
