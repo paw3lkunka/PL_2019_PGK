@@ -102,7 +102,9 @@ public class Cultist : Character
 
     public override void Die()
     {
+        GameManager.Instance.OnGameOver -= OnGameOver;
         GameManager.Instance.Faith -= GameManager.Instance.FaithForKilledCultist;
+        GameManager.Instance.cultistNumber--;
         base.Die();
     }
 
