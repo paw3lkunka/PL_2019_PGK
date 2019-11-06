@@ -31,7 +31,6 @@ public class Cultist : Character
     {
         Debug.Log("Start");
         base.Start();
-
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
