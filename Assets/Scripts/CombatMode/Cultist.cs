@@ -15,6 +15,7 @@ public class Cultist : Character
     {
         SceneManager.sceneLoaded += OnSceneLoad;
         SceneManager.sceneUnloaded += OnSceneUnload;
+        GameManager.Instance.OnGameOver += OnGameOver;
 
         DontDestroyOnLoad(gameObject);
 
@@ -66,32 +67,16 @@ public class Cultist : Character
         {
             shooter.StopShooting();
         }
-
-        if(canWalk)
+        
+        if (Input.GetMouseButtonDown(0))
         {
-            agent.isStopped = false;
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                GoToMousePosition();
-            }
+            GoToMousePosition();
         }
-        else
+        
+        if (Input.GetMouseButtonDown(1))
         {
-            agent.isStopped = true;
-        }
-
-        if(canShoot)
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-                AimToMousePosition();
-                shooter.StartShooting();
-            }
-        }
-        else
-        {
-            shooter.StopShooting();
+            AimToMousePosition();
+            shooter.StartShooting();
         }
 
         base.Update();
@@ -119,6 +104,12 @@ public class Cultist : Character
     {
         GameManager.Instance.Faith -= GameManager.Instance.FaithForKilledCultist;
         base.Die();
+    }
+
+    private void OnGameOver()
+    {
+        Destroy(gameObject);
+        GameManager.Instance.OnGameOver -= OnGameOver;
     }
 
     public Vector2 FormationOffset

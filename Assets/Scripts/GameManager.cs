@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     public GameObject cultistPrefab;
     public GameObject guiPrefab;
 
+    public GameObject gameOverScreenPrefab;
+    private GameObject gameOverScreenInstance = null;
+
     public GUI Gui { get; private set; }
 
     public int initialCultistsNumber;
@@ -25,13 +28,14 @@ public class GameManager : MonoBehaviour
     public float FaithForKilledCultist { get => faithForKilledCultist; private set => faithForKilledCultist = value; }
     public float FaithForWoundedCultist { get => faithForWoundedCultist; private set => faithForWoundedCultist = value; }
 
+    public event System.Action OnGameOver;
 
-
-    public event System.Action OnWaterLow;
-    public event System.Action OnFaithLow;
-    public event System.Action OnFaithHigh;
-
-
+    public GameObject GameOverScreenInstance
+    {
+        get => gameOverScreenInstance;
+        set => gameOverScreenInstance = value;
+    }
+    
     [Range(0, 1),SerializeField]
     private float water = 1;
     [Range(0, 1), SerializeField]
@@ -54,11 +58,22 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        gameOverScreenInstance = null;
+
         ResetIndicatorsValues();
         if(Instance == null)
         {
             Instance = this;
             Initialize();
+        }
+
+    }
+
+    private void Update()
+    {
+        if (cultistNumber <= 0 && gameOverScreenInstance == null)
+        {
+            GameOver();
         }
     }
 
@@ -80,11 +95,17 @@ public class GameManager : MonoBehaviour
         faith = 0.5f;
     }
 
+    void GameOver()
+    {
+        OnGameOver();
+        gameOverScreenInstance = Instantiate(gameOverScreenPrefab);
+    }
+
     public void Restart()
     {
         ResetIndicatorsValues();
         SceneManager.LoadScene(0);
-        Destroy(GetComponent<GameOver>().GameOverScreenInstance);
+        Destroy(GameOverScreenInstance);
         Initialize();
     }
 
