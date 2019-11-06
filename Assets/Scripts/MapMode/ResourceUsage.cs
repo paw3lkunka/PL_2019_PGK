@@ -5,16 +5,15 @@ using UnityEngine.UI;
 
 public class ResourceUsage : MonoBehaviour
 {
-    private const int maxHeight = 128;
     public float usageFactor = 0.0002f;
-    public GameObject indicator;
-    public GameObject TextInformation;
-    public GameObject indicatorInfoText;
+    //public GameObject indicator;
+    //public GameObject TextInformation;
+    //public GameObject indicatorInfoText;
     public bool isFaith = false;
     
-    private RawImage indicatorImage;
-    private Text crewInfo;
-    private Text indicatorInfo;
+    //private RawImage indicatorImage;
+    //private Text crewInfo;
+    //private Text indicatorInfo;
     private Vector2 playerLastPosition;
     private float timeLastMemberDied = 0.0f;
     private float timeLastMemberCome = 0.0f;
@@ -45,18 +44,11 @@ public class ResourceUsage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        indicatorImage = indicator.GetComponent<RawImage>();
-        crewInfo = TextInformation.GetComponent<Text>();
-        indicatorInfo = indicatorInfoText.GetComponent<Text>();
         if(isFaith)
         {
-            indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * Amount);
+            GameManager.Instance.Gui.FaithIndicator = Amount;
         }
-        crewInfo.text = "Actual number of cult members: " + crewSize;
-        if(isFaith) 
-            indicatorInfo.text = "Faith: " + (int)(Amount * 100) + "%";
-        else
-            indicatorInfo.text = "Water: " + (int)(Amount * 100) + "%";
+        GameManager.Instance.Gui.FaithIndicator = crewSize;
         playerLastPosition = transform.position;
     }
 
@@ -75,7 +67,6 @@ public class ResourceUsage : MonoBehaviour
                 //"Faith strenghtening"
                 Amount += usageFactor * (crewSize > 7.0f ? (crewSize / 7) : 0.0f);
             }
-            indicatorImage.GetComponent<RectTransform>().sizeDelta = new Vector2(32, maxHeight * Amount);
             
 
             if( Amount < 0.25f && 
@@ -100,12 +91,6 @@ public class ResourceUsage : MonoBehaviour
             }
             
             playerLastPosition = transform.position;
-            
-            crewInfo.text = "Actual number of cult members: " + crewSize;
-            if(isFaith) 
-                indicatorInfo.text = "Faith: " + (int)(Amount * 100) + "%";
-            else
-                indicatorInfo.text = "Water: " + (int)(Amount * 100) + "%";
 
             if(crewSize > 25) crewSize = 25;
         }

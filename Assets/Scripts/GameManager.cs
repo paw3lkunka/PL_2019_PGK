@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject cultistPrefab;
+
+    [SerializeField] private GUI gui;
+    public GUI Gui { get => gui; private set => gui = value; }
+
     public int initialCultistsNumber;
     public int cultistNumber;
 
@@ -20,6 +24,8 @@ public class GameManager : MonoBehaviour
     public float FaithForKilledEnemy { get => faithForKilledEnemy; private set => faithForKilledEnemy = value; }
     public float FaithForKilledCultist { get => faithForKilledCultist; private set => faithForKilledCultist = value; }
     public float FaithForWoundedCultist { get => faithForWoundedCultist; private set => faithForWoundedCultist = value; }
+
+
 
     public event System.Action OnWaterLow;
     public event System.Action OnFaithLow;
