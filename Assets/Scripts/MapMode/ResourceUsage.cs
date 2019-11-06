@@ -52,35 +52,35 @@ public class ResourceUsage : MonoBehaviour
         {
             if(isFaith)
             {
-                Amount -= usageFactor * (crewSize > 5.0f ? (crewSize / 5) : 1.0f);
+                Amount -= usageFactor * (crewSize > 7.0f ? (crewSize / 7) : 1.0f);
                 //"Faith strenghtening"
-                Amount += usageFactor * (crewSize > 7.0f ? (crewSize / 7) : 0.0f);
+                Amount += usageFactor * (crewSize > 9.0f ? (crewSize / 9) : 0.0f);
             }
             else
             {
-                Amount -= usageFactor * (crewSize > 3.0f ? (crewSize / 3) : 1.0f);
+                Amount -= usageFactor * (crewSize > 5.0f ? (crewSize / 5) : 1.0f);
             }
             
 
-            if( Amount < 0.25f && 
-                (Time.time - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) )
+            if( Amount < 0.2f && 
+                (Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) )
             {
                 crewSize -= 1;
-                timeLastMemberDied = Time.time;
+                timeLastMemberDied = Time.timeSinceLevelLoad;
             }
 
             if( isFaith && Amount > 0.9f 
-            && (Time.time - timeLastMemberDied) > ( 25.0f * (1.0 - (Amount / 0.9f - 1.0f)) ) )
+            && (Time.timeSinceLevelLoad - timeLastMemberDied) > ( 25.0f * (1.0 - (Amount / 0.9f - 1.0f)) ) )
             {
                 crewSize -= 1;
-                timeLastMemberDied = Time.time;
+                timeLastMemberDied = Time.timeSinceLevelLoad;
             }
 
             if( isFaith && Amount > 0.7f
-            && (Time.time - timeLastMemberCome) >  15.0f )
+            && (Time.timeSinceLevelLoad - timeLastMemberCome) >  15.0f )
             {
                 crewSize += 1;
-                timeLastMemberCome = Time.time;
+                timeLastMemberCome = Time.timeSinceLevelLoad;
             }
             
             playerLastPosition = transform.position;

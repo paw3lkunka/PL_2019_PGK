@@ -9,13 +9,14 @@ public class MoveToMouseClick : MonoBehaviour
     
     private void Start()
     {
-        targetPos = transform.position;
+        targetPos = GameManager.Instance.savedPosition;
     }
     
-    void Update ()
+    void LateUpdate()
     {
         if(Input.GetMouseButtonDown(0))
             targetPos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
         if((Vector2)transform.position != targetPos && GameManager.Instance.cultistNumber > 0)
         {
             DottedLine.Instance.DrawDottedLine(targetPos, transform.position);

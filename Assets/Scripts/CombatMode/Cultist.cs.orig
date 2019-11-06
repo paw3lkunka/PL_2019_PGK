@@ -1,0 +1,159 @@
+﻿using UnityEngine.SceneManagement;
+using UnityEngine.AI;
+using UnityEngine;
+
+[RequireComponent(typeof(Shooter))]
+public class Cultist : Character
+{
+    private Shooter shooter;
+
+<<<<<<< HEAD
+=======
+    public bool canWalk;
+
+    public bool canShoot;
+
+>>>>>>> dedbe3ca6e29181e91c06a0ae01a6bcf4973d038
+    protected override void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoad;
+        SceneManager.sceneUnloaded += OnSceneUnload;
+        GameManager.Instance.OnGameOver += OnGameOver;
+
+        DontDestroyOnLoad(gameObject);
+
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            gameObject.SetActive(false);
+        }
+
+        base.Awake();
+        shooter = GetComponent<Shooter>();
+
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == 0)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+            CombatSceneManager.Instance.ourCrew.Add(gameObject);
+            agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
+        }
+    }
+
+    private void OnSceneUnload(Scene scene)
+    {
+        if (scene.buildIndex != 0)
+        {
+            CombatSceneManager.Instance.ourCrew.Remove(gameObject);
+            CombatSceneManager.Instance.enemies.Remove(gameObject);
+        }
+    }
+
+    protected override void Update()
+    {
+        (GameObject, float) aaa = CombatSceneManager.Instance.enemies.NearestFrom(transform.position);
+
+        if ( aaa.Item2 > shooter.range )
+        {
+            shooter.StopShooting();
+        }
+<<<<<<< HEAD
+
+        if (Input.GetMouseButtonDown(0) && CheckState(CharacterState.CanMove))
+        {
+            GoToMousePosition();
+        }
+
+        if (Input.GetMouseButtonDown(1) && CheckState(CharacterState.CanAttack))
+=======
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            GoToMousePosition();
+        }
+        
+        if (Input.GetMouseButtonDown(1))
+>>>>>>> dedbe3ca6e29181e91c06a0ae01a6bcf4973d038
+        {
+            AimToMousePosition();
+            shooter.StartShooting();
+        }
+
+        base.Update();
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+        SceneManager.sceneUnloaded -= OnSceneUnload;
+    }
+
+    public void GoToMousePosition()
+    {
+        agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
+    }    
+    public void AimToMousePosition() => GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos + FormationOffset;
+
+    public override void TakeDamage(int damage)
+    {
+        GameManager.Instance.Faith -= GameManager.Instance.FaithForWoundedCultist;
+        base.TakeDamage(damage);
+    }
+
+    public override void Die()
+    {
+        GameManager.Instance.OnGameOver -= OnGameOver;
+        GameManager.Instance.Faith -= GameManager.Instance.FaithForKilledCultist;
+        GameManager.Instance.cultistNumber--;
+        base.Die();
+    }
+
+    private void OnGameOver()
+    {
+        Destroy(gameObject);
+        GameManager.Instance.OnGameOver -= OnGameOver;
+    }
+
+    public Vector2 FormationOffset
+    {
+        get
+        {
+            int index = CombatSceneManager.Instance.ourCrew.IndexOf(gameObject);
+            switch (index)
+            {
+                default:
+                case 0:
+                    return Vector2.zero;
+                case 1:
+                    return Vector2.down;
+                case 2:
+                    return Vector2.right;
+                case 3:
+                    return Vector2.right + Vector2.down;
+                case 4:
+                    return Vector2.up;
+                case 5:
+                    return Vector2.right + Vector2.up;
+                case 6:
+                    return Vector2.left;
+                case 7:
+                    return Vector2.left + Vector2.down;
+                case 8:
+                    return Vector2.left + Vector2.up;
+            }
+        }
+    }
+}
