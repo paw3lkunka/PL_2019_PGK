@@ -6,14 +6,8 @@ using UnityEngine.UI;
 public class ResourceUsage : MonoBehaviour
 {
     public float usageFactor = 0.0002f;
-    //public GameObject indicator;
-    //public GameObject TextInformation;
-    //public GameObject indicatorInfoText;
     public bool isFaith = false;
-    
-    //private RawImage indicatorImage;
-    //private Text crewInfo;
-    //private Text indicatorInfo;
+
     private Vector2 playerLastPosition;
     private float timeLastMemberDied = 0.0f;
     private float timeLastMemberCome = 0.0f;
@@ -56,7 +50,6 @@ public class ResourceUsage : MonoBehaviour
         }
         if(playerLastPosition.x != transform.position.x || playerLastPosition.y != transform.position.y)
         {
-            
             if(isFaith)
             {
                 Amount -= usageFactor * (crewSize > 5.0f ? (crewSize / 5) : 1.0f);

@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        ResetIndicatorsValues();
         if(Instance == null)
         {
             Instance = this;
@@ -64,11 +65,6 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         DontDestroyOnLoad(gameObject);
-        cultistNumber = initialCultistsNumber;
-
-        water = 1.0f;
-        faith = 0.5f;
-
         Gui = Instantiate(guiPrefab).GetComponent<GUI>();
 
         for (int i = 0; i < initialCultistsNumber; i++)
@@ -77,12 +73,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void ResetIndicatorsValues()
+    {
+        cultistNumber = initialCultistsNumber;
+        water = 1.0f;
+        faith = 0.5f;
+    }
+
     public void Restart()
     {
+        ResetIndicatorsValues();
         SceneManager.LoadScene(0);
-        water = 1f;
-        faith = 0.6f;
-        Awake();
+        Destroy(GetComponent<GameOver>().GameOverScreenInstance);
+        Initialize();
     }
 
     public void Exit()
