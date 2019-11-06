@@ -92,7 +92,7 @@ public class Cultist : Character
     {
         agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
     }    
-    public void AimToMousePosition() => GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos;
+    public void AimToMousePosition() => GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos + FormationOffset;
 
     public override void TakeDamage(int damage)
     {
@@ -102,7 +102,9 @@ public class Cultist : Character
 
     public override void Die()
     {
+        GameManager.Instance.OnGameOver -= OnGameOver;
         GameManager.Instance.Faith -= GameManager.Instance.FaithForKilledCultist;
+        GameManager.Instance.cultistNumber--;
         base.Die();
     }
 

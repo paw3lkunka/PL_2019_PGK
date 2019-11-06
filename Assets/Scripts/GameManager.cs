@@ -98,7 +98,11 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
-        OnGameOver();
+        if( OnGameOver != null )
+        {
+            OnGameOver();
+        }
+
         gameOverScreenInstance = Instantiate(gameOverScreenPrefab);
     }
 

@@ -8,6 +8,7 @@ public class Shooter : MonoBehaviour
     public float range = 10;
     public float baseDamage = 5;
     public float attackInterval = 1.5f;
+    public float variation = .1f;
 
     public GameObject bulletPrefab;
     public Vector2 target;
@@ -21,7 +22,7 @@ public class Shooter : MonoBehaviour
         if (gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
             obj.layer = LayerMask.NameToLayer("PlayerBullets");
 
-        if (gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
             obj.layer = LayerMask.NameToLayer("EnemiesBullets");
 
         obj.GetComponent<Bullet>().Shoot( target - (Vector2)transform.position);
@@ -29,11 +30,13 @@ public class Shooter : MonoBehaviour
 
     private IEnumerator ShootingRoutine()
     {
+        yield return new WaitForSeconds(Mathf.Clamp(Random.Range(-variation / 2, variation / 2), 0, variation / 2));
+
         while (true)
         {
             ShootTo(target);
 
-            yield return new WaitForSeconds(attackInterval);
+            yield return new WaitForSeconds(attackInterval + Random.Range(-variation/2,variation/2));
         }
     }
 
