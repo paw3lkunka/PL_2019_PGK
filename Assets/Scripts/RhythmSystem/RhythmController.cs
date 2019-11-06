@@ -139,8 +139,6 @@ public partial class RhythmController : MonoBehaviour
     private void OnEnable()
     {
         timeSinceEnable = Time.time;
-        Debug.Log(timeSinceEnable);
-        Debug.Log(TimeSinceEnable);
 
         audioSource = GetComponent<AudioSource>();
         audioSource.Play();
@@ -148,7 +146,6 @@ public partial class RhythmController : MonoBehaviour
         heavyGuitar.Play();
 
         nextBeatMoment = TimeSinceEnable + (startOffset * beatTime) + fineTune;
-        Debug.Log(nextBeatMoment);
     }
 
     private void Update()

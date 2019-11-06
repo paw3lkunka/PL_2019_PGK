@@ -59,6 +59,15 @@ public class Cultist : Character
     {
         (GameObject, float) aaa = CombatSceneManager.Instance.enemies.NearestFrom(transform.position);
 
+        if (RhythmController.Instance.Combo > 1)
+        {
+            SetStateOn(CharacterState.CanAttack);
+        }
+        else
+        {
+            SetStateOff(CharacterState.CanAttack);
+        }
+
         if ( aaa.Item2 > shooter.range )
         {
             shooter.StopShooting();
