@@ -17,8 +17,8 @@ public class CombatSceneManager : MonoBehaviour
 
     public Vector2 startPoint;
 
-    public void PlaceWalkTargetIndicator() => walkTargetIndicator.transform.position = CombatSceneManager.Instance.MousePos;
-    public void PlaceShootTargetIndicator() => shootTargetIndicator.transform.position = CombatSceneManager.Instance.MousePos;
+    public void PlaceWalkTargetIndicator() => walkTargetIndicator.transform.position = MousePos;
+    public void PlaceShootTargetIndicator() => shootTargetIndicator.transform.position = MousePos;
 
 
     private void Update()
@@ -32,6 +32,8 @@ public class CombatSceneManager : MonoBehaviour
         {
             OnRigthButton.Invoke();
         }
+
+        //GameManager.Instance.Gui;
     }
     
 

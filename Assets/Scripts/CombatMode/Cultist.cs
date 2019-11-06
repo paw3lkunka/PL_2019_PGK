@@ -28,9 +28,7 @@ public class Cultist : Character
 
     protected override void Start()
     {
-        Debug.Log("Start");
         base.Start();
-
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)

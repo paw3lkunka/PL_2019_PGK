@@ -6,12 +6,21 @@ using UnityEngine.UI;
 public class GameOver : MonoBehaviour
 {
     public GameObject screenPrefab;
-    private GameObject gameOver = null;
+    private GameObject gameOverScreenInstance = null;
+    public GameObject GameOverScreenInstance 
+    {
+        get => gameOverScreenInstance;
+        set => gameOverScreenInstance = value;
+    }
 
+    void Start() 
+    {
+        gameOverScreenInstance = null;
+    }
 
     void LateUpdate()
     {
-        if(GameManager.Instance.initialCultistsNumber <= 0 && gameOver == null)
+        if(GameManager.Instance.cultistNumber <= 0 && gameOverScreenInstance == null)
         {
             Render();
         }
@@ -19,6 +28,6 @@ public class GameOver : MonoBehaviour
     
     void Render()
     {
-        gameOver = Instantiate(screenPrefab);
+        gameOverScreenInstance = Instantiate(screenPrefab);
     }
 }

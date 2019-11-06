@@ -78,6 +78,12 @@ public class Enemy : Character
         }
 
     }
+
+    public override void Die()
+    {
+        GameManager.Instance.Faith += GameManager.Instance.FaithForKilledEnemy;
+        base.Die();
+    }
     
     private bool ShouldShoot() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) <= this.shootingRange : false;
 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5888413036395679802}
   - component: {fileID: 7862550192762261036}
   - component: {fileID: 5466541610303206112}
+  - component: {fileID: 4978766291027575115}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -117,18 +118,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7862550192762261036}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Restart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &4978766291027575115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3680882533705235940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db9ed4a94663e04a903dc1ed8472057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3867103217182241236
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,6 +549,7 @@ GameObject:
   - component: {fileID: 6880964548047595566}
   - component: {fileID: 3270314303001533796}
   - component: {fileID: 3557524956380692356}
+  - component: {fileID: 7208652116592757910}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -653,3 +656,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7208652116592757910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8143112524769894935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc2c1a0ea05d984d9d4c39e00f38730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
