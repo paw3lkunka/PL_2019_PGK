@@ -15,14 +15,14 @@ public class RandomEncounter : MonoBehaviour
     //WORK IN PROGRESS... 
     void Start(){
         playerLastPosition = transform.position;
-        timeSinceLastEncounter = Time.time;
+        timeSinceLastEncounter = Time.timeSinceLevelLoad;
         probability = 0.0f;
         encounter = false;
     }
     
     void Update ()
     {
-        if((Time.time - timeSinceLastEncounter) > 20.0f &&
+        if((Time.timeSinceLevelLoad - timeSinceLastEncounter) > 20.0f &&
             (playerLastPosition.x != transform.position.x || playerLastPosition.y != transform.position.y))
         {
             probability += Random.Range(0, probabilityFactor);
@@ -33,7 +33,7 @@ public class RandomEncounter : MonoBehaviour
             if(encounter)
             {
                 Debug.Log("Tu bedzie Encounter jak go ktos zrobi xDDDD");
-                timeSinceLastEncounter = Time.time;
+                timeSinceLastEncounter = Time.timeSinceLevelLoad;
                 probability = 0.0f;
                 encounter = false;
             }

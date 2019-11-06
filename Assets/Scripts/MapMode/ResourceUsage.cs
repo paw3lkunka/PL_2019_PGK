@@ -52,17 +52,17 @@ public class ResourceUsage : MonoBehaviour
         {
             if(isFaith)
             {
-                Amount -= usageFactor * (crewSize > 5.0f ? (crewSize / 5) : 1.0f);
+                Amount -= usageFactor * (crewSize > 7.0f ? (crewSize / 7) : 1.0f);
                 //"Faith strenghtening"
-                Amount += usageFactor * (crewSize > 7.0f ? (crewSize / 7) : 0.0f);
+                Amount += usageFactor * (crewSize > 9.0f ? (crewSize / 9) : 0.0f);
             }
             else
             {
-                Amount -= usageFactor * (crewSize > 2.0f ? (crewSize / 2) : 1.0f);
+                Amount -= usageFactor * (crewSize > 5.0f ? (crewSize / 5) : 1.0f);
             }
             
 
-            if( Amount < 0.25f && 
+            if( Amount < 0.2f && 
                 (Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) )
             {
                 crewSize -= 1;
