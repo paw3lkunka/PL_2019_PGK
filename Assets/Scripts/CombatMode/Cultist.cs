@@ -6,11 +6,16 @@ using UnityEngine;
 public class Cultist : Character
 {
     private Shooter shooter;
-   
+
+    public bool canWalk;
+
+    public bool canShoot;
+
     protected override void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoad;
         SceneManager.sceneUnloaded += OnSceneUnload;
+        GameManager.Instance.OnGameOver += OnGameOver;
 
         DontDestroyOnLoad(gameObject);
 
@@ -62,12 +67,12 @@ public class Cultist : Character
         {
             shooter.StopShooting();
         }
-
+        
         if (Input.GetMouseButtonDown(0))
         {
             GoToMousePosition();
         }
-
+        
         if (Input.GetMouseButtonDown(1))
         {
             AimToMousePosition();
@@ -99,6 +104,12 @@ public class Cultist : Character
     {
         GameManager.Instance.Faith -= GameManager.Instance.FaithForKilledCultist;
         base.Die();
+    }
+
+    private void OnGameOver()
+    {
+        Destroy(gameObject);
+        GameManager.Instance.OnGameOver -= OnGameOver;
     }
 
     public Vector2 FormationOffset

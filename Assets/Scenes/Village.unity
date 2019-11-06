@@ -15573,6 +15573,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 23800000, guid: 20cdaf0fb59eec8448fd45792da5dba5,
         type: 2}
+    - target: {fileID: 5339254310478306283, guid: 1c872f1990f435342a712b6fa3ce7aed,
+        type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.086666666
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c872f1990f435342a712b6fa3ce7aed, type: 3}
 --- !u!1001 &536075125
@@ -21793,6 +21798,11 @@ PrefabInstance:
     - target: {fileID: 7979052477405802463, guid: dcfb7cee2d7ab9e4aafed123047efff4,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7103433523843810439, guid: dcfb7cee2d7ab9e4aafed123047efff4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7103433523843810488, guid: dcfb7cee2d7ab9e4aafed123047efff4,

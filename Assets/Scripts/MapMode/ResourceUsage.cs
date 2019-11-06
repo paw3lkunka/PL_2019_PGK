@@ -63,24 +63,24 @@ public class ResourceUsage : MonoBehaviour
             
 
             if( Amount < 0.25f && 
-                (Time.time - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) )
+                (Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) )
             {
                 crewSize -= 1;
-                timeLastMemberDied = Time.time;
+                timeLastMemberDied = Time.timeSinceLevelLoad;
             }
 
             if( isFaith && Amount > 0.9f 
-            && (Time.time - timeLastMemberDied) > ( 25.0f * (1.0 - (Amount / 0.9f - 1.0f)) ) )
+            && (Time.timeSinceLevelLoad - timeLastMemberDied) > ( 25.0f * (1.0 - (Amount / 0.9f - 1.0f)) ) )
             {
                 crewSize -= 1;
-                timeLastMemberDied = Time.time;
+                timeLastMemberDied = Time.timeSinceLevelLoad;
             }
 
             if( isFaith && Amount > 0.7f
-            && (Time.time - timeLastMemberCome) >  15.0f )
+            && (Time.timeSinceLevelLoad - timeLastMemberCome) >  15.0f )
             {
                 crewSize += 1;
-                timeLastMemberCome = Time.time;
+                timeLastMemberCome = Time.timeSinceLevelLoad;
             }
             
             playerLastPosition = transform.position;

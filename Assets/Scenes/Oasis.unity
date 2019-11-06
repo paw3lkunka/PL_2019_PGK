@@ -127,6 +127,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 920517133557248443, guid: 40bfc58069d43d24e9788d105189c101,
+        type: 3}
+      propertyPath: m_Name
+      value: Guitar_light
+      objectReference: {fileID: 0}
     - target: {fileID: 920517133557248441, guid: 40bfc58069d43d24e9788d105189c101,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -181,11 +186,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 920517133557248443, guid: 40bfc58069d43d24e9788d105189c101,
-        type: 3}
-      propertyPath: m_Name
-      value: Guitar_light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40bfc58069d43d24e9788d105189c101, type: 3}
@@ -37553,7 +37553,7 @@ PrefabInstance:
     - target: {fileID: 8047570944430733026, guid: 196b29ea9d117174fa064e3518315522,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8047570944430733026, guid: 196b29ea9d117174fa064e3518315522,
         type: 3}
@@ -37742,7 +37742,6 @@ MonoBehaviour:
   walkTargetIndicator: {fileID: 2054089607}
   shootTargetIndicator: {fileID: 1968566549}
   startPoint: {x: -22, y: -1.5}
-  startArea: {fileID: 0}
 --- !u!4 &1711709718
 Transform:
   m_ObjectHideFlags: 0
@@ -38437,6 +38436,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 23800000, guid: 733dc59f45fe954498425ebeee4e8390,
         type: 2}
+    - target: {fileID: 5339254310478306283, guid: 1c872f1990f435342a712b6fa3ce7aed,
+        type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.086666666
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c872f1990f435342a712b6fa3ce7aed, type: 3}
 --- !u!1001 &7352916510463960865
