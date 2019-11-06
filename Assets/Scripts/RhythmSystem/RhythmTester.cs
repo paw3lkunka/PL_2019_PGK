@@ -21,26 +21,6 @@ public class RhythmTester : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
             beatStatus = controller.HitBeat();
-
-            switch (beatStatus)
-            {
-                case Beat.None:
-                    rhythmIndicator.color = badColor;
-                    break;
-                case Beat.Bad:
-                    rhythmIndicator.color = badColor;
-                    break;
-                case Beat.Good:
-                    rhythmIndicator.color = goodColor;
-                    break;
-                case Beat.Great:
-                    rhythmIndicator.color = greatColor;
-                    break;
-            }
-        }
-        else
-        {
-            rhythmIndicator.color = transparent;
         }
     }
 

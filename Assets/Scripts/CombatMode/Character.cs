@@ -35,6 +35,8 @@ public class Character : MonoBehaviour
 
     protected virtual void Awake()
     {
+        SetStateOn(CharacterState.CanMove);
+        SetStateOn(CharacterState.CanAttack);
         maxHp = hp;
         agent = GetComponent<NavMeshAgent>();
     }
@@ -70,5 +72,25 @@ public class Character : MonoBehaviour
             yield return new WaitForEndOfFrame();
             Destroy(gameObject);
         }
+    }
+
+    public void FlipState(CharacterState state)
+    {
+        characterState ^= state;
+    }
+
+    public bool CheckState(CharacterState state)
+    {
+        return (characterState & state) > 0 ? true : false;
+    }
+
+    public void SetStateOn(CharacterState state)
+    {
+        characterState |= state;
+    }
+
+    public void SetStateOff(CharacterState state)
+    {
+        characterState &= ~state;
     }
 }

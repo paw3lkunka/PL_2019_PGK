@@ -63,12 +63,12 @@ public class Cultist : Character
             shooter.StopShooting();
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && CheckState(CharacterState.CanMove))
         {
             GoToMousePosition();
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && CheckState(CharacterState.CanAttack))
         {
             AimToMousePosition();
             shooter.StartShooting();
