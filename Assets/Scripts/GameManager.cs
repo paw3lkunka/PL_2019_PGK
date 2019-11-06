@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
     
+    public Vector2 savedPosition;
 
     private void Awake()
     {

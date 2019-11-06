@@ -58,7 +58,7 @@ public class ResourceUsage : MonoBehaviour
             }
             else
             {
-                Amount -= usageFactor * (crewSize > 3.0f ? (crewSize / 3) : 1.0f);
+                Amount -= usageFactor * (crewSize > 2.0f ? (crewSize / 2) : 1.0f);
             }
             
 
