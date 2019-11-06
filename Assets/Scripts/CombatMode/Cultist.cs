@@ -9,7 +9,6 @@ public class Cultist : Character
    
     protected override void Awake()
     {
-        Debug.Log("Awake");
         SceneManager.sceneLoaded += OnSceneLoad;
         SceneManager.sceneUnloaded += OnSceneUnload;
 
@@ -29,7 +28,6 @@ public class Cultist : Character
 
     protected override void Start()
     {
-        Debug.Log("Start");
         base.Start();
     }
 

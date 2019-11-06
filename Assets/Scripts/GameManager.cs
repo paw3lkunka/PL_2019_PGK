@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject cultistPrefab;
+    public GameObject guiPrefab;
 
-    [SerializeField] private GUI gui;
-    public GUI Gui { get => gui; private set => gui = value; }
+    public GUI Gui { get; private set; }
 
     public int initialCultistsNumber;
     public int cultistNumber;
@@ -68,6 +68,8 @@ public class GameManager : MonoBehaviour
 
         water = 1.0f;
         faith = 0.5f;
+
+        Gui = Instantiate(guiPrefab).GetComponent<GUI>();
 
         for (int i = 0; i < initialCultistsNumber; i++)
         {

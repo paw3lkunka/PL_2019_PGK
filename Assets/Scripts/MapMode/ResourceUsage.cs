@@ -44,15 +44,6 @@ public class ResourceUsage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(isFaith)
-        {
-            GameManager.Instance.Gui.FaithIndicator = Amount;
-        }
-        else
-        {
-            GameManager.Instance.Gui.WaterIndicator = Amount;
-        }
-        GameManager.Instance.Gui.CrewIndicator = crewSize;
         playerLastPosition = transform.position;
     }
 
