@@ -24,13 +24,7 @@ public class Character : MonoBehaviour
     {
         maxHp = hp;
         agent = GetComponent<NavMeshAgent>();
-
-        SceneManager.sceneLoaded += OnSceneLoad;
-        SceneManager.sceneUnloaded += OnSceneUnload;
     }
-
-    protected virtual void OnSceneUnload(Scene scene) { }
-    protected virtual void OnSceneLoad(Scene scene, LoadSceneMode mode) { }
 
     protected virtual void Start()
     {
@@ -64,11 +58,5 @@ public class Character : MonoBehaviour
             yield return new WaitForEndOfFrame();
             Destroy(gameObject);
         }
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoad;
-        SceneManager.sceneUnloaded -= OnSceneUnload;
     }
 }

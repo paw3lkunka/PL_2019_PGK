@@ -60,6 +60,11 @@ public static class Extensions
 
         foreach (GameObject enemy in objs)
         {
+            if(!enemy)
+            {
+                continue;
+            }
+
             float distance = Vector2.Distance(from, enemy.transform.position);
             if ( distance < minimum)
             {

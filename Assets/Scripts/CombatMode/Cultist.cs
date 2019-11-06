@@ -9,6 +9,10 @@ public class Cultist : Character
    
     protected override void Awake()
     {
+        Debug.Log("Awake");
+        SceneManager.sceneLoaded += OnSceneLoad;
+        SceneManager.sceneUnloaded += OnSceneUnload;
+
         DontDestroyOnLoad(gameObject);
 
         if(SceneManager.GetActiveScene().buildIndex == 0)
@@ -25,31 +29,31 @@ public class Cultist : Character
 
     protected override void Start()
     {
+        Debug.Log("Start");
         base.Start();
 
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            CombatSceneManager.Instance.ourCrew.Add(gameObject);
-            agent.Warp( CombatSceneManager.Instance.startPoint + FormationOffset );
-        }
-
     }
 
-    protected override void OnSceneLoad(Scene scene, LoadSceneMode mode)
-    {
-        
-
-    }
-
-    protected override void OnSceneUnload(Scene scene)
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
         if (scene.buildIndex == 0)
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
         else
         {
-            gameObject.SetActive(false);
+            gameObject.SetActive(true);
+            CombatSceneManager.Instance.ourCrew.Add(gameObject);
+            agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
+        }
+    }
+
+    private void OnSceneUnload(Scene scene)
+    {
+        if (scene.buildIndex != 0)
+        {
+            CombatSceneManager.Instance.ourCrew.Remove(gameObject);
+            CombatSceneManager.Instance.enemies.Remove(gameObject);
         }
     }
 
@@ -74,6 +78,12 @@ public class Cultist : Character
         }
 
         base.Update();
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+        SceneManager.sceneUnloaded -= OnSceneUnload;
     }
 
     public void GoToMousePosition()
