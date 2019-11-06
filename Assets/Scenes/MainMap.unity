@@ -1163,12 +1163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneIndex: 2
---- !u!1 &340929778 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 259232563670143920, guid: bf6dbe73562dcfd49b3e50e973f8a6c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1945517413}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &570698677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,7 +1195,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cultistPrefab: {fileID: 2659117062321255298, guid: fca019f3bf262b545a9cbe48dc96d017,
     type: 3}
+  gui: {fileID: 2110721062}
   initialCultistsNumber: 4
+  cultistNumber: 0
   faithForKilledEnemy: 0.1
   faithForKilledCultist: 0.2
   faithForWoundedCultist: 0.02
@@ -1361,9 +1357,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usageFactor: 0.0002
-  indicator: {fileID: 340929778}
-  TextInformation: {fileID: 1703532888}
-  indicatorInfoText: {fileID: 1353985830}
   isFaith: 0
 --- !u!114 &585367975
 MonoBehaviour:
@@ -1378,9 +1371,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usageFactor: 0.0002
-  indicator: {fileID: 1435742932}
-  TextInformation: {fileID: 1703532888}
-  indicatorInfoText: {fileID: 970480374}
   isFaith: 1
 --- !u!61 &585367976
 BoxCollider2D:
@@ -3666,24 +3656,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneIndex: 3
---- !u!1 &970480374 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 259232563971870444, guid: bf6dbe73562dcfd49b3e50e973f8a6c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1945517413}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1353985830 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 259232563356951759, guid: bf6dbe73562dcfd49b3e50e973f8a6c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1945517413}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1435742932 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 259232563436846380, guid: bf6dbe73562dcfd49b3e50e973f8a6c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1945517413}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1487703591
 GameObject:
   m_ObjectHideFlags: 0
@@ -119340,12 +119312,6 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!1 &1703532888 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 259232563090072507, guid: bf6dbe73562dcfd49b3e50e973f8a6c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1945517413}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1945517413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119531,19 +119497,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2110721061 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 259232564307049820, guid: bf6dbe73562dcfd49b3e50e973f8a6c4,
+--- !u!114 &2110721062 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8487220634957031813, guid: bf6dbe73562dcfd49b3e50e973f8a6c4,
     type: 3}
   m_PrefabInstance: {fileID: 1945517413}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2110721066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2110721061}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8d6004234f7a4a4f960051c44e7d875, type: 3}
