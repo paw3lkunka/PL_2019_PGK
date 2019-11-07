@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 20
-  baseDamage: 5
+  baseDamage: 3
   attackInterval: 0.2
   variation: 0.05
   bulletPrefab: {fileID: 6786680127287788827, guid: 71e0136e0b7ec9b4dae56b68747e4442,
@@ -293,6 +293,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2659117062321255302}
     m_Modifications:
+    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
+        type: 3}
+      propertyPath: m_Name
+      value: Hitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 3181841589084581550, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -347,16 +357,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
-        type: 3}
-      propertyPath: m_Name
-      value: Hitbox
-      objectReference: {fileID: 0}
-    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f, type: 3}

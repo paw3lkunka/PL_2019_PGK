@@ -24,9 +24,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float faithForWoundedCultist = 0.01f;
 
-    public float FaithForKilledEnemy { get => faithForKilledEnemy; private set => faithForKilledEnemy = value; }
-    public float FaithForKilledCultist { get => faithForKilledCultist; private set => faithForKilledCultist = value; }
-    public float FaithForWoundedCultist { get => faithForWoundedCultist; private set => faithForWoundedCultist = value; }
+    public float FaithForKilledEnemy { get => faithForKilledEnemy; set => faithForKilledEnemy = value; }
+    public float FaithForKilledCultist { get => faithForKilledCultist; set => faithForKilledCultist = value; }
+    public float FaithForWoundedCultist { get => faithForWoundedCultist; set => faithForWoundedCultist = value; }
 
     public event System.Action OnGameOver;
 
