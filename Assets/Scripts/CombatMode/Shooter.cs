@@ -30,7 +30,8 @@ public class Shooter : MonoBehaviour
 
     private IEnumerator ShootingRoutine()
     {
-        yield return new WaitForSeconds(Mathf.Clamp(Random.Range(-variation / 2, variation / 2), 0, variation / 2));
+        //needs fix
+        //yield return new WaitForSeconds(Mathf.Clamp(Random.Range(-variation / 2, variation / 2), 0, variation / 2));
 
         while (true)
         {

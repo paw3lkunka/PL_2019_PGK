@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private static bool first = true;
+
     public GameObject cultistPrefab;
     public GameObject guiPrefab;
 
@@ -66,6 +68,12 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             Initialize();
+        }
+
+        if(first)
+        {
+            first = false;
+            SceneManager.LoadScene(4);
         }
 
     }

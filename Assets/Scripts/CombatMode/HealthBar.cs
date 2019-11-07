@@ -5,6 +5,7 @@ using UnityEngine;
 public class HealthBar : MonoBehaviour
 {
     private Transform bar;
+    public bool scaleFix = false;
 
     private void Awake()
     {
@@ -14,7 +15,7 @@ public class HealthBar : MonoBehaviour
     public void SetBar(int hp, int maxHp)
     {
         var normalizedHp = (float)hp / (float)maxHp;
-        bar.localScale = new Vector3(normalizedHp, 1.0f);
+        bar.localScale = new Vector3(normalizedHp, 1.0f) * (scaleFix ? bar.localScale.x : 1);
     }
 
     public void HideBar()

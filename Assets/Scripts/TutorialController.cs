@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class TutorialController : MonoBehaviour
@@ -33,19 +34,26 @@ public class TutorialController : MonoBehaviour
 
     private void Update()
     {
-        if(RhythmController.Instance.Combo <= minimumWalkCombo)
+        if(RhythmController.Instance.Combo >= minimumWalkCombo)
         {
             Destroy(smokeWalk);
         }
         
-        if(GameManager.Instance.Water <= minimumWaterLevel)
+        if(GameManager.Instance.Water >= minimumWaterLevel)
         {
             Destroy(smokeWater);
         }
 
-        if(GameManager.Instance.Faith <= minimumFaithLevel)
+        if(GameManager.Instance.Faith >= minimumFaithLevel)
         {
             Destroy(smokeFaith);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F10))
+        {
+            GameManager.Instance.Faith = Mathf.Max(GameManager.Instance.Faith, 0.7f);
+            GameManager.Instance.Water = 1;
+            SceneManager.LoadScene(0);
         }
     }
 }

@@ -128,7 +128,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 2659117062321255298}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 0.045238934
   m_LinearDrag: 0
@@ -293,16 +293,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2659117062321255302}
     m_Modifications:
-    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
-        type: 3}
-      propertyPath: m_Name
-      value: Hitbox
-      objectReference: {fileID: 0}
-    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 3181841589084581550, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -357,6 +347,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
+        type: 3}
+      propertyPath: m_Name
+      value: Hitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f, type: 3}

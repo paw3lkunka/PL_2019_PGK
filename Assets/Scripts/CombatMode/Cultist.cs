@@ -93,7 +93,7 @@ public class Cultist : Character
             GoToMousePosition();
         }
         
-        if ( canAttack &&  Input.GetMouseButtonDown(1) )
+        if ( canAttack && Input.GetMouseButtonDown(1) )
         {
             AimToMousePosition();
             shooter.StartShooting();
@@ -105,7 +105,7 @@ public class Cultist : Character
     private void ToRageMode()
     {
         shooter.baseDamage *= 1.5f;
-        agent.speed *= 1.5f;
+        agent.speed *= 1.1f;
         defence = .5f;
         GameManager.Instance.FaithForKilledEnemy *= 2;
     }
@@ -114,7 +114,7 @@ public class Cultist : Character
     private void ToNormalMode()
     {
         shooter.baseDamage /= 1.5f;
-        agent.speed /= 1.5f;
+        agent.speed /= 1.1f;
         defence = 0;
         GameManager.Instance.FaithForKilledEnemy /= 2;
     }
