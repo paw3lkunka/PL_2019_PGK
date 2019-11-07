@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8250339572719688412}
   - component: {fileID: 8250339572719688413}
   - component: {fileID: 8250339572719688409}
-  - component: {fileID: 8250339572719688414}
   m_Layer: 0
   m_Name: RhythmController
   m_TagString: Untagged
@@ -144,8 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightGuitar: {fileID: 0}
   heavyGuitar: {fileID: 0}
-  startOffset: 4
-  fineTune: 0.1
+  startOffset: 0
+  fineTune: 0
   songBpm: 60
   timeSignature: {x: 4, y: 4}
   goodTolerance: 0.15
@@ -166,24 +165,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80fee6dc552d0544a841a16033037982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rhythmController: {fileID: 8250339572719688413}
   lightMusic: {fileID: 0}
   heavyMusic: {fileID: 0}
-  fadeSpeed: 0.05
---- !u!114 &8250339572719688414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8250339572719688418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ecfdc23fbe4a5d40bc2dcb54c724112, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 8250339572719688413}
-  rhythmIndicator: {fileID: 0}
-  badColor: {r: 1, g: 0, b: 0, a: 1}
-  goodColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  greatColor: {r: 0, g: 1, b: 0, a: 1}
+  fadeTime: 2
+  fadeCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

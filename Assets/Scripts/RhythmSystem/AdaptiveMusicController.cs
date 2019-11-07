@@ -5,44 +5,88 @@ using UnityEngine;
 public class AdaptiveMusicController : MonoBehaviour
 {
 #pragma warning disable
-    [SerializeField] private RhythmController rhythmController;
-    [Space]
     [SerializeField] private AudioSource lightMusic;
     [SerializeField] private AudioSource heavyMusic;
     [Space]
-    [SerializeField] private float fadeSpeed = 0.1f;
+    [SerializeField] private float fadeTime = 2.0f;
+    [SerializeField] private AnimationCurve fadeCurve;
 #pragma warning restore
 
-    private int lastFrameCombo = 0;
-    private bool lastFrameRageStatus = false;
+    private float coroutineTime = 0.0f;
 
-    private int thisFrameCombo = 0;
-    private bool thisFrameRageStatus = false;
-
-    private void LateUpdate()
+    private void OnEnable()
     {
-        thisFrameCombo = rhythmController.GetCurrentCombo();
-        thisFrameRageStatus = rhythmController.IsInRageMode();
+        RhythmController.Instance.OnComboStart += FadeToLight;
+        RhythmController.Instance.OnRageModeStart += FadeToHeavy;
+        RhythmController.Instance.OnRageModeEnd += FadeToLight;
+        RhythmController.Instance.OnComboEnd += FadeToNone;
+    }
 
-        if (thisFrameCombo > 0)
+    private void OnDisable()
+    {
+        RhythmController.Instance.OnComboStart -= FadeToLight;
+        RhythmController.Instance.OnRageModeStart -= FadeToHeavy;
+        RhythmController.Instance.OnRageModeEnd -= FadeToLight;
+        RhythmController.Instance.OnComboEnd -= FadeToNone;
+    }
+
+    private void FadeToNone()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeToNoneCoroutine());
+    }
+
+    private void FadeToLight()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeToLightCoroutine());
+    }
+
+    private void FadeToHeavy()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeToHeavyCoroutine());
+    }
+
+    private IEnumerator FadeToNoneCoroutine()
+    {
+        coroutineTime = 0.0f;
+        while (coroutineTime <= fadeTime)
         {
-            if (thisFrameRageStatus)
-            {
-                heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume + fadeSpeed);
-                lightMusic.volume = Mathf.Clamp01(lightMusic.volume - fadeSpeed);
-            }
-            else
-            {
-                heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume - fadeSpeed);
-                lightMusic.volume = Mathf.Clamp01(lightMusic.volume + fadeSpeed);
-            }
-        }
-        else
-        {
-            heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume - fadeSpeed);
-            lightMusic.volume = Mathf.Clamp01(lightMusic.volume - fadeSpeed);
+            yield return new WaitForEndOfFrame();
+
+            heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+            lightMusic.volume = Mathf.Clamp01(lightMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+
+            coroutineTime += Time.deltaTime;
         }
     }
 
+    private IEnumerator FadeToLightCoroutine()
+    {
+        coroutineTime = 0.0f;
+        while (coroutineTime <= fadeTime)
+        {
+            yield return new WaitForEndOfFrame();
 
+            heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+            lightMusic.volume = Mathf.Clamp01(lightMusic.volume + fadeCurve.Evaluate(coroutineTime / fadeTime));
+
+            coroutineTime += Time.deltaTime;
+        }
+    }
+
+    private IEnumerator FadeToHeavyCoroutine()
+    {
+        coroutineTime = 0.0f;
+        while (coroutineTime <= fadeTime)
+        {
+            yield return new WaitForEndOfFrame();
+
+            heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume + fadeCurve.Evaluate(coroutineTime / fadeTime));
+            lightMusic.volume = Mathf.Clamp01(lightMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+
+            coroutineTime += Time.deltaTime;
+        }
+    }
 }

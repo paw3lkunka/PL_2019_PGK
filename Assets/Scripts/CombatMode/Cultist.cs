@@ -6,11 +6,7 @@ using UnityEngine;
 public class Cultist : Character
 {
     private Shooter shooter;
-
-    public bool canWalk;
-
-    public bool canShoot;
-
+   
     protected override void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -31,9 +27,20 @@ public class Cultist : Character
         agent.updateUpAxis = false;
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+        SceneManager.sceneUnloaded -= OnSceneUnload;
+
+        RhythmController.Instance.OnRageModeStart -= ToRageMode;
+        RhythmController.Instance.OnRageModeEnd -= ToNormalMode;
+    }
+
     protected override void Start()
     {
         base.Start();
+        RhythmController.Instance.OnRageModeStart += ToRageMode;
+        RhythmController.Instance.OnRageModeEnd += ToNormalMode;
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
@@ -61,19 +68,32 @@ public class Cultist : Character
 
     protected override void Update()
     {
-        (GameObject, float) aaa = CombatSceneManager.Instance.enemies.NearestFrom(transform.position);
 
-        if ( aaa.Item2 > shooter.range )
+
+        if (RhythmController.Instance.Combo >= 1)
+        {
+            SetStateOn(CharacterState.CanAttack);
+        }
+        else
+        {
+            SetStateOff(CharacterState.CanAttack);
+        }
+
+        float distanceToEnemy = CombatSceneManager.Instance.enemies.NearestFrom(transform.position).Item2;
+        bool canMove = CheckState(CharacterState.CanMove);
+        bool canAttack = CheckState(CharacterState.CanAttack);
+
+        if ( !canAttack || distanceToEnemy > shooter.range )
         {
             shooter.StopShooting();
         }
         
-        if (Input.GetMouseButtonDown(0))
+        if ( canMove && Input.GetMouseButtonDown(0) )
         {
             GoToMousePosition();
         }
         
-        if (Input.GetMouseButtonDown(1))
+        if ( canAttack &&  Input.GetMouseButtonDown(1) )
         {
             AimToMousePosition();
             shooter.StartShooting();
@@ -82,10 +102,21 @@ public class Cultist : Character
         base.Update();
     }
 
-    private void OnDestroy()
+    private void ToRageMode()
     {
-        SceneManager.sceneLoaded -= OnSceneLoad;
-        SceneManager.sceneUnloaded -= OnSceneUnload;
+        shooter.baseDamage *= 1.5f;
+        agent.speed *= 1.5f;
+        defence = .5f;
+        GameManager.Instance.FaithForKilledEnemy *= 2;
+    }
+
+
+    private void ToNormalMode()
+    {
+        shooter.baseDamage /= 1.5f;
+        agent.speed /= 1.5f;
+        defence = 0;
+        GameManager.Instance.FaithForKilledEnemy /= 2;
     }
 
     public void GoToMousePosition()
@@ -103,9 +134,9 @@ public class Cultist : Character
     public override void Die()
     {
         GameManager.Instance.OnGameOver -= OnGameOver;
+        base.Die();
         GameManager.Instance.Faith -= GameManager.Instance.FaithForKilledCultist;
         GameManager.Instance.cultistNumber--;
-        base.Die();
     }
 
     private void OnGameOver()

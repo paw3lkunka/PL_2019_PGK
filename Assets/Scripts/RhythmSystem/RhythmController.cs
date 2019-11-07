@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
 using TMPro;
 
 public enum Beat { None, Bad, Good, Great };
 
-public class RhythmController : MonoBehaviour
+public partial class RhythmController : MonoBehaviour
 {
 #pragma warning disable
     [SerializeField] private AudioSource lightGuitar;
@@ -31,17 +29,28 @@ public class RhythmController : MonoBehaviour
     [SerializeField] TextMeshProUGUI rageModeText;
 #pragma warning restore
 
+    // Singleton implementation
+    public static RhythmController Instance { get; private set; }
+
     // External components
     private AudioSource audioSource;
 
     // Control variables
-    private float beatTime = 0.0f;
-    private float currentTimeMoment = 0.0f;
+    private float beatTime;
+    private float timeSinceEnable;
+    private float TimeSinceEnable
+    {
+        get => Time.time - timeSinceEnable;
+    }
     private float nextBeatMoment = 0.0f;
     private Beat currentBeatMomentStatus = Beat.None;
 
     // Combo variables
     private int combo = 0;
+    public int Combo
+    {
+        get => combo;
+    }
     private Beat[] thisMeasureBeats;
     private int currentBeatNumber = 0;
     private Beat currentBeatStatus = Beat.None;
@@ -55,43 +64,62 @@ public class RhythmController : MonoBehaviour
 
     // Indicator handling
     private float normalizedGoodTime = 0.0f;
+    public float NormalizedGoodTime
+    {
+        get => normalizedGoodTime;
+    }
 
     // Controller events
-    public delegate void BeatFail();
-    public event BeatFail OnBeatFail;
+    public event Action OnBeatHitBad;
+    public event Action OnBeatHitGood;
+    public event Action OnBeatHitGreat;
+    public event Action OnComboStart;
+    public event Action OnComboEnd;
+    public event Action OnRageModeStart;
+    public event Action OnRageModeEnd;
+    public event Action OnBeatEnd;
 
     public Beat HitBeat()
     {
         if (currentBeatStatus == Beat.None)
         {
             currentBeatStatus = currentBeatMomentStatus;
+            if (currentBeatMomentStatus == Beat.Good)
+            {
+                OnBeatHitGood?.Invoke();
+            }
+            else if (currentBeatMomentStatus == Beat.Great)
+            {
+                OnBeatHitGreat?.Invoke();
+            }
+            else if (currentBeatMomentStatus == Beat.Bad)
+            {
+                OnBeatHitBad?.Invoke();
+            }
             return currentBeatMomentStatus;
         }
         else
         {
-            FailCombo();
-            currentBeatMomentStatus = Beat.Bad;
+            currentBeatStatus = Beat.Bad;
+            OnBeatHitBad?.Invoke();
             return Beat.Bad;
         }
     }
 
-    public float GetBeatAnimationTime()
-    {
-        return normalizedGoodTime;
-    }
-
-    public int GetCurrentCombo()
-    {
-        return combo;
-    }
-
-    public bool IsInRageMode()
-    {
-        return rageMode;
-    }
-
     private void Awake()
     {
+        Instance = this;
+
+        //else
+        //{
+        //    Debug.Log("<color=red>You have two or more rhythm controllers in scene. Make sure there is always one rhythm controller!</color>");
+        //}
+
+        OnBeatEnd += EndBeat;
+        OnBeatHitBad += BeatHitBad;
+        OnRageModeStart += RageModeStart;
+        OnRageModeEnd += RageModeEnd;
+
         thisMeasureBeats = new Beat[timeSignature.x];
         beatTime = 60.0f / songBpm;
         if (greatTolerance > goodTolerance)
@@ -100,36 +128,45 @@ public class RhythmController : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        OnBeatEnd -= EndBeat;
+        OnBeatHitBad -= BeatHitBad;
+        OnRageModeStart -= RageModeStart;
+        OnRageModeEnd -= RageModeEnd;
+    }
 
     private void OnEnable()
     {
+        timeSinceEnable = Time.time;
+
         audioSource = GetComponent<AudioSource>();
         audioSource.Play();
         lightGuitar.Play();
         heavyGuitar.Play();
 
-        nextBeatMoment += startOffset * beatTime + fineTune;
+        nextBeatMoment = TimeSinceEnable + (startOffset * beatTime) + fineTune;
     }
 
     private void Update()
     {
-        if (currentTimeMoment < nextBeatMoment - goodTolerance)
+        if (TimeSinceEnable < nextBeatMoment - goodTolerance)
         {
             normalizedGoodTime = 0.0f;
             currentBeatMomentStatus = Beat.Bad;
         }
-        else if (currentTimeMoment > nextBeatMoment - goodTolerance && currentTimeMoment < nextBeatMoment + goodTolerance)
+        else if (TimeSinceEnable > nextBeatMoment - goodTolerance && TimeSinceEnable < nextBeatMoment + goodTolerance)
         {
-            if (currentTimeMoment < nextBeatMoment)
+            if (TimeSinceEnable < nextBeatMoment)
             {
-                normalizedGoodTime = (currentTimeMoment - (nextBeatMoment - goodTolerance)) / (goodTolerance);
+                normalizedGoodTime = (TimeSinceEnable - (nextBeatMoment - goodTolerance)) / (goodTolerance);
             }
             else
             {
-                normalizedGoodTime = -((currentTimeMoment - nextBeatMoment) / (goodTolerance)) + 1.0f;
+                normalizedGoodTime = -((TimeSinceEnable - nextBeatMoment) / (goodTolerance)) + 1.0f;
             }
 
-            if (currentTimeMoment > nextBeatMoment - greatTolerance && currentTimeMoment < nextBeatMoment + greatTolerance)
+            if (TimeSinceEnable > nextBeatMoment - greatTolerance && TimeSinceEnable < nextBeatMoment + greatTolerance)
             {
                 currentBeatMomentStatus = Beat.Great;
             }
@@ -141,10 +178,15 @@ public class RhythmController : MonoBehaviour
         else
         {
             normalizedGoodTime = 0.0f;
-            NextBeat();
+            OnBeatEnd?.Invoke();
             nextBeatMoment += beatTime;
         }
 
+        // Temporary input handling
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        {
+            HitBeat();
+        }
 
         // Debug -----------
         if (debug)
@@ -159,94 +201,6 @@ public class RhythmController : MonoBehaviour
             {
                 rageModeText.text = "";
             }
-        }
-
-
-        currentTimeMoment += Time.deltaTime;
-    }
-
-    private void NextBeat()
-    {
-        thisMeasureBeats[currentBeatNumber] = currentBeatStatus;
-        currentBeatStatus = Beat.None;
-        UpdateCounters();
-
-        if (currentBeatNumber < timeSignature.x - 1)
-        {
-            currentBeatNumber++;
-        }
-        else
-        {
-            currentBeatNumber = 0;
-            EvaluateCombo();
-        }
-    }
-
-    private void EvaluateCombo()
-    {
-        int countBad = 0;
-        int countGood = 0;
-        int countGreat = 0;
-
-        foreach (var beat in thisMeasureBeats)
-        {
-            switch (beat)
-            {
-                case Beat.None:
-                    countBad++;
-                    break;
-                case Beat.Bad:
-                    countBad++;
-                    break;
-                case Beat.Good:
-                    countGood++;
-                    break;
-                case Beat.Great:
-                    countGreat++;
-                    break;
-            }
-        }
-
-        if ( countGood + countGreat == 4)
-        {
-            combo++;
-        }
-        else
-        {
-            combo = 0;
-        }
-
-        if ( (countGreat == 4 && combo > 2) || combo > 8)
-        {
-            rageMode = true;
-        }
-        else
-        {
-            rageMode = false;
-        }
-    }
-
-    private void FailCombo()
-    {
-        combo = 0;
-    }
-
-    private void UpdateCounters()
-    {
-        switch (currentBeatStatus)
-        {
-            case Beat.None:
-                missedBeats++;
-                break;
-            case Beat.Bad:
-                badBeats++;
-                break;
-            case Beat.Good:
-                goodBeats++;
-                break;
-            case Beat.Great:
-                greatBeats++;
-                break;
         }
     }
 }

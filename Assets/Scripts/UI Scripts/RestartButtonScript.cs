@@ -5,13 +5,7 @@ using UnityEngine.UI;
 
 public class RestartButtonScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Awake()
-    {
-        GetComponent<Button>().onClick.AddListener(RestartOnClick);
-    }
-
-    void RestartOnClick()
+    public void RestartOnClick()
     {
         GameManager.Instance.Restart();
     }
