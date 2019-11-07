@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private static bool first = true;
+    [SerializeField] private bool skipTutorial = false;
+    public bool SkipTutorial { get => skipTutorial; set => skipTutorial = value; }
 
     public GameObject cultistPrefab;
     public GameObject guiPrefab;
@@ -80,12 +81,6 @@ public class GameManager : MonoBehaviour
             Initialize();
         }
 
-        if(first)
-        {
-            first = false;
-            SceneManager.LoadScene(4);
-        }
-
     }
 
     private void Update()
@@ -127,7 +122,7 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         ResetIndicatorsValues();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMap");
         Destroy(GameOverScreenInstance);
         Initialize();
     }
@@ -136,14 +131,16 @@ public class GameManager : MonoBehaviour
     {
         goodTolerance = hardModeGoodTolerance;
         greatTolerance = hardModeGreatTolerance;
-        // TODO: LOAD GAME HERE!!!!111ONEONEONE
+
+        SceneManager.LoadScene(SkipTutorial ? "MainMap" : "Tutorial");
     }
 
     public void EasyModeStart()
     {
         goodTolerance = easyModeGoodTolerance;
         greatTolerance = easyModeGreatTolerance;
-        // TODO: LOAD GAME HERE!!!!111ONEONEONE
+
+        SceneManager.LoadScene(SkipTutorial ? "MainMap" : "Tutorial");
     }
 
     public void Exit()

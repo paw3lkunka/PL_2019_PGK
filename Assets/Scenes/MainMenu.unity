@@ -349,6 +349,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 365633532}
   m_CullTransparentMesh: 0
+--- !u!1 &426950850
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 426950851}
+  - component: {fileID: 426950852}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &426950851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426950850}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.662555, y: -17.623192, z: -5.5761566}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &426950852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426950850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e65a8f4685fdf947b27064f0d530aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cultistPrefab: {fileID: 0}
+  guiPrefab: {fileID: 0}
+  gameOverScreenPrefab: {fileID: 0}
+  initialCultistsNumber: 4
+  cultistNumber: 0
+  faithForKilledEnemy: 0.2
+  faithForKilledCultist: 0.2
+  faithForWoundedCultist: 0.01
+  goodTolerance: 0.18
+  greatTolerance: 0.1
+  easyModeGoodTolerance: 0.28
+  easyModeGreatTolerance: 0.2
+  hardModeGoodTolerance: 0.18
+  hardModeGreatTolerance: 0.1
+  water: 1
+  faith: 0.6
+  savedPosition: {x: 0, y: 0}
 --- !u!1 &512776234
 GameObject:
   m_ObjectHideFlags: 0

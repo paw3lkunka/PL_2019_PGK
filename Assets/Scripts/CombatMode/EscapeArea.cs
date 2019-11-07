@@ -10,7 +10,7 @@ public class EscapeArea : MonoBehaviour
     {
         if( CombatSceneManager.Instance.ourCrew.IndexOf(collision.gameObject) != -1 )
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("MainMap");
         }
     }
 

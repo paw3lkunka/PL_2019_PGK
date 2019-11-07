@@ -6,13 +6,13 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class CombatArea : MonoBehaviour
 {
-    public int sceneIndex;
+    public string sceneName;
     public Vector2 returnPoint;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameManager.Instance.savedPosition = returnPoint;
-        SceneManager.LoadScene(sceneIndex);
+        SceneManager.LoadScene(sceneName);
     }
 
     private void OnDrawGizmos()

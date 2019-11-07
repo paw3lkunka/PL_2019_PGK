@@ -15,7 +15,8 @@ public class Cultist : Character
 
         DontDestroyOnLoad(gameObject);
 
-        if(SceneManager.GetActiveScene().buildIndex == 0)
+        string sceneName = SceneManager.GetActiveScene().name;
+        if ( sceneName == "MainMap" || sceneName == "MainMenu")
         {
             gameObject.SetActive(false);
         }
@@ -45,7 +46,7 @@ public class Cultist : Character
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == 0)
+        if (scene.name == "MainMap" || scene.name == "MainMenu" )
         {
             gameObject.SetActive(false);
         }
@@ -59,7 +60,7 @@ public class Cultist : Character
 
     private void OnSceneUnload(Scene scene)
     {
-        if (scene.buildIndex != 0)
+        if (scene.name != "MainMap" && scene.name != "MainMenu")
         {
             CombatSceneManager.Instance.ourCrew.Remove(gameObject);
             CombatSceneManager.Instance.enemies.Remove(gameObject);

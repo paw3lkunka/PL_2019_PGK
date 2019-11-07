@@ -53,7 +53,7 @@ public class TutorialController : MonoBehaviour
         {
             GameManager.Instance.Faith = Mathf.Max(GameManager.Instance.Faith, 0.7f);
             GameManager.Instance.Water = 1;
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("MainMap");
         }
     }
 }
