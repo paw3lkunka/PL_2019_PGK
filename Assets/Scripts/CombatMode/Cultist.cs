@@ -33,8 +33,17 @@ public class Cultist : Character
         SceneManager.sceneLoaded -= OnSceneLoad;
         SceneManager.sceneUnloaded -= OnSceneUnload;
 
-        RhythmController.Instance.OnRageModeStart -= ToRageMode;
-        RhythmController.Instance.OnRageModeEnd -= ToNormalMode;
+        try
+        {
+            RhythmController.Instance.OnRageModeStart -= ToRageMode;
+        }
+        catch (System.NullReferenceException) { }
+
+        try
+        {
+            RhythmController.Instance.OnRageModeEnd -= ToNormalMode;
+        }
+        catch (System.NullReferenceException) { }
     }
 
     protected override void Start()

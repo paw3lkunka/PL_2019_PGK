@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverScreenPrefab;
     private GameObject gameOverScreenInstance = null;
 
-    public GUI Gui { get; private set; }
+    static public GUI Gui { get; private set; }
 
     public int initialCultistsNumber;
     public int cultistNumber;
@@ -124,6 +124,8 @@ public class GameManager : MonoBehaviour
     {
         ResetIndicatorsValues();
         SceneManager.LoadScene("MainMenu");
+        Destroy(Gui.gameObject);
+        Gui = null;
         Destroy(GameOverScreenInstance);
         Initialize();
     }
