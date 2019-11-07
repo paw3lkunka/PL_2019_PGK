@@ -80,6 +80,7 @@ public class ResourceUsage : MonoBehaviour
             && (Time.timeSinceLevelLoad - timeLastMemberCome) >  15.0f )
             {
                 crewSize += 1;
+                Instantiate(GameManager.Instance.cultistPrefab);
                 timeLastMemberCome = Time.timeSinceLevelLoad;
             }
             
