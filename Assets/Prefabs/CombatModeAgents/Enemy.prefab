@@ -152,9 +152,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.5, y: 0}
+  m_Offset: {x: -0.01, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.15
 --- !u!195 &9000724666377562216
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -189,11 +189,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ed6fd392b57664c8888aef4a4cca6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  hp: 30
   defence: 0
-  eyesightRange: 4
-  shootingRange: 2
-  chaseRange: 7
+  characterState: 0
+  eyesightRange: 7
+  shootingRange: 5
+  chaseRange: 10
   patrolPoints:
   - {x: 19, y: 3}
   - {x: 20, y: -1}
@@ -210,9 +211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9927ce9d04f5b147bfdd1d827ab2bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
+  range: 30
   baseDamage: 5
   attackInterval: 0.5
+  variation: 0.1
   bulletPrefab: {fileID: 6786680127287788827, guid: 71e0136e0b7ec9b4dae56b68747e4442,
     type: 3}
   target: {x: 0, y: 0}

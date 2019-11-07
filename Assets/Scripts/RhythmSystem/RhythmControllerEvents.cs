@@ -68,10 +68,11 @@ public partial class RhythmController : MonoBehaviour
             {
                 OnRageModeStart?.Invoke();
             }
-            else
+            else if(rageMode)
             {
                 OnRageModeEnd?.Invoke();
             }
+
             if (combo == 1)
             {
                 OnComboStart?.Invoke();

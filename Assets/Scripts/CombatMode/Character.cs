@@ -16,7 +16,7 @@ public class Character : MonoBehaviour
 #pragma warning disable
     [SerializeField] private int hp;
     [Range(0, 20)]
-    [SerializeField] private int defence;
+    [SerializeField] protected float defence;
     [Header("Read Only")]
     [SerializeField] private CharacterState characterState;
 #pragma warning restore
@@ -58,7 +58,7 @@ public class Character : MonoBehaviour
 
     public virtual void TakeDamage(int damage)
     {
-        hp -= Mathf.Max( damage / (defence + 1) , 0);
+        hp -= Mathf.Max( Mathf.CeilToInt((float)damage / (defence + 1)) , 0);
     }
 
     public virtual void Die()

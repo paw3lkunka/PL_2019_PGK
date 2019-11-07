@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9927ce9d04f5b147bfdd1d827ab2bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
+  range: 20
   baseDamage: 5
   attackInterval: 0.2
   variation: 0.05
@@ -192,10 +192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ef4f8b2233a844587a4b8c592de668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 10
+  hp: 20
   defence: 0
-  canWalk: 1
-  canShoot: 1
+  characterState: 0
 --- !u!58 &2659117062321255352
 CircleCollider2D:
   m_ObjectHideFlags: 0

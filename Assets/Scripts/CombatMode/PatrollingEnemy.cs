@@ -46,4 +46,13 @@ public class PatrollingEnemy : Enemy
     }
 
     private bool ShouldPatrol() => !chasedObject && !(agent?.pathPending ?? false) && (agent?.remainingDistance ?? float.PositiveInfinity) < 0.5f;
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        foreach (Vector2 p in patrolPoints)
+        {
+            Gizmos.DrawSphere(p, .2f);
+        }
+    }
 }
