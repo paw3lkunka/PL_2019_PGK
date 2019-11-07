@@ -88,5 +88,9 @@ public class ResourceUsage : MonoBehaviour
 
             if(crewSize > 25) crewSize = 25;
         }
+
+    }
+    private void KillRandomCultist()
+    {
     }
 }

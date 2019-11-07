@@ -44,6 +44,17 @@ public class CombatSceneManager : MonoBehaviour
         Instance = this;
     }
 
+    //Hack
+    private void Start()
+    {
+        while( ourCrew.Count > GameManager.Instance.cultistNumber )
+        {
+            GameObject obj = ourCrew[Random.Range(0, ourCrew.Count)];
+            ourCrew.Remove(obj);
+            Destroy(obj);
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
