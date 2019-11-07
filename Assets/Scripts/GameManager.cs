@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         Gui = Instantiate(guiPrefab).GetComponent<GUI>();
+        Gui.gameObject.SetActive(false);
 
         for (int i = 0; i < initialCultistsNumber; i++)
         {
@@ -122,7 +123,7 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         ResetIndicatorsValues();
-        SceneManager.LoadScene("MainMap");
+        SceneManager.LoadScene("MainMenu");
         Destroy(GameOverScreenInstance);
         Initialize();
     }
@@ -132,6 +133,7 @@ public class GameManager : MonoBehaviour
         goodTolerance = hardModeGoodTolerance;
         greatTolerance = hardModeGreatTolerance;
 
+        Gui.gameObject.SetActive(true);
         SceneManager.LoadScene(SkipTutorial ? "MainMap" : "Tutorial");
     }
 
@@ -140,6 +142,7 @@ public class GameManager : MonoBehaviour
         goodTolerance = easyModeGoodTolerance;
         greatTolerance = easyModeGreatTolerance;
 
+        Gui.gameObject.SetActive(true);
         SceneManager.LoadScene(SkipTutorial ? "MainMap" : "Tutorial");
     }
 
