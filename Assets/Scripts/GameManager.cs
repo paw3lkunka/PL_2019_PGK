@@ -89,6 +89,11 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+
+        if( Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameOver();
+        }
     }
 
     private void Initialize()
