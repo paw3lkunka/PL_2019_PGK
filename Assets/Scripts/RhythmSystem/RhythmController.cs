@@ -18,10 +18,6 @@ public partial class RhythmController : MonoBehaviour
     [SerializeField] private Vector2Int timeSignature;
 
     [Space]
-    [SerializeField] private float goodTolerance;
-    [SerializeField] private float greatTolerance;
-
-    [Space]
     [Header("Debug UI")]
     [SerializeField] private bool debug = false;
     [SerializeField] TextMeshProUGUI comboText;
@@ -31,6 +27,9 @@ public partial class RhythmController : MonoBehaviour
 
     // Singleton implementation
     public static RhythmController Instance { get; private set; }
+
+    private float goodTolerance;
+    private float greatTolerance;
 
     // External components
     private AudioSource audioSource;
@@ -109,6 +108,9 @@ public partial class RhythmController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        goodTolerance = GameManager.Instance.goodTolerance;
+        greatTolerance = GameManager.Instance.greatTolerance;
 
         //else
         //{

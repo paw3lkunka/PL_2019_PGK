@@ -66,7 +66,10 @@ public partial class RhythmController : MonoBehaviour
             combo++;
             if ((countGreat == 4 && combo > 2) || combo > 8)
             {
-                OnRageModeStart?.Invoke();
+                if( !rageMode )
+                {
+                    OnRageModeStart?.Invoke();
+                }
             }
             else if(rageMode)
             {

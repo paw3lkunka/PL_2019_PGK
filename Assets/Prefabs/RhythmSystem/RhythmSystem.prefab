@@ -229,11 +229,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7979052477405802463}
     m_Modifications:
-    - target: {fileID: 920517133557248443, guid: 40bfc58069d43d24e9788d105189c101,
-        type: 3}
-      propertyPath: m_Name
-      value: Guitar_light
-      objectReference: {fileID: 0}
     - target: {fileID: 920517133557248441, guid: 40bfc58069d43d24e9788d105189c101,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -288,6 +283,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 920517133557248443, guid: 40bfc58069d43d24e9788d105189c101,
+        type: 3}
+      propertyPath: m_Name
+      value: Guitar_light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40bfc58069d43d24e9788d105189c101, type: 3}
@@ -482,12 +482,12 @@ PrefabInstance:
     - target: {fileID: 8250339572719688409, guid: d58d20e81f3cb56438e423b1c8a38847,
         type: 3}
       propertyPath: fadeCurve.m_Curve.Array.data[0].inSlope
-      value: 0
+      value: 2.662185
       objectReference: {fileID: 0}
     - target: {fileID: 8250339572719688409, guid: d58d20e81f3cb56438e423b1c8a38847,
         type: 3}
       propertyPath: fadeCurve.m_Curve.Array.data[0].outSlope
-      value: 0
+      value: 2.662185
       objectReference: {fileID: 0}
     - target: {fileID: 8250339572719688409, guid: d58d20e81f3cb56438e423b1c8a38847,
         type: 3}
@@ -518,6 +518,11 @@ PrefabInstance:
         type: 3}
       propertyPath: fadeCurve.m_Curve.Array.data[1].tangentMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8250339572719688409, guid: d58d20e81f3cb56438e423b1c8a38847,
+        type: 3}
+      propertyPath: fadeCurve.m_Curve.Array.data[0].outWeight
+      value: 0.058333334
       objectReference: {fileID: 0}
     - target: {fileID: 8250339572719688413, guid: d58d20e81f3cb56438e423b1c8a38847,
         type: 3}
@@ -551,8 +556,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8250339572719688413, guid: d58d20e81f3cb56438e423b1c8a38847,
         type: 3}
-      propertyPath: fineTune
-      value: 0.01
+      propertyPath: goodTolerance
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8250339572719688413, guid: d58d20e81f3cb56438e423b1c8a38847,
+        type: 3}
+      propertyPath: greatTolerance
+      value: 0.13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d58d20e81f3cb56438e423b1c8a38847, type: 3}

@@ -26,6 +26,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float faithForWoundedCultist = 0.01f;
 
+    [Header("Global rhythm system properties")]
+    public float goodTolerance = 0.18f;
+    public float greatTolerance = 0.1f;
+
+    public float easyModeGoodTolerance = 0.18f;
+    public float easyModeGreatTolerance = 0.1f;
+
+    public float hardModeGoodTolerance = 0.28f;
+    public float hardModeGreatTolerance = 0.2f;
+
     public float FaithForKilledEnemy { get => faithForKilledEnemy; set => faithForKilledEnemy = value; }
     public float FaithForKilledCultist { get => faithForKilledCultist; set => faithForKilledCultist = value; }
     public float FaithForWoundedCultist { get => faithForWoundedCultist; set => faithForWoundedCultist = value; }
@@ -120,6 +130,20 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
         Destroy(GameOverScreenInstance);
         Initialize();
+    }
+
+    public void HardModeStart()
+    {
+        goodTolerance = hardModeGoodTolerance;
+        greatTolerance = hardModeGreatTolerance;
+        // TODO: LOAD GAME HERE!!!!111ONEONEONE
+    }
+
+    public void EasyModeStart()
+    {
+        goodTolerance = easyModeGoodTolerance;
+        greatTolerance = easyModeGreatTolerance;
+        // TODO: LOAD GAME HERE!!!!111ONEONEONE
     }
 
     public void Exit()
