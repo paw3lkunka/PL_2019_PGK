@@ -1,21 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    private Transform bar;
-    public bool scaleFix = false;
+    private Image bar;
 
     private void Awake()
     {
-        bar = this.transform.Find("Bar");
+        bar = GetComponentInChildren<Image>();
     }
 
     public void SetBar(int hp, int maxHp)
     {
-        var normalizedHp = (float)hp / (float)maxHp;
-        bar.localScale = new Vector3(normalizedHp, 1.0f) * (scaleFix ? bar.localScale.x : 1);
+        bar.fillAmount = (float)hp / maxHp;
     }
 
     public void HideBar()

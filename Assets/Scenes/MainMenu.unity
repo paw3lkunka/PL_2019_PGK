@@ -392,9 +392,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e65a8f4685fdf947b27064f0d530aba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cultistPrefab: {fileID: 0}
-  guiPrefab: {fileID: 0}
-  gameOverScreenPrefab: {fileID: 0}
+  skipTutorial: 0
+  cultistPrefab: {fileID: 2659117062321255298, guid: fca019f3bf262b545a9cbe48dc96d017,
+    type: 3}
+  guiPrefab: {fileID: 259232564307049820, guid: bf6dbe73562dcfd49b3e50e973f8a6c4,
+    type: 3}
+  gameOverScreenPrefab: {fileID: 7551444911920474970, guid: fee4c723ed7ba894896ff548b39a965f,
+    type: 3}
   initialCultistsNumber: 4
   cultistNumber: 0
   faithForKilledEnemy: 0.2
