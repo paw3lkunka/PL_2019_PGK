@@ -117,7 +117,6 @@ public class Cultist : Character
         shooter.baseDamage *= 1.5f;
         agent.speed *= 1.1f;
         defence = .5f;
-        GameManager.Instance.FaithForKilledEnemy *= 2;
     }
 
 
@@ -126,7 +125,6 @@ public class Cultist : Character
         shooter.baseDamage /= 1.5f;
         agent.speed /= 1.1f;
         defence = 0;
-        GameManager.Instance.FaithForKilledEnemy /= 2;
     }
 
     public void GoToMousePosition()
