@@ -128,6 +128,9 @@ public partial class RhythmController : MonoBehaviour
         {
             throw new BadBeatToleranceException("Great tolerance was set to higher than good tolerance, which is illegal. Fix this issue in the inspector");
         }
+
+        OnRageModeStart += GameManager.Instance.ToRageMode;
+        OnRageModeEnd += GameManager.Instance.ToNormalMode;
     }
 
     private void OnDestroy()

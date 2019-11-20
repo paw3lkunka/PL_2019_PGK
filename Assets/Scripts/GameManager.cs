@@ -80,9 +80,10 @@ public class GameManager : MonoBehaviour
             Instance = this;
             Initialize();
         }
-        RhythmController.Instance.OnRageModeStart += ToRageMode;
-        RhythmController.Instance.OnRageModeEnd += ToNormalMode;
+    }
 
+    private void Start()
+    {
     }
 
     private void Update()
@@ -161,13 +162,13 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    private void ToRageMode()
+    public void ToRageMode()
     {
        FaithForKilledEnemy *= 2;
     }
 
 
-    private void ToNormalMode()
+    public void ToNormalMode()
     {
         FaithForKilledEnemy /= 2;
     }
