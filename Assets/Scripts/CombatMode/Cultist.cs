@@ -143,7 +143,10 @@ public class Cultist : Character
     {
         GameManager.Instance.OnGameOver -= OnGameOver;
         base.Die();
-        GameManager.Instance.Faith -= GameManager.Instance.FaithForKilledCultist;
+
+        float lossedFaith = GameManager.Instance.FaithForKilledCultist;
+        GameManager.Instance.Faith -= lossedFaith;
+        emitter.Emit("-" + (int)(lossedFaith * 100), Color.green, 3);
         GameManager.Instance.cultistNumber--;
     }
 

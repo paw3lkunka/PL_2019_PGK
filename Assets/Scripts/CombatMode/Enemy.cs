@@ -81,7 +81,9 @@ public class Enemy : Character
 
     public override void Die()
     {
-        GameManager.Instance.Faith += GameManager.Instance.FaithForKilledEnemy;
+        float gainedFaith = GameManager.Instance.FaithForKilledEnemy;
+        GameManager.Instance.Faith += gainedFaith;
+        emitter.Emit("+" + (int)(gainedFaith * 100), Color.green, 3);
         base.Die();
     }
     
