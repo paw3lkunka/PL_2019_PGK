@@ -62,7 +62,11 @@ public class Character : MonoBehaviour
     {
         int realDamage = Mathf.CeilToInt((float)damage / (defence + 1));
         hp -= Mathf.Max(realDamage, 0);
-        emitter.Emit("-" + realDamage, Color.red, 2f);
+
+        if(emitter)
+        {
+            emitter.Emit("-" + realDamage, Color.red, 2f);
+        }
     }
 
     public virtual void Die()
