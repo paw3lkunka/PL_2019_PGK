@@ -468,6 +468,8 @@ MonoBehaviour:
   skipTutorial: 0
   cultistPrefab: {fileID: 2659117062321255298, guid: fca019f3bf262b545a9cbe48dc96d017,
     type: 3}
+  leaderPrefab: {fileID: 2659117062321255298, guid: 19a007f48af59e74698d1ff79c8bba41,
+    type: 3}
   guiPrefab: {fileID: 259232564307049820, guid: bf6dbe73562dcfd49b3e50e973f8a6c4,
     type: 3}
   gameOverScreenPrefab: {fileID: 7551444911920474970, guid: fee4c723ed7ba894896ff548b39a965f,
@@ -486,6 +488,7 @@ MonoBehaviour:
   water: 1
   faith: 0.6
   savedPosition: {x: 0, y: 0}
+  ourCrew: []
 --- !u!1 &512776234
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,7 +2260,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.025024414, y: -0.023742676}
+  m_AnchoredPosition: {x: 0.024902344, y: -0.02368164}
   m_SizeDelta: {x: 0, y: 0.099975586}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1385084097

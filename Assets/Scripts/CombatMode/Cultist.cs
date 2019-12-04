@@ -161,11 +161,9 @@ public class Cultist : Character
         get
         {
             int index = GameManager.Instance.ourCrew.IndexOf(gameObject);
-            switch (index)
+            switch (index % 8 + 1)
             {
                 default:
-                case 0:
-                    return Vector2.zero;
                 case 1:
                     return Vector2.down;
                 case 2:

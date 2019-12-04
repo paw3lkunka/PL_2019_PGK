@@ -44,7 +44,7 @@ public class CombatSceneManager : MonoBehaviour
     //Hack
     private void Start()
     {
-        while( GameManager.Instance.ourCrew.Count > GameManager.Instance.cultistNumber )
+        while( GameManager.Instance.ourCrew.Count > GameManager.Instance.cultistNumber + 1)
         {
             GameObject obj = GameManager.Instance.ourCrew[Random.Range(0, GameManager.Instance.ourCrew.Count)];
             GameManager.Instance.ourCrew.Remove(obj);

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public bool SkipTutorial { get => skipTutorial; set => skipTutorial = value; }
 
     public GameObject cultistPrefab;
+    public GameObject leaderPrefab;
     public GameObject guiPrefab;
 
     public GameObject gameOverScreenPrefab;
@@ -107,6 +108,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Gui = Instantiate(guiPrefab).GetComponent<GUI>();
         Gui.gameObject.SetActive(false);
+
+        Instantiate(leaderPrefab, Vector3.zero, Quaternion.identity);
 
         for (int i = 0; i < initialCultistsNumber; i++)
         {
