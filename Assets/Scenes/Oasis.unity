@@ -11224,6 +11224,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7103433524461256710, guid: dcfb7cee2d7ab9e4aafed123047efff4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.005249
+      objectReference: {fileID: 0}
+    - target: {fileID: 7103433524461256710, guid: dcfb7cee2d7ab9e4aafed123047efff4,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2254.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7103433525654848170, guid: dcfb7cee2d7ab9e4aafed123047efff4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcfb7cee2d7ab9e4aafed123047efff4, type: 3}
 --- !u!4 &1067574211 stripped
@@ -37892,7 +37907,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51092555f173e5d409efd0d093fb97c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ourCrew: []
   enemies: []
   OnLeftButton:
     m_PersistentCalls:

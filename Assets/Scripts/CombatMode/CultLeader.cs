@@ -29,7 +29,6 @@ public class CultLeader : Character
     {
         SceneManager.sceneLoaded -= OnSceneLoad;
         SceneManager.sceneUnloaded -= OnSceneUnload;
-
     }
 
     protected override void Start()
