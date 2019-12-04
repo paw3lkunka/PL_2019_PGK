@@ -46,6 +46,8 @@ public class GUI : MonoBehaviour
         get => GetComponent<Canvas>();
     }
 
+    public bool isMouseOver;
+
     private Image faithImage;
     private Image waterImage;
 
@@ -95,5 +97,15 @@ public class GUI : MonoBehaviour
         {
             waterImage.color = waterGood;
         }
+    }
+
+    public void PointerEnter()
+    {
+        isMouseOver = true;
+    }
+    
+    public void PointerExit()
+    {
+        isMouseOver = false;
     }
 }

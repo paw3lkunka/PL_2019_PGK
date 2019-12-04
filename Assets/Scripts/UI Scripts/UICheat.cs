@@ -27,6 +27,7 @@ public class UICheat : MonoBehaviour
     public void AddCultist()
     {
         GameManager.Instance.cultistNumber += 1;
+        Instantiate(GameManager.Instance.cultistPrefab);
     }
 
     public void KillCultist()

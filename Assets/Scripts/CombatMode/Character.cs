@@ -67,7 +67,7 @@ public class Character : MonoBehaviour
 
     public virtual void Die()
     {
-        CombatSceneManager.Instance.ourCrew.Remove(gameObject);
+        GameManager.Instance.ourCrew.Remove(gameObject);
         CombatSceneManager.Instance.enemies.Remove(gameObject);
         StartCoroutine(Routine());
 

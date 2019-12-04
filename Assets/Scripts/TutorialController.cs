@@ -8,8 +8,6 @@ public class TutorialController : MonoBehaviour
     [SerializeField]
     private GameObject smokeWalk;
     [SerializeField]
-    private int minimumWalkCombo;
-    [SerializeField]
     private GameObject smokeWater;
     [SerializeField]
     [Range(0.0f, 1.0f)]
@@ -25,6 +23,8 @@ public class TutorialController : MonoBehaviour
     [Range(0.0f, 1.0f)]
     [SerializeField]
     private float minimumFaithLevel;
+
+    private int minimumWalkCombo = 4;
 
     private void Start()
     {

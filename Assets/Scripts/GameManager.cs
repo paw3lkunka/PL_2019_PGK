@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverScreenPrefab;
     private GameObject gameOverScreenInstance = null;
 
-    static public GUI Gui { get; private set; }
+    public static GUI Gui { get; private set; }
 
     public int initialCultistsNumber;
     public int cultistNumber;
@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     
     public Vector2 savedPosition;
+
+    public List<GameObject> ourCrew = new List<GameObject>();
 
     private void Awake()
     {

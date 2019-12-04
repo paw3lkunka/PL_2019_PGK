@@ -39,7 +39,7 @@ public class Enemy : Character
     {
         base.Update();
 
-        var nearestDistance = CombatSceneManager.Instance.ourCrew.NearestFrom(transform.position);
+        var nearestDistance = GameManager.Instance.ourCrew.NearestFrom(transform.position);
         if(!nearestDistance.Item1)
         {
             return;

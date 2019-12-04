@@ -8,7 +8,7 @@ public class EscapeArea : MonoBehaviour
 {
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if( CombatSceneManager.Instance.ourCrew.IndexOf(collision.gameObject) != -1 )
+        if( GameManager.Instance.ourCrew.IndexOf(collision.gameObject) != -1 )
         {
             SceneManager.LoadScene("MainMap");
         }

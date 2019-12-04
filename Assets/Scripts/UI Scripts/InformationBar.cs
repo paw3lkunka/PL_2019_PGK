@@ -3,18 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class InformationBar
+public class InformationBar : MonoBehaviour
 {
-    private GameObject prefab;
+    public int barIndex {get; set;}
+
+    public int informationIndex {get; set;}
 
     public int MaxLifeTime { get; private set; }
 
-    public int LifeTime;
 
-    InformationBar(GameObject uiPrefab, string information)
+    public static readonly string[] information = {"A new cultist arrived to your tribe!", "Your cultist abandoned you, because of low faith level", "Your cultist died form dehydration, HOW DARE YOU", "You cultist just died ;c"};
+
+    public void UpdateBar()
     {
-        prefab = uiPrefab;
-        prefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = information;
-        MaxLifeTime = 8;
+        gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = information[informationIndex];
+        MaxLifeTime = 5;
+    }
+
+    void OnEnable()
+    {
+        if(barIndex > 9)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    
+    void OnDisable()
+    {
+        
     }
 }
