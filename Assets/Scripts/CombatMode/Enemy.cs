@@ -39,7 +39,7 @@ public class Enemy : Character
     {
         base.Update();
 
-        var nearestDistance = CombatSceneManager.Instance.ourCrew.NearestFrom(transform.position);
+        var nearestDistance = GameManager.Instance.ourCrew.NearestFrom(transform.position);
         if(!nearestDistance.Item1)
         {
             return;
@@ -83,7 +83,11 @@ public class Enemy : Character
     {
         float gainedFaith = GameManager.Instance.FaithForKilledEnemy;
         GameManager.Instance.Faith += gainedFaith;
-        fatihTextEemitter.Emit("+" + (int)(gainedFaith * 100), Color.green, 3);
+
+        if (emitter)
+        {
+            emitter.Emit("+" + (int)(gainedFaith * 100), Color.green, 3);
+        }
         base.Die();
     }
     

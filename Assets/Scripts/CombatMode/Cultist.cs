@@ -14,6 +14,7 @@ public class Cultist : Character
         GameManager.Instance.OnGameOver += OnGameOver;
 
         DontDestroyOnLoad(gameObject);
+        GameManager.Instance.ourCrew.Add(gameObject);
 
         string sceneName = SceneManager.GetActiveScene().name;
         if ( sceneName == "MainMap" || sceneName == "MainMenu")
@@ -62,8 +63,7 @@ public class Cultist : Character
         else
         {
             gameObject.SetActive(true);
-            CombatSceneManager.Instance.ourCrew.Add(gameObject);
-            Agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
+            agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
         }
     }
 
@@ -71,7 +71,7 @@ public class Cultist : Character
     {
         if (scene.name != "MainMap" && scene.name != "MainMenu")
         {
-            CombatSceneManager.Instance.ourCrew.Remove(gameObject);
+            GameManager.Instance.ourCrew.Remove(gameObject);
             CombatSceneManager.Instance.enemies.Remove(gameObject);
         }
     }
@@ -163,12 +163,10 @@ public class Cultist : Character
     {
         get
         {
-            int index = CombatSceneManager.Instance.ourCrew.IndexOf(gameObject);
-            switch (index)
+            int index = GameManager.Instance.ourCrew.IndexOf(gameObject);
+            switch (index % 8 + 1)
             {
                 default:
-                case 0:
-                    return Vector2.zero;
                 case 1:
                     return Vector2.down;
                 case 2:

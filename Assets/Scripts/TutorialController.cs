@@ -5,26 +5,21 @@ using UnityEngine;
 
 public class TutorialController : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject smokeWalk;
-    [SerializeField]
-    private int minimumWalkCombo;
-    [SerializeField]
-    private GameObject smokeWater;
-    [SerializeField]
+#pragma warning disable
+    [SerializeField] private GameObject smokeWalk;
+    [SerializeField] private GameObject smokeWater;
     [Range(0.0f, 1.0f)]
-    private float startWaterLevel;
-    [SerializeField]
+    [SerializeField] private float startWaterLevel;
     [Range(0.0f, 1.0f)]
-    private float minimumWaterLevel;
-    [SerializeField]
-    private GameObject smokeFaith;
+    [SerializeField] private float minimumWaterLevel;
+    [SerializeField] private GameObject smokeFaith;
     [Range(0.0f, 1.0f)]
-    [SerializeField]
-    private float startFaithLevel;
+    [SerializeField] private float startFaithLevel;
     [Range(0.0f, 1.0f)]
-    [SerializeField]
-    private float minimumFaithLevel;
+    [SerializeField] private float minimumFaithLevel;
+#pragma warning restore
+
+    private int minimumWalkCombo = 4;
 
     private void Start()
     {

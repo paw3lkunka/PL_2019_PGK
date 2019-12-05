@@ -6,6 +6,7 @@ using TMPro;
 public class FloatingText : MonoBehaviour
 {
     private TextMeshProUGUI tmPro;
+#pragma warning disable
     [SerializeField] private float lifeTime;
     [SerializeField] private float speed;
     [SerializeField] private float entropy;
@@ -13,6 +14,7 @@ public class FloatingText : MonoBehaviour
     [SerializeField] private float speedAcc;
     [SerializeField] private float entropyAcc;
     [SerializeField] private float amplitudeAcc;
+#pragma warning restore
 
     private void Awake()
     {

@@ -6,8 +6,6 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class CombatSceneManager : MonoBehaviour
 {
-
-    public List<GameObject> ourCrew = new List<GameObject>();
     public List<GameObject> enemies = new List<GameObject>();
 
     public UnityEvent OnLeftButton, OnRigthButton;
@@ -33,7 +31,6 @@ public class CombatSceneManager : MonoBehaviour
             OnRigthButton.Invoke();
         }
 
-        //GameManager.Instance.Gui;
     }
     
 
@@ -44,16 +41,6 @@ public class CombatSceneManager : MonoBehaviour
         Instance = this;
     }
 
-    //Hack
-    private void Start()
-    {
-        while( ourCrew.Count > GameManager.Instance.cultistNumber )
-        {
-            GameObject obj = ourCrew[Random.Range(0, ourCrew.Count)];
-            ourCrew.Remove(obj);
-            Destroy(obj);
-        }
-    }
 
     private void OnDrawGizmos()
     {

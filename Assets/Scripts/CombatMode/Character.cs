@@ -64,12 +64,16 @@ public class Character : MonoBehaviour
     {
         int realDamage = Mathf.CeilToInt((float)damage / (defence + 1));
         hp -= Mathf.Max(realDamage, 0);
-        healthTextEmitter.Emit("-" + realDamage, Color.red, 2f);
+
+        if(emitter)
+        {
+            emitter.Emit("-" + realDamage, Color.red, 2f);
+        }
     }
 
     public virtual void Die()
     {
-        CombatSceneManager.Instance.ourCrew.Remove(gameObject);
+        GameManager.Instance.ourCrew.Remove(gameObject);
         CombatSceneManager.Instance.enemies.Remove(gameObject);
         StartCoroutine(Routine());
 

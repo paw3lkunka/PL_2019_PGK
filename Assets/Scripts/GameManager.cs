@@ -9,12 +9,13 @@ public class GameManager : MonoBehaviour
     public bool SkipTutorial { get => skipTutorial; set => skipTutorial = value; }
 
     public GameObject cultistPrefab;
+    public GameObject leaderPrefab;
     public GameObject guiPrefab;
 
     public GameObject gameOverScreenPrefab;
     private GameObject gameOverScreenInstance = null;
 
-    static public GUI Gui { get; private set; }
+    public static GUI Gui { get; private set; }
 
     public int initialCultistsNumber;
     public int cultistNumber;
@@ -70,6 +71,8 @@ public class GameManager : MonoBehaviour
     
     public Vector2 savedPosition;
 
+    public List<GameObject> ourCrew = new List<GameObject>();
+
     private void Awake()
     {
         gameOverScreenInstance = null;
@@ -105,6 +108,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Gui = Instantiate(guiPrefab).GetComponent<GUI>();
         Gui.gameObject.SetActive(false);
+
+        Instantiate(leaderPrefab, Vector3.zero, Quaternion.identity);
 
         for (int i = 0; i < initialCultistsNumber; i++)
         {

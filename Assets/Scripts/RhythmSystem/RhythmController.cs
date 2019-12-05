@@ -21,7 +21,7 @@ public partial class RhythmController : MonoBehaviour
     [Header("Debug UI")]
     [SerializeField] private bool debug = false;
     [SerializeField] TextMeshProUGUI comboText;
-    [SerializeField] TextMeshProUGUI currentBeatText;
+    //[SerializeField] TextMeshProUGUI currentBeatText;
     [SerializeField] TextMeshProUGUI rageModeText;
 #pragma warning restore
 
@@ -197,7 +197,7 @@ public partial class RhythmController : MonoBehaviour
         if (debug)
         {
             comboText.text = "Combo: " + combo;
-            currentBeatText.text = "Beat: " + currentBeatNumber;
+            //currentBeatText.text = "Beat: " + currentBeatNumber;
             if (rageMode)
             {
                 rageModeText.text = "Rage mode!";
