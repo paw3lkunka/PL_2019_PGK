@@ -1,18 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AdaptiveMusicController : MonoBehaviour
 {
 #pragma warning disable
-    [SerializeField] private AudioSource lightMusic;
-    [SerializeField] private AudioSource heavyMusic;
+    [Header("Base audio and clips")]
+    // External components
+    [SerializeField] private AudioSource drumTrack;
+    [SerializeField] private AudioSource lightTrack;
+    [SerializeField] private AudioSource heavyTrack;
+
+    // Count up track
+    [SerializeField] private bool countUp = true;
+    [SerializeField] private AudioClip countUpClip;
+    // Audio loop clips arrays
+    [SerializeField] private AudioClip[] drumTrackClips;
+    [SerializeField] private AudioClip[] lightTrackClips;
+    [SerializeField] private AudioClip[] heavyTrackClips;
+
+    [Header("Adaptive music setup")]
     [Space]
     [SerializeField] private float fadeTime = 2.0f;
     [SerializeField] private AnimationCurve fadeCurve;
 #pragma warning restore
 
     private float coroutineTime = 0.0f;
+
+
 
     private void OnEnable()
     {

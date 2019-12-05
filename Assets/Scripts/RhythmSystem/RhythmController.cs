@@ -8,38 +8,36 @@ public enum Beat { None, Bad, Good, Great };
 public partial class RhythmController : MonoBehaviour
 {
 #pragma warning disable
-    [SerializeField] private AudioSource lightGuitar;
-    [SerializeField] private AudioSource heavyGuitar;
 
-    [SerializeField] private int startOffset = 0;
-    [SerializeField] private float fineTune = 0.0f;
+
+    [Space]
+    [Header("Song timing setup")]
+    //[SerializeField] private int startOffset = 0;
+    //[SerializeField] private float fineTune = 0.0f;
     [SerializeField] private float songBpm;
     [Tooltip("Musical time signature, at the moment, only the beats per measure part is used")]
     [SerializeField] private Vector2Int timeSignature;
 
     [Space]
-    [Header("Debug UI")]
+    [Header("Rhythm UI references")]
     [SerializeField] private bool debug = false;
     [SerializeField] TextMeshProUGUI comboText;
-    [SerializeField] TextMeshProUGUI currentBeatText;
     [SerializeField] TextMeshProUGUI rageModeText;
 #pragma warning restore
 
     // Singleton implementation
     public static RhythmController Instance { get; private set; }
 
+    // Rhythm window tolerance values
     private float goodTolerance;
     private float greatTolerance;
 
-    // External components
-    private AudioSource audioSource;
-
     // Control variables
     private float beatTime;
-    private float timeSinceEnable;
+    private float sequenceStartMoment;
     private float TimeSinceEnable
     {
-        get => Time.time - timeSinceEnable;
+        get => Time.time - sequenceStartMoment;
     }
     private float nextBeatMoment = 0.0f;
     private Beat currentBeatMomentStatus = Beat.None;
@@ -107,15 +105,17 @@ public partial class RhythmController : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (!Instance)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.Log("<color=red>You have two or more rhythm controllers in scene. Make sure there is always one rhythm controller!</color>");
+        }
 
         goodTolerance = GameManager.Instance.goodTolerance;
         greatTolerance = GameManager.Instance.greatTolerance;
-
-        //else
-        //{
-        //    Debug.Log("<color=red>You have two or more rhythm controllers in scene. Make sure there is always one rhythm controller!</color>");
-        //}
 
         OnBeatEnd += EndBeat;
         OnBeatHitBad += BeatHitBad;
@@ -141,16 +141,13 @@ public partial class RhythmController : MonoBehaviour
         OnRageModeEnd -= RageModeEnd;
     }
 
-    private void OnEnable()
+    private void SequenceStart()
     {
-        timeSinceEnable = Time.time;
+        sequenceStartMoment = Time.time;
 
-        audioSource = GetComponent<AudioSource>();
-        audioSource.Play();
-        lightGuitar.Play();
-        heavyGuitar.Play();
+        drumTrack.clip = drumTrackClips[0];
 
-        nextBeatMoment = TimeSinceEnable + (startOffset * beatTime) + fineTune;
+        nextBeatMoment = TimeSinceEnable + beatTime;
     }
 
     private void Update()
@@ -197,7 +194,6 @@ public partial class RhythmController : MonoBehaviour
         if (debug)
         {
             comboText.text = "Combo: " + combo;
-            currentBeatText.text = "Beat: " + currentBeatNumber;
             if (rageMode)
             {
                 rageModeText.text = "Rage mode!";
