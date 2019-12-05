@@ -84,9 +84,9 @@ public class Enemy : Character
         float gainedFaith = GameManager.Instance.FaithForKilledEnemy;
         GameManager.Instance.Faith += gainedFaith;
 
-        if (emitter)
+        if (fatihTextEemitter)
         {
-            emitter.Emit("+" + (int)(gainedFaith * 100), Color.green, 3);
+            fatihTextEemitter.Emit("+" + (int)(gainedFaith * 100), Color.green, 3);
         }
         base.Die();
     }

@@ -21,8 +21,8 @@ public class CultLeader : Character
 
         base.Awake();
 
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
+        Agent.updateRotation = false;
+        Agent.updateUpAxis = false;
     }
 
     private void OnDestroy()
@@ -45,7 +45,7 @@ public class CultLeader : Character
         else
         {
             gameObject.SetActive(true);
-            agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
+            Agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
         }
     }
 
@@ -74,7 +74,7 @@ public class CultLeader : Character
 
     public void GoToMousePosition()
     {
-        agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
+        Agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
     }
     public void AimToMousePosition() => GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos + FormationOffset;
 

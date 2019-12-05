@@ -63,7 +63,7 @@ public class Cultist : Character
         else
         {
             gameObject.SetActive(true);
-            agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
+            Agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
         }
     }
 
