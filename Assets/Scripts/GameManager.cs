@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public static GUI Gui { get; private set; }
 
     public int initialCultistsNumber;
+    /// <summary>
+    /// Number of cultists (without leader)
+    /// </summary>
     public int cultistNumber;
 
 
@@ -70,7 +73,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     
     public Vector2 savedPosition;
-
+    /// <summary>
+    /// List of cultists (with leader at [0] )
+    /// </summary>
     public List<GameObject> ourCrew;
 
     private void Awake()

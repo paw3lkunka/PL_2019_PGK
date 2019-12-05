@@ -71,7 +71,6 @@ public class Cultist : Character
     {
         if (scene.name != "MainMap" && scene.name != "MainMenu")
         {
-            GameManager.Instance.ourCrew.Remove(gameObject);
             CombatSceneManager.Instance.enemies.Remove(gameObject);
         }
     }

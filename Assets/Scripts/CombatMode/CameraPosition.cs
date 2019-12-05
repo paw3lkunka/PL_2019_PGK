@@ -16,11 +16,11 @@ public class CameraPosition : MonoBehaviour
         if(GameManager.Instance.cultistNumber > 0)
         {
             var crew = GameManager.Instance.ourCrew;
-            if (crew.Count == 0)
+            if (GameManager.Instance.cultistNumber == 0)
             {
                 return;
             }
-            else if (crew.Count == 1)
+            else if (GameManager.Instance.cultistNumber == 1)
             {
                 transform.position = (Vector2)crew[0].transform.position;
                 transform.position += Vector3.back * 10;
