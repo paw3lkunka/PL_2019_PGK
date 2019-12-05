@@ -31,8 +31,8 @@ public class Enemy : Character
 
         shooter = GetComponent<Shooter>();
 
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
+        Agent.updateRotation = false;
+        Agent.updateUpAxis = false;
     }
 
     protected override void Update()
@@ -58,7 +58,7 @@ public class Enemy : Character
             
             if(ShouldShoot())
             {
-                agent.isStopped = true;
+                Agent.isStopped = true;
                 shooter.target = chasedObject.transform.position;
                 shooter.StartShooting();
                 return;
@@ -68,13 +68,13 @@ public class Enemy : Character
 
             if (ShouldChase())
             {
-                agent.isStopped = false;
-                agent.destination = chasedObject.transform.position;
+                Agent.isStopped = false;
+                Agent.destination = chasedObject.transform.position;
                 return;
             }
 
             chasedObject = null;
-            agent.isStopped = false;
+            Agent.isStopped = false;
         }
 
     }
@@ -83,7 +83,7 @@ public class Enemy : Character
     {
         float gainedFaith = GameManager.Instance.FaithForKilledEnemy;
         GameManager.Instance.Faith += gainedFaith;
-        emitter.Emit("+" + (int)(gainedFaith * 100), Color.green, 3);
+        fatihTextEemitter.Emit("+" + (int)(gainedFaith * 100), Color.green, 3);
         base.Die();
     }
     

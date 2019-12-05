@@ -28,8 +28,10 @@ public class Character : MonoBehaviour
         set => characterState = value;
     }
 
-    protected NavMeshAgent agent;
-    protected TextsEmitter emitter;
+    public NavMeshAgent Agent { get; private set; }
+    public Rigidbody2D RBody2d { get; private set; }
+    public TextsEmitter healthTextEmitter;
+    public TextsEmitter fatihTextEemitter;
 
     private int maxHp;
     private HealthBar healthBar;
@@ -39,8 +41,8 @@ public class Character : MonoBehaviour
         SetStateOn(CharacterState.CanMove);
         SetStateOn(CharacterState.CanAttack);
         maxHp = hp;
-        agent = GetComponent<NavMeshAgent>();
-        emitter = GetComponentInChildren<TextsEmitter>();
+        Agent = GetComponent<NavMeshAgent>();
+        RBody2d = GetComponent<Rigidbody2D>();
     }
 
     protected virtual void Start()
@@ -62,7 +64,7 @@ public class Character : MonoBehaviour
     {
         int realDamage = Mathf.CeilToInt((float)damage / (defence + 1));
         hp -= Mathf.Max(realDamage, 0);
-        emitter.Emit("-" + realDamage, Color.red, 2f);
+        healthTextEmitter.Emit("-" + realDamage, Color.red, 2f);
     }
 
     public virtual void Die()

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D),typeof(Collider2D))]
@@ -9,23 +10,26 @@ public class Bullet : MonoBehaviour
     public float startSpeed;
     public float timeToDestroy;
 
+    public float pushForce;
+    public float stunTime;
+
+    [field: SerializeField]
+    public Vector2 Direction { get; private set; }
+
     private new Collider2D collider;
-
-
-
-
+         
     void Awake()
     {
         collider = GetComponent<Collider2D>();
-
-
     }
 
     public void Shoot( Vector2 direction )
     {
+        Direction = direction.normalized;
+
         IEnumerator routine()
         {
-            GetComponent<Rigidbody2D>().AddForce(direction.normalized * startSpeed, ForceMode2D.Impulse);
+            GetComponent<Rigidbody2D>().AddForce(Direction * startSpeed, ForceMode2D.Impulse);
             collider.enabled = false;
 
             yield return new WaitForSeconds(.1F);
@@ -36,7 +40,6 @@ public class Bullet : MonoBehaviour
         StartCoroutine(routine());
     }
 
-    // Update is called once per frame
     void Update()
     {
         if( timeToDestroy < 0 )
@@ -48,14 +51,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Hitbox victim = collision.gameObject.GetComponentInChildren<Hitbox>();
-
-        if (victim)
-        {
-            victim.TakeDamage(damege);
-        }
         Destroy(gameObject);
-
     }
 
 

@@ -24,8 +24,8 @@ public class Cultist : Character
         base.Awake();
         shooter = GetComponent<Shooter>();
 
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
+        Agent.updateRotation = false;
+        Agent.updateUpAxis = false;
     }
 
     private void OnDestroy()
@@ -63,7 +63,7 @@ public class Cultist : Character
         {
             gameObject.SetActive(true);
             CombatSceneManager.Instance.ourCrew.Add(gameObject);
-            agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
+            Agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
         }
     }
 
@@ -115,7 +115,7 @@ public class Cultist : Character
     private void ToRageMode()
     {
         shooter.baseDamage *= 1.5f;
-        agent.speed *= 1.1f;
+        Agent.speed *= 1.1f;
         defence = .5f;
     }
 
@@ -123,13 +123,16 @@ public class Cultist : Character
     private void ToNormalMode()
     {
         shooter.baseDamage /= 1.5f;
-        agent.speed /= 1.1f;
+        Agent.speed /= 1.1f;
         defence = 0;
     }
 
     public void GoToMousePosition()
     {
-        agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
+        if(Agent.enabled)
+        {
+            Agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
+        }
     }    
     public void AimToMousePosition() => GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos + FormationOffset;
 
@@ -146,7 +149,7 @@ public class Cultist : Character
 
         float lossedFaith = GameManager.Instance.FaithForKilledCultist;
         GameManager.Instance.Faith -= lossedFaith;
-        emitter.Emit("-" + (int)(lossedFaith * 100), Color.green, 3);
+        fatihTextEemitter.Emit("-" + (int)(lossedFaith * 100), Color.green, 3);
         GameManager.Instance.cultistNumber--;
     }
 
