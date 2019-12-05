@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     
     public Vector2 savedPosition;
 
-    public List<GameObject> ourCrew = new List<GameObject>();
+    public List<GameObject> ourCrew;
 
     private void Awake()
     {
@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Gui = Instantiate(guiPrefab).GetComponent<GUI>();
         Gui.gameObject.SetActive(false);
+        ourCrew = new List<GameObject>();
 
         Instantiate(leaderPrefab, Vector3.zero, Quaternion.identity);
 
