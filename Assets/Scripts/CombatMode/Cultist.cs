@@ -133,8 +133,18 @@ public class Cultist : Character
         {
             Agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
         }
-    }    
-    public void AimToMousePosition() => GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos + FormationOffset;
+    }
+    public void AimToMousePosition()
+    {
+        Vector2 offset = new Vector2
+        (
+            Random.Range(Mathf.Min(0, FormationOffset.x), Mathf.Max(0, FormationOffset.x)),
+            Random.Range(Mathf.Min(0, FormationOffset.y), Mathf.Max(0, FormationOffset.y))
+        );
+
+        GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos + offset;
+    }
+
 
     public override void TakeDamage(int damage)
     {
