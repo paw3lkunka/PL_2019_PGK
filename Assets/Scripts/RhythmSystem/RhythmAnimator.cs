@@ -107,10 +107,10 @@ public class RhythmAnimator : MonoBehaviour
         rhythmIndicator.color = new Color(  rhythmIndicator.color.r, 
                                             rhythmIndicator.color.g, 
                                             rhythmIndicator.color.b, 
-                                            pulseCurve.Evaluate(RhythmController.Instance.NormalizedGoodTime));
+                                            pulseCurve.Evaluate((float)RhythmController.Instance.NormalizedGoodTime));
         if (cameraEffectsEnabled && cameraEffectsEnabledInternal)
         {
-            mainCamera.orthographicSize = startCameraSize - cameraCurve.Evaluate(RhythmController.Instance.NormalizedGoodTime) * cameraEffectMultiplierInternal;
+            mainCamera.orthographicSize = startCameraSize - cameraCurve.Evaluate((float)RhythmController.Instance.NormalizedGoodTime) * cameraEffectMultiplierInternal;
         }
     }
 

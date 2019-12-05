@@ -18,7 +18,7 @@ public class AdaptiveMusicSequencer : MonoBehaviour
 
     private void Update()
     {
-        AudioSettings.dspTime;
+        
     }
 
 }

@@ -71,8 +71,8 @@ public class AdaptiveMusicController : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
 
-            heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
-            lightMusic.volume = Mathf.Clamp01(lightMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+            heavyTrack.volume = Mathf.Clamp01(heavyTrack.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+            lightTrack.volume = Mathf.Clamp01(lightTrack.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
 
             coroutineTime += Time.deltaTime;
         }
@@ -85,8 +85,8 @@ public class AdaptiveMusicController : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
 
-            heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
-            lightMusic.volume = Mathf.Clamp01(lightMusic.volume + fadeCurve.Evaluate(coroutineTime / fadeTime));
+            heavyTrack.volume = Mathf.Clamp01(heavyTrack.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+            lightTrack.volume = Mathf.Clamp01(lightTrack.volume + fadeCurve.Evaluate(coroutineTime / fadeTime));
 
             coroutineTime += Time.deltaTime;
         }
@@ -99,8 +99,8 @@ public class AdaptiveMusicController : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
 
-            heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume + fadeCurve.Evaluate(coroutineTime / fadeTime));
-            lightMusic.volume = Mathf.Clamp01(lightMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+            heavyTrack.volume = Mathf.Clamp01(heavyTrack.volume + fadeCurve.Evaluate(coroutineTime / fadeTime));
+            lightTrack.volume = Mathf.Clamp01(lightTrack.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
 
             coroutineTime += Time.deltaTime;
         }

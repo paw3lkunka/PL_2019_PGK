@@ -29,17 +29,17 @@ public partial class RhythmController : MonoBehaviour
     public static RhythmController Instance { get; private set; }
 
     // Rhythm window tolerance values
-    private float goodTolerance;
-    private float greatTolerance;
+    private double goodTolerance;
+    private double greatTolerance;
 
     // Control variables
-    private float beatTime;
-    private float sequenceStartMoment;
-    private float TimeSinceEnable
+    private double beatTime;
+    private double sequenceStartMoment;
+    private double TimeSinceEnable
     {
         get => Time.time - sequenceStartMoment;
     }
-    private float nextBeatMoment = 0.0f;
+    private double nextBeatMoment = 0.0f;
     private Beat currentBeatMomentStatus = Beat.None;
 
     // Combo variables
@@ -60,8 +60,8 @@ public partial class RhythmController : MonoBehaviour
     private int greatBeats = 0;
 
     // Indicator handling
-    private float normalizedGoodTime = 0.0f;
-    public float NormalizedGoodTime
+    private double normalizedGoodTime = 0.0f;
+    public double NormalizedGoodTime
     {
         get => normalizedGoodTime;
     }
@@ -143,9 +143,7 @@ public partial class RhythmController : MonoBehaviour
 
     private void SequenceStart()
     {
-        sequenceStartMoment = Time.time;
-
-        drumTrack.clip = drumTrackClips[0];
+        sequenceStartMoment = AudioSettings.dspTime;
 
         nextBeatMoment = TimeSinceEnable + beatTime;
     }
