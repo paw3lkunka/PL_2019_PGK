@@ -205,7 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51092555f173e5d409efd0d093fb97c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ourCrew: []
   enemies: []
   OnLeftButton:
     m_PersistentCalls:
@@ -221,7 +220,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnRigthButton:
+  OnRightButton:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8345137823665700857}
@@ -237,4 +236,4 @@ MonoBehaviour:
         m_CallState: 2
   walkTargetIndicator: {fileID: 8345137823194368619}
   shootTargetIndicator: {fileID: 8345137823410966777}
-  startArea: {fileID: 0}
+  startPoint: {x: 0, y: 0}

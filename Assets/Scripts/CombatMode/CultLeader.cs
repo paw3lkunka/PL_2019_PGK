@@ -45,7 +45,7 @@ public class CultLeader : Character
         else
         {
             gameObject.SetActive(true);
-            Agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
+            Agent.Warp(CrewSceneManager.Instance.startPoint + FormationOffset);
         }
     }
 
@@ -54,7 +54,7 @@ public class CultLeader : Character
         if (scene.name != "MainMap" && scene.name != "MainMenu")
         {
             GameManager.Instance.ourCrew.Remove(gameObject);
-            CombatSceneManager.Instance.enemies.Remove(gameObject);
+            CrewSceneManager.Instance.enemies.Remove(gameObject);
         }
     }
 
@@ -70,13 +70,15 @@ public class CultLeader : Character
         base.Update();
     }
 
-
-
     public void GoToMousePosition()
     {
-        Agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
+        if (Agent.enabled && !GameManager.Gui.isMouseOver)
+        {
+            Agent.SetDestination(CrewSceneManager.Instance.MousePos + FormationOffset);
+        }
     }
-    public void AimToMousePosition() => GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos + FormationOffset;
+
+    public void AimToMousePosition() => GetComponent<Shooter>().target = CrewSceneManager.Instance.MousePos + FormationOffset;
 
     public override void TakeDamage(int damage)
     {

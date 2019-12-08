@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject cultistPrefab;
     public GameObject leaderPrefab;
     public GameObject guiPrefab;
+    public EventSystem eventSystem;
 
     public GameObject gameOverScreenPrefab;
     private GameObject gameOverScreenInstance = null;
@@ -111,6 +113,7 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(eventSystem);
         Gui = Instantiate(guiPrefab).GetComponent<GUI>();
         Gui.gameObject.SetActive(false);
         ourCrew = new List<GameObject>();

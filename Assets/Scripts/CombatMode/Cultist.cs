@@ -15,6 +15,7 @@ public class Cultist : Character
 
         DontDestroyOnLoad(gameObject);
         GameManager.Instance.ourCrew.Add(gameObject);
+        gameObject.transform.position = GameManager.Instance.ourCrew[0].transform.position + new Vector3(FormationOffset.x, FormationOffset.y);
 
         string sceneName = SceneManager.GetActiveScene().name;
         if ( sceneName == "MainMap" || sceneName == "MainMenu")
@@ -50,8 +51,17 @@ public class Cultist : Character
     protected override void Start()
     {
         base.Start();
-        RhythmController.Instance.OnRageModeStart += ToRageMode;
-        RhythmController.Instance.OnRageModeEnd += ToNormalMode;
+        try
+        {
+            RhythmController.Instance.OnRageModeStart += ToRageMode;
+        }
+        catch (System.NullReferenceException) { }
+
+        try
+        {
+            RhythmController.Instance.OnRageModeEnd += ToNormalMode;
+        }
+        catch (System.NullReferenceException) { }
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
@@ -63,7 +73,7 @@ public class Cultist : Character
         else
         {
             gameObject.SetActive(true);
-            Agent.Warp(CombatSceneManager.Instance.startPoint + FormationOffset);
+            Agent.Warp(CrewSceneManager.Instance.startPoint + FormationOffset);
         }
     }
 
@@ -71,26 +81,34 @@ public class Cultist : Character
     {
         if (scene.name != "MainMap" && scene.name != "MainMenu")
         {
-            CombatSceneManager.Instance.enemies.Remove(gameObject);
+            CrewSceneManager.Instance.enemies.Remove(gameObject);
         }
     }
 
     protected override void Update()
     {
-
-
-        if (RhythmController.Instance.Combo >= 1)
+        if (CrewSceneManager.Instance.combatMode)
         {
-            SetStateOn(CharacterState.CanAttack);
+            if (RhythmController.Instance.Combo >= 1)
+            {
+                SetStateOn(CharacterState.CanAttack);
+            }
+            else
+            {
+                SetStateOff(CharacterState.CanAttack);
+            }
+
+            gameObject.transform.GetChild(1).gameObject.SetActive(true);
         }
         else
         {
-            SetStateOff(CharacterState.CanAttack);
+            // Hide HealthBar on neutral scenes
+            gameObject.transform.GetChild(1).gameObject.SetActive(false);
         }
 
-        float distanceToEnemy = CombatSceneManager.Instance.enemies.NearestFrom(transform.position).Item2;
+        float distanceToEnemy = CrewSceneManager.Instance.enemies.NearestFrom(transform.position).Item2;
         bool canMove = CheckState(CharacterState.CanMove);
-        bool canAttack = CheckState(CharacterState.CanAttack);
+        bool canAttack = CrewSceneManager.Instance.combatMode && CheckState(CharacterState.CanAttack);
 
         if ( !canAttack || distanceToEnemy > shooter.range )
         {
@@ -128,9 +146,9 @@ public class Cultist : Character
 
     public void GoToMousePosition()
     {
-        if(Agent.enabled)
+        if(Agent.enabled && !GameManager.Gui.isMouseOver)
         {
-            Agent.SetDestination(CombatSceneManager.Instance.MousePos + FormationOffset);
+            Agent.SetDestination(CrewSceneManager.Instance.MousePos + FormationOffset);
         }
     }
     public void AimToMousePosition()
@@ -140,8 +158,7 @@ public class Cultist : Character
             Random.Range(Mathf.Min(0, FormationOffset.x), Mathf.Max(0, FormationOffset.x)),
             Random.Range(Mathf.Min(0, FormationOffset.y), Mathf.Max(0, FormationOffset.y))
         );
-
-        GetComponent<Shooter>().target = CombatSceneManager.Instance.MousePos + offset;
+        GetComponent<Shooter>().target = CrewSceneManager.Instance.MousePos + offset;
     }
 
 

@@ -12,6 +12,8 @@ public class GUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI faithText;
     [SerializeField] private TextMeshProUGUI waterText;
     [SerializeField] private TextMeshProUGUI cultistsText;
+
+    public bool CheatSheet;
 #pragma warning restore
 
     public float FaithIndicator
@@ -68,6 +70,10 @@ public class GUI : MonoBehaviour
     {
         faithImage = faithBar.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
         waterImage = waterBar.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
+        if(!CheatSheet)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
     }
 
     public void Update()

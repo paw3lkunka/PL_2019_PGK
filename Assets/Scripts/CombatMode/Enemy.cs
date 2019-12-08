@@ -22,7 +22,7 @@ public class Enemy : Character
     protected override void Start()
     {
         base.Start();
-        CombatSceneManager.Instance.enemies.Add(gameObject);
+        CrewSceneManager.Instance.enemies.Add(gameObject);
     }
 
     protected override void Awake()

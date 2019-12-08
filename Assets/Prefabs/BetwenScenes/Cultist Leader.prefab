@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 2659117062321255299}
   - component: {fileID: 895464696274985061}
   - component: {fileID: 2659117062321255352}
+  - component: {fileID: 2491099381441552065}
   m_Layer: 8
   m_Name: Cultist Leader
   m_TagString: Untagged
@@ -175,6 +176,8 @@ MonoBehaviour:
   hp: 1000
   defence: 20
   characterState: 1
+  healthTextEmitter: {fileID: 0}
+  fatihTextEemitter: {fileID: 0}
 --- !u!58 &2659117062321255352
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -191,6 +194,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.12
+--- !u!114 &2491099381441552065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2659117062321255298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516da10d472a96f4e9d2db44683d97bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogBox: {fileID: 3379805898484623786, guid: 4a7e752f397ba5e4b8d4a93f26f90a82,
+    type: 3}
+  cultistPrefab: {fileID: 2659117062321255298, guid: fca019f3bf262b545a9cbe48dc96d017,
+    type: 3}
 --- !u!1001 &3047831338210046495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -198,6 +217,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2659117062321255302}
     m_Modifications:
+    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
+        type: 3}
+      propertyPath: m_Name
+      value: Hitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 3181841589084581550, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -252,16 +281,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
-        type: 3}
-      propertyPath: m_Name
-      value: Hitbox
-      objectReference: {fileID: 0}
-    - target: {fileID: 7988984692230322069, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3011814831065823592, guid: adf92e86536cbfd40a9bbf8ab7a0cb2f,
         type: 3}

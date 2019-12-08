@@ -14,7 +14,7 @@ public class MoveToMouseClick : MonoBehaviour
     
     void LateUpdate()
     {
-        if(Input.GetMouseButtonDown(0) && !GameManager.Gui.GetComponent<GUI>().isMouseOver)
+        if(Input.GetMouseButtonDown(0) && !GameManager.Gui.isMouseOver)
             targetPos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
         
         if((Vector2)transform.position != targetPos && GameManager.Instance.cultistNumber > 0)
