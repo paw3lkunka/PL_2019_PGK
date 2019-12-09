@@ -8,13 +8,9 @@ public enum Beat { None, Bad, Good, Great };
 public partial class RhythmController : MonoBehaviour
 {
 #pragma warning disable
-
-
     [Space]
     [Header("Song timing setup")]
-    //[SerializeField] private int startOffset = 0;
-    //[SerializeField] private float fineTune = 0.0f;
-    [SerializeField] private float songBpm;
+    [SerializeField] private double songBpm;
     [Tooltip("Musical time signature, at the moment, only the beats per measure part is used")]
     [SerializeField] private Vector2Int timeSignature;
 
@@ -35,9 +31,9 @@ public partial class RhythmController : MonoBehaviour
     // Control variables
     private double beatTime;
     private double sequenceStartMoment;
-    private double TimeSinceEnable
+    private double TimeSinceSequenceStart
     {
-        get => Time.time - sequenceStartMoment;
+        get => AudioSettings.dspTime - sequenceStartMoment;
     }
     private double nextBeatMoment = 0.0f;
     private Beat currentBeatMomentStatus = Beat.None;
@@ -123,7 +119,7 @@ public partial class RhythmController : MonoBehaviour
         OnRageModeEnd += RageModeEnd;
 
         thisMeasureBeats = new Beat[timeSignature.x];
-        beatTime = 60.0f / songBpm;
+        beatTime = 60.0d / songBpm;
         if (greatTolerance > goodTolerance)
         {
             throw new BadBeatToleranceException("Great tolerance was set to higher than good tolerance, which is illegal. Fix this issue in the inspector");
@@ -144,29 +140,28 @@ public partial class RhythmController : MonoBehaviour
     private void SequenceStart()
     {
         sequenceStartMoment = AudioSettings.dspTime;
-
-        nextBeatMoment = TimeSinceEnable + beatTime;
+        nextBeatMoment = TimeSinceSequenceStart + beatTime;
     }
 
     private void Update()
     {
-        if (TimeSinceEnable < nextBeatMoment - goodTolerance)
+        if (TimeSinceSequenceStart < nextBeatMoment - goodTolerance)
         {
             normalizedGoodTime = 0.0f;
             currentBeatMomentStatus = Beat.Bad;
         }
-        else if (TimeSinceEnable > nextBeatMoment - goodTolerance && TimeSinceEnable < nextBeatMoment + goodTolerance)
+        else if (TimeSinceSequenceStart > nextBeatMoment - goodTolerance && TimeSinceSequenceStart < nextBeatMoment + goodTolerance)
         {
-            if (TimeSinceEnable < nextBeatMoment)
+            if (TimeSinceSequenceStart < nextBeatMoment)
             {
-                normalizedGoodTime = (TimeSinceEnable - (nextBeatMoment - goodTolerance)) / (goodTolerance);
+                normalizedGoodTime = (TimeSinceSequenceStart - (nextBeatMoment - goodTolerance)) / (goodTolerance);
             }
             else
             {
-                normalizedGoodTime = -((TimeSinceEnable - nextBeatMoment) / (goodTolerance)) + 1.0f;
+                normalizedGoodTime = -((TimeSinceSequenceStart - nextBeatMoment) / (goodTolerance)) + 1.0f;
             }
 
-            if (TimeSinceEnable > nextBeatMoment - greatTolerance && TimeSinceEnable < nextBeatMoment + greatTolerance)
+            if (TimeSinceSequenceStart > nextBeatMoment - greatTolerance && TimeSinceSequenceStart < nextBeatMoment + greatTolerance)
             {
                 currentBeatMomentStatus = Beat.Great;
             }

@@ -28,7 +28,9 @@ public class AdaptiveMusicController : MonoBehaviour
 
     private float coroutineTime = 0.0f;
 
-
+    private int drumTrackIndex = 0;
+    private int lightTrackIndex = 0;
+    private int heavyTrackIndex = 0;
 
     private void OnEnable()
     {
@@ -44,6 +46,26 @@ public class AdaptiveMusicController : MonoBehaviour
         RhythmController.Instance.OnRageModeStart -= FadeToHeavy;
         RhythmController.Instance.OnRageModeEnd -= FadeToLight;
         RhythmController.Instance.OnComboEnd -= FadeToNone;
+    }
+
+    public void StartSequence()
+    {
+        drumTrackIndex = 0;
+        drumTrack.clip = drumTrackClips[drumTrackIndex];
+        lightTrackIndex = 0;
+        lightTrack.clip = lightTrackClips[lightTrackIndex];
+        heavyTrackIndex = 0;
+        heavyTrack.clip = heavyTrackClips[heavyTrackIndex];
+    }
+
+    public void PlayBar(int beats, double beatMoment)
+    {
+
+    }
+
+    public void InterruptSequence()
+    {
+
     }
 
     private void FadeToNone()
