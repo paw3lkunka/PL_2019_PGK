@@ -26,12 +26,10 @@ public class GameManager : MonoBehaviour
     public int cultistNumber;
 
 
-    [SerializeField]
-    private float faithForKilledEnemy = 0.1f;
-    [SerializeField]
-    private float faithForKilledCultist = 0.2f;
-    [SerializeField]
-    private float faithForWoundedCultist = 0.01f;
+
+    private float faithForKilledEnemy = 0.01f;
+    private float faithForKilledCultist = 0.02f;
+    private float faithForWoundedCultist = 0.001f;
 
     [Header("Global rhythm system properties")]
     public float goodTolerance = 0.18f;
@@ -178,7 +176,7 @@ public class GameManager : MonoBehaviour
 
     public void ToRageMode()
     {
-       FaithForKilledEnemy *= 2;
+        FaithForKilledEnemy *= 2;
     }
 
 

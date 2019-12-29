@@ -85,10 +85,12 @@ public partial class RhythmController : MonoBehaviour
         {
             combo = 0;
             OnComboEnd?.Invoke();
+            if(rageMode)
+            {
+                OnRageModeEnd?.Invoke();
+                OnComboEnd?.Invoke();
+            }
         }
-
-        
-        
     }
 
     private void UpdateCounters()
