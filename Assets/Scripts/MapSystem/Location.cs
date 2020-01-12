@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Location : MonoBehaviour
 {
-    [field: SerializeField]
-    public int SpawnChance { get; private set; }
+    public int spawnChance;
 
     private void OnValidate()
     {

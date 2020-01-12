@@ -14,6 +14,7 @@ public class MapGenerator : MonoBehaviour
 {
     public bool useCustomSeed = false;
     public int seed;
+
     public List<GameObject> locationPrefabs;
 
     private Grid grid;
@@ -21,6 +22,8 @@ public class MapGenerator : MonoBehaviour
     public Vector2Int segments = new Vector2Int(5, 5);
     public Vector2Int cellSize = new Vector2Int(30, 30);
     public Vector2Int randomOffsetRange = new Vector2Int(0, 0);
+
+    [HideInInspector]public int emptyChance;
 
     private void OnValidate()
     {
@@ -48,7 +51,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     [ContextMenu("Generate")]
-    private void Generate()
+    public void Generate()
     {
         if(!useCustomSeed)
         {
@@ -57,15 +60,18 @@ public class MapGenerator : MonoBehaviour
 
         Random.InitState(seed);
 
-        List<int> chances = new List<int>();
+        List<int> chances = new List<int>() ;
         int range = 0;
 
         foreach (GameObject LocationObject in locationPrefabs)
         {
-            int chance = LocationObject.GetComponent<Location>().SpawnChance;
+            int chance = LocationObject.GetComponent<Location>().spawnChance;
             range += chance;
             chances.Add(chance);
         }
+
+        range += emptyChance;
+        chances.Add(emptyChance);
 
         for (int i = 0; i < segments.x; i++)
         {
@@ -84,14 +90,23 @@ public class MapGenerator : MonoBehaviour
                     index++;
                 }
                 
-                GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
-                DestroyImmediate(instance.GetComponent<Grid>());
+                try
+                {
+                    GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
+                    DestroyImmediate(instance.GetComponent<Grid>());
+                }
+                catch( System.ArgumentOutOfRangeException exc )
+                {
+                    //if index == locationPrefabs.Count cell should be empty - it's normal situation, else rethrow
+                    if (index != locationPrefabs.Count)
+                        throw exc;
+                }
             }
         }
     }
 
     [ContextMenu("Clear")]
-    private void Clear()
+    public void Clear()
     {
         foreach( Transform child in grid.GetComponentsInChildren<Transform>())
         {
