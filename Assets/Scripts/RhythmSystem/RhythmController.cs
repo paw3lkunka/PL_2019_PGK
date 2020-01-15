@@ -76,19 +76,20 @@ public partial class RhythmController : MonoBehaviour
     {
         if (currentBeatStatus == Beat.None)
         {
+            switch (currentBeatMomentStatus)
+            {
+                case Beat.Bad:
+                    OnBeatHitBad?.Invoke();
+                    break;
+                case Beat.Good:
+                    OnBeatHitGood?.Invoke();
+                    break;
+                case Beat.Great:
+                    OnBeatHitGreat?.Invoke();
+                    break;
+            }
             currentBeatStatus = currentBeatMomentStatus;
-            if (currentBeatMomentStatus == Beat.Good)
-            {
-                OnBeatHitGood?.Invoke();
-            }
-            else if (currentBeatMomentStatus == Beat.Great)
-            {
-                OnBeatHitGreat?.Invoke();
-            }
-            else if (currentBeatMomentStatus == Beat.Bad)
-            {
-                OnBeatHitBad?.Invoke();
-            }
+
             return currentBeatMomentStatus;
         }
         else
@@ -97,6 +98,12 @@ public partial class RhythmController : MonoBehaviour
             OnBeatHitBad?.Invoke();
             return Beat.Bad;
         }
+    }
+
+    public void ResetSequence()
+    {
+        sequenceStartMoment = AudioSettings.dspTime;
+        nextBeatMoment = TimeSinceSequenceStart + beatTime;
     }
 
     private void Awake()
@@ -135,12 +142,6 @@ public partial class RhythmController : MonoBehaviour
         OnBeatHitBad -= BeatHitBad;
         OnRageModeStart -= RageModeStart;
         OnRageModeEnd -= RageModeEnd;
-    }
-
-    private void SequenceStart()
-    {
-        sequenceStartMoment = AudioSettings.dspTime;
-        nextBeatMoment = TimeSinceSequenceStart + beatTime;
     }
 
     private void Update()
