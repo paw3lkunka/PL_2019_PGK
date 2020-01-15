@@ -22,7 +22,15 @@ public class AudioTimeline : MonoBehaviour
     public static AudioTimeline Instance;
 
     // Timeline states
-    private bool isPlaying = false;
+
+    // ---- Critical flag used for tracking if the timeline engine should be played or paused ----
+    //      UNDER NO CIRCUMSTANCED REFER TO THIS VARIABLE DIRECTLY, IT SHOULD ONLY BE CHANGED
+    //      BY CORRESPONDING METHODS
+    
+        private bool isPlaying = false;
+    
+    // -------------------------------------------------------------------------------------------
+    
     private TimelineState timelineState = TimelineState.None;
 
     // Rhythm window tolerance values
@@ -37,6 +45,8 @@ public class AudioTimeline : MonoBehaviour
     private double nextBeatMoment;
     private int currentBeatNumber = 0;
     private bool hasEncounteredPerfect = false;
+    private bool wasCurrentBeatHit = false;
+
     // Bar tracking
     private BeatState[] barBeatStates;
     private BarState lastBarState = BarState.None;
@@ -99,8 +109,57 @@ public class AudioTimeline : MonoBehaviour
         nextBeatMoment = beatDuration;
     }
 
+    /// <summary>
+    /// The most important method, should be invoked by input mechanisms that handle rhythm
+    /// Is responsible for determining at which state the beat was hit and invokes actions accordingly
+    /// </summary>
     public void BeatHit()
     {
+        if (wasCurrentBeatHit == false)
+        {
+            // IF SOMETHING DOESN'T WORK YOU PROBABLY FORGOT TO RESET THIS FLAG
+            wasCurrentBeatHit = true;
+
+            switch (currentBeatState)
+            {
+                case BeatState.None:
+                    // ---- On Beat State None ----
+                    // If beat is hit here, it counts as a miss and should:
+                    // - invoke appropriate method for handling fails
+                    // - invoke appropriate event for failed beat broadcast
+                    currentBeatState = BeatState.Bad;
+
+                    break;
+                case BeatState.Bad:
+                    // ---- On Beat State Bad ----
+                    // If beat is hit here, it is considered a duplicate hit in one beat
+                    // Should be handled similarly to Beat State None
+                
+
+                    break;
+                case BeatState.Good:
+                    // ---- On Beat State Good ----
+                    // This condition handles beat state normally
+                
+
+                    break;
+                case BeatState.Great:
+                    // ---- On Beat State Great ----
+                    // This condition handles beat state normally 
+
+
+                    break;
+                case BeatState.Perfect:
+                    // ---- On Beat State Perfect ----
+                    // This is a frame-perfect hit state and should be used only for special things
+
+
+                    break;
+
+            }
+            // Finally record the beat state for bar evaluation
+            barBeatStates[currentBeatNumber] = currentBeatState;
+        }
 
     }
 
@@ -146,11 +205,16 @@ public class AudioTimeline : MonoBehaviour
                     // ------------------------------------------------------------------------------
                 }
             }
-            else
+            else if (hasEncounteredPerfect == false)
             {
                 currentBeatState = BeatState.None;
             }
-
+            else if (hasEncounteredPerfect == true)
+            {
+                currentBeatState = BeatState.None;
+                hasEncounteredPerfect = false;
+                wasCurrentBeatHit = false;
+            }
         }
     }
 }
