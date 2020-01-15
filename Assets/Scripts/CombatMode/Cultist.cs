@@ -6,7 +6,10 @@ using UnityEngine;
 public class Cultist : Character
 {
     private Shooter shooter;
-   
+    public bool fanaticMode = false;
+    public bool isFanatic = false;
+
+    #region Mono behaviour functions
     protected override void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -30,24 +33,6 @@ public class Cultist : Character
         Agent.updateUpAxis = false;
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoad;
-        SceneManager.sceneUnloaded -= OnSceneUnload;
-
-        try
-        {
-            RhythmController.Instance.OnRageModeStart -= ToRageMode;
-        }
-        catch (System.NullReferenceException) { }
-
-        try
-        {
-            RhythmController.Instance.OnRageModeEnd -= ToNormalMode;
-        }
-        catch (System.NullReferenceException) { }
-    }
-
     protected override void Start()
     {
         base.Start();
@@ -62,27 +47,6 @@ public class Cultist : Character
             RhythmController.Instance.OnRageModeEnd += ToNormalMode;
         }
         catch (System.NullReferenceException) { }
-    }
-
-    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "MainMap" || scene.name == "MainMenu" )
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-            Agent.Warp(CrewSceneManager.Instance.startPoint + FormationOffset);
-        }
-    }
-
-    private void OnSceneUnload(Scene scene)
-    {
-        if (scene.name != "MainMap" && scene.name != "MainMenu")
-        {
-            CrewSceneManager.Instance.enemies.Remove(gameObject);
-        }
     }
 
     protected override void Update()
@@ -106,28 +70,83 @@ public class Cultist : Character
             gameObject.transform.GetChild(1).gameObject.SetActive(false);
         }
 
-        float distanceToEnemy = CrewSceneManager.Instance.enemies.NearestFrom(transform.position).Item2;
+        (GameObject,float) nearest = CrewSceneManager.Instance.enemies.NearestFrom(transform.position);
         bool canMove = CheckState(CharacterState.CanMove);
         bool canAttack = CrewSceneManager.Instance.combatMode && CheckState(CharacterState.CanAttack);
 
-        if ( !canAttack || distanceToEnemy > shooter.range )
+        if (isFanatic)
         {
-            shooter.StopShooting();
+            FanaticBehaviour(nearest.Item1, nearest.Item2, canMove, canAttack);
         }
-        
-        if ( canMove && Input.GetMouseButtonDown(0) )
+        else
         {
-            GoToMousePosition();
-        }
-        
-        if ( canAttack && Input.GetMouseButtonDown(1) )
-        {
-            AimToMousePosition();
-            shooter.StartShooting();
+            StandardBehaviour(nearest.Item1, nearest.Item2, canMove, canAttack);
         }
 
         base.Update();
     }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+        SceneManager.sceneUnloaded -= OnSceneUnload;
+
+        try
+        {
+            RhythmController.Instance.OnRageModeStart -= ToRageMode;
+        }
+        catch (System.NullReferenceException) { }
+
+        try
+        {
+            RhythmController.Instance.OnRageModeEnd -= ToNormalMode;
+        }
+        catch (System.NullReferenceException) { }
+    }
+    #endregion
+
+    #region Behaviour
+
+    public void StandardBehaviour(GameObject enemy, float distanceToEnemy, bool canMove, bool canAttack)
+    {
+
+        if (!canAttack || distanceToEnemy > shooter.range)
+        {
+            shooter.StopShooting();
+        }
+
+        if (canMove && Input.GetMouseButtonDown(0))
+        {
+            GoToMousePosition();
+        }
+
+        if (canAttack && Input.GetMouseButtonDown(1))
+        {
+            AimToMousePosition();
+            shooter.StartShooting();
+        }
+    }
+
+    public void FanaticBehaviour(GameObject enemy, float distanceToEnemy, bool canMove, bool canAttack)
+    {
+        if ( canAttack && distanceToEnemy <= shooter.range)
+        {
+            Vector3 target = enemy.transform.position;
+            Agent.SetDestination(target);
+            shooter.target = target;
+            shooter.StartShooting();
+
+        }
+        else
+        {
+            shooter.StopShooting();
+            isFanatic = false;
+        }
+    }
+
+    #endregion
+
+    #region Rage mode handling
 
     private void ToRageMode()
     {
@@ -136,13 +155,15 @@ public class Cultist : Character
         defence = .5f;
     }
 
-
     private void ToNormalMode()
     {
         shooter.baseDamage /= 1.5f;
         Agent.speed /= 1.1f;
         defence = 0;
     }
+    #endregion
+
+    #region Control
 
     public void GoToMousePosition()
     {
@@ -151,6 +172,7 @@ public class Cultist : Character
             Agent.SetDestination(CrewSceneManager.Instance.MousePos + FormationOffset);
         }
     }
+
     public void AimToMousePosition()
     {
         Vector2 offset = new Vector2
@@ -160,7 +182,9 @@ public class Cultist : Character
         );
         GetComponent<Shooter>().target = CrewSceneManager.Instance.MousePos + offset;
     }
+    #endregion
 
+    #region Taking damage
 
     public override void TakeDamage(int damage)
     {
@@ -178,13 +202,51 @@ public class Cultist : Character
         fatihTextEemitter.Emit("-" + (int)(lossedFaith * 100), Color.green, 3);
         GameManager.Instance.cultistNumber--;
     }
+    #endregion
 
+    #region Event listeners
+
+    /// <summary>
+    /// SceneLoad listener
+    /// </summary>
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMap" || scene.name == "MainMenu")
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+            Agent.Warp(CrewSceneManager.Instance.startPoint + FormationOffset);
+        }
+    }
+
+    /// <summary>
+    /// SceneUnload listener
+    /// </summary>
+    private void OnSceneUnload(Scene scene)
+    {
+        if (scene.name != "MainMap" && scene.name != "MainMenu")
+        {
+            CrewSceneManager.Instance.enemies.Remove(gameObject);
+        }
+    }
+
+    /// <summary>
+    /// GameOverEvent listener
+    /// </summary>
     private void OnGameOver()
     {
         Destroy(gameObject);
         GameManager.Instance.OnGameOver -= OnGameOver;
     }
+    #endregion
 
+    #region misc
+    /// <summary>
+    /// Returns position in formation from formation centre
+    /// </summary>
     public Vector2 FormationOffset
     {
         get
@@ -212,4 +274,5 @@ public class Cultist : Character
             }
         }
     }
+    #endregion
 }

@@ -46,6 +46,9 @@ public class GameManager : MonoBehaviour
     public float FaithForWoundedCultist { get => faithForWoundedCultist; set => faithForWoundedCultist = value; }
 
     public event System.Action OnGameOver;
+    public event System.Action LowWaterLevel;
+    public event System.Action LowFaithLevel;
+    public event System.Action HighFaithLevel;
 
     public GameObject GameOverScreenInstance
     {
@@ -88,10 +91,6 @@ public class GameManager : MonoBehaviour
             Instance = this;
             Initialize();
         }
-    }
-
-    private void Start()
-    {
     }
 
     private void Update()

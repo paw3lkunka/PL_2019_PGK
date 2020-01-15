@@ -28,7 +28,7 @@ public class ResourceUsage : MonoBehaviour
         }
     }
 
-    private int crewSize
+    private int CrewSize
     {
         get => GameManager.Instance.cultistNumber;
         set => GameManager.Instance.cultistNumber = value;
@@ -52,45 +52,42 @@ public class ResourceUsage : MonoBehaviour
         {
             if(isFaith)
             {
-                Amount -= usageFactor * (crewSize > 7.0f ? (crewSize / 7) : 1.0f);
+                Amount -= usageFactor * (CrewSize > 7.0f ? (CrewSize / 7) : 1.0f);
                 //"Faith strenghtening"
-                Amount += usageFactor * (crewSize > 9.0f ? (crewSize / 9) : 0.0f);
+                Amount += usageFactor * (CrewSize > 9.0f ? (CrewSize / 9) : 0.0f);
             }
             else
             {
-                Amount -= usageFactor * (crewSize > 5.0f ? (crewSize / 5) : 1.0f);
+                Amount -= usageFactor * (CrewSize > 5.0f ? (CrewSize / 5) : 1.0f);
             }
             
 
             if( Amount < 0.2f && 
                 (Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) )
             {
-                crewSize -= 1;
+                CrewSize -= 1;
                 timeLastMemberDied = Time.timeSinceLevelLoad;
             }
 
             if( isFaith && Amount > 0.9f 
             && (Time.timeSinceLevelLoad - timeLastMemberDied) > ( 25.0f * (1.0 - (Amount / 0.9f - 1.0f)) ) )
             {
-                crewSize -= 1;
+                CrewSize -= 1;
                 timeLastMemberDied = Time.timeSinceLevelLoad;
             }
 
             if( isFaith && Amount > 0.7f
             && (Time.timeSinceLevelLoad - timeLastMemberCome) >  15.0f )
             {
-                crewSize += 1;
+                CrewSize += 1;
                 Instantiate(GameManager.Instance.cultistPrefab);
                 timeLastMemberCome = Time.timeSinceLevelLoad;
             }
             
             playerLastPosition = transform.position;
 
-            if(crewSize > 25) crewSize = 25;
+            if(CrewSize > 25) CrewSize = 25;
         }
 
-    }
-    private void KillRandomCultist()
-    {
     }
 }
