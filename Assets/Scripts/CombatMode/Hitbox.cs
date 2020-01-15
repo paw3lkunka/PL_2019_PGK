@@ -19,38 +19,37 @@ public class Hitbox : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Bullet bullet = collision.GetComponentInChildren<Bullet>();
-        /*
+
         IEnumerator Routine()
         {
             stuned = true;
             float timer = bullet.stunTime;
-            Vector2 destination = character.Agent.destination;
 
-            character.Agent.enabled = false;
-            character.RBody2d.bodyType = RigidbodyType2D.Dynamic;
+            Vector2 vec = bullet.Direction * bullet.pushForce;
+            Vector3 push = new Vector3( vec.x, vec.y, 0.0f );
 
-            character.GetComponent<Rigidbody2D>().AddForce(bullet.Direction * bullet.pushForce, ForceMode2D.Impulse);
+            Transform spriteTransform = character.transform.GetChild(0).transform;
+            spriteTransform.localPosition += push;
+           
 
             yield return new WaitForEndOfFrame();
 
-            while ( timer > 0 )
+            while (timer > 0)
             {
                 timer -= Time.deltaTime;
+                spriteTransform.localPosition -= push * (Time.deltaTime / bullet.stunTime);
                 yield return new WaitForEndOfFrame();
             }
-            
-            character.RBody2d.bodyType = RigidbodyType2D.Kinematic;
-            character.Agent.enabled = true;
-            character.Agent.SetDestination(destination);
+            character.transform.GetChild(0).transform.localPosition = character.transform.GetComponentInChildren<HealthBar>(true).gameObject.transform.localPosition - new Vector3(0, 0.5f, 0);
             stuned = false;
-        }*/
+        }
 
         if (bullet)
         {
-            /*if(!stuned)
+            if (!stuned)
             {
                 StartCoroutine(Routine());
-            }*/
+            }
             TakeDamage(bullet.damege);
             Destroy(bullet.gameObject);
         }
