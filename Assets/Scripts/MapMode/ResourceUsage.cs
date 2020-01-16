@@ -5,7 +5,31 @@ using UnityEngine.UI;
 
 public class ResourceUsage : MonoBehaviour
 {
-    public float usageFactor = 0.0002f;
+
+    public bool low = false, high = false, fanatic = false;
+
+    /*
+    //Ja to tu tylko zostawię
+    private void OnValidate()
+    {
+        throw new System.Exception("xD");
+    }
+    */
+
+    public float UsageFactor
+    {
+        get
+        {
+            if(isFaith)
+            {
+                return GameManager.Instance.FaithUsageFactor;
+            }
+            else
+            {
+                return GameManager.Instance.WaterUsageFactor;
+            }
+        }
+    }
     public bool isFaith = false;
 
     private Vector2 playerLastPosition;
@@ -39,6 +63,23 @@ public class ResourceUsage : MonoBehaviour
     void Start()
     {
         playerLastPosition = transform.position;
+
+        if(isFaith)
+        {
+            GameManager.Instance.LowFaithLevelStart += SetLow;
+            GameManager.Instance.LowFaithLevelEnd += UnsetLow;
+            
+            GameManager.Instance.HighFaithLevelStart += SetHigh;
+            GameManager.Instance.HighFaithLevelEnd += UnsetHigh;
+
+            GameManager.Instance.FanaticStart += SetFanatic;
+            GameManager.Instance.FanaticEnd += UnsetFanatic;
+        }
+        else
+        {
+            GameManager.Instance.LowWaterLevelStart += SetLow;
+            GameManager.Instance.LowWaterLevelEnd += UnsetLow;
+        }
     }
 
     // Update is called once per frame
@@ -52,42 +93,65 @@ public class ResourceUsage : MonoBehaviour
         {
             if(isFaith)
             {
-                Amount -= usageFactor * (CrewSize > 7.0f ? (CrewSize / 7) : 1.0f);
+                Amount -= UsageFactor * (CrewSize > 7.0f ? (CrewSize / 7) : 1.0f);
                 //"Faith strenghtening"
-                Amount += usageFactor * (CrewSize > 9.0f ? (CrewSize / 9) : 0.0f);
+                Amount += UsageFactor * (CrewSize > 9.0f ? (CrewSize / 9) : 0.0f);
             }
             else
             {
-                Amount -= usageFactor * (CrewSize > 5.0f ? (CrewSize / 5) : 1.0f);
-            }
-            
-
-            if( Amount < 0.2f && 
-                (Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) )
-            {
-                CrewSize -= 1;
-                timeLastMemberDied = Time.timeSinceLevelLoad;
+                Amount -= UsageFactor * (CrewSize > 5.0f ? (CrewSize / 5) : 1.0f);
             }
 
-            if( isFaith && Amount > 0.9f 
-            && (Time.timeSinceLevelLoad - timeLastMemberDied) > ( 25.0f * (1.0 - (Amount / 0.9f - 1.0f)) ) )
+            if (low)
+                OnLowLevel();
+
+            if (isFaith)
             {
-                CrewSize -= 1;
-                timeLastMemberDied = Time.timeSinceLevelLoad;
+                if (high)
+                    OnHighFaithLEvel();
+
+                if (fanatic)
+                    OnFanatic();
             }
 
-            if( isFaith && Amount > 0.7f
-            && (Time.timeSinceLevelLoad - timeLastMemberCome) >  15.0f )
-            {
-                CrewSize += 1;
-                Instantiate(GameManager.Instance.cultistPrefab);
-                timeLastMemberCome = Time.timeSinceLevelLoad;
-            }
-            
             playerLastPosition = transform.position;
 
             if(CrewSize > 25) CrewSize = 25;
         }
 
     }
+
+    private void OnLowLevel()
+    {
+        if ( (Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f) ) )
+        {
+            CrewSize -= 1;
+            timeLastMemberDied = Time.timeSinceLevelLoad;
+        }
+    }
+
+    private void OnHighFaithLEvel()
+    {
+        if ( (Time.timeSinceLevelLoad - timeLastMemberCome) > 15.0f )
+        {
+            CrewSize += 1;
+            Instantiate(GameManager.Instance.cultistPrefab);
+            timeLastMemberCome = Time.timeSinceLevelLoad;
+        }
+    }
+    private void OnFanatic()
+    {
+        if ( (Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (1.0 - (Amount / 0.9f - 1.0f))) )
+        {
+            CrewSize -= 1;
+            timeLastMemberDied = Time.timeSinceLevelLoad;
+        }
+    }
+
+    private void SetLow() => low = true;
+    private void SetHigh() => high = true;
+    private void SetFanatic() => fanatic = true;
+    private void UnsetLow() => low = false;
+    private void UnsetHigh() => high = false;
+    private void UnsetFanatic() => fanatic = false;
 }

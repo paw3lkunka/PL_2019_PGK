@@ -46,9 +46,6 @@ public class GameManager : MonoBehaviour
     public float FaithForWoundedCultist { get => faithForWoundedCultist; set => faithForWoundedCultist = value; }
 
     public event System.Action OnGameOver;
-    public event System.Action LowWaterLevel;
-    public event System.Action LowFaithLevel;
-    public event System.Action HighFaithLevel;
 
     public GameObject GameOverScreenInstance
     {
@@ -60,6 +57,29 @@ public class GameManager : MonoBehaviour
     private float water = 1.0f;
     [Range(0, 1), SerializeField]
     private float faith = 0.5f;
+
+    private float oldWater;
+    private float oldFaith;
+
+    public float FaithUsageFactor = 0.0002f;
+    public float WaterUsageFactor = 0.0001f;
+
+    public float LowWaterLevel = 0.2f;
+    public float LowFaithLevel = 0.2f;
+    public float HighFaithLevel = 0.7f;
+    public float FanaticFaithLevel = 0.9f;
+
+    public event System.Action LowWaterLevelStart;
+    public event System.Action LowWaterLevelEnd;
+
+    public event System.Action LowFaithLevelStart;
+    public event System.Action LowFaithLevelEnd;
+
+    public event System.Action HighFaithLevelStart;
+    public event System.Action HighFaithLevelEnd;
+
+    public event System.Action FanaticStart;
+    public event System.Action FanaticEnd;
 
     public float Water
     {
@@ -83,6 +103,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        oldWater = water;
+        oldFaith = faith;
+
         gameOverScreenInstance = null;
 
         ResetIndicatorsValues();
@@ -95,16 +118,42 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-
         if (cultistNumber <= 0 && gameOverScreenInstance == null)
         {
             GameOver();
         }
 
-        if( Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameOver();
         }
+
+        if (water < LowWaterLevel && oldWater >= LowWaterLevel )
+            LowWaterLevelStart?.Invoke();
+
+        if (water > LowWaterLevel && oldWater <= LowWaterLevel)
+            LowWaterLevelEnd?.Invoke();
+
+        if (faith < LowFaithLevel && oldFaith >= LowFaithLevel)
+            LowFaithLevelStart?.Invoke();
+
+        if (faith > LowFaithLevel && oldFaith <= LowFaithLevel)
+            LowFaithLevelEnd?.Invoke();
+        
+        if (faith > HighFaithLevel && oldFaith <= HighFaithLevel)
+            HighFaithLevelStart?.Invoke();
+
+        if (faith < HighFaithLevel && oldFaith >= HighFaithLevel)
+            HighFaithLevelEnd?.Invoke();
+
+        if (faith > FanaticFaithLevel && oldFaith <= FanaticFaithLevel)
+            FanaticStart?.Invoke();
+
+        if (faith < FanaticFaithLevel && oldFaith >= FanaticFaithLevel)
+            FanaticEnd?.Invoke();
+
+        oldFaith = faith;
+        oldWater = water;
     }
 
     private void Initialize()
@@ -132,11 +181,7 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
-        if( OnGameOver != null )
-        {
-            OnGameOver();
-        }
-
+        OnGameOver?.Invoke();
         gameOverScreenInstance = Instantiate(gameOverScreenPrefab);
     }
 
