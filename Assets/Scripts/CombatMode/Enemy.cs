@@ -86,7 +86,7 @@ public class Enemy : Character
 
         if (fatihTextEemitter)
         {
-            fatihTextEemitter.Emit("+" + (int)(gainedFaith * 100), Color.green, 3);
+            fatihTextEemitter.Emit("+" + (int)Mathf.Round(gainedFaith * 100), Color.green, 3);
         }
         base.Die();
     }
