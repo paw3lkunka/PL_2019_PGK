@@ -479,12 +479,18 @@ MonoBehaviour:
   cultistNumber: 0
   goodTolerance: 0.18
   greatTolerance: 0.1
-  easyModeGoodTolerance: 0.24
+  easyModeGoodTolerance: 0.28
   easyModeGreatTolerance: 0.2
   hardModeGoodTolerance: 0.18
   hardModeGreatTolerance: 0.1
   water: 1
   faith: 0.6
+  FaithUsageFactor: 0.0002
+  WaterUsageFactor: 0.0001
+  LowWaterLevel: 0.2
+  LowFaithLevel: 0.2
+  HighFaithLevel: 0.7
+  FanaticFaithLevel: 0.9
   savedPosition: {x: 0, y: 0}
   ourCrew: []
 --- !u!1 &512776234

@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
     private float faithForWoundedCultist = 0.001f;
 
     [Header("Global rhythm system properties")]
-    public float goodTolerance = 0.18f;
-    public float greatTolerance = 0.1f;
+    [HideInInspector] public float goodTolerance;
+    [HideInInspector] public float greatTolerance;
 
     public float easyModeGoodTolerance = 0.18f;
     public float easyModeGreatTolerance = 0.1f;

@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class CameraPosition : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void LateUpdate()
     {
         if(GameManager.Instance.cultistNumber > 0)
@@ -38,7 +31,6 @@ public class CameraPosition : MonoBehaviour
                     max.y = Mathf.Max(max.y, pos.y);
                     min.x = Mathf.Min(min.x, pos.x);
                     min.y = Mathf.Min(min.y, pos.y);
-
 
                     transform.position = min + (max - min) / 2;
                     transform.position += Vector3.back * 10;

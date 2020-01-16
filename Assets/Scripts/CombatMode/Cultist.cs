@@ -6,8 +6,7 @@ using UnityEngine;
 public class Cultist : Character
 {
     private Shooter shooter;
-    public bool fanaticMode = false;
-    public bool isFanatic = false;
+    public bool isFanatic;
 
     #region Mono behaviour functions
     protected override void Awake()
@@ -36,17 +35,23 @@ public class Cultist : Character
     protected override void Start()
     {
         base.Start();
+
+        isFanatic = GameManager.Instance.Faith > GameManager.Instance.FanaticFaithLevel;
+
         try
         {
-            RhythmController.Instance.OnRageModeStart += ToRageMode;
+            RhythmController.Instance.OnRageModeStart += EnterRageMode;
         }
         catch (System.NullReferenceException) { }
 
         try
         {
-            RhythmController.Instance.OnRageModeEnd += ToNormalMode;
+            RhythmController.Instance.OnRageModeEnd += ExitRageMode;
         }
         catch (System.NullReferenceException) { }
+
+        GameManager.Instance.FanaticStart += EnterFanaticMode;
+        GameManager.Instance.FanaticEnd += ExitFanaticMode;
     }
 
     protected override void Update()
@@ -93,15 +98,18 @@ public class Cultist : Character
 
         try
         {
-            RhythmController.Instance.OnRageModeStart -= ToRageMode;
+            RhythmController.Instance.OnRageModeStart -= EnterRageMode;
         }
         catch (System.NullReferenceException) { }
 
         try
         {
-            RhythmController.Instance.OnRageModeEnd -= ToNormalMode;
+            RhythmController.Instance.OnRageModeEnd -= ExitRageMode;
         }
         catch (System.NullReferenceException) { }
+
+        GameManager.Instance.FanaticStart -= EnterFanaticMode;
+        GameManager.Instance.FanaticEnd -= ExitFanaticMode;
     }
     #endregion
 
@@ -129,38 +137,51 @@ public class Cultist : Character
 
     public void FanaticBehaviour(GameObject enemy, float distanceToEnemy, bool canMove, bool canAttack)
     {
-        if ( canAttack && distanceToEnemy <= shooter.range)
+        if (canAttack && distanceToEnemy <= shooter.range)
         {
             Vector3 target = enemy.transform.position;
-            Agent.SetDestination(target);
+
+            if (canMove)
+            {
+                Agent.SetDestination(target);
+            }
+
             shooter.target = target;
             shooter.StartShooting();
-
         }
         else
         {
             shooter.StopShooting();
-            isFanatic = false;
+
+            if (canMove && Input.GetMouseButtonDown(0))
+            {
+                GoToMousePosition();
+            }
         }
     }
 
     #endregion
 
-    #region Rage mode handling
+    #region Event Listeners
 
-    private void ToRageMode()
+    private void EnterRageMode()
     {
         shooter.baseDamage *= 1.5f;
         Agent.speed *= 1.1f;
         defence = .5f;
     }
 
-    private void ToNormalMode()
+    private void ExitRageMode()
     {
         shooter.baseDamage /= 1.5f;
         Agent.speed /= 1.1f;
         defence = 0;
     }
+
+    private void EnterFanaticMode() => isFanatic = true;
+    private void ExitFanaticMode() => isFanatic = false;
+
+
     #endregion
 
     #region Control

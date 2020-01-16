@@ -141,11 +141,14 @@ public class ResourceUsage : MonoBehaviour
     }
     private void OnFanatic()
     {
+        //Nie wiem, czy przy utraci kontroli jest to jesczcze potrzebne
+        /*
         if ( (Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (1.0 - (Amount / 0.9f - 1.0f))) )
         {
             CrewSize -= 1;
             timeLastMemberDied = Time.timeSinceLevelLoad;
         }
+        */
     }
 
     private void SetLow() => low = true;
