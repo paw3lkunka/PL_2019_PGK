@@ -40,7 +40,7 @@ public class Hitbox : MonoBehaviour
                 spriteTransform.localPosition -= push * (Time.deltaTime / bullet.stunTime);
                 yield return new WaitForEndOfFrame();
             }
-            character.transform.GetChild(0).transform.localPosition = character.transform.GetComponentInChildren<HealthBar>(true).gameObject.transform.localPosition - new Vector3(0, 0.5f, 0);
+            character.transform.GetChild(0).transform.localPosition = new Vector3(0, 0.4f, 0);
             stuned = false;
         }
 

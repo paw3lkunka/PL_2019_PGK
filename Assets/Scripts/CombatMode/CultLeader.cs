@@ -33,7 +33,9 @@ public class CultLeader : Character
 
     protected override void Start()
     {
-
+        hp = 100;
+        defence = 20;
+        base.Start();
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
@@ -67,6 +69,11 @@ public class CultLeader : Character
             GoToMousePosition();
         }
 
+        if(GameManager.Instance.cultistNumber == 0)
+        {
+            defence = 0;
+        }
+
         base.Update();
     }
 
@@ -82,12 +89,13 @@ public class CultLeader : Character
 
     public override void TakeDamage(int damage)
     {
-        
+        base.TakeDamage(damage);
     }
 
     public override void Die()
     {
-        
+        GameManager.Instance.OnGameOver -= OnGameOver;
+        base.Die();
     }
 
     private void OnGameOver()

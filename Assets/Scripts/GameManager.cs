@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (cultistNumber <= 0 && gameOverScreenInstance == null)
+        if (ourCrew.Count <= 0 && gameOverScreenInstance == null)
         {
             GameOver();
         }

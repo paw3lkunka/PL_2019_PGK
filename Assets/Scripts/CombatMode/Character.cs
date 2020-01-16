@@ -14,7 +14,7 @@ public class Character : MonoBehaviour
 {
     // Unity Editor accesible fields
 #pragma warning disable
-    [SerializeField] private int hp;
+    [SerializeField] protected int hp;
     [Range(0, 20)]
     [SerializeField] protected float defence;
     [Header("Read Only")]
@@ -40,7 +40,6 @@ public class Character : MonoBehaviour
     {
         SetStateOn(CharacterState.CanMove);
         SetStateOn(CharacterState.CanAttack);
-        maxHp = hp;
         Agent = GetComponent<NavMeshAgent>();
         RBody2d = GetComponent<Rigidbody2D>();
     }
@@ -48,6 +47,7 @@ public class Character : MonoBehaviour
     protected virtual void Start()
     {
         healthBar = GetComponentInChildren<HealthBar>();
+        maxHp = hp;
     }
 
     protected virtual void Update()
@@ -62,10 +62,10 @@ public class Character : MonoBehaviour
 
     public virtual void TakeDamage(int damage)
     {
-        int realDamage = Mathf.CeilToInt((float)damage / (defence + 1));
+        int realDamage = Mathf.RoundToInt((float)damage / (defence + 1));
         hp -= Mathf.Max(realDamage, 0);
 
-        if(healthTextEmitter)
+        if(healthTextEmitter && realDamage > 0)
         {
             healthTextEmitter.Emit("-" + realDamage, Color.red, 2f);
         }

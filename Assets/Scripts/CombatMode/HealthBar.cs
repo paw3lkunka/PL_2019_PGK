@@ -12,7 +12,7 @@ public class HealthBar : MonoBehaviour
 
     public void SetBar(int hp, int maxHp)
     {
-        bar.fillAmount = (float)hp / maxHp;
+        bar.fillAmount = (float)hp / (float)maxHp;
     }
 
     public void HideBar()
