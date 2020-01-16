@@ -25,11 +25,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public int cultistNumber;
 
-
-
-    private float faithForKilledEnemy = 0.01f;
-    private float faithForKilledCultist = 0.02f;
-    private float faithForWoundedCultist = 0.001f;
+    public float faithForKilledEnemy = 0.01f;
+    public float faithForKilledCultist = 0.02f;
+    public float faithForWoundedCultist = 0.001f;
 
     [Header("Global rhythm system properties")]
     [HideInInspector] public float goodTolerance;

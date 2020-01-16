@@ -6,6 +6,7 @@ public class CameraPosition : MonoBehaviour
 {
     void LateUpdate()
     {
+      
         if(GameManager.Instance.cultistNumber > 0)
         {
             var crew = GameManager.Instance.ourCrew;

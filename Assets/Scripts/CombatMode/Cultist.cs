@@ -6,7 +6,11 @@ using UnityEngine;
 public class Cultist : Character
 {
     private Shooter shooter;
-    public bool isFanatic;
+    public bool isFanatic, fanaticState;
+
+    [Range(0,0.001f)] public float fanaticStateEnterChance = 0.05f, fanaticStateExitChance = 0.01f;
+    public float fanaticAimDebuff; 
+
 
     #region Mono behaviour functions
     protected override void Awake()
@@ -37,6 +41,7 @@ public class Cultist : Character
         base.Start();
 
         isFanatic = GameManager.Instance.Faith > GameManager.Instance.FanaticFaithLevel;
+        fanaticState = false;
 
         try
         {
@@ -56,6 +61,21 @@ public class Cultist : Character
 
     protected override void Update()
     {
+        if (isFanatic)
+        {
+            if (fanaticState)
+            {
+                fanaticState = Random.Range(0.0f, 1.0f) < fanaticStateExitChance ? false : true;
+                Debug.Log("enter");
+            }
+            else
+            {
+                Debug.Log("exit");
+                fanaticState = Random.Range(0.0f, 1.0f) < fanaticStateEnterChance ? true : false;
+            }
+        }
+
+
         if (CrewSceneManager.Instance.combatMode)
         {
             if (RhythmController.Instance.Combo >= 1)
@@ -79,7 +99,7 @@ public class Cultist : Character
         bool canMove = CheckState(CharacterState.CanMove);
         bool canAttack = CrewSceneManager.Instance.combatMode && CheckState(CharacterState.CanAttack);
 
-        if (isFanatic)
+        if (fanaticState)
         {
             FanaticBehaviour(nearest.Item1, nearest.Item2, canMove, canAttack);
         }
@@ -146,7 +166,12 @@ public class Cultist : Character
                 Agent.SetDestination(target);
             }
 
-            shooter.target = target;
+            shooter.target = target + new Vector3
+            (
+                Random.Range(-fanaticAimDebuff, fanaticAimDebuff),
+                Random.Range(-fanaticAimDebuff, fanaticAimDebuff),
+                0.0f
+            );
             shooter.StartShooting();
         }
         else

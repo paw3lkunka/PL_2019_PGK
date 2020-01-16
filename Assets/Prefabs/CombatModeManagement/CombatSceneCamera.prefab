@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7445830758222196401}
   - component: {fileID: 7445830758222196302}
   - component: {fileID: 7445830758222196403}
+  - component: {fileID: 4700553753453899500}
   m_Layer: 0
   m_Name: CombatSceneCamera
   m_TagString: MainCamera
@@ -91,8 +92,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7445830758222196303}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47847726f7978104f94f2fbd4d43d8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4700553753453899500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445830758222196303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d69a91594ef36419f925689892d8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

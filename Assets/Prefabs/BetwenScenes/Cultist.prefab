@@ -199,6 +199,11 @@ MonoBehaviour:
   characterState: 0
   healthTextEmitter: {fileID: 7219727147023758479}
   fatihTextEemitter: {fileID: 5986286555209186250}
+  isFanatic: 0
+  fanaticState: 0
+  fanaticStateEnterChance: 0.0005
+  fanaticStateExitChance: 0.0002
+  fanaticAimDebuff: 0.1
 --- !u!58 &2659117062321255352
 CircleCollider2D:
   m_ObjectHideFlags: 0
