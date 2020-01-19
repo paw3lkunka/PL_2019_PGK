@@ -22,9 +22,14 @@ public class RhythmModule : MonoBehaviour
         //drumSourceA.clip = lightDrumTracks[0];
     }
 
-    private void Start()
+    private void OnEnable()
     {
         AudioTimeline.Instance.OnBeat += PlayHat;
+    }
+
+    private void OnDisable()
+    {
+        AudioTimeline.Instance.OnBeat -= PlayHat;
     }
 
     public void PlayHat(bool isMain)

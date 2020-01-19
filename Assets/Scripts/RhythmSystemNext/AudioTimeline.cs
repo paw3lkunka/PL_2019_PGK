@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum BeatState { None, Bad, Good, Great, Perfect };
 public enum BarState { None, Average, Good, Perfect, Failed };
-public enum TimelineState { None, Countup, Playing, Interrupted };
+public enum TimelineState { None, Countup, PauseCountup, Playing, Paused, Interrupted };
 
 public class AudioTimeline : MonoBehaviour
 {
@@ -13,6 +13,9 @@ public class AudioTimeline : MonoBehaviour
     [Header("Timeline setup")]
     [SerializeField] private double songBpm = 80;
     [SerializeField] private int beatsPerBar = 4;
+    [Header("Timing and delays")]
+    [Tooltip("Time after failed beat for timeline to resume playing")]
+    [SerializeField] private int failedBeatResetOffset = 4;
 #pragma warning restore
     public int BeatsPerBar => beatsPerBar;
     public double SongBpm => songBpm;
@@ -34,9 +37,9 @@ public class AudioTimeline : MonoBehaviour
     private TimelineState timelineState = TimelineState.None;
 
     // Rhythm window tolerance values
-    private double goodTolerance;
-    private double greatTolerance;
-    private double toleranceBias; // Use with caution as I don't have the patience to check if this value is correct
+    private double goodTolerance = 0.25f;
+    private double greatTolerance = 0.15f;
+    private double toleranceBias = 0.0f; // Use with caution as I don't have the patience to check if this value is correct
 
     // Audio timing control variables
     // Beat tracking
@@ -46,6 +49,15 @@ public class AudioTimeline : MonoBehaviour
     private int currentBeatNumber = 0;
     private bool hasEncounteredPerfect = false;
     private bool wasCurrentBeatHit = false;
+
+    // Pause saving moments
+    private double pauseMoment;
+    private double nextBeatPauseMoment;
+    private double TimeSincePause
+    {
+        get => AudioSettings.dspTime - pauseMoment;
+    }
+
 
     // Bar tracking
     private BeatState[] barBeatStates;
@@ -62,9 +74,16 @@ public class AudioTimeline : MonoBehaviour
         get => nextBeatMoment - TimeSinceSequenceStart;
     }
 
-    // Timeline events
+    // ----------------------------------------------------
+    // ---- Timeline events -------------------------------
+    
     public delegate void BeatEvent(bool isMain);
     public event BeatEvent OnBeat;
+    public event Action OnSequenceReset;
+    public event Action OnPause;
+    public event Action OnResume;
+
+    // ----------------------------------------------------
 
     private void Awake()
     {
@@ -83,30 +102,74 @@ public class AudioTimeline : MonoBehaviour
     private void Start()
     {
         TimelineInit();
-        SequenceStart();
     }
 
     public void TimelineInit()
     {
         beatDuration = 60.0d / songBpm;
+        SequenceStart();
     }
 
     public void TimelinePause()
     {
+        // Set the timeline state to paused
+        timelineState = TimelineState.Paused;
 
+        // Save beat moment variables
+        pauseMoment = AudioSettings.dspTime;
+        nextBeatPauseMoment = nextBeatMoment;
+
+        // Broadcast On Pause event
+        OnPause();
+
+        // Set timeline to not playing
+        isPlaying = false;
     }
 
     public void TimelineResume()
     {
+        // Set the timeline state to pause countup
+        timelineState = TimelineState.PauseCountup;
 
+        // Restore beat moment variables corrected by time passed
+        nextBeatMoment = nextBeatPauseMoment + TimeSincePause;
+
+        // Invoke On Resume event
+        OnResume();
+
+        // Set timeline to playing
+        isPlaying = true;
+
+        //TODO: Checking the number of beats for offset countup
     }
 
     private void SequenceStart()
     {
-        isPlaying = true;
-
+        // Reset sequence start moment and set next beat moment
         sequenceStartMoment = AudioSettings.dspTime;
         nextBeatMoment = beatDuration;
+        // Set timeline state to countup
+        timelineState = TimelineState.Countup;
+
+        // Set the timeline state to is playing
+        isPlaying = true;
+    }
+
+    public void SequenceReset()
+    {
+        // Set states accordingly
+        isPlaying = false;
+        timelineState = TimelineState.Interrupted;
+        // Invoke sequence reset event
+        OnSequenceReset();
+        // Start sequence reset coroutine
+        StartCoroutine(SequenceResetCoroutine());
+    }
+
+    private IEnumerator SequenceResetCoroutine()
+    {
+        yield return new WaitForSeconds((float)beatDuration * failedBeatResetOffset);
+        SequenceStart();
     }
 
     /// <summary>
@@ -115,7 +178,9 @@ public class AudioTimeline : MonoBehaviour
     /// </summary>
     public void BeatHit()
     {
-        if (wasCurrentBeatHit == false)
+        Debug.Log("Beat hit invoked");
+        if (wasCurrentBeatHit == false && 
+            (timelineState == TimelineState.Countup || timelineState == TimelineState.Playing))
         {
             // IF SOMETHING DOESN'T WORK YOU PROBABLY FORGOT TO RESET THIS FLAG
             wasCurrentBeatHit = true;
@@ -191,9 +256,8 @@ public class AudioTimeline : MonoBehaviour
                         currentBeatState = BeatState.Perfect;
 
                         // ---- Invoke the OnBeat event with corresponding parameter ----
-                        if (currentBeatNumber == beatsPerBar)
+                        if (currentBeatNumber >= beatsPerBar)
                         {
-                            currentBeatNumber = 0;
                             OnBeat(true);
                         }
                         else
@@ -214,6 +278,13 @@ public class AudioTimeline : MonoBehaviour
                 currentBeatState = BeatState.None;
                 hasEncounteredPerfect = false;
                 wasCurrentBeatHit = false;
+
+                nextBeatMoment += beatDuration;
+                currentBeatNumber++;
+                if (currentBeatNumber >= beatsPerBar)
+                {
+                    currentBeatNumber = 0;
+                }
             }
         }
     }
