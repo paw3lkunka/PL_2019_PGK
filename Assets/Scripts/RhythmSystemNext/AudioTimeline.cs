@@ -38,7 +38,7 @@ public class AudioTimeline : MonoBehaviour
 
     // Rhythm window tolerance values
     private double goodTolerance = 0.25f;
-    private double greatTolerance = 0.15f;
+    private double greatTolerance = 0.08f;
     private double toleranceBias = 0.0f; // Use with caution as I don't have the patience to check if this value is correct
 
     // Audio timing control variables
@@ -58,7 +58,6 @@ public class AudioTimeline : MonoBehaviour
         get => AudioSettings.dspTime - pauseMoment;
     }
 
-
     // Bar tracking
     private BeatState[] barBeatStates;
     private BarState lastBarState = BarState.None;
@@ -74,11 +73,19 @@ public class AudioTimeline : MonoBehaviour
         get => nextBeatMoment - TimeSinceSequenceStart;
     }
 
+    // ---- Combo handling --------------------------------
+
+    public int Combo { get; private set; } = 0;
+
     // ----------------------------------------------------
     // ---- Timeline events -------------------------------
-    
+
     public delegate void BeatEvent(bool isMain);
+    public delegate void BeatHitEvent(BeatState beatState, int beatNumber);
+    public delegate void BarEndEvent(BarState barState);
     public event BeatEvent OnBeat;
+    public event BeatHitEvent OnBeatHit;
+    public event BarEndEvent OnBarEnd;
     public event Action OnSequenceReset;
     public event Action OnPause;
     public event Action OnResume;
@@ -184,46 +191,11 @@ public class AudioTimeline : MonoBehaviour
         {
             // IF SOMETHING DOESN'T WORK YOU PROBABLY FORGOT TO RESET THIS FLAG
             wasCurrentBeatHit = true;
-
-            switch (currentBeatState)
-            {
-                case BeatState.None:
-                    // ---- On Beat State None ----
-                    // If beat is hit here, it counts as a miss and should:
-                    // - invoke appropriate method for handling fails
-                    // - invoke appropriate event for failed beat broadcast
-                    currentBeatState = BeatState.Bad;
-
-                    break;
-                case BeatState.Bad:
-                    // ---- On Beat State Bad ----
-                    // If beat is hit here, it is considered a duplicate hit in one beat
-                    // Should be handled similarly to Beat State None
-                
-
-                    break;
-                case BeatState.Good:
-                    // ---- On Beat State Good ----
-                    // This condition handles beat state normally
-                
-
-                    break;
-                case BeatState.Great:
-                    // ---- On Beat State Great ----
-                    // This condition handles beat state normally 
-
-
-                    break;
-                case BeatState.Perfect:
-                    // ---- On Beat State Perfect ----
-                    // This is a frame-perfect hit state and should be used only for special things
-
-
-                    break;
-
-            }
+            
             // Finally record the beat state for bar evaluation
             barBeatStates[currentBeatNumber] = currentBeatState;
+            // And send the event with current beat state attached to
+            OnBeatHit(currentBeatState, currentBeatNumber);
         }
 
     }
@@ -256,7 +228,7 @@ public class AudioTimeline : MonoBehaviour
                         currentBeatState = BeatState.Perfect;
 
                         // ---- Invoke the OnBeat event with corresponding parameter ----
-                        if (currentBeatNumber >= beatsPerBar)
+                        if (currentBeatNumber >= beatsPerBar - 1)
                         {
                             OnBeat(true);
                         }
@@ -275,17 +247,150 @@ public class AudioTimeline : MonoBehaviour
             }
             else if (hasEncounteredPerfect == true)
             {
+                // The reset state when the beat evaluation should take place
+                EvaluateBeat();
+
+                // Resetting state keeping variables for the next beat
                 currentBeatState = BeatState.None;
                 hasEncounteredPerfect = false;
                 wasCurrentBeatHit = false;
 
+                // Advancing counters to next beat moment
                 nextBeatMoment += beatDuration;
+
+                // Increment beat number and reset it if the full bar has passed
                 currentBeatNumber++;
                 if (currentBeatNumber >= beatsPerBar)
                 {
+                    EvaluateBar();
                     currentBeatNumber = 0;
                 }
             }
         }
     }
+
+    private void EvaluateBeat()
+    {
+        // Take everything into account and update bar beat status
+        if (!wasCurrentBeatHit)
+        {
+            //FailSequence();
+            barBeatStates[currentBeatNumber] = BeatState.None;
+        }
+
+        if (barBeatStates[currentBeatNumber] == BeatState.Bad)
+        {
+            FailSequence();
+            SequenceReset();
+        }
+    }
+
+    private void FailSequence()
+    {
+        Combo = 0;
+        SequenceReset();
+    }
+
+    private void EvaluateBar()
+    {
+        int good = 0, great = 0, perfect = 0, bad = 0, none = 0;
+
+        // Didn't take into account the fail states because they are managed earlier
+        // This may be a BUG place if something goes wrong
+        foreach (var state in barBeatStates)
+        {
+            switch (state)
+            {
+                case BeatState.None:
+                    none++;
+                    break;
+                case BeatState.Bad:
+                    bad++;
+                    break;
+                case BeatState.Good:
+                    good++;
+                    break;
+                case BeatState.Great:
+                    great++;
+                    break;
+                case BeatState.Perfect:
+                    perfect++;
+                    break;
+            }
+        }
+
+        if (bad > 0)
+        {
+            OnBarEnd(BarState.Failed);
+        }
+        else if (none > 0)
+        {
+            if (none == beatsPerBar)
+            {
+                OnBarEnd(BarState.None);
+            }
+            else
+            {
+                OnBarEnd(BarState.Failed);
+            }
+        }
+        else if (perfect == beatsPerBar)
+        {
+            Combo += 2;
+            OnBarEnd(BarState.Perfect);
+        }
+        else if (great == beatsPerBar)
+        {
+            Combo++;
+            OnBarEnd(BarState.Good);
+        }
+        else
+        {
+            Combo++;
+            OnBarEnd(BarState.Average);
+        }
+    }
 }
+
+
+//switch (currentBeatState)
+//{
+//case BeatState.None:
+//    // ---- On Beat State None ----
+//    // If beat is hit here, it counts as a miss and should:
+//    // - invoke appropriate method for handling fails
+//    // - invoke appropriate event for failed beat broadcast
+//    currentBeatState = BeatState.Bad;
+//    Combo = 0;
+//    SequenceReset();
+
+//    break;
+//case BeatState.Bad:
+//    // ---- On Beat State Bad ----
+//    // If beat is hit here, it is considered a duplicate hit in one beat
+//    // Should be handled similarly to Beat State None
+//    currentBeatState = BeatState.Bad; // Not necessary - potentially a lifesaver or a code breaker
+//    Combo = 0;
+//    SequenceReset();
+
+//    break;
+//case BeatState.Good:
+//    // ---- On Beat State Good ----
+//    // This condition handles beat state normally
+//    currentBeatState = BeatState.Good;
+
+//    break;
+//case BeatState.Great:
+//    // ---- On Beat State Great ----
+//    // This condition handles beat state normally 
+//    currentBeatState = BeatState.Great;
+
+//    break;
+//case BeatState.Perfect:
+//    // ---- On Beat State Perfect ----
+//    // This is a frame-perfect hit state and should be used only for special things
+//    currentBeatState = BeatState.Perfect;
+
+//    break;
+
+//}

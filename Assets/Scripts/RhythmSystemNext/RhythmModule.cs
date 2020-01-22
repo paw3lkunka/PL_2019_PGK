@@ -6,6 +6,7 @@ using UnityEngine;
 public class RhythmModule : MonoBehaviour
 {
 #pragma warning disable
+    [SerializeField] private bool playOffbeat = false;
     [SerializeField] private AudioClip countupHiHat;
     [SerializeField] private AudioClip countupKick;
     [SerializeField] private AudioPack[] drumPacks;
@@ -17,31 +18,25 @@ public class RhythmModule : MonoBehaviour
     {
         AudioSource[] audioSources = GetComponents<AudioSource>();
         rhythmSource = audioSources[0];
-        //drumSourceA = audioSources[1];
-        //drumSourceB = audioSources[2];
-        //drumSourceA.clip = lightDrumTracks[0];
     }
 
     private void OnEnable()
     {
-        AudioTimeline.Instance.OnBeat += PlayHat;
+        AudioTimeline.Instance.OnBeat += PlayCount;
     }
 
     private void OnDisable()
     {
-        AudioTimeline.Instance.OnBeat -= PlayHat;
+        AudioTimeline.Instance.OnBeat -= PlayCount;
     }
 
-    public void PlayHat(bool isMain)
+    public void PlayCount(bool isMain)
     {
-        if (isMain)
+        rhythmSource.PlayOneShot(countupKick);
+
+        if (playOffbeat && isMain)
         {
-            rhythmSource.PlayOneShot(countupKick);
             StartCoroutine(OffbeatHat());
-        }
-        else
-        {
-            rhythmSource.PlayOneShot(countupKick);
         }
     }
 

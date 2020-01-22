@@ -6,7 +6,7 @@ public class InputTest : MonoBehaviour
 {
     void Update()
     {
-        if (Input.anyKey)
+        if (Input.anyKeyDown)
         {
             AudioTimeline.Instance.BeatHit();
         }

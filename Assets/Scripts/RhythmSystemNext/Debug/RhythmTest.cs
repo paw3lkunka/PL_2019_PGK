@@ -1,24 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RhythmTest : MonoBehaviour
 {
-    public GameObject rhythmIndicator;
+    public Image rhythmIndicator;
 
     private void Start()
     {
-        rhythmIndicator.SetActive(false);
+        rhythmIndicator = GameObject.Find("RhythmIndicator").GetComponent<Image>();
+        if (rhythmIndicator.IsRealNull())
+        { 
+            rhythmIndicator = FindObjectOfType<Image>(); 
+        }
+        rhythmIndicator.enabled = false;
     }
 
     private void OnEnable()
     {
         AudioTimeline.Instance.OnBeat += Indicate;
+        AudioTimeline.Instance.OnBeatHit += VisualizeBeatHit;
     }
 
     private void OnDisable()
     {
         AudioTimeline.Instance.OnBeat -= Indicate;
+        AudioTimeline.Instance.OnBeatHit -= VisualizeBeatHit;
+    }
+
+    private void VisualizeBeatHit(BeatState state, int beatNumber)
+    {
+        switch (state)
+        {
+            case BeatState.None:
+                rhythmIndicator.color = Color.black;
+                break;
+            case BeatState.Bad:
+                rhythmIndicator.color = Color.red;
+                break;
+            case BeatState.Good:
+                rhythmIndicator.color = Color.cyan;
+                break;
+            case BeatState.Great:
+                rhythmIndicator.color = Color.green;
+                break;
+            case BeatState.Perfect:
+                rhythmIndicator.color = Color.magenta;
+                break;
+        }
+        Indicate(false);
     }
 
     private void Indicate(bool isMain)
@@ -28,9 +59,11 @@ public class RhythmTest : MonoBehaviour
 
     private IEnumerator IndicateCoroutine()
     {
-        rhythmIndicator.SetActive(true);
+        rhythmIndicator.enabled = true;
         yield return new WaitForEndOfFrame();
-        rhythmIndicator.SetActive(false);
+        yield return new WaitForEndOfFrame();
+        rhythmIndicator.enabled = false;
+        rhythmIndicator.color = Color.white;
     }
 }
 
