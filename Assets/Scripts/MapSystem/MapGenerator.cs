@@ -23,19 +23,32 @@ public class MapGenerator : MonoBehaviour
     public Vector2Int cellSize = new Vector2Int(30, 30);
     public Vector2Int randomOffsetRange = new Vector2Int(0, 0);
 
-    [HideInInspector]public int emptyChance;
+    [HideInInspector] public int emptyChance;
+    [HideInInspector] public bool isValid;
 
     private void OnValidate()
     {
         grid = GetComponent<Grid>();
-        if( !ValidatePrefabs() )
-        {
-            Debug.LogError("Location prefabs validation failed!");
-        }
+        ValidatePrefabs();
+
+        if (segments.x < 1)
+            segments.x = 1;
+        if (segments.y < 1)
+            segments.y = 1;
+
+        if (cellSize.x < 1)
+            cellSize.x = 1;
+        if (cellSize.y < 1)
+            cellSize.y = 1;
+
+        if (randomOffsetRange.x < 0)
+            randomOffsetRange.x = 0;
+        if (randomOffsetRange.y < 0)
+            randomOffsetRange.y = 0;
     }
 
     [ContextMenu("Validate")]
-    public bool ValidatePrefabs()
+    public void ValidatePrefabs()
     {
         foreach (GameObject prefab in locationPrefabs)
         {
@@ -43,11 +56,11 @@ public class MapGenerator : MonoBehaviour
 
             if (scriptsCount != 1)
             {
+                isValid = false;
                 throw new LocationValidationException(prefab, scriptsCount);
             }
         }
-        Debug.Log("Location prefabs validated");
-        return true;
+        isValid = true;
     }
 
     [ContextMenu("Generate")]
@@ -73,6 +86,9 @@ public class MapGenerator : MonoBehaviour
         range += emptyChance;
         chances.Add(emptyChance);
 
+        int halfWidth = (segments.x-1) * cellSize.x / 2;
+        int halfHight = (segments.y-1) * cellSize.y / 2;
+
         for (int i = 0; i < segments.x; i++)
         {
             for (int j = 0; j < segments.y; j++)
@@ -81,8 +97,8 @@ public class MapGenerator : MonoBehaviour
                 int index = 0;
 
                 Vector3 position = new Vector3(i * cellSize.x, j * cellSize.y);
-                position.x += Random.Range(-randomOffsetRange.x, randomOffsetRange.x);
-                position.y += Random.Range(-randomOffsetRange.y, randomOffsetRange.y);
+                position.x += Random.Range(-randomOffsetRange.x, randomOffsetRange.x) - halfWidth;
+                position.y += Random.Range(-randomOffsetRange.y, randomOffsetRange.y) - halfHight;
                 
                 while (chances[index] < randomNumber)
                 {
