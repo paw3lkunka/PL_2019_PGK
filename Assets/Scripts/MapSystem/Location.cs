@@ -5,7 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class Location : MonoBehaviour
 {
+    [HideInInspector]
     public int spawnChance;
+    [HideInInspector]
+    public int generatorHashCode;
 
     private void OnValidate()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 class LocationValidationException : System.Exception
 {
@@ -14,6 +15,7 @@ public class MapGenerator : MonoBehaviour
 {
     public bool useCustomSeed = false;
     public int seed;
+    public int orderInLayer;
 
     public List<GameObject> locationPrefabs;
 
@@ -109,6 +111,8 @@ public class MapGenerator : MonoBehaviour
                 try
                 {
                     GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
+                    instance.GetComponentInChildren<Location>().generatorHashCode = GetHashCode();
+                    instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
                     DestroyImmediate(instance.GetComponent<Grid>());
                 }
                 catch( System.ArgumentOutOfRangeException exc )
@@ -124,75 +128,12 @@ public class MapGenerator : MonoBehaviour
     [ContextMenu("Clear")]
     public void Clear()
     {
-        foreach( Transform child in grid.GetComponentsInChildren<Transform>())
+        foreach( var child in grid.GetComponentsInChildren<Location>())
         {
-            if(child.name.Contains("(Clone)"))
+            if(child.generatorHashCode == GetHashCode())
             {
                 DestroyImmediate(child.gameObject);
             }
         }
     }
 }
-
-
-/*
-[RequireComponent(typeof(Grid))]
-public class MapGenerator : MonoBehaviour
-{
-    private Grid grid;
-
-    Vector2Int segments = new Vector2Int(5, 5);
-    Vector2Int cellSize = new Vector2Int(30, 30);
-    Vector2Int randomOffsetRange = new Vector2Int(0, 0);
-
-    public GameObject LocationsGridPrefab;
-
-    private void Awake()
-    {
-    }
-
-    private void Start()
-    {
-
-    }
-
-    [ContextMenu("Generate")]
-    private void Generate()
-    {
-        List<int> chances = new List<int>();
-        int range = 0;
-
-        foreach( Location location in LocationsGridPrefab.GetComponentsInChildren<Location>() )
-        {
-            int chance = location.SpawnChance;
-            range += chance;
-            chances.Add(chance);
-        }
-
-        for (int i = 0; i < segments.x; i++)
-        {
-            for (int j = 0; j < segments.y; j++)
-            {
-                int randomNumber = Random.Range(0, range);
-                int index = 0;
-
-                Vector3 position = new Vector3(i*cellSize.x, j*cellSize.y);
-                
-                Debug.Log(chances.Count);
-
-                while ( chances[index] < randomNumber)
-                {
-                    randomNumber -= chances[index];
-                    index++;
-                }
-
-                Debug.Log("index: " + index);
-
-                Instantiate(LocationsGridPrefab.transform.GetChild(index).gameObject, position, Quaternion.identity, grid.transform);
-            }
-        }
-    }
-
-
-}
-*/
