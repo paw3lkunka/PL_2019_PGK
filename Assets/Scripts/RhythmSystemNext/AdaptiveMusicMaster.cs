@@ -38,8 +38,11 @@ public class AdaptiveMusicMaster : MonoBehaviour
     private AudioPack currentHeavyMusicPack;
 
     private AudioClip currentDrumClip;
+    public AudioClip CurrentDrumClip => currentDrumClip;
     private AudioClip currentLightMusicClip;
+    public AudioClip CurrentLightMusicClip => currentLightMusicClip;
     private AudioClip currentHeavyMusicClip;
+    public AudioClip CurrentHeavyMusicClip => currentHeavyMusicClip;
 
     private void OnEnable()
     {

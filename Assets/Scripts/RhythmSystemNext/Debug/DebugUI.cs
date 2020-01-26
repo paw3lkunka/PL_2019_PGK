@@ -13,6 +13,8 @@ public class DebugUI : MonoBehaviour
     public TextMeshProUGUI textMesh;
     public Image[] images;
 
+    public AdaptiveMusicMaster adaptiveMusic;
+
     private BarState barState = BarState.None;
     private BeatState beatState = BeatState.None;
     private int beatNumber = 0;
@@ -57,6 +59,12 @@ public class DebugUI : MonoBehaviour
             textMesh.text += "Beat state: " + beatState.ToString() + "\n";
         if (displayBeatNumber)
             textMesh.text += "Beat number: " + beatNumber + "\n";
+        if (adaptiveMusic != null && !adaptiveMusic.CurrentDrumClip.IsRealNull())
+            textMesh.text += "Drum track: " + adaptiveMusic.CurrentDrumClip.name + "\n";
+        //if (!lightMusicSource.IsRealNull() && !lightMusicSource.clip.IsRealNull())
+        //    textMesh.text += "Drum track: " + lightMusicSource.clip.name + "\n";
+        if (adaptiveMusic != null && !adaptiveMusic.CurrentHeavyMusicClip.IsRealNull())
+            textMesh.text += "Heavy track: " + adaptiveMusic.CurrentHeavyMusicClip.name + "\n";
     }
 
 }
