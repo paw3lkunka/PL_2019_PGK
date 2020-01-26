@@ -9,15 +9,13 @@ public class RhythmModule : MonoBehaviour
     [SerializeField] private bool playOffbeat = false;
     [SerializeField] private AudioClip countupHiHat;
     [SerializeField] private AudioClip countupKick;
-    [SerializeField] private AudioPack[] drumPacks;
 #pragma warning restore
 
     private AudioSource rhythmSource;
 
     private void Awake()
     {
-        AudioSource[] audioSources = GetComponents<AudioSource>();
-        rhythmSource = audioSources[0];
+        rhythmSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()

@@ -8,10 +8,14 @@ public class DebugUI : MonoBehaviour
 {
     public bool displayCombo = true;
     public bool displayBarState = true;
+    public bool displayBeatState = true;
+    public bool displayBeatNumber = true;
     public TextMeshProUGUI textMesh;
     public Image[] images;
 
     private BarState barState = BarState.None;
+    private BeatState beatState = BeatState.None;
+    private int beatNumber = 0;
 
     void Start()
     {
@@ -22,16 +26,24 @@ public class DebugUI : MonoBehaviour
     private void OnEnable()
     {
         AudioTimeline.Instance.OnBarEnd += BarDebug;
+        AudioTimeline.Instance.OnBeatHit += BeatDebug;
     }
 
     private void OnDisable()
     {
         AudioTimeline.Instance.OnBarEnd -= BarDebug;
+        AudioTimeline.Instance.OnBeatHit -= BeatDebug;
     }
 
     private void BarDebug(BarState barState)
     {
         this.barState = barState;
+    }
+
+    private void BeatDebug(BeatState beatState, int beatNumber)
+    {
+        this.beatState = beatState;
+        this.beatNumber = beatNumber;
     }
 
     private void Update()
@@ -41,6 +53,10 @@ public class DebugUI : MonoBehaviour
             textMesh.text += "Combo: " + AudioTimeline.Instance.Combo + "\n";
         if (displayBarState)
             textMesh.text += "Bar state: " + barState.ToString() + "\n";
+        if (displayBeatState)
+            textMesh.text += "Beat state: " + beatState.ToString() + "\n";
+        if (displayBeatNumber)
+            textMesh.text += "Beat number: " + beatNumber + "\n";
     }
 
 }

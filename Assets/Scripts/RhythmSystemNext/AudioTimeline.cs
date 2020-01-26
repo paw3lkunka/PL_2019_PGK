@@ -27,7 +27,7 @@ public class AudioTimeline : MonoBehaviour
     // Timeline states
 
     // ---- Critical flag used for tracking if the timeline engine should be played or paused ----
-    //      UNDER NO CIRCUMSTANCED REFER TO THIS VARIABLE DIRECTLY, IT SHOULD ONLY BE CHANGED
+    //      UNDER NO CIRCUMSTANCE REFER TO THIS VARIABLE DIRECTLY, IT SHOULD ONLY BE CHANGED
     //      BY CORRESPONDING METHODS
     
         private bool isPlaying = false;
@@ -46,9 +46,11 @@ public class AudioTimeline : MonoBehaviour
     private BeatState currentBeatState = BeatState.None;
     private double beatDuration;
     private double nextBeatMoment;
+    public double NextBeatMoment => nextBeatMoment;
     private int currentBeatNumber = 0;
     private bool hasEncounteredPerfect = false;
     private bool wasCurrentBeatHit = false;
+    private bool wasSequenceInitiated = false;
 
     // Pause saving moments
     private double pauseMoment;
@@ -167,6 +169,7 @@ public class AudioTimeline : MonoBehaviour
         // Set states accordingly
         isPlaying = false;
         timelineState = TimelineState.Interrupted;
+        lastBarState = BarState.Failed;
         // Invoke sequence reset event
         OnSequenceReset();
         // Start sequence reset coroutine
@@ -189,9 +192,13 @@ public class AudioTimeline : MonoBehaviour
         if (wasCurrentBeatHit == false && 
             (timelineState == TimelineState.Countup || timelineState == TimelineState.Playing))
         {
+            if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
+            {
+                SequenceReset();
+            }
+
             // IF SOMETHING DOESN'T WORK YOU PROBABLY FORGOT TO RESET THIS FLAG
             wasCurrentBeatHit = true;
-            
             // Finally record the beat state for bar evaluation
             barBeatStates[currentBeatNumber] = currentBeatState;
             // And send the event with current beat state attached to
@@ -274,14 +281,12 @@ public class AudioTimeline : MonoBehaviour
         // Take everything into account and update bar beat status
         if (!wasCurrentBeatHit)
         {
-            //FailSequence();
             barBeatStates[currentBeatNumber] = BeatState.None;
         }
 
         if (barBeatStates[currentBeatNumber] == BeatState.Bad)
         {
             FailSequence();
-            SequenceReset();
         }
     }
 
@@ -339,7 +344,7 @@ public class AudioTimeline : MonoBehaviour
             Combo += 2;
             OnBarEnd(BarState.Perfect);
         }
-        else if (great == beatsPerBar)
+        else if (good == 0 && great > 0)
         {
             Combo++;
             OnBarEnd(BarState.Good);
