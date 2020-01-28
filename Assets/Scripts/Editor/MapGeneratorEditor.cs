@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 [CustomEditor(typeof(MapGenerator))]
 public class MapGeneratorEditor : Editor
@@ -61,16 +62,27 @@ public class MapGeneratorEditor : Editor
         {
             EditorGUI.indentLevel++;
             {
+                int index = 0;
                 foreach (GameObject prefab in generator.locationPrefabs)
                 {
                     Location location = prefab.GetComponent<Location>();
-                    int inputValue = EditorGUILayout.IntField(prefab.name, location.spawnChance);
-                    location.spawnChance = inputValue > 0 ? inputValue : 0;
+                    int value;
+                    try
+                    {
+                        value = generator.spawnChances[index];
+                    }
+                    catch
+                    {
+                        value = 0;
+                    }
+                    int newValue = EditorGUILayout.IntField(prefab.name, value);
+                    generator.spawnChances[index] = newValue > 0 ? newValue : 0;
+                    index++;
                 }
                 generator.emptyChance = EditorGUILayout.IntField("empty", generator.emptyChance);
+                EditorUtility.SetDirty(target);
             }
             EditorGUI.indentLevel--;
         }
-
     }
 }

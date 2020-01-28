@@ -14,6 +14,8 @@ class LocationValidationException : System.Exception
 public class MapGenerator : MonoBehaviour
 {
     public bool useCustomSeed = false;
+    public bool forceEmptyCentre = false;
+
     public int seed;
     public int orderInLayer;
 
@@ -27,9 +29,14 @@ public class MapGenerator : MonoBehaviour
 
     [HideInInspector] public int emptyChance;
     [HideInInspector] public bool isValid;
+    [HideInInspector] public List<int> spawnChances = new List<int>();
+
+    public int generationID;
 
     private void OnValidate()
     {
+        spawnChances.Resize(locationPrefabs.Count, 0);
+
         grid = GetComponent<Grid>();
         ValidatePrefabs();
 
@@ -68,6 +75,7 @@ public class MapGenerator : MonoBehaviour
     [ContextMenu("Generate")]
     public void Generate()
     {
+
         if(!useCustomSeed)
         {
             seed = Random.Range(int.MinValue, int.MaxValue);
@@ -78,9 +86,9 @@ public class MapGenerator : MonoBehaviour
         List<int> chances = new List<int>() ;
         int range = 0;
 
-        foreach (GameObject LocationObject in locationPrefabs)
+        for(int i=0; i< locationPrefabs.Count; i++ )
         {
-            int chance = LocationObject.GetComponent<Location>().spawnChance;
+            int chance = spawnChances[i];
             range += chance;
             chances.Add(chance);
         }
@@ -111,15 +119,20 @@ public class MapGenerator : MonoBehaviour
                 try
                 {
                     GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
-                    instance.GetComponentInChildren<Location>().generatorHashCode = GetHashCode();
+                    instance.GetComponentInChildren<Location>().generationID = (int)generationID;
                     instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
-                    DestroyImmediate(instance.GetComponent<Grid>());
+                    //DestroyImmediate(instance.GetComponent<Grid>());
                 }
                 catch( System.ArgumentOutOfRangeException exc )
                 {
                     //if index == locationPrefabs.Count cell should be empty - it's normal situation, else rethrow
                     if (index != locationPrefabs.Count)
                         throw exc;
+                }
+
+                if (forceEmptyCentre)
+                {
+                    freeCentre();
                 }
             }
         }
@@ -130,10 +143,53 @@ public class MapGenerator : MonoBehaviour
     {
         foreach( var child in grid.GetComponentsInChildren<Location>())
         {
-            if(child.generatorHashCode == GetHashCode())
+            if(child.generationID == generationID)
             {
                 DestroyImmediate(child.gameObject);
             }
         }
+        
+        generationID = GetHashCode();
+    }
+
+    private void freeCentre()
+    {
+        foreach( Location loc in transform.GetComponentsInChildren<Location>() )
+        {
+            if( loc.generationID == generationID )
+            {
+                Vector2 halfSize = (Vector2)cellSize * 0.5f;
+                Vector2 pos = loc.transform.localPosition;
+
+                if (pos.x < halfSize.x && pos.x > -halfSize.x && pos.y < halfSize.y && pos.y > -halfSize.y )
+                {
+                    pos.x = pos.x > 0 ? halfSize.x : -halfSize.x;
+                    pos.y = pos.y > 0 ? halfSize.y : -halfSize.y;
+                }
+
+                loc.transform.localPosition = pos;
+            }
+        }
+
+    }
+}
+
+public static class ListExtra
+{
+    public static void Resize<T>(this List<T> list, int sz, T c)
+    {
+        int cur = list.Count;
+        if (sz < cur)
+            list.RemoveRange(sz, cur - sz);
+        else if (sz > cur)
+        {
+            if (sz > list.Capacity)//this bit is purely an optimisation, to avoid multiple automatic capacity changes.
+                list.Capacity = sz;
+            list.AddRange(System.Linq.Enumerable.Repeat(c, sz - cur));
+        }
+    }
+    public static void Resize<T>(this List<T> list, int sz) where T : new()
+    {
+        Resize(list, sz, new T());
     }
 }
