@@ -49,7 +49,7 @@ public class PatrollingEnemy : Enemy
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.cyan;
+        Gizmos.color = Color.black;
         foreach (Vector2 p in patrolPoints)
         {
             Gizmos.DrawSphere(p, .2f);
