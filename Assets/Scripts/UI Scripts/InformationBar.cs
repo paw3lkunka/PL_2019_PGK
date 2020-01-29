@@ -12,7 +12,10 @@ public class InformationBar : MonoBehaviour
     public int MaxLifeTime { get; private set; }
 
 
-    public static readonly string[] information = {"A new cultist arrived to your tribe!", "Your cultist abandoned you, because of low faith level", "Your cultist died form dehydration, HOW DARE YOU", "You cultist just died ;c"};
+    public static readonly string[] information = {"A new cultist arrived to your tribe!", 
+                                                    "Your cultist abandoned you,\n because of low faith level", 
+                                                    "Your cultist died form dehydration,\n HOW DARE YOU", 
+                                                    "You cultist just died ;c"};
 
     public void UpdateBar()
     {

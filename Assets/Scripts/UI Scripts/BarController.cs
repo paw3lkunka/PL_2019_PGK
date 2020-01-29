@@ -97,22 +97,25 @@ public class BarController : MonoBehaviour
 
     public void ShowLastTen()
     {
-        showLast = !showLast;
-        if(showLast)
+        if(instances.Count > 0)
         {
-            instances[0].SetActive(false);
-            for(int i = 0; i < 10 && i < instances.Count; i++)
+            showLast = !showLast;
+            if (showLast)
             {
-                instances[i].SetActive(true);
-                float y = 50 * canvas.transform.localScale.y + canvas.transform.localScale.y * instances[i].GetComponent<RectTransform>().rect.height * i;
-                instances[i].transform.position = new Vector3(0, y, 0);
+                instances[0].SetActive(false);
+                for (int i = 0; i < 10 && i < instances.Count; i++)
+                {
+                    instances[i].SetActive(true);
+                    float y = 50 * canvas.transform.localScale.y + canvas.transform.localScale.y * instances[i].GetComponent<RectTransform>().rect.height * i;
+                    instances[i].transform.position = new Vector3(0, y, 0);
+                }
             }
-        }
-        else
-        {
-            for(int i = 0; i < 10 && i < instances.Count; ++i)
+            else
             {
-                instances[i].SetActive(false);
+                for (int i = 0; i < 10 && i < instances.Count; ++i)
+                {
+                    instances[i].SetActive(false);
+                }
             }
         }
     }

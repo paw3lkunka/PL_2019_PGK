@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: 150, y: 40}
+  m_AnchoredPosition: {x: 0, y: -11}
+  m_SizeDelta: {x: 150, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7898740202711137910
 CanvasRenderer:
@@ -92,8 +92,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 0.13686371}
   m_textInfo:
     textComponent: {fileID: 4442125081139466782}
     characterCount: 4
@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 2442720212487520254}
   - component: {fileID: 5573493533362316226}
   - component: {fileID: 6251599484664865394}
+  - component: {fileID: 5310443320782090820}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -194,7 +195,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 400}
+  m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5573493533362316226
 CanvasRenderer:
@@ -232,6 +233,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5310443320782090820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572281814590798445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b39aa0cc32124944be5a7ee90016c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlotText: []
 --- !u!1 &5759907447699433961
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +259,7 @@ GameObject:
   - component: {fileID: 5759907447699433963}
   - component: {fileID: 5759907447699433960}
   m_Layer: 5
-  m_Name: TutorialInfos
+  m_Name: PlotInfoUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -307,8 +321,8 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1600, y: 768}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -423,11 +437,11 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_textAlignment: 514
@@ -521,8 +535,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 450, y: 270}
+  m_AnchoredPosition: {x: 1.1, y: 6.6}
+  m_SizeDelta: {x: 275.56, y: 137.79}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6007361703927585664
 CanvasRenderer:
@@ -550,15 +564,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec libero
+  m_text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec libero
     volutpat, euismod libero nec, iaculis massa. Sed gravida massa sed neque dapibus
     tincidunt. Sed in felis est. Quisque porta dapibus posuere. Nulla iaculis vehicula
     egestas. Mauris eu eros ipsum. Sed imperdiet sit amet leo vitae euismod. Pellentesque
     enim urna, mattis sit amet elementum sed, molestie ac augue. Duis magna lorem,
-    blandit vitae metus eu, posuere tempus tortor. Maecenas ultricies eros id ligula
-    dignissim, quis ornare felis lacinia. Aliquam vel erat enim. Maecenas nec elit
-    efficitur arcu consectetur dictum non nec orci. Vivamus sit amet libero eget metus
-    placerat ultricies id a orci. \u200B"
+    blandit vitae metus eu, posuere tempus tortor. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0acc820450c1f1343b905b09e2cd9cc5, type: 2}
   m_sharedMaterial: {fileID: -1753381669728134186, guid: 0acc820450c1f1343b905b09e2cd9cc5,
@@ -587,11 +598,11 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 15.7
+  m_fontSize: 10.75
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 12
+  m_fontSizeMin: 10
   m_fontSizeMax: 30
   m_fontStyle: 0
   m_textAlignment: 257
@@ -625,15 +636,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0.79724693, y: -0.5289865, z: 0.5154552, w: 0.17596266}
   m_textInfo:
     textComponent: {fileID: 3141558897268876309}
-    characterCount: 679
+    characterCount: 452
     spriteCount: 0
-    spaceCount: 103
-    wordCount: 103
+    spaceCount: 68
+    wordCount: 68
     linkCount: 0
-    lineCount: 12
+    lineCount: 9
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -687,8 +698,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 40}
-  m_SizeDelta: {x: 180, y: 40}
+  m_AnchoredPosition: {x: -2.3, y: 17.7}
+  m_SizeDelta: {x: 120, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5652394716532907029
 CanvasRenderer:
@@ -768,4 +779,15 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114311979570921416}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5310443320782090820}
+        m_MethodName: NextText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
