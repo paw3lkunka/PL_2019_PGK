@@ -94,10 +94,13 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     
     public Vector2 savedPosition;
+
     /// <summary>
     /// List of cultists (with leader at [0] )
     /// </summary>
     public List<GameObject> ourCrew;
+
+    public int ShrinesVisited { get; set; }
 
     private void Awake()
     {
@@ -175,6 +178,7 @@ public class GameManager : MonoBehaviour
         cultistNumber = initialCultistsNumber;
         water = 1.0f;
         faith = 0.5f;
+        ShrinesVisited = 0;
     }
 
     void GameOver()
