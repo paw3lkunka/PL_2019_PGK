@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BarController : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class BarController : MonoBehaviour
             instanceBeginTime = Time.time;
             lastCultistNumber = GameManager.Instance.cultistNumber;
         }
-        else if(lastCultistNumber > GameManager.Instance.cultistNumber && GameManager.Instance.Faith < 0.2f)
+        else if(lastCultistNumber > GameManager.Instance.cultistNumber && GameManager.Instance.Faith < 0.2f && SceneManager.GetActiveScene().name.Equals("MainMap"))
         {
             shiftTable();
             instances.Insert(0, Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity, canvas.transform));

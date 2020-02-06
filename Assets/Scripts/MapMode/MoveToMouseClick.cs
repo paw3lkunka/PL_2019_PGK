@@ -17,7 +17,7 @@ public class MoveToMouseClick : MonoBehaviour
         if(Input.GetMouseButtonDown(0) && !GameManager.Gui.isMouseOver)
             targetPos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        if ((Vector2)transform.position != targetPos && GameManager.Instance.ourCrew.Count > 0)
+        if ((Vector2)transform.position != targetPos && GameManager.Instance.cultistNumber > 0)
         {
             DottedLine.Instance.DrawDottedLine(targetPos, transform.position);
             transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);

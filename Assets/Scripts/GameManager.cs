@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     public int initialCultistsNumber;
     /// <summary>
-    /// Number of cultists (without leader)
+    /// Number of cultists (with leader)
     /// </summary>
     public int cultistNumber;
 
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (ourCrew.Count <= 0 && gameOverScreenInstance == null)
+        if (cultistNumber <= 0 && gameOverScreenInstance == null)
         {
             GameOver();
         }
@@ -175,6 +175,7 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(cultistPrefab,Vector3.zero,Quaternion.identity);
         }
+        cultistNumber += 1;
     }
 
     private void ResetIndicatorsValues()

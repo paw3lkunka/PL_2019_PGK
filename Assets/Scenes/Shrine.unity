@@ -192,6 +192,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1679860599912029666, guid: 0357eb8436591624499dc93282e9badd,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1679860599912029677, guid: 0357eb8436591624499dc93282e9badd,
         type: 3}
       propertyPath: patrolPoints.Array.size
@@ -216,11 +221,6 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolPoints.Array.data[1].y
       value: -8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1679860599912029666, guid: 0357eb8436591624499dc93282e9badd,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0357eb8436591624499dc93282e9badd, type: 3}
@@ -302,6 +302,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1679860599912029666, guid: 0357eb8436591624499dc93282e9badd,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1679860599912029677, guid: 0357eb8436591624499dc93282e9badd,
         type: 3}
       propertyPath: patrolPoints.Array.size
@@ -326,11 +331,6 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolPoints.Array.data[1].y
       value: -11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1679860599912029666, guid: 0357eb8436591624499dc93282e9badd,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0357eb8436591624499dc93282e9badd, type: 3}
@@ -476,6 +476,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9000724666377562216, guid: 0b27d2dfa6df4ce42bf30127009f95da,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9000724666377562215, guid: 0b27d2dfa6df4ce42bf30127009f95da,
         type: 3}
       propertyPath: patrolPoints.Array.size
@@ -524,11 +529,6 @@ PrefabInstance:
     - target: {fileID: 8291873734851684470, guid: 0b27d2dfa6df4ce42bf30127009f95da,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000724666377562216, guid: 0b27d2dfa6df4ce42bf30127009f95da,
-        type: 3}
-      propertyPath: m_Radius
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -847,6 +847,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9000724666377562216, guid: 0b27d2dfa6df4ce42bf30127009f95da,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9000724666377562215, guid: 0b27d2dfa6df4ce42bf30127009f95da,
         type: 3}
       propertyPath: patrolPoints.Array.size
@@ -871,11 +876,6 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolPoints.Array.data[1].y
       value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000724666377562216, guid: 0b27d2dfa6df4ce42bf30127009f95da,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b27d2dfa6df4ce42bf30127009f95da, type: 3}
@@ -1053,7 +1053,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5292008099937044697, guid: d0388d90193663f46903d42f1b000517,
+        type: 3}
+      propertyPath: healthTextEmitter
+      value: 
+      objectReference: {fileID: 5458302710109219631, guid: d28186ea97da95543a83cfbbff84aead,
+        type: 3}
+    - target: {fileID: 5292008099937044697, guid: d0388d90193663f46903d42f1b000517,
+        type: 3}
+      propertyPath: fatihTextEemitter
+      value: 
+      objectReference: {fileID: 5458302710109219631, guid: d28186ea97da95543a83cfbbff84aead,
+        type: 3}
+    - target: {fileID: 5292008099937044697, guid: d0388d90193663f46903d42f1b000517,
+        type: 3}
+      propertyPath: eyesightRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5292008099937044697, guid: d0388d90193663f46903d42f1b000517,
+        type: 3}
+      propertyPath: shootingRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5292008099937044697, guid: d0388d90193663f46903d42f1b000517,
+        type: 3}
+      propertyPath: chaseRange
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5292008099937044697, guid: d0388d90193663f46903d42f1b000517,
+        type: 3}
+      propertyPath: hp
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5292008099937044697, guid: d0388d90193663f46903d42f1b000517,
+        type: 3}
+      propertyPath: defence
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3993020631848125837, guid: d0388d90193663f46903d42f1b000517, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d0388d90193663f46903d42f1b000517, type: 3}
 --- !u!4 &759217405 stripped
 Transform:
@@ -1528,6 +1566,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9000724666377562216, guid: 0b27d2dfa6df4ce42bf30127009f95da,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9000724666377562215, guid: 0b27d2dfa6df4ce42bf30127009f95da,
         type: 3}
       propertyPath: patrolPoints.Array.size
@@ -1552,11 +1595,6 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolPoints.Array.data[1].y
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000724666377562216, guid: 0b27d2dfa6df4ce42bf30127009f95da,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b27d2dfa6df4ce42bf30127009f95da, type: 3}
@@ -11224,6 +11262,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9000724666377562216, guid: 0b27d2dfa6df4ce42bf30127009f95da,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9000724666377562215, guid: 0b27d2dfa6df4ce42bf30127009f95da,
         type: 3}
       propertyPath: patrolPoints.Array.size
@@ -11248,11 +11291,6 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolPoints.Array.data[1].y
       value: -9
-      objectReference: {fileID: 0}
-    - target: {fileID: 9000724666377562216, guid: 0b27d2dfa6df4ce42bf30127009f95da,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b27d2dfa6df4ce42bf30127009f95da, type: 3}
@@ -27347,7 +27385,7 @@ PrefabInstance:
         type: 3}
       propertyPath: PlotText.Array.data[0]
       value: You have the feel that you are reaching very important point of your
-        journey. You can gain more faith and maybe more followers. Find the destiny.
+        journey. You can gain more faith, if you are strong enough. Find the destiny.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31565694f9589b542b3f6719e49f5c87, type: 3}

@@ -69,7 +69,7 @@ public class CultLeader : Character
             GoToMousePosition();
         }
 
-        if(GameManager.Instance.cultistNumber == 0)
+        if(GameManager.Instance.cultistNumber == 1)
         {
             defence = 0;
         }

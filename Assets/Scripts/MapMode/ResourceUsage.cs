@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +15,7 @@ public class ResourceUsage : MonoBehaviour
         throw new System.Exception("xD");
     }
     */
+    private readonly System.Random rand = new System.Random();
 
     public float UsageFactor
     {
@@ -126,6 +127,7 @@ public class ResourceUsage : MonoBehaviour
         if ( (Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f) ) )
         {
             CrewSize -= 1;
+            GameManager.Instance.ourCrew.RemoveAt(rand.Next() % (GameManager.Instance.ourCrew.Count - 1) + 1);
             timeLastMemberDied = Time.timeSinceLevelLoad;
         }
     }

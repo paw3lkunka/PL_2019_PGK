@@ -132,7 +132,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (forceEmptyCentre)
                 {
-                    freeCentre();
+                    FreeCentre();
                 }
             }
         }
@@ -152,7 +152,7 @@ public class MapGenerator : MonoBehaviour
         generationID = GetHashCode();
     }
 
-    private void freeCentre()
+    private void FreeCentre()
     {
         foreach( Location loc in transform.GetComponentsInChildren<Location>() )
         {
