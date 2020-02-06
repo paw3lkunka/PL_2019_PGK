@@ -1,1 +1,113 @@
-﻿{}
+{
+    "name": "NewInput",
+    "maps": [
+        {
+            "name": "CombatMode",
+            "id": "3e4e1317-a05d-432b-ba93-9ba5a123c632",
+            "actions": [
+                {
+                    "name": "SetShootTarget",
+                    "type": "Button",
+                    "id": "f852d4ee-ebdc-4263-b8eb-9423cf3bacdc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c4e49b92-25e3-4839-b7e2-9c0555c9b658",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SetShootTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5d14c759-aaf3-4718-90e9-67958ef52f96",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SetShootTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "MapMode",
+            "id": "83a9ad21-0a7c-4505-8641-20b079eaed81",
+            "actions": [],
+            "bindings": []
+        },
+        {
+            "name": "Gameplay",
+            "id": "927fdd73-c6de-4111-8477-5fb2d3cd12f6",
+            "actions": [
+                {
+                    "name": "MoveCursor",
+                    "type": "Button",
+                    "id": "ca9e273c-fe69-4b34-9937-3cfec5ef9452",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SetWalkTarget",
+                    "type": "Button",
+                    "id": "5099243b-0a5d-4979-830c-5104fc7c9a30",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b135ee91-571b-4fb8-bffa-75db907c22b6",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveCursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "671bf64e-70bf-4f6e-95c2-ea454a7e049f",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SetWalkTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2e4e655-ae24-4f9d-a0bf-99f76d079ecb",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SetWalkTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "GUI",
+            "id": "d7a5d1d2-00e3-4295-8a0f-6ed4d282e171",
+            "actions": [],
+            "bindings": []
+        }
+    ],
+    "controlSchemes": []
+}

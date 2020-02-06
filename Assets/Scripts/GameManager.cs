@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -79,6 +80,8 @@ public class GameManager : MonoBehaviour
     public event System.Action FanaticStart;
     public event System.Action FanaticEnd;
 
+    public NewInput input;
+    
     public float Water
     {
         get => water;
@@ -108,6 +111,7 @@ public class GameManager : MonoBehaviour
         oldFaith = faith;
 
         gameOverScreenInstance = null;
+        input = new NewInput();
 
         ResetIndicatorsValues();
         if(Instance == null)
@@ -124,7 +128,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Keyboard.current[Key.Escape].wasPressedThisFrame)
         {
             GameOver();
         }

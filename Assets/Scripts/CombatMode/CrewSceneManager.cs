@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [DisallowMultipleComponent]
 public class CrewSceneManager : MonoBehaviour
@@ -16,6 +17,11 @@ public class CrewSceneManager : MonoBehaviour
     public Vector2 startPoint;
 
     public bool combatMode = true;
+
+    public NewInput input;
+
+    public Transform cursorPrefab;
+    private Transform cursorInstance;
 
     public void PlaceWalkTargetIndicator() => walkTargetIndicator.transform.position = MousePos;
     public void PlaceShootTargetIndicator()
@@ -46,9 +52,15 @@ public class CrewSceneManager : MonoBehaviour
 
     private void Awake()
     {
+        input = GameManager.Instance.input;
+        cursorInstance = Instantiate(cursorPrefab, new Vector3(startPoint.x, startPoint.y), Quaternion.identity);
         Instance = this;
     }
 
+    private void OnEnable()
+    {
+        
+    }
 
     private void OnDrawGizmos()
     {
