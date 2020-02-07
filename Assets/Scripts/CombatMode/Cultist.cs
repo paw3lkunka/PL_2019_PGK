@@ -5,14 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(Shooter))]
 public class Cultist : Character
 {
+    #region Variables
+
     private Shooter shooter;
     public bool isFanatic, fanaticState;
 
-    [Range(0,0.001f)] public float fanaticStateEnterChance = 0.05f, fanaticStateExitChance = 0.01f;
-    public float fanaticAimDebuff; 
+    [Range(0, 0.001f)] public float fanaticStateEnterChance = 0.05f, fanaticStateExitChance = 0.01f;
+    public float fanaticAimDebuff;
 
+    #endregion
 
-    #region Mono behaviour functions
+    #region MonoBehaviour
+
     protected override void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -24,7 +28,7 @@ public class Cultist : Character
         gameObject.transform.position = GameManager.Instance.ourCrew[0].transform.position + new Vector3(FormationOffset.x, FormationOffset.y);
 
         string sceneName = SceneManager.GetActiveScene().name;
-        if ( sceneName == "MainMap" || sceneName == "MainMenu")
+        if (sceneName == "MainMap" || sceneName == "MainMenu")
         {
             gameObject.SetActive(false);
         }
@@ -95,7 +99,7 @@ public class Cultist : Character
             gameObject.transform.GetChild(1).gameObject.SetActive(false);
         }
 
-        (GameObject,float) nearest = CrewSceneManager.Instance.enemies.NearestFrom(transform.position);
+        (GameObject, float) nearest = CrewSceneManager.Instance.enemies.NearestFrom(transform.position);
         bool canMove = CheckState(CharacterState.CanMove);
         bool canAttack = CrewSceneManager.Instance.combatMode && CheckState(CharacterState.CanAttack);
 
@@ -131,7 +135,10 @@ public class Cultist : Character
         GameManager.Instance.FanaticStart -= EnterFanaticMode;
         GameManager.Instance.FanaticEnd -= ExitFanaticMode;
     }
+
     #endregion
+
+    #region Component
 
     #region Behaviour
 
@@ -206,14 +213,13 @@ public class Cultist : Character
     private void EnterFanaticMode() => isFanatic = true;
     private void ExitFanaticMode() => isFanatic = false;
 
-
     #endregion
 
     #region Control
 
     public void GoToMousePosition()
     {
-        if(Agent.enabled && !GameManager.Gui.isMouseOver)
+        if (Agent.enabled && !GameManager.Gui.isMouseOver)
         {
             Agent.SetDestination(CrewSceneManager.Instance.MousePos + FormationOffset);
         }
@@ -228,6 +234,7 @@ public class Cultist : Character
         );
         GetComponent<Shooter>().target = CrewSceneManager.Instance.MousePos + offset;
     }
+
     #endregion
 
     #region Taking damage
@@ -248,6 +255,7 @@ public class Cultist : Character
         fatihTextEemitter.Emit("-" + (int)(lossedFaith * 100), Color.green, 3);
         GameManager.Instance.cultistNumber--;
     }
+
     #endregion
 
     #region Event listeners
@@ -287,6 +295,7 @@ public class Cultist : Character
         Destroy(gameObject);
         GameManager.Instance.OnGameOver -= OnGameOver;
     }
+
     #endregion
 
     #region misc
@@ -320,5 +329,8 @@ public class Cultist : Character
             }
         }
     }
+
+    #endregion
+
     #endregion
 }

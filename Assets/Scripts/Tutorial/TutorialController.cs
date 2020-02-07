@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TutorialController : MonoBehaviour
 {
+    #region Variables
+
 #pragma warning disable
     [SerializeField] private GameObject smokeWalk;
     [SerializeField] private GameObject smokeWater;
@@ -21,6 +23,10 @@ public class TutorialController : MonoBehaviour
 
     private int minimumWalkCombo = 4;
 
+    #endregion
+
+    #region MonoBehaviour
+
     private void Start()
     {
         GameManager.Instance.Water = startWaterLevel;
@@ -29,17 +35,17 @@ public class TutorialController : MonoBehaviour
 
     private void Update()
     {
-        if(RhythmController.Instance.Combo >= minimumWalkCombo)
+        if (RhythmController.Instance.Combo >= minimumWalkCombo)
         {
             Destroy(smokeWalk);
         }
-        
-        if(GameManager.Instance.Water >= minimumWaterLevel)
+
+        if (GameManager.Instance.Water >= minimumWaterLevel)
         {
             Destroy(smokeWater);
         }
 
-        if(GameManager.Instance.Faith >= minimumFaithLevel)
+        if (GameManager.Instance.Faith >= minimumFaithLevel)
         {
             Destroy(smokeFaith);
         }
@@ -51,4 +57,12 @@ public class TutorialController : MonoBehaviour
             SceneManager.LoadScene("MainMap");
         }
     }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class CameraPosition : MonoBehaviour
 {
-    void LateUpdate()
+    #region Variables
+
+
+
+    #endregion
+
+    #region MonoBehaviour
+
+    private void LateUpdate()
     {
-      
-        if(GameManager.Instance.cultistNumber > 0)
+
+        if (GameManager.Instance.cultistNumber > 0)
         {
             var crew = GameManager.Instance.ourCrew;
             if (GameManager.Instance.cultistNumber == 0)
@@ -39,4 +47,12 @@ public class CameraPosition : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

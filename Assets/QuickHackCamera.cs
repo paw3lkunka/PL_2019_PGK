@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class QuickHackCamera : MonoBehaviour
 {
-    Transform leader;
-    void Start()
+    #region Variables
+
+    private Transform leader;
+
+    #endregion
+
+    #region MonoBehaviour
+
+    private void Start()
     {
         // Nie jestem z tego dumny
         leader = GameObject.Find("Cultist Leader(Clone)").transform;
     }
+
     private void Update()
     {
         try
@@ -20,5 +28,13 @@ public class QuickHackCamera : MonoBehaviour
         {
             // ani z tego
         }
-    }   
+    }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

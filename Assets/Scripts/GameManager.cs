@@ -7,8 +7,16 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    #region Variables
+
+    public static GameManager Instance { get; private set; }
+
     [SerializeField] private bool skipTutorial = false;
-    public bool SkipTutorial { get => skipTutorial; set => skipTutorial = value; }
+    public bool SkipTutorial
+    {
+        get => skipTutorial;
+        set => skipTutorial = value;
+    }
 
     public GameObject cultistPrefab;
     public GameObject leaderPrefab;
@@ -51,8 +59,8 @@ public class GameManager : MonoBehaviour
         get => gameOverScreenInstance;
         set => gameOverScreenInstance = value;
     }
-    
-    [Range(0, 1),SerializeField]
+
+    [Range(0, 1), SerializeField]
     private float water = 1.0f;
     [Range(0, 1), SerializeField]
     private float faith = 0.5f;
@@ -81,7 +89,7 @@ public class GameManager : MonoBehaviour
     public event System.Action FanaticEnd;
 
     public NewInput input;
-    
+
     public float Water
     {
         get => water;
@@ -94,8 +102,6 @@ public class GameManager : MonoBehaviour
         set => faith = Mathf.Clamp(value, 0, 1);
     }
 
-    public static GameManager Instance { get; private set; }
-    
     public Vector2 savedPosition;
 
     /// <summary>
@@ -104,6 +110,10 @@ public class GameManager : MonoBehaviour
     public List<GameObject> ourCrew;
 
     public int ShrinesVisited { get; set; }
+
+    #endregion
+
+    #region MonoBehaviour
 
     private void Awake()
     {
@@ -114,7 +124,7 @@ public class GameManager : MonoBehaviour
         input = new NewInput();
 
         ResetIndicatorsValues();
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             Initialize();
@@ -133,7 +143,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        if (water < LowWaterLevel && oldWater >= LowWaterLevel )
+        if (water < LowWaterLevel && oldWater >= LowWaterLevel)
             LowWaterLevelStart?.Invoke();
 
         if (water > LowWaterLevel && oldWater <= LowWaterLevel)
@@ -144,7 +154,7 @@ public class GameManager : MonoBehaviour
 
         if (faith > LowFaithLevel && oldFaith <= LowFaithLevel)
             LowFaithLevelEnd?.Invoke();
-        
+
         if (faith > HighFaithLevel && oldFaith <= HighFaithLevel)
             HighFaithLevelStart?.Invoke();
 
@@ -161,6 +171,10 @@ public class GameManager : MonoBehaviour
         oldWater = water;
     }
 
+    #endregion
+
+    #region Component
+
     private void Initialize()
     {
         DontDestroyOnLoad(gameObject);
@@ -173,7 +187,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < initialCultistsNumber; i++)
         {
-            Instantiate(cultistPrefab,Vector3.zero,Quaternion.identity);
+            Instantiate(cultistPrefab, Vector3.zero, Quaternion.identity);
         }
         cultistNumber += 1;
     }
@@ -230,9 +244,10 @@ public class GameManager : MonoBehaviour
         FaithForKilledEnemy *= 2;
     }
 
-
     public void ToNormalMode()
     {
         FaithForKilledEnemy /= 2;
     }
+
+    #endregion    
 }

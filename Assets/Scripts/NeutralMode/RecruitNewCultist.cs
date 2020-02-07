@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class RecruitNewCultist : MonoBehaviour
 {
+    #region Variables
+
     public GameObject dialogBox;
 
     private GameObject instanced;
+
+    #endregion
+
+    #region MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -20,9 +26,17 @@ public class RecruitNewCultist : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if ( other.gameObject.CompareTag("NPC") )
+        if (other.gameObject.CompareTag("NPC"))
         {
             instanced = null;
         }
     }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

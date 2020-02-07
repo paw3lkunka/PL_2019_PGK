@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AdaptiveMusicController : MonoBehaviour
 {
+    #region Variables
+
 #pragma warning disable
     [SerializeField] private AudioSource lightMusic;
     [SerializeField] private AudioSource heavyMusic;
@@ -13,6 +15,10 @@ public class AdaptiveMusicController : MonoBehaviour
 #pragma warning restore
 
     private float coroutineTime = 0.0f;
+
+    #endregion
+
+    #region MonoBehaviour
 
     private void OnEnable()
     {
@@ -29,6 +35,10 @@ public class AdaptiveMusicController : MonoBehaviour
         RhythmController.Instance.OnRageModeEnd -= FadeToLight;
         RhythmController.Instance.OnComboEnd -= FadeToNone;
     }
+
+    #endregion
+
+    #region Component
 
     private void FadeToNone()
     {
@@ -89,4 +99,6 @@ public class AdaptiveMusicController : MonoBehaviour
             coroutineTime += Time.deltaTime;
         }
     }
+
+    #endregion
 }

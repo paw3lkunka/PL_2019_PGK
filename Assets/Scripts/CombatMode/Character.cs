@@ -12,6 +12,8 @@ public enum CharacterState
 [RequireComponent(typeof(Collider2D), typeof(NavMeshAgent))]
 public class Character : MonoBehaviour
 {
+    #region Variables
+
     // Unity Editor accesible fields
 #pragma warning disable
     [SerializeField] protected int hp;
@@ -35,6 +37,10 @@ public class Character : MonoBehaviour
 
     private int maxHp;
     private HealthBar healthBar;
+
+    #endregion
+
+    #region MonoBehaviour
 
     protected virtual void Awake()
     {
@@ -60,12 +66,16 @@ public class Character : MonoBehaviour
         healthBar?.SetBar(hp, maxHp);
     }
 
+    #endregion
+
+    #region Component
+
     public virtual void TakeDamage(int damage)
     {
         int realDamage = Mathf.RoundToInt((float)damage / (defence + 1));
         hp -= Mathf.Max(realDamage, 0);
 
-        if(healthTextEmitter && realDamage > 0)
+        if (healthTextEmitter && realDamage > 0)
         {
             healthTextEmitter.Emit("-" + realDamage, Color.red, 2f);
         }
@@ -103,4 +113,6 @@ public class Character : MonoBehaviour
     {
         characterState &= ~state;
     }
+
+    #endregion
 }

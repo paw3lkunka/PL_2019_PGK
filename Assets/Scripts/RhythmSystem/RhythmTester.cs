@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class RhythmTester : MonoBehaviour
 {
+    #region Variables
+
 #pragma warning disable
     [SerializeField] private RhythmController controller;
     [SerializeField] private Image rhythmIndicator;
@@ -16,6 +18,10 @@ public class RhythmTester : MonoBehaviour
     private Beat beatStatus;
     private Color transparent = new Color(0, 0, 0, 0);
 
+    #endregion
+
+    #region MonoBehaviour
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
@@ -24,4 +30,11 @@ public class RhythmTester : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

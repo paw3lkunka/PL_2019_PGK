@@ -5,9 +5,15 @@ using System;
 
 public class RandomizeCultists : MonoBehaviour
 {
+    #region Variables
+
     public int randomizedCultists;
     private System.Random rand = new System.Random();
-    // Start is called before the first frame update
+
+    #endregion
+
+    #region MonoBehaviour
+
     void Start()
     {
         for (int i = 0; i < 5; ++i)
@@ -17,12 +23,18 @@ public class RandomizeCultists : MonoBehaviour
         Generate();
     }
 
+    #endregion
+
+    #region Component
+
     private void Generate()
     {
         randomizedCultists = rand.Next() % 5 + 1;
-        for(int i = 0; i < randomizedCultists; ++i)
+        for (int i = 0; i < randomizedCultists; ++i)
         {
             transform.GetChild(i).gameObject.SetActive(true);
         }
     }
+
+    #endregion
 }

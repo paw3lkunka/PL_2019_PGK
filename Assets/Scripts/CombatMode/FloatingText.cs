@@ -5,7 +5,10 @@ using TMPro;
 
 public class FloatingText : MonoBehaviour
 {
+    #region Variables
+
     private TextMeshProUGUI tmPro;
+
 #pragma warning disable
     [SerializeField] private float lifeTime;
     [SerializeField] private float speed;
@@ -16,6 +19,10 @@ public class FloatingText : MonoBehaviour
     [SerializeField] private float amplitudeAcc;
 #pragma warning restore
 
+    #endregion
+
+    #region MonoBehaviour
+
     private void Awake()
     {
         tmPro = GetComponentInChildren<TextMeshProUGUI>();
@@ -23,7 +30,7 @@ public class FloatingText : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate( Mathf.Sin(Time.time * entropy) * amplitude, speed, 0 );
+        transform.Translate(Mathf.Sin(Time.time * entropy) * amplitude, speed, 0);
 
         lifeTime -= Time.deltaTime;
 
@@ -32,18 +39,23 @@ public class FloatingText : MonoBehaviour
         amplitude += Time.deltaTime * amplitudeAcc;
 
 
-        if( lifeTime < 0 )
+        if (lifeTime < 0)
         {
             Destroy(gameObject);
         }
-
     }
 
-    public void Set( string text, Color color, float lifeTime )
+    #endregion
+
+    #region Component
+
+    public void Set(string text, Color color, float lifeTime)
     {
         tmPro.text = text;
         tmPro.color = color;
 
         this.lifeTime = lifeTime;
     }
+
+    #endregion
 }

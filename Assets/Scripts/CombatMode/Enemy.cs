@@ -7,6 +7,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Shooter))]
 public class Enemy : Character
 {
+    #region Variables
+
 #pragma warning disable
     [SerializeField]
     private float eyesightRange;
@@ -19,15 +21,13 @@ public class Enemy : Character
     protected GameObject chasedObject;
     protected Shooter shooter;
 
-    protected override void Start()
-    {
-        base.Start();
-        CrewSceneManager.Instance.enemies.Add(gameObject);
-    }
+    #endregion
+
+    #region MonoBehaviour
 
     protected override void Awake()
     {
-        base.Awake(); 
+        base.Awake();
 
         shooter = GetComponent<Shooter>();
 
@@ -35,19 +35,25 @@ public class Enemy : Character
         Agent.updateUpAxis = false;
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        CrewSceneManager.Instance.enemies.Add(gameObject);
+    }
+
     protected override void Update()
     {
         base.Update();
 
         var nearestDistance = GameManager.Instance.ourCrew.NearestFrom(transform.position);
-        if(!nearestDistance.Item1)
+        if (!nearestDistance.Item1)
         {
             return;
         }
 
-        if(!chasedObject)
+        if (!chasedObject)
         {
-            if(nearestDistance.Item2 < this.eyesightRange)
+            if (nearestDistance.Item2 < this.eyesightRange)
             {
                 chasedObject = nearestDistance.Item1;
             }
@@ -55,8 +61,8 @@ public class Enemy : Character
         else
         {
             chasedObject = nearestDistance.Item1;
-            
-            if(ShouldShoot())
+
+            if (ShouldShoot())
             {
                 Agent.isStopped = true;
                 shooter.target = chasedObject.transform.position;
@@ -79,6 +85,10 @@ public class Enemy : Character
 
     }
 
+    #endregion
+
+    #region Component
+
     public override void Die()
     {
         float gainedFaith = GameManager.Instance.FaithForKilledEnemy;
@@ -90,8 +100,16 @@ public class Enemy : Character
         }
         base.Die();
     }
-    
-    private bool ShouldShoot() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) <= this.shootingRange : false;
 
-    private bool ShouldChase() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) < this.chaseRange : false;
+    private bool ShouldShoot()
+    {
+        return chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) <= this.shootingRange : false;
+    }
+
+    private bool ShouldChase()
+    {
+        return chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) < this.chaseRange : false;
+    }
+
+    #endregion
 }

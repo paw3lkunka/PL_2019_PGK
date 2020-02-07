@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class UICheat : MonoBehaviour
 {
+    #region Variables
+
+
+
+    #endregion
+
+    #region MonoBehaviour
+
+
+
+    #endregion
+
+    #region Component
+
     public void AddWater()
     {
         GameManager.Instance.Water += 0.1f;
@@ -34,4 +48,6 @@ public class UICheat : MonoBehaviour
     {
         GameManager.Instance.cultistNumber -= 1;
     }
+
+    #endregion
 }

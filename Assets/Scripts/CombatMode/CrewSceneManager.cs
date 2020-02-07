@@ -7,6 +7,10 @@ using UnityEngine.InputSystem;
 [DisallowMultipleComponent]
 public class CrewSceneManager : MonoBehaviour
 {
+    #region Variables
+
+    public static CrewSceneManager Instance { get; private set; }
+
     public List<GameObject> enemies = new List<GameObject>();
 
     public UnityEvent OnLeftButton, OnRightButton;
@@ -23,15 +27,21 @@ public class CrewSceneManager : MonoBehaviour
     public Transform cursorPrefab;
     private Transform cursorInstance;
 
-    public void PlaceWalkTargetIndicator() => walkTargetIndicator.transform.position = MousePos;
-    public void PlaceShootTargetIndicator()
+    #endregion
+
+    #region MonoBehaviour
+
+    private void Awake()
     {
-        if(combatMode)
-        {
-            shootTargetIndicator.transform.position = MousePos;
-        }
+        input = GameManager.Instance.input;
+        //cursorInstance = Instantiate(cursorPrefab, new Vector3(startPoint.x, startPoint.y), Quaternion.identity);
+        Instance = this;
     }
 
+    private void OnEnable()
+    {
+
+    }
 
     private void Update()
     {
@@ -44,22 +54,6 @@ public class CrewSceneManager : MonoBehaviour
         {
             OnRightButton.Invoke();
         }
-
-    }
-    
-
-    public static CrewSceneManager Instance { get; private set; }
-
-    private void Awake()
-    {
-        input = GameManager.Instance.input;
-        cursorInstance = Instantiate(cursorPrefab, new Vector3(startPoint.x, startPoint.y), Quaternion.identity);
-        Instance = this;
-    }
-
-    private void OnEnable()
-    {
-        
     }
 
     private void OnDrawGizmos()
@@ -68,7 +62,26 @@ public class CrewSceneManager : MonoBehaviour
         Gizmos.DrawSphere(startPoint, .2f);
     }
 
+    #endregion
+
+    #region Component
+
     public Vector2 MousePos => Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+    public void PlaceWalkTargetIndicator()
+    {
+        walkTargetIndicator.transform.position = MousePos;
+    }
+
+    public void PlaceShootTargetIndicator()
+    {
+        if (combatMode)
+        {
+            shootTargetIndicator.transform.position = MousePos;
+        }
+    }
+
+    #endregion
 }
 
 public static class Extensions
@@ -80,13 +93,13 @@ public static class Extensions
 
         foreach (GameObject enemy in objs)
         {
-            if(!enemy)
+            if (!enemy)
             {
                 continue;
             }
 
             float distance = Vector2.Distance(from, enemy.transform.position);
-            if ( distance < minimum)
+            if (distance < minimum)
             {
                 target = enemy;
                 minimum = distance;

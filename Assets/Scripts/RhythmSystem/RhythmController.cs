@@ -3,10 +3,18 @@ using System.Runtime.Serialization;
 using UnityEngine;
 using TMPro;
 
-public enum Beat { None, Bad, Good, Great };
+public enum Beat 
+{ 
+    None, 
+    Bad, 
+    Good, 
+    Great 
+};
 
 public partial class RhythmController : MonoBehaviour
 {
+    #region Variables
+
 #pragma warning disable
     [SerializeField] private AudioSource lightGuitar;
     [SerializeField] private AudioSource heavyGuitar;
@@ -78,32 +86,9 @@ public partial class RhythmController : MonoBehaviour
     public event Action OnRageModeEnd;
     public event Action OnBeatEnd;
 
-    public Beat HitBeat()
-    {
-        if (currentBeatStatus == Beat.None)
-        {
-            currentBeatStatus = currentBeatMomentStatus;
-            if (currentBeatMomentStatus == Beat.Good)
-            {
-                OnBeatHitGood?.Invoke();
-            }
-            else if (currentBeatMomentStatus == Beat.Great)
-            {
-                OnBeatHitGreat?.Invoke();
-            }
-            else if (currentBeatMomentStatus == Beat.Bad)
-            {
-                OnBeatHitBad?.Invoke();
-            }
-            return currentBeatMomentStatus;
-        }
-        else
-        {
-            currentBeatStatus = Beat.Bad;
-            OnBeatHitBad?.Invoke();
-            return Beat.Bad;
-        }
-    }
+    #endregion
+
+    #region MonoBehaviour
 
     private void Awake()
     {
@@ -131,14 +116,6 @@ public partial class RhythmController : MonoBehaviour
 
         OnRageModeStart += GameManager.Instance.ToRageMode;
         OnRageModeEnd += GameManager.Instance.ToNormalMode;
-    }
-
-    private void OnDestroy()
-    {
-        OnBeatEnd -= EndBeat;
-        OnBeatHitBad -= BeatHitBad;
-        OnRageModeStart -= RageModeStart;
-        OnRageModeEnd -= RageModeEnd;
     }
 
     private void OnEnable()
@@ -208,6 +185,47 @@ public partial class RhythmController : MonoBehaviour
             }
         }
     }
+
+    private void OnDestroy()
+    {
+        OnBeatEnd -= EndBeat;
+        OnBeatHitBad -= BeatHitBad;
+        OnRageModeStart -= RageModeStart;
+        OnRageModeEnd -= RageModeEnd;
+    }
+
+    #endregion
+
+    #region Component
+
+    public Beat HitBeat()
+    {
+        if (currentBeatStatus == Beat.None)
+        {
+            currentBeatStatus = currentBeatMomentStatus;
+            if (currentBeatMomentStatus == Beat.Good)
+            {
+                OnBeatHitGood?.Invoke();
+            }
+            else if (currentBeatMomentStatus == Beat.Great)
+            {
+                OnBeatHitGreat?.Invoke();
+            }
+            else if (currentBeatMomentStatus == Beat.Bad)
+            {
+                OnBeatHitBad?.Invoke();
+            }
+            return currentBeatMomentStatus;
+        }
+        else
+        {
+            currentBeatStatus = Beat.Bad;
+            OnBeatHitBad?.Invoke();
+            return Beat.Bad;
+        }
+    }
+
+    #endregion
 }
 
 [Serializable]

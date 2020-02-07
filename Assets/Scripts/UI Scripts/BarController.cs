@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class BarController : MonoBehaviour
 {
+    #region Variables
+
     public GameObject prefab;
     public GameObject UICanvas;
 
@@ -16,7 +18,10 @@ public class BarController : MonoBehaviour
     private float instanceBeginTime;
     private bool showLast;
 
-    // Start is called before the first frame update
+    #endregion
+
+    #region MonoBehaviour
+
     void Start()
     {
         lastCultistNumber = GameManager.Instance.cultistNumber;
@@ -24,72 +29,75 @@ public class BarController : MonoBehaviour
         canvas = UICanvas.GetComponent<Canvas>();
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
-        if(lastCultistNumber < GameManager.Instance.cultistNumber)
+        if (lastCultistNumber < GameManager.Instance.cultistNumber)
         {
-            shiftTable();
-            instances.Insert(0, Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity, canvas.transform));
+            ShiftTable();
+            instances.Insert(0, Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity, canvas.transform));
             instances[0].GetComponent<InformationBar>().informationIndex = 0;
-            changeInstance();
-            
+            ChangeInstance();
+
             instanceBeginTime = Time.time;
             lastCultistNumber = GameManager.Instance.cultistNumber;
         }
-        else if(lastCultistNumber > GameManager.Instance.cultistNumber && GameManager.Instance.Water < 0.2f)
+        else if (lastCultistNumber > GameManager.Instance.cultistNumber && GameManager.Instance.Water < 0.2f)
         {
-            shiftTable();
-            instances.Insert(0, Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity, canvas.transform));
+            ShiftTable();
+            instances.Insert(0, Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity, canvas.transform));
             instances[0].GetComponent<InformationBar>().informationIndex = 2;
-            changeInstance();
-            
+            ChangeInstance();
+
             instanceBeginTime = Time.time;
             lastCultistNumber = GameManager.Instance.cultistNumber;
         }
-        else if(lastCultistNumber > GameManager.Instance.cultistNumber && GameManager.Instance.Faith < 0.2f && SceneManager.GetActiveScene().name.Equals("MainMap"))
+        else if (lastCultistNumber > GameManager.Instance.cultistNumber && GameManager.Instance.Faith < 0.2f && SceneManager.GetActiveScene().name.Equals("MainMap"))
         {
-            shiftTable();
-            instances.Insert(0, Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity, canvas.transform));
+            ShiftTable();
+            instances.Insert(0, Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity, canvas.transform));
             instances[0].GetComponent<InformationBar>().informationIndex = 1;
-            changeInstance();
-            
+            ChangeInstance();
+
             instanceBeginTime = Time.time;
             lastCultistNumber = GameManager.Instance.cultistNumber;
         }
-        else if(lastCultistNumber > GameManager.Instance.cultistNumber)
+        else if (lastCultistNumber > GameManager.Instance.cultistNumber)
         {
-            shiftTable();
-            instances.Insert(0, Instantiate(prefab, new Vector3(0,0,0), Quaternion.identity, canvas.transform));
+            ShiftTable();
+            instances.Insert(0, Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity, canvas.transform));
             instances[0].GetComponent<InformationBar>().informationIndex = 3;
-            changeInstance();
-            
+            ChangeInstance();
+
             instanceBeginTime = Time.time;
             lastCultistNumber = GameManager.Instance.cultistNumber;
         }
 
-        if(instances.Count > 0 && instances[0].GetComponent<InformationBar>().MaxLifeTime <= (Time.time - instanceBeginTime) && !showLast)
+        if (instances.Count > 0 && instances[0].GetComponent<InformationBar>().MaxLifeTime <= (Time.time - instanceBeginTime) && !showLast)
         {
             instances[0].SetActive(false);
         }
     }
 
-    private void shiftTable()
-    { 
-        if(instances.Count > 0)
+    #endregion
+
+    #region Component
+
+    private void ShiftTable()
+    {
+        if (instances.Count > 0)
         {
-            if(instances[0].activeSelf)
+            if (instances[0].activeSelf)
             {
                 instances[0].SetActive(false);
             }
-            foreach(GameObject i in instances)
+            foreach (GameObject i in instances)
             {
                 i.GetComponent<InformationBar>().barIndex += 1;
             }
         }
     }
 
-    private void changeInstance()
+    private void ChangeInstance()
     {
         instances[0].GetComponent<InformationBar>().barIndex = 0;
         instances[0].GetComponent<InformationBar>().UpdateBar();
@@ -98,7 +106,7 @@ public class BarController : MonoBehaviour
 
     public void ShowLastTen()
     {
-        if(instances.Count > 0)
+        if (instances.Count > 0)
         {
             showLast = !showLast;
             if (showLast)
@@ -120,4 +128,6 @@ public class BarController : MonoBehaviour
             }
         }
     }
+
+    #endregion
 }

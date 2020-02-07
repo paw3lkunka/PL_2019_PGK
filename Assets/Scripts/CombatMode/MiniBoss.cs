@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class MiniBoss : Enemy
 {
+    #region Variables
+
+
+
+    #endregion
+
+    #region MonoBehaviour
+
+
+
+    #endregion
+
+    #region Component
+
     public override void Die()
     {
         float gainedFaith = 0.05f;
@@ -15,4 +29,6 @@ public class MiniBoss : Enemy
         }
         base.Die();
     }
+
+    #endregion
 }

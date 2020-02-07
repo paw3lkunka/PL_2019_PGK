@@ -5,14 +5,17 @@ using UnityEngine.Tilemaps;
 
 class LocationValidationException : System.Exception
 {
-
     public LocationValidationException(GameObject obj, int number)
         : base( number == 0 ? obj + " is not a location" : obj + " has multiple Location scripts (" + number + ")")
-    { }
+    { 
+        
+    }
 }
 
 public class MapGenerator : MonoBehaviour
 {
+    #region Variables
+
     public bool useCustomSeed = false;
     public bool forceEmptyCentre = false;
 
@@ -32,6 +35,10 @@ public class MapGenerator : MonoBehaviour
     [HideInInspector] public List<int> spawnChances = new List<int>();
 
     public int generationID;
+
+    #endregion
+
+    #region MonoBehaviour
 
     private void OnValidate()
     {
@@ -56,6 +63,10 @@ public class MapGenerator : MonoBehaviour
             randomOffsetRange.y = 0;
     }
 
+    #endregion
+
+    #region Component
+
     [ContextMenu("Validate")]
     public void ValidatePrefabs()
     {
@@ -76,17 +87,17 @@ public class MapGenerator : MonoBehaviour
     public void Generate()
     {
 
-        if(!useCustomSeed)
+        if (!useCustomSeed)
         {
             seed = Random.Range(int.MinValue, int.MaxValue);
         }
 
         Random.InitState(seed);
 
-        List<int> chances = new List<int>() ;
+        List<int> chances = new List<int>();
         int range = 0;
 
-        for(int i=0; i< locationPrefabs.Count; i++ )
+        for (int i = 0; i < locationPrefabs.Count; i++)
         {
             int chance = spawnChances[i];
             range += chance;
@@ -96,8 +107,8 @@ public class MapGenerator : MonoBehaviour
         range += emptyChance;
         chances.Add(emptyChance);
 
-        int halfWidth = (segments.x-1) * cellSize.x / 2;
-        int halfHight = (segments.y-1) * cellSize.y / 2;
+        int halfWidth = (segments.x - 1) * cellSize.x / 2;
+        int halfHight = (segments.y - 1) * cellSize.y / 2;
 
         for (int i = 0; i < segments.x; i++)
         {
@@ -109,13 +120,13 @@ public class MapGenerator : MonoBehaviour
                 Vector3 position = new Vector3(i * cellSize.x, j * cellSize.y);
                 position.x += Random.Range(-randomOffsetRange.x, randomOffsetRange.x) - halfWidth;
                 position.y += Random.Range(-randomOffsetRange.y, randomOffsetRange.y) - halfHight;
-                
+
                 while (chances[index] < randomNumber)
                 {
                     randomNumber -= chances[index];
                     index++;
                 }
-                
+
                 try
                 {
                     GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
@@ -123,7 +134,7 @@ public class MapGenerator : MonoBehaviour
                     instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
                     //DestroyImmediate(instance.GetComponent<Grid>());
                 }
-                catch( System.ArgumentOutOfRangeException exc )
+                catch (System.ArgumentOutOfRangeException exc)
                 {
                     //if index == locationPrefabs.Count cell should be empty - it's normal situation, else rethrow
                     if (index != locationPrefabs.Count)
@@ -141,27 +152,27 @@ public class MapGenerator : MonoBehaviour
     [ContextMenu("Clear")]
     public void Clear()
     {
-        foreach( var child in grid.GetComponentsInChildren<Location>())
+        foreach (var child in grid.GetComponentsInChildren<Location>())
         {
-            if(child.generationID == generationID)
+            if (child.generationID == generationID)
             {
                 DestroyImmediate(child.gameObject);
             }
         }
-        
+
         generationID = GetHashCode();
     }
 
     private void FreeCentre()
     {
-        foreach( Location loc in transform.GetComponentsInChildren<Location>() )
+        foreach (Location loc in transform.GetComponentsInChildren<Location>())
         {
-            if( loc.generationID == generationID )
+            if (loc.generationID == generationID)
             {
                 Vector2 halfSize = (Vector2)cellSize * 0.5f;
                 Vector2 pos = loc.transform.localPosition;
 
-                if (pos.x < halfSize.x && pos.x > -halfSize.x && pos.y < halfSize.y && pos.y > -halfSize.y )
+                if (pos.x < halfSize.x && pos.x > -halfSize.x && pos.y < halfSize.y && pos.y > -halfSize.y)
                 {
                     pos.x = pos.x > 0 ? halfSize.x : -halfSize.x;
                     pos.y = pos.y > 0 ? halfSize.y : -halfSize.y;
@@ -172,6 +183,8 @@ public class MapGenerator : MonoBehaviour
         }
 
     }
+
+    #endregion
 }
 
 public static class ListExtra

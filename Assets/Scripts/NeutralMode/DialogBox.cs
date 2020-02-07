@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class DialogBox : MonoBehaviour
 {
+    #region Variables
+
     public GameObject caller;
+
+    #endregion
+
+    #region MonoBehaviour
+
+
+
+    #endregion
+
+    #region Component
 
     private void Awake()
     {
@@ -13,6 +25,7 @@ public class DialogBox : MonoBehaviour
         gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
         gameObject.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
     }
+
     public void Recruit()
     {
         Instantiate(GameManager.Instance.cultistPrefab);
@@ -25,4 +38,6 @@ public class DialogBox : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    #endregion
 }

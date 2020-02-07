@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RuntimeGenerator : MonoBehaviour
 {
-    public int mainSeed;
-    
+    #region Variables
+
     [Space]
     public MapGenerator foreground;
     public MapGenerator background;
@@ -21,11 +21,16 @@ public class RuntimeGenerator : MonoBehaviour
 
     private static int? forgroundSeed = null;
     private static int[] backgroundSeeds = null;
-    
-    // Start is called before the first frame update
-    void Start()
+
+    public int mainSeed;
+
+    #endregion
+
+    #region MonoBehaviour
+
+    private void Start()
     {
-        if(!useCustomMainSeed)
+        if (!useCustomMainSeed)
         {
             mainSeed = Random.Range(int.MinValue, int.MaxValue);
         }
@@ -41,7 +46,7 @@ public class RuntimeGenerator : MonoBehaviour
         {
             backgroundSeeds = new int[backgroundIterations];
             backgroundSeeds[0] = overrideInitialSeed ? Random.Range(int.MinValue, int.MaxValue) : background.seed;
-            for(int i=1; i<backgroundIterations; i++)
+            for (int i = 1; i < backgroundIterations; i++)
             {
                 backgroundSeeds[i] = Random.Range(int.MinValue, int.MaxValue);
             }
@@ -63,17 +68,24 @@ public class RuntimeGenerator : MonoBehaviour
             background.seed = backgroundSeeds[i];
             background.Generate();
         }
-               
-        if(reshuffleEachTime)
+
+        if (reshuffleEachTime)
         {
             forgroundSeed = null;
             backgroundSeeds = null;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+
     }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

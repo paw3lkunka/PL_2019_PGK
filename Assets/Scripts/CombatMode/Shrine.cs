@@ -5,12 +5,20 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Shrine : MonoBehaviour
 {
+    #region Variables
+
     public GameObject hiddenEnemies;
     bool visited = false;
+
+    #endregion
+
+    #region MonoBehaviour
+
     private void Start()
     {
         hiddenEnemies.SetActive(false);
     }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (!visited && collision.gameObject.GetComponent<Bullet>() == null)
@@ -21,4 +29,12 @@ public class Shrine : MonoBehaviour
             visited = true;
         }
     }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

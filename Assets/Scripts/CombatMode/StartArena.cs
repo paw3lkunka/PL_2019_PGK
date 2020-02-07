@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class StartArena : MonoBehaviour
 {
-    int a;
-    // Start is called before the first frame update
-    void Start()
+    #region Variables
+
+    private int a;
+
+    #endregion
+
+    #region MonoBehaviour
+
+    private void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         a++;
     }
 
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

@@ -5,11 +5,24 @@ using UnityEngine;
 [System.Serializable]
 public class Location : MonoBehaviour
 {
-    //[HideInInspector]
+    #region Variables
+
     public int generationID;
+
+    #endregion
+
+    #region MonoBehaviour
 
     private void OnValidate()
     {
         transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
     }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

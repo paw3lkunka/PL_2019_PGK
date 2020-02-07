@@ -3,6 +3,20 @@ using System.Collections;
 
 public partial class RhythmController : MonoBehaviour
 {
+    #region Variables
+
+
+
+    #endregion
+
+    #region MonoBehaviour
+
+
+
+    #endregion
+
+    #region Component
+
     private void BeatHitBad()
     {
         OnComboEnd?.Invoke();
@@ -66,12 +80,12 @@ public partial class RhythmController : MonoBehaviour
             combo++;
             if ((countGreat == 4 && combo > 2) || combo > 8)
             {
-                if( !rageMode )
+                if (!rageMode)
                 {
                     OnRageModeStart?.Invoke();
                 }
             }
-            else if(rageMode)
+            else if (rageMode)
             {
                 OnRageModeEnd?.Invoke();
             }
@@ -85,7 +99,7 @@ public partial class RhythmController : MonoBehaviour
         {
             combo = 0;
             OnComboEnd?.Invoke();
-            if(rageMode)
+            if (rageMode)
             {
                 OnRageModeEnd?.Invoke();
                 OnComboEnd?.Invoke();
@@ -111,4 +125,6 @@ public partial class RhythmController : MonoBehaviour
                 break;
         }
     }
+
+    #endregion
 }

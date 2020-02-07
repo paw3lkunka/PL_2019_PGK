@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class MoveToMouseClick : MonoBehaviour
 {
+    #region Variables
+
     public float speed = 1.0f;
-    Vector2 targetPos;
-    
+    private Vector2 targetPos;
+
+    #endregion
+
+    #region MonoBehaviour
+
     private void Start()
     {
         targetPos = GameManager.Instance.savedPosition;
     }
-    
-    void LateUpdate()
+
+    private void LateUpdate()
     {
-        if(Input.GetMouseButtonDown(0) && !GameManager.Gui.isMouseOver)
+        if (Input.GetMouseButtonDown(0) && !GameManager.Gui.isMouseOver)
             targetPos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         if ((Vector2)transform.position != targetPos && GameManager.Instance.cultistNumber > 0)
@@ -23,4 +29,12 @@ public class MoveToMouseClick : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
         }
     }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

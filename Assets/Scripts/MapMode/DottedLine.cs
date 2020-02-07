@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class DottedLine : MonoBehaviour
 {
-    public Sprite Dot;
-
-    private float size = 0.3f;
-    private float delta = 0.5f;
+    #region Variables
 
     private static DottedLine instance;
+
     public static DottedLine Instance
     {
         get
@@ -21,9 +19,17 @@ public class DottedLine : MonoBehaviour
         }
     }
 
-    //Utility fields
-    List<Vector2> positions = new List<Vector2>();
-    List<GameObject> dots = new List<GameObject>();
+    private float size = 0.3f;
+    private float delta = 0.5f;
+
+    public Sprite Dot;
+
+    private List<Vector2> positions = new List<Vector2>();
+    private List<GameObject> dots = new List<GameObject>();
+
+    #endregion
+
+    #region MonoBehaviour
 
     void FixedUpdate()
     {
@@ -32,28 +38,11 @@ public class DottedLine : MonoBehaviour
             DestroyAllDots();
             positions.Clear();
         }
-
     }
 
-    private void DestroyAllDots()
-    {
-        foreach (var dot in dots)
-        {
-            Destroy(dot);
-        }
-        dots.Clear();
-    }
+    #endregion
 
-    GameObject GetOneDot()
-    {
-        var gameObject = new GameObject();
-        gameObject.transform.localScale = transform.localScale * size;
-        gameObject.transform.parent = transform;
-
-        var spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = Dot;
-        return gameObject;
-    }
+    #region Component
 
     public void DrawDottedLine(Vector2 start, Vector2 end)
     {
@@ -80,4 +69,26 @@ public class DottedLine : MonoBehaviour
             dots.Add(g);
         }
     }
+
+    private GameObject GetOneDot()
+    {
+        var gameObject = new GameObject();
+        gameObject.transform.localScale = transform.localScale * size;
+        gameObject.transform.parent = transform;
+
+        var spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = Dot;
+        return gameObject;
+    }
+
+    private void DestroyAllDots()
+    {
+        foreach (var dot in dots)
+        {
+            Destroy(dot);
+        }
+        dots.Clear();
+    }
+
+    #endregion
 }

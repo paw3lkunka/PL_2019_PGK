@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class CultLeader : Character
 {
+    #region Variables
+
+
+
+    #endregion
+
+    #region MonoBehaviour
+
     protected override void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -14,7 +22,7 @@ public class CultLeader : Character
         GameManager.Instance.ourCrew.Add(gameObject);
 
         string sceneName = SceneManager.GetActiveScene().name;
-        if ( sceneName == "MainMap" || sceneName == "MainMenu")
+        if (sceneName == "MainMap" || sceneName == "MainMenu")
         {
             gameObject.SetActive(false);
         }
@@ -25,12 +33,6 @@ public class CultLeader : Character
         Agent.updateUpAxis = false;
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoad;
-        SceneManager.sceneUnloaded -= OnSceneUnload;
-    }
-
     protected override void Start()
     {
         hp = 100;
@@ -38,9 +40,44 @@ public class CultLeader : Character
         base.Start();
     }
 
+    protected override void Update()
+    {
+        bool canMove = CheckState(CharacterState.CanMove);
+
+        if (canMove && Input.GetMouseButtonDown(0))
+        {
+            GoToMousePosition();
+        }
+
+        if (GameManager.Instance.cultistNumber == 1)
+        {
+            defence = 0;
+        }
+
+        base.Update();
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+        SceneManager.sceneUnloaded -= OnSceneUnload;
+    }
+
+    #endregion
+
+    #region Component
+
+    public Vector2 FormationOffset
+    {
+        get
+        {
+            return Vector2.zero;
+        }
+    }
+
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMap" || scene.name == "MainMenu" )
+        if (scene.name == "MainMap" || scene.name == "MainMenu")
         {
             gameObject.SetActive(false);
         }
@@ -60,23 +97,6 @@ public class CultLeader : Character
         }
     }
 
-    protected override void Update()
-    {
-        bool canMove = CheckState(CharacterState.CanMove);
-
-        if (canMove && Input.GetMouseButtonDown(0))
-        {
-            GoToMousePosition();
-        }
-
-        if(GameManager.Instance.cultistNumber == 1)
-        {
-            defence = 0;
-        }
-
-        base.Update();
-    }
-
     public void GoToMousePosition()
     {
         if (Agent.enabled && !GameManager.Gui.isMouseOver)
@@ -85,7 +105,10 @@ public class CultLeader : Character
         }
     }
 
-    public void AimToMousePosition() => GetComponent<Shooter>().target = CrewSceneManager.Instance.MousePos + FormationOffset;
+    public void AimToMousePosition()
+    {
+        GetComponent<Shooter>().target = CrewSceneManager.Instance.MousePos + FormationOffset;
+    }
 
     public override void TakeDamage(int damage)
     {
@@ -104,11 +127,5 @@ public class CultLeader : Character
         GameManager.Instance.OnGameOver -= OnGameOver;
     }
 
-    public Vector2 FormationOffset
-    {
-        get
-        {
-            return Vector2.zero;
-        }
-    }
+    #endregion
 }

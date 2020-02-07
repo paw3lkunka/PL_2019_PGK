@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D),typeof(Collider2D))]
 public class Bullet : MonoBehaviour
 {
+    #region Variables
+
     public int damege;
     public float startSpeed;
     public float timeToDestroy;
@@ -17,13 +19,35 @@ public class Bullet : MonoBehaviour
     public Vector2 Direction { get; private set; }
 
     private new Collider2D collider;
-         
-    void Awake()
+
+    #endregion
+
+    #region MonoBehaviour
+
+    private void Awake()
     {
         collider = GetComponent<Collider2D>();
     }
 
-    public void Shoot( Vector2 direction )
+    private void Update()
+    {
+        if (timeToDestroy < 0)
+        {
+            Destroy(gameObject);
+        }
+        timeToDestroy -= Time.deltaTime;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(gameObject);
+    }
+
+    #endregion
+
+    #region Component
+
+    public void Shoot(Vector2 direction)
     {
         Direction = direction.normalized;
 
@@ -40,19 +64,5 @@ public class Bullet : MonoBehaviour
         StartCoroutine(routine());
     }
 
-    void Update()
-    {
-        if( timeToDestroy < 0 )
-        {
-            Destroy(gameObject);
-        }
-        timeToDestroy -= Time.deltaTime;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Destroy(gameObject);
-    }
-
-
+    #endregion
 }
