@@ -29,6 +29,7 @@ public class CrewSceneManager : MonoBehaviour
 
     [HideInInspector]
     public Transform cultLeader;
+    private Vector3 nextCursorPosition;
     public float cursorRange = 5.0f;
 
     #endregion
@@ -55,6 +56,7 @@ public class CrewSceneManager : MonoBehaviour
 
                 case InputSchedule.Gamepad:
                     input.Gameplay.MoveCursor.performed += MoveCursorJoystick;
+                    input.Gameplay.MoveCursor.canceled += ctx => nextCursorPosition = cultLeader.position;
                     break;
 
                 case InputSchedule.Touchscreen:
@@ -85,6 +87,7 @@ public class CrewSceneManager : MonoBehaviour
 
                 case InputSchedule.Gamepad:
                     input.Gameplay.MoveCursor.performed -= MoveCursorJoystick;
+                    input.Gameplay.MoveCursor.canceled -= ctx => cursorInstance.position = cultLeader.position;
                     break;
 
                 case InputSchedule.Touchscreen:
@@ -105,6 +108,9 @@ public class CrewSceneManager : MonoBehaviour
 
     private void Update()
     {
+        Vector3 vel = new Vector3();
+        cursorInstance.position = Vector3.SmoothDamp(cursorInstance.position, nextCursorPosition, ref vel, 0.05f);
+        
         var cursorLeaderDistance = Vector2.Distance(cultLeader.transform.position, cursorInstance.transform.position);
 
         var currentCursorColor = cursorInstanceRenderer.color;
@@ -138,19 +144,15 @@ public class CrewSceneManager : MonoBehaviour
 
     public void MoveCursorPointer(InputAction.CallbackContext ctx)
     {
-        var newCursorPosition = Camera.main.ScreenToWorldPoint(ctx.ReadValue<Vector2>());
-        newCursorPosition.z = 0;
-        Vector3 velocity = new Vector3();
-
-        cursorInstance.position = Vector3.SmoothDamp(cursorInstance.position, newCursorPosition, ref velocity, 0.02f);
+        nextCursorPosition = Camera.main.ScreenToWorldPoint(ctx.ReadValue<Vector2>());
+        nextCursorPosition.z = 0;
     }
 
     public void MoveCursorJoystick(InputAction.CallbackContext ctx)
     {
-        var joystickAxis = ctx.ReadValue<Vector2>();
-        var newCursorPosition = cultLeader.position + new Vector3(joystickAxis.x, joystickAxis.y);
-
-        cursorInstance.position = newCursorPosition;
+        var joystickAxis = ctx.ReadValue<Vector2>() * cursorRange;
+        nextCursorPosition = cultLeader.position + new Vector3(joystickAxis.x, joystickAxis.y);
+        nextCursorPosition.z = 0;
     }
 
     public void SetWalkTargetIndicator(InputAction.CallbackContext ctx)

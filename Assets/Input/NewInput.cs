@@ -90,7 +90,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""id"": ""b135ee91-571b-4fb8-bffa-75db907c22b6"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Normalize(min=-1,max=1),AxisDeadzone"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""MoveCursor"",
                     ""isComposite"": false,
