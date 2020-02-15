@@ -18,7 +18,22 @@ public class EscapeArea : MonoBehaviour
     {
         if (GameManager.Instance.ourCrew.IndexOf(collision.gameObject) != -1)
         {
-            SceneManager.LoadScene("MainMap");
+            GameManager.Instance.StartCoroutine(Routine());
+
+            IEnumerator Routine()
+            {
+                var unload = SceneManager.UnloadSceneAsync(GameManager.Instance.locationScene);
+                yield return new WaitUntil(()=>!unload.isDone);
+                foreach (var obj in GameManager.Instance.mainMapScene.GetRootGameObjects())
+                {
+                    obj.SetActive(true);
+                    if (obj.CompareTag("Player"))
+                    {
+                        obj.transform.position = GameManager.Instance.savedPosition;
+                    }
+                }
+            }
+
         }
     }
 

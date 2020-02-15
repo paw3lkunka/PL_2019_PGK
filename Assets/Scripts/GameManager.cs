@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
         set => skipTutorial = value;
     }
 
+    public Scene mainMapScene;
+    public Scene locationScene;
+
     public GameObject cultistPrefab;
     public GameObject leaderPrefab;
     public GameObject guiPrefab;

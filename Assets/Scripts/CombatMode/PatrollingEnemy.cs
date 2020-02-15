@@ -9,6 +9,10 @@ public class PatrollingEnemy : Enemy
     private Vector2[] patrolPoints;
 #pragma warning restore
 
+#if UNITY_EDITOR
+    public Color gizmoColor = Color.magenta;
+#endif
+
     private int destPoint = 0;
 
     #endregion
@@ -40,10 +44,10 @@ public class PatrollingEnemy : Enemy
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.black;
+        Gizmos.color = gizmoColor;
         foreach (Vector2 p in patrolPoints)
         {
-            Gizmos.DrawSphere(p, .2f);
+            Gizmos.DrawSphere(p, .1f);
         }
     }
 

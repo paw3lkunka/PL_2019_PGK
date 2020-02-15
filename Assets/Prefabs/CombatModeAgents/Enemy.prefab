@@ -203,6 +203,7 @@ MonoBehaviour:
   - {x: 19, y: 3}
   - {x: 20, y: -1}
   - {x: 19, y: -6}
+  gizmoColor: {r: 0.5176471, g: 0.1254902, b: 0.09411766, a: 1}
 --- !u!114 &9000724666377562213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +337,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5458302710109219631, guid: d28186ea97da95543a83cfbbff84aead,
+        type: 3}
+      propertyPath: textPrefab
+      value: 
+      objectReference: {fileID: 2305930432605828687, guid: 1c4ecf09ee23df84c972ebfcea75114a,
+        type: 3}
     - target: {fileID: 8783456592560801953, guid: d28186ea97da95543a83cfbbff84aead,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -391,12 +398,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5458302710109219631, guid: d28186ea97da95543a83cfbbff84aead,
-        type: 3}
-      propertyPath: textPrefab
-      value: 
-      objectReference: {fileID: 2305930432605828687, guid: 1c4ecf09ee23df84c972ebfcea75114a,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d28186ea97da95543a83cfbbff84aead, type: 3}
 --- !u!4 &8041055857759774129 stripped

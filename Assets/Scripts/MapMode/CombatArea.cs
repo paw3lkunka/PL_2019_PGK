@@ -20,7 +20,19 @@ public class CombatArea : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameManager.Instance.savedPosition = GlobalReturnPoint;
-        SceneManager.LoadScene(sceneName);
+
+        GameManager.Instance.StartCoroutine(Routine());
+
+        IEnumerator Routine()
+        {
+            foreach (var obj in GameManager.Instance.mainMapScene.GetRootGameObjects())
+            {
+                obj.SetActive(false);
+            }
+            AsyncOperation load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            yield return new WaitUntil(()=>load.isDone);
+            GameManager.Instance.locationScene = SceneManager.GetSceneByName(sceneName);
+        }
     }
 
     private void OnDrawGizmos()
