@@ -18,8 +18,18 @@ public partial class AudioTimeline
 
     private void OnDisable()
     {
+        OnBeat -= BeatHandler;
+        OnBeatHit -= BeatHitHandler;
         OnBeatFail -= BeatFailHandler;
+        OnBarEnd -= BarEndHandler;
+        OnSequenceStart -= SequenceStartHandler;
+        OnSequenceReset -= SequenceResetHandler;
+        OnSequencePause -= SequencePauseHandler;
+        OnSequenceResume -= SequenceResumeHandler;
     }
+
+    // ----------------------------------------------------
+    // ---- Internal event handlers -----------------------
 
     private void BeatHandler(bool isMain)
     {
@@ -33,7 +43,7 @@ public partial class AudioTimeline
 
     private void BeatFailHandler()
     {
-        SequenceReset();
+        OnSequenceReset();
     }
 
     private void BarEndHandler(BarState barState)
@@ -48,22 +58,37 @@ public partial class AudioTimeline
 
         // Reset sequence start moment and set next beat moment
         sequenceStartMoment = AudioSettings.dspTime;
-        nextBeatMoment = beatDuration;
+        NextBeatMoment = beatDuration;
     }
 
     private void SequenceResetHandler()
     {
+        // ### TIMELINE STATE CHANGE ###
+        timelineState = TimelineState.Interrupted;
 
+        lastBarState = BarState.Failed;
+        // Invoke sequence reset event
+        OnSequenceReset();
+        // Start sequence reset coroutine
+        StartCoroutine(SequenceResetCoroutine());
     }
 
     private void SequencePauseHandler()
     {
+        // ### TIMELINE STATE CHANGE ###
+        timelineState = TimelineState.Paused;
 
+        // Save beat moment variables
+        pauseMoment = AudioSettings.dspTime;
     }
 
     private void SequenceResumeHandler()
     {
+        // ### TIMELINE STATE CHANGE ###
+        timelineState = TimelineState.Countup;
 
+        // Restore beat moment variables corrected by time passed
+        NextBeatMoment = AudioSettings.dspTime + beatDuration;
     }
 
     // Additional helper functions
