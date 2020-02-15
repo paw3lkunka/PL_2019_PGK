@@ -30,6 +30,7 @@ public class EscapeArea : MonoBehaviour
                     if (obj.CompareTag("Player"))
                     {
                         obj.transform.position = GameManager.Instance.savedPosition;
+                        obj.GetComponent<MoveToCursorClick>().ResetTarget();
                     }
                 }
             }

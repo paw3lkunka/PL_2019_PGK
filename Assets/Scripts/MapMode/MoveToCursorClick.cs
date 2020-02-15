@@ -28,12 +28,10 @@ public class MoveToCursorClick : MonoBehaviour
 
     private void OnEnable()
     {
-        input.Gameplay.SetWalkTarget.performed += SetWalkTarget;
-        input.Gameplay.SetWalkTarget.Enable();
-
         if (input != null)
         {
-            
+            input.Gameplay.SetWalkTarget.performed += SetWalkTarget;
+            input.Gameplay.SetWalkTarget.Enable();
         }
     }
 
@@ -59,7 +57,7 @@ public class MoveToCursorClick : MonoBehaviour
 
     #region Component
 
-
+    public void ResetTarget() => targetPos = transform.position;
 
     #endregion
 

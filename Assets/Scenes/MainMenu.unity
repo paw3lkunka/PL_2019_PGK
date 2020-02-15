@@ -466,6 +466,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skipTutorial: 0
+  mainMapScene:
+    m_Handle: 0
+  locationScene:
+    m_Handle: 0
   cultistPrefab: {fileID: 2659117062321255298, guid: fca019f3bf262b545a9cbe48dc96d017,
     type: 3}
   leaderPrefab: {fileID: 2659117062321255298, guid: 19a007f48af59e74698d1ff79c8bba41,
@@ -496,7 +500,7 @@ MonoBehaviour:
   FanaticFaithLevel: 0.9
   savedPosition: {x: 0, y: 0}
   ourCrew: []
-  inputSchedule: 1
+  inputSchedule: 0
 --- !u!1 &512776234
 GameObject:
   m_ObjectHideFlags: 0
