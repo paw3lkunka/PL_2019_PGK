@@ -1,6 +1,7 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Shooter))]
 public class Cultist : Character
@@ -8,10 +9,15 @@ public class Cultist : Character
     #region Variables
 
     private Shooter shooter;
-    public bool isFanatic, fanaticState;
+    public bool isFanatic;
+    public bool fanaticState;
 
     [Range(0, 0.001f)] public float fanaticStateEnterChance = 0.05f, fanaticStateExitChance = 0.01f;
     public float fanaticAimDebuff;
+
+    private NewInput input;
+    private bool canMove;
+    private bool canAttack;
 
     #endregion
 
@@ -38,6 +44,8 @@ public class Cultist : Character
 
         Agent.updateRotation = false;
         Agent.updateUpAxis = false;
+
+        input = GameManager.Instance.input;
     }
 
     protected override void Start()
@@ -61,6 +69,30 @@ public class Cultist : Character
 
         GameManager.Instance.FanaticStart += EnterFanaticMode;
         GameManager.Instance.FanaticEnd += ExitFanaticMode;
+    }
+
+    protected void OnEnable()
+    {
+        if(input != null)
+        {
+            input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
+            input.Gameplay.SetWalkTarget.Enable();
+
+            input.CombatMode.SetShootTarget.performed += AimToCursorPosition;
+            input.CombatMode.SetShootTarget.Enable();
+        }
+    }
+
+    protected void OnDisable()
+    {
+        if(input != null)
+        {
+            input.Gameplay.SetWalkTarget.performed -= GoToCursorPosition;
+            input.Gameplay.SetWalkTarget.Disable();
+
+            input.CombatMode.SetShootTarget.performed -= AimToCursorPosition;
+            input.CombatMode.SetShootTarget.Disable();
+        }
     }
 
     protected override void Update()
@@ -100,8 +132,8 @@ public class Cultist : Character
         }
 
         (GameObject, float) nearest = CrewSceneManager.Instance.enemies.NearestFrom(transform.position);
-        bool canMove = CheckState(CharacterState.CanMove);
-        bool canAttack = CrewSceneManager.Instance.combatMode && CheckState(CharacterState.CanAttack);
+        canMove = CheckState(CharacterState.CanMove);
+        canAttack = CrewSceneManager.Instance.combatMode && CheckState(CharacterState.CanAttack);
 
         if (fanaticState)
         {
@@ -144,21 +176,9 @@ public class Cultist : Character
 
     public void StandardBehaviour(GameObject enemy, float distanceToEnemy, bool canMove, bool canAttack)
     {
-
         if (!canAttack || distanceToEnemy > shooter.range)
         {
             shooter.StopShooting();
-        }
-
-        if (canMove && Input.GetMouseButtonDown(0))
-        {
-            GoToMousePosition();
-        }
-
-        if (canAttack && Input.GetMouseButtonDown(1))
-        {
-            AimToMousePosition();
-            shooter.StartShooting();
         }
     }
 
@@ -184,11 +204,6 @@ public class Cultist : Character
         else
         {
             shooter.StopShooting();
-
-            if (canMove && Input.GetMouseButtonDown(0))
-            {
-                GoToMousePosition();
-            }
         }
     }
 
@@ -212,28 +227,6 @@ public class Cultist : Character
 
     private void EnterFanaticMode() => isFanatic = true;
     private void ExitFanaticMode() => isFanatic = false;
-
-    #endregion
-
-    #region Control
-
-    public void GoToMousePosition()
-    {
-        if (Agent.enabled && !GameManager.Gui.isMouseOver)
-        {
-            Agent.SetDestination(CrewSceneManager.Instance.MousePos + FormationOffset);
-        }
-    }
-
-    public void AimToMousePosition()
-    {
-        Vector2 offset = new Vector2
-        (
-            Random.Range(Mathf.Min(0, FormationOffset.x), Mathf.Max(0, FormationOffset.x)),
-            Random.Range(Mathf.Min(0, FormationOffset.y), Mathf.Max(0, FormationOffset.y))
-        );
-        GetComponent<Shooter>().target = CrewSceneManager.Instance.MousePos + offset;
-    }
 
     #endregion
 
@@ -331,6 +324,38 @@ public class Cultist : Character
     }
 
     #endregion
+
+    #endregion
+
+    #region Input
+
+    private void GoToCursorPosition(InputAction.CallbackContext ctx)
+    {
+        if (Agent.enabled && !GameManager.Gui.isMouseOver && canMove)
+        {
+            var cursorPosition = CrewSceneManager.Instance.cursorInstance.position;
+            var nextDestination = new Vector2(cursorPosition.x, cursorPosition.y) + FormationOffset;
+            Agent.SetDestination(nextDestination);
+        }
+    }
+
+    private void AimToCursorPosition(InputAction.CallbackContext ctx)
+    {
+        if(canAttack)
+        {
+            var targetOffset = new Vector2
+            (
+                Random.Range(Mathf.Min(0, FormationOffset.x), Mathf.Max(0, FormationOffset.x)),
+                Random.Range(Mathf.Min(0, FormationOffset.y), Mathf.Max(0, FormationOffset.y))
+            );
+
+            var cursorPosition = CrewSceneManager.Instance.cursorInstance.position;
+            var nextTarget = new Vector2(cursorPosition.x, cursorPosition.y) + targetOffset;
+
+            GetComponent<Shooter>().target = nextTarget;
+            shooter.StartShooting();
+        }
+    }
 
     #endregion
 }

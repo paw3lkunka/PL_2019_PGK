@@ -5,6 +5,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
+public enum InputSchedule
+{
+    MouseKeyboard,
+    Gamepad,
+    Touchscreen
+}
+
 public class GameManager : MonoBehaviour
 {
     #region Variables
@@ -88,8 +95,6 @@ public class GameManager : MonoBehaviour
     public event System.Action FanaticStart;
     public event System.Action FanaticEnd;
 
-    public NewInput input;
-
     public float Water
     {
         get => water;
@@ -110,6 +115,10 @@ public class GameManager : MonoBehaviour
     public List<GameObject> ourCrew;
 
     public int ShrinesVisited { get; set; }
+
+    [HideInInspector]
+    public NewInput input;
+    public InputSchedule inputSchedule;
 
     #endregion
 

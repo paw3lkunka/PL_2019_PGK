@@ -34,7 +34,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""SetShootTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -45,18 +45,23 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SetShootTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4e107d0-5298-44a8-b313-38f6c3208f76"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard"",
                     ""action"": ""SetShootTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""MapMode"",
-            ""id"": ""83a9ad21-0a7c-4505-8641-20b079eaed81"",
-            ""actions"": [],
-            ""bindings"": []
         },
         {
             ""name"": ""Gameplay"",
@@ -86,7 +91,18 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b87dc4d2-476f-44b4-abf8-b21dae40629f"",
+                    ""path"": ""<Pointer>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard"",
                     ""action"": ""MoveCursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -97,7 +113,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""SetWalkTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -108,33 +124,73 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SetWalkTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""babcf9de-2fe9-4309-8c7b-b8f86a8fe898"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard"",
                     ""action"": ""SetWalkTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""GUI"",
-            ""id"": ""d7a5d1d2-00e3-4295-8a0f-6ed4d282e171"",
-            ""actions"": [],
-            ""bindings"": []
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""MouseKeyboard"",
+            ""bindingGroup"": ""MouseKeyboard"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Gamepad"",
+            ""bindingGroup"": ""Gamepad"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Touchscreen"",
+            ""bindingGroup"": ""Touchscreen"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Touchscreen>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // CombatMode
         m_CombatMode = asset.FindActionMap("CombatMode", throwIfNotFound: true);
         m_CombatMode_SetShootTarget = m_CombatMode.FindAction("SetShootTarget", throwIfNotFound: true);
-        // MapMode
-        m_MapMode = asset.FindActionMap("MapMode", throwIfNotFound: true);
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_MoveCursor = m_Gameplay.FindAction("MoveCursor", throwIfNotFound: true);
         m_Gameplay_SetWalkTarget = m_Gameplay.FindAction("SetWalkTarget", throwIfNotFound: true);
-        // GUI
-        m_GUI = asset.FindActionMap("GUI", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -214,31 +270,6 @@ public class @NewInput : IInputActionCollection, IDisposable
     }
     public CombatModeActions @CombatMode => new CombatModeActions(this);
 
-    // MapMode
-    private readonly InputActionMap m_MapMode;
-    private IMapModeActions m_MapModeActionsCallbackInterface;
-    public struct MapModeActions
-    {
-        private @NewInput m_Wrapper;
-        public MapModeActions(@NewInput wrapper) { m_Wrapper = wrapper; }
-        public InputActionMap Get() { return m_Wrapper.m_MapMode; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MapModeActions set) { return set.Get(); }
-        public void SetCallbacks(IMapModeActions instance)
-        {
-            if (m_Wrapper.m_MapModeActionsCallbackInterface != null)
-            {
-            }
-            m_Wrapper.m_MapModeActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-            }
-        }
-    }
-    public MapModeActions @MapMode => new MapModeActions(this);
-
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
@@ -279,44 +310,40 @@ public class @NewInput : IInputActionCollection, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
-
-    // GUI
-    private readonly InputActionMap m_GUI;
-    private IGUIActions m_GUIActionsCallbackInterface;
-    public struct GUIActions
+    private int m_MouseKeyboardSchemeIndex = -1;
+    public InputControlScheme MouseKeyboardScheme
     {
-        private @NewInput m_Wrapper;
-        public GUIActions(@NewInput wrapper) { m_Wrapper = wrapper; }
-        public InputActionMap Get() { return m_Wrapper.m_GUI; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GUIActions set) { return set.Get(); }
-        public void SetCallbacks(IGUIActions instance)
+        get
         {
-            if (m_Wrapper.m_GUIActionsCallbackInterface != null)
-            {
-            }
-            m_Wrapper.m_GUIActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-            }
+            if (m_MouseKeyboardSchemeIndex == -1) m_MouseKeyboardSchemeIndex = asset.FindControlSchemeIndex("MouseKeyboard");
+            return asset.controlSchemes[m_MouseKeyboardSchemeIndex];
         }
     }
-    public GUIActions @GUI => new GUIActions(this);
+    private int m_GamepadSchemeIndex = -1;
+    public InputControlScheme GamepadScheme
+    {
+        get
+        {
+            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
+            return asset.controlSchemes[m_GamepadSchemeIndex];
+        }
+    }
+    private int m_TouchscreenSchemeIndex = -1;
+    public InputControlScheme TouchscreenScheme
+    {
+        get
+        {
+            if (m_TouchscreenSchemeIndex == -1) m_TouchscreenSchemeIndex = asset.FindControlSchemeIndex("Touchscreen");
+            return asset.controlSchemes[m_TouchscreenSchemeIndex];
+        }
+    }
     public interface ICombatModeActions
     {
         void OnSetShootTarget(InputAction.CallbackContext context);
-    }
-    public interface IMapModeActions
-    {
     }
     public interface IGameplayActions
     {
         void OnMoveCursor(InputAction.CallbackContext context);
         void OnSetWalkTarget(InputAction.CallbackContext context);
-    }
-    public interface IGUIActions
-    {
     }
 }
