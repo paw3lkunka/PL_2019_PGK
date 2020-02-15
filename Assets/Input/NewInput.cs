@@ -24,7 +24,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""id"": ""f852d4ee-ebdc-4263-b8eb-9423cf3bacdc"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(pressPoint=0.05)""
                 }
             ],
             ""bindings"": [
@@ -122,7 +122,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""e2e4e655-ae24-4f9d-a0bf-99f76d079ecb"",
                     ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(pressPoint=0.05)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""SetWalkTarget"",
