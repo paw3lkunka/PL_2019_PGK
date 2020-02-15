@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class RhythmTester : MonoBehaviour
 {
@@ -18,23 +19,50 @@ public class RhythmTester : MonoBehaviour
     private Beat beatStatus;
     private Color transparent = new Color(0, 0, 0, 0);
 
+    private NewInput input;
+
     #endregion
 
     #region MonoBehaviour
 
-    private void Update()
+    private void Awake()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-        {
-            beatStatus = controller.HitBeat();
-        }
+        input = GameManager.Instance.input;
     }
+
+    private void OnEnable()
+    {
+        input.Gameplay.SetWalkTarget.performed += HitBeatInputTest;
+        input.Gameplay.SetWalkTarget.Enable();
+
+        input.CombatMode.SetShootTarget.performed += HitBeatInputTest;
+        input.CombatMode.SetShootTarget.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Gameplay.SetWalkTarget.performed -= HitBeatInputTest;
+        input.Gameplay.SetWalkTarget.Disable();
+
+        input.CombatMode.SetShootTarget.performed -= HitBeatInputTest;
+        input.CombatMode.SetShootTarget.Disable();
+    }
+
 
     #endregion
 
     #region Component
 
 
+
+    #endregion
+
+    #region Input
+
+    private void HitBeatInputTest(InputAction.CallbackContext ctx)
+    {
+        beatStatus = controller.HitBeat();
+    }
 
     #endregion
 }

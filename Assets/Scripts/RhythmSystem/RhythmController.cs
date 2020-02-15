@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public enum Beat 
 { 
@@ -86,6 +87,8 @@ public partial class RhythmController : MonoBehaviour
     public event Action OnRageModeEnd;
     public event Action OnBeatEnd;
 
+    private NewInput input;
+
     #endregion
 
     #region MonoBehaviour
@@ -116,6 +119,8 @@ public partial class RhythmController : MonoBehaviour
 
         OnRageModeStart += GameManager.Instance.ToRageMode;
         OnRageModeEnd += GameManager.Instance.ToNormalMode;
+
+        input = GameManager.Instance.input;
     }
 
     private void OnEnable()
@@ -128,6 +133,21 @@ public partial class RhythmController : MonoBehaviour
         heavyGuitar.Play();
 
         nextBeatMoment = TimeSinceEnable + (startOffset * beatTime) + fineTune;
+
+        input.Gameplay.SetWalkTarget.performed += HitBeatInputHandler;
+        input.Gameplay.SetWalkTarget.Enable();
+
+        input.CombatMode.SetShootTarget.performed += HitBeatInputHandler;
+        input.CombatMode.SetShootTarget.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Gameplay.SetWalkTarget.performed -= HitBeatInputHandler;
+        input.Gameplay.SetWalkTarget.Disable();
+
+        input.CombatMode.SetShootTarget.performed -= HitBeatInputHandler;
+        input.CombatMode.SetShootTarget.Disable();
     }
 
     private void Update()
@@ -162,12 +182,6 @@ public partial class RhythmController : MonoBehaviour
             normalizedGoodTime = 0.0f;
             OnBeatEnd?.Invoke();
             nextBeatMoment += beatTime;
-        }
-
-        // Temporary input handling
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-        {
-            HitBeat();
         }
 
         // Debug -----------
@@ -223,6 +237,15 @@ public partial class RhythmController : MonoBehaviour
             OnBeatHitBad?.Invoke();
             return Beat.Bad;
         }
+    }
+
+    #endregion
+
+    #region Input
+
+    public void HitBeatInputHandler(InputAction.CallbackContext ctx)
+    {
+        HitBeat();
     }
 
     #endregion

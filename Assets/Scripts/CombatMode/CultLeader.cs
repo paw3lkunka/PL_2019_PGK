@@ -1,12 +1,14 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CultLeader : Character
 {
     #region Variables
 
-
+    private NewInput input;
+    private bool canMove;
 
     #endregion
 
@@ -31,6 +33,8 @@ public class CultLeader : Character
 
         Agent.updateRotation = false;
         Agent.updateUpAxis = false;
+
+        input = GameManager.Instance.input;
     }
 
     protected override void Start()
@@ -40,14 +44,27 @@ public class CultLeader : Character
         base.Start();
     }
 
+    protected void OnEnable()
+    {
+        if(input != null)
+        {
+            input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
+            input.Gameplay.SetWalkTarget.Enable();
+        }
+    }
+
+    protected void OnDisable()
+    {
+        if (input != null)
+        {
+            input.Gameplay.SetWalkTarget.performed -= GoToCursorPosition;
+            input.Gameplay.SetWalkTarget.Disable();
+        }
+    }
+
     protected override void Update()
     {
-        bool canMove = CheckState(CharacterState.CanMove);
-
-        if (canMove && Input.GetMouseButtonDown(0))
-        {
-            GoToMousePosition();
-        }
+        canMove = CheckState(CharacterState.CanMove);
 
         if (GameManager.Instance.cultistNumber == 1)
         {
@@ -77,14 +94,22 @@ public class CultLeader : Character
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMap" || scene.name == "MainMenu")
+        switch (scene.name)
         {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-            Agent.Warp(CrewSceneManager.Instance.startPoint + FormationOffset);
+            case "MainMap":
+                MapSceneManager.Instance.cultLeader = transform;
+                gameObject.SetActive(false);
+                break;
+
+            case "MainMenu":
+                gameObject.SetActive(false);
+                break;
+
+            default:
+                gameObject.SetActive(true);
+                Agent.Warp(CrewSceneManager.Instance.startPoint + FormationOffset);
+                CrewSceneManager.Instance.cultLeader = transform;
+                break;
         }
     }
 
@@ -95,19 +120,6 @@ public class CultLeader : Character
             GameManager.Instance.ourCrew.Remove(gameObject);
             CrewSceneManager.Instance.enemies.Remove(gameObject);
         }
-    }
-
-    public void GoToMousePosition()
-    {
-        if (Agent.enabled && !GameManager.Gui.isMouseOver)
-        {
-            Agent.SetDestination(CrewSceneManager.Instance.MousePos + FormationOffset);
-        }
-    }
-
-    public void AimToMousePosition()
-    {
-        GetComponent<Shooter>().target = CrewSceneManager.Instance.MousePos + FormationOffset;
     }
 
     public override void TakeDamage(int damage)
@@ -125,6 +137,30 @@ public class CultLeader : Character
     {
         Destroy(gameObject);
         GameManager.Instance.OnGameOver -= OnGameOver;
+    }
+
+    #endregion
+
+    #region Input
+
+
+    private void GoToCursorPosition(InputAction.CallbackContext ctx)
+    {
+        if (Agent.enabled && !GameManager.Gui.isMouseOver && canMove)
+        {
+            var cursorPosition = CrewSceneManager.Instance.cursorInstance.position;
+            var nextDestination = new Vector2(cursorPosition.x, cursorPosition.y) + FormationOffset;
+
+            Agent.SetDestination(nextDestination);
+        }
+    }
+
+    private void AimToCursorPosition(InputAction.CallbackContext ctx)
+    {
+        var cursorPosition = CrewSceneManager.Instance.cursorInstance.position;
+        var nextTarget = new Vector2(cursorPosition.x, cursorPosition.y) + FormationOffset;
+
+        GetComponent<Shooter>().target = nextTarget;
     }
 
     #endregion
