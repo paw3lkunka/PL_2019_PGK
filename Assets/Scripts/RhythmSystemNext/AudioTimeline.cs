@@ -5,34 +5,26 @@ using UnityEngine;
 
 public enum BeatState { None, Bad, Good, Great, Perfect };
 public enum BarState { None, Average, Good, Perfect, Failed };
-public enum TimelineState { None, Countup, PauseCountup, Playing, Paused, Interrupted };
+public enum TimelineState { None, Countup, Playing, Paused, Interrupted };
 
-public class AudioTimeline : MonoBehaviour
+public partial class AudioTimeline : MonoBehaviour
 {
 #pragma warning disable
     [Header("Timeline setup")]
     [SerializeField] private double songBpm = 80;
+    public double SongBpm => songBpm;
     [SerializeField] private int beatsPerBar = 4;
+    public int BeatsPerBar => beatsPerBar;
     [Header("Timing and delays")]
-    [Tooltip("Time after failed beat for timeline to resume playing")]
+    [Tooltip("Beats time after failed beat for timeline to resume playing")]
     [SerializeField] private int failedBeatResetOffset = 4;
 #pragma warning restore
-    public int BeatsPerBar => beatsPerBar;
-    public double SongBpm => songBpm;
 
     // Singleton implementation
     // Note that the timeline can be used to keep music synced between scenes if left "don't destroy on load"
     public static AudioTimeline Instance;
 
     // Timeline states
-
-    // ---- Critical flag used for tracking if the timeline engine should be played or paused ----
-    //      UNDER NO CIRCUMSTANCE REFER TO THIS VARIABLE DIRECTLY, IT SHOULD ONLY BE CHANGED
-    //      BY CORRESPONDING METHODS
-    
-        private bool isPlaying = false;
-    
-    // -------------------------------------------------------------------------------------------
     
     private TimelineState timelineState = TimelineState.None;
 
@@ -54,7 +46,6 @@ public class AudioTimeline : MonoBehaviour
 
     // Pause saving moments
     private double pauseMoment;
-    private double nextBeatPauseMoment;
     private double TimeSincePause
     {
         get => AudioSettings.dspTime - pauseMoment;
@@ -87,12 +78,57 @@ public class AudioTimeline : MonoBehaviour
     public delegate void BarEndEvent(BarState barState);
     public event BeatEvent OnBeat;
     public event BeatHitEvent OnBeatHit;
+    public event Action OnBeatFail;
     public event BarEndEvent OnBarEnd;
+    public event Action OnSequenceStart;
     public event Action OnSequenceReset;
-    public event Action OnPause;
-    public event Action OnResume;
+    public event Action OnSequencePause;
+    public event Action OnSequenceResume;
 
     // ----------------------------------------------------
+    // ---- Public methods for external use ---------------
+
+    public void Pause()
+    {
+
+    }
+
+    public void Resume()
+    {
+
+    }
+
+    /// <summary>
+    /// The most important method, should be invoked by input mechanisms that handle rhythm
+    /// Is responsible for determining at which state the beat was hit and invokes actions accordingly
+    /// </summary>
+    public void BeatHit(bool pause = false)
+    {
+        if (wasCurrentBeatHit == false &&
+             (timelineState == TimelineState.Countup || timelineState == TimelineState.Playing))
+        {
+            if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
+            {
+                OnBeatFail();
+            }
+
+            // IF SOMETHING DOESN'T WORK YOU PROBABLY FORGOT TO RESET THIS FLAG
+            wasCurrentBeatHit = true;
+            // Finally record the beat state for bar evaluation
+            barBeatStates[currentBeatNumber] = currentBeatState;
+            // And send the event with current beat state attached to
+            OnBeatHit(currentBeatState, currentBeatNumber);
+        }
+        else if (pause == true)
+        {
+            // Failed beat pause event
+
+        }
+    }
+
+    // ----------------------------------------------------
+    // ---- Unity functions -------------------------------
+    // NOTE: OnEnable and OnDisable moved to AudioTimelineEvents
 
     private void Awake()
     {
@@ -113,62 +149,112 @@ public class AudioTimeline : MonoBehaviour
         TimelineInit();
     }
 
-    public void TimelineInit()
+    private void Update()
+    {
+        // Make a check if update should check for beat and fire events
+        // If yes, verify if events should fire as countup or not
+        switch (timelineState)
+        {
+            case TimelineState.None:
+            case TimelineState.Paused:
+            case TimelineState.Interrupted:
+                return; // The rhythm is not playing so return and do nothing
+                        // TODO: Important part, should verify its validity
+
+            case TimelineState.Countup:
+                // Set additional variables for countup
+                break;
+            case TimelineState.Playing:
+                // Set additional variables for normal
+                break;
+        }
+
+
+        // ---- Main rhythm check ----
+        // The Good rhythm hit window condition is checked here
+        if (TimeSinceSequenceStart > nextBeatMoment - goodTolerance + toleranceBias &&
+            TimeSinceSequenceStart < nextBeatMoment + goodTolerance + toleranceBias)
+        {
+
+            currentBeatState = BeatState.Good;
+
+            // The Great rhythm hit window condition is checked here
+            if (TimeSinceSequenceStart > nextBeatMoment - greatTolerance &&
+                TimeSinceSequenceStart < nextBeatMoment + greatTolerance)
+            {
+
+                currentBeatState = BeatState.Great;
+
+                // ------------------------------------------------------------------------------
+                // The Perfect rhythm hit condition is checked here
+                if (TimeSinceSequenceStart >= nextBeatMoment && hasEncounteredPerfect == false)
+                {
+
+                    hasEncounteredPerfect = true;
+                    currentBeatState = BeatState.Perfect;
+
+                    // ---- Invoke the OnBeat event with corresponding parameter ----
+                    if (currentBeatNumber == beatsPerBar - 1)
+                    {
+                        OnBeat(true);
+                    }
+                    else
+                    {
+                        OnBeat(false);
+                    }
+
+                }
+                // ------------------------------------------------------------------------------
+            }
+        }
+
+        // If beat is not detected (i.e. the time is not in timeframe)
+        // set the beat state to none because the time is before beat
+        else if (hasEncounteredPerfect == false)
+        {
+            currentBeatState = BeatState.None;
+        }
+
+        // This fires after last possible condition of good beat
+        // so this calls the beat evaluation method and sets next beat states
+        else if (hasEncounteredPerfect == true)
+        {
+            // The reset state when the beat evaluation should take place
+            EvaluateBeat();
+
+            // Resetting state keeping variables for the next beat
+            currentBeatState = BeatState.None;
+            hasEncounteredPerfect = false;
+            wasCurrentBeatHit = false;
+
+            // Advancing counters to next beat moment
+            nextBeatMoment += beatDuration;
+
+            // Increment beat number and reset it if the full bar has passed
+            currentBeatNumber++;
+            if (currentBeatNumber >= beatsPerBar)
+            {
+                EvaluateBar();
+                currentBeatNumber = 0;
+            }
+        }
+
+    }
+
+    // ----------------------------------------------------
+    // ---- Timeline control methods ----------------------
+
+    private void TimelineInit()
     {
         beatDuration = 60.0d / songBpm;
-        SequenceStart();
+        OnSequenceStart();
     }
 
-    public void TimelinePause()
+    private void SequenceReset()
     {
-        // Set the timeline state to paused
-        timelineState = TimelineState.Paused;
-
-        // Save beat moment variables
-        pauseMoment = AudioSettings.dspTime;
-        nextBeatPauseMoment = nextBeatMoment;
-
-        // Broadcast On Pause event
-        OnPause();
-
-        // Set timeline to not playing
-        isPlaying = false;
-    }
-
-    public void TimelineResume()
-    {
-        // Set the timeline state to pause countup
-        timelineState = TimelineState.PauseCountup;
-
-        // Restore beat moment variables corrected by time passed
-        nextBeatMoment = nextBeatPauseMoment + TimeSincePause;
-
-        // Invoke On Resume event
-        OnResume();
-
-        // Set timeline to playing
-        isPlaying = true;
-
-        //TODO: Checking the number of beats for offset countup
-    }
-
-    private void SequenceStart()
-    {
-        // Reset sequence start moment and set next beat moment
-        sequenceStartMoment = AudioSettings.dspTime;
-        nextBeatMoment = beatDuration;
-        // Set timeline state to countup
-        timelineState = TimelineState.Countup;
-
-        // Set the timeline state to is playing
-        isPlaying = true;
-    }
-
-    public void SequenceReset()
-    {
-        // Set states accordingly
-        isPlaying = false;
+        // ### TIMELINE STATE CHANGE ###
         timelineState = TimelineState.Interrupted;
+
         lastBarState = BarState.Failed;
         // Invoke sequence reset event
         OnSequenceReset();
@@ -176,104 +262,32 @@ public class AudioTimeline : MonoBehaviour
         StartCoroutine(SequenceResetCoroutine());
     }
 
-    private IEnumerator SequenceResetCoroutine()
+    private void SequencePause()
     {
-        yield return new WaitForSeconds((float)beatDuration * failedBeatResetOffset);
-        SequenceStart();
+        // ### TIMELINE STATE CHANGE ###
+        timelineState = TimelineState.Paused;
+
+        // Save beat moment variables
+        pauseMoment = AudioSettings.dspTime;
+        
+        // Depending on 
+
+        // Broadcast On Pause event
+        OnPause();
     }
 
-    /// <summary>
-    /// The most important method, should be invoked by input mechanisms that handle rhythm
-    /// Is responsible for determining at which state the beat was hit and invokes actions accordingly
-    /// </summary>
-    public void BeatHit()
+    private void SequenceResume()
     {
-        Debug.Log("Beat hit invoked");
-        if (wasCurrentBeatHit == false && 
-            (timelineState == TimelineState.Countup || timelineState == TimelineState.Playing))
-        {
-            if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
-            {
-                SequenceReset();
-            }
+        // ### TIMELINE STATE CHANGE ###
+        timelineState = TimelineState.Countup;
 
-            // IF SOMETHING DOESN'T WORK YOU PROBABLY FORGOT TO RESET THIS FLAG
-            wasCurrentBeatHit = true;
-            // Finally record the beat state for bar evaluation
-            barBeatStates[currentBeatNumber] = currentBeatState;
-            // And send the event with current beat state attached to
-            OnBeatHit(currentBeatState, currentBeatNumber);
-        }
+        // Restore beat moment variables corrected by time passed
+        nextBeatMoment = nextBeatPauseMoment + TimeSincePause;
 
-    }
+        // Invoke On Resume event
+        OnResume();
 
-    private void Update()
-    {
-        if (isPlaying)
-        {
-            // ---- Main rhythm check ----
-            // The Good rhythm hit window condition is checked here
-            if (TimeSinceSequenceStart > nextBeatMoment - goodTolerance + toleranceBias && 
-                TimeSinceSequenceStart < nextBeatMoment + goodTolerance + toleranceBias)
-            {
-
-                currentBeatState = BeatState.Good;
-
-                // The Great rhythm hit window condition is checked here
-                if (TimeSinceSequenceStart > nextBeatMoment - greatTolerance &&
-                    TimeSinceSequenceStart < nextBeatMoment + greatTolerance)
-                {
-
-                    currentBeatState = BeatState.Great;
-
-                    // ------------------------------------------------------------------------------
-                    // The Perfect rhythm hit condition is checked here
-                    if (TimeSinceSequenceStart >= nextBeatMoment && hasEncounteredPerfect == false)
-                    {
-
-                        hasEncounteredPerfect = true;
-                        currentBeatState = BeatState.Perfect;
-
-                        // ---- Invoke the OnBeat event with corresponding parameter ----
-                        if (currentBeatNumber >= beatsPerBar - 1)
-                        {
-                            OnBeat(true);
-                        }
-                        else
-                        {
-                            OnBeat(false);
-                        }
-
-                    }
-                    // ------------------------------------------------------------------------------
-                }
-            }
-            else if (hasEncounteredPerfect == false)
-            {
-                currentBeatState = BeatState.None;
-            }
-            else if (hasEncounteredPerfect == true)
-            {
-                // The reset state when the beat evaluation should take place
-                EvaluateBeat();
-
-                // Resetting state keeping variables for the next beat
-                currentBeatState = BeatState.None;
-                hasEncounteredPerfect = false;
-                wasCurrentBeatHit = false;
-
-                // Advancing counters to next beat moment
-                nextBeatMoment += beatDuration;
-
-                // Increment beat number and reset it if the full bar has passed
-                currentBeatNumber++;
-                if (currentBeatNumber >= beatsPerBar)
-                {
-                    EvaluateBar();
-                    currentBeatNumber = 0;
-                }
-            }
-        }
+        //TODO: Checking the number of beats for offset countup
     }
 
     private void EvaluateBeat()
