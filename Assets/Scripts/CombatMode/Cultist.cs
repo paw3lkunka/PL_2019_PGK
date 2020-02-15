@@ -258,14 +258,20 @@ public class Cultist : Character
     /// </summary>
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMap" || scene.name == "MainMenu")
+        switch (scene.name)
         {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-            Agent.Warp(CrewSceneManager.Instance.startPoint + FormationOffset);
+            case "MainMap":
+                gameObject.SetActive(false);
+                break;
+
+            case "MainMenu":
+                gameObject.SetActive(false);
+                break;
+
+            default:
+                gameObject.SetActive(true);
+                Agent.Warp(CrewSceneManager.Instance.startPoint + FormationOffset);
+                break;
         }
     }
 

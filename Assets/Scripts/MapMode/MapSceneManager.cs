@@ -174,8 +174,8 @@ public class MapSceneManager : MonoBehaviour
 
     public void MoveCursorJoystick(InputAction.CallbackContext ctx)
     {
-        var joystickAxis = ctx.ReadValue<Vector2>() * cursorRange;
-        nextCursorPosition = cultLeader.position + new Vector3(joystickAxis.x, joystickAxis.y);
+        var joystickAxis = ctx.ReadValue<Vector2>();
+        nextCursorPosition = cultLeader.position + new Vector3(joystickAxis.x, joystickAxis.y) * cursorRange;
         nextCursorPosition.z = 0;
     }
 
