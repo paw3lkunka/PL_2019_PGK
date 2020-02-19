@@ -42,6 +42,7 @@ public class PatrollingEnemy : Enemy
             GotoNextPoint();
         }
     }
+
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {

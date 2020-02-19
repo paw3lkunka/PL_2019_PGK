@@ -94,6 +94,7 @@ public class CrewSceneManager : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(enemies.Count);
         if(enabled)
         {
             switch (GameManager.Instance.inputSchedule)

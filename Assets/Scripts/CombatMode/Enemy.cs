@@ -38,7 +38,16 @@ public class Enemy : Character
     protected override void Start()
     {
         base.Start();
+    }
+
+    protected void OnEnable()
+    {
         CrewSceneManager.Instance.enemies.Add(gameObject);
+    }
+
+    protected void OnDisable()
+    {
+        CrewSceneManager.Instance.enemies.Remove(gameObject);
     }
 
     protected override void Update()
