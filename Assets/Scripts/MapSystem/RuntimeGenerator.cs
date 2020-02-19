@@ -30,6 +30,7 @@ public class RuntimeGenerator : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Wywołuję runtime generator");
         if (!useCustomMainSeed)
         {
             mainSeed = Random.Range(int.MinValue, int.MaxValue);
@@ -54,9 +55,23 @@ public class RuntimeGenerator : MonoBehaviour
 
         if (clearPreSelected)
         {
-            foreground.Clear();
+            try
+            {
+                foreground.Clear();
+            }
+            catch(System.NullReferenceException)
+            {
+                //do nothing, ofcourse xD
+            }
             foreground.useCustomSeed = true;
-            background.Clear();
+            try
+            {
+                background.Clear();
+            }
+            catch(System.NullReferenceException)
+            {
+                //do nothiung
+            }
             background.useCustomSeed = true;
         }
 
