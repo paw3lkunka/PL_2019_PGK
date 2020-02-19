@@ -95,7 +95,7 @@ public class AdaptiveMusicMaster : MonoBehaviour
             }
 
             if (musicEnabled &&/* !currentLightMusicClip.IsRealNull() && */!currentHeavyMusicClip.IsRealNull() &&
-                AudioTimeline.Instance.Combo > 1)
+                RhythmMechanics.Instance.Combo > 1)
             {
                 //lightMusicSource.PlayOneShot(currentLightMusicClip);
                 heavyMusicSource.PlayOneShot(currentHeavyMusicClip);

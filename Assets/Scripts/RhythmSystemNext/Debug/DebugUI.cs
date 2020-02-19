@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class DebugUI : MonoBehaviour
 {
     public bool displayCombo = true;
+    public bool displayRage = true;
     public bool displayBarState = true;
     public bool displayBeatState = true;
     public bool displayBeatNumber = true;
@@ -52,7 +53,9 @@ public class DebugUI : MonoBehaviour
     {
         textMesh.text = "";
         if (displayCombo)
-            textMesh.text += "Combo: " + AudioTimeline.Instance.Combo + "\n";
+            textMesh.text += "Combo: " + RhythmMechanics.Instance.Combo + "\n";
+        if (displayRage)
+            textMesh.text += "Rage: " + RhythmMechanics.Instance.Rage + "\n";
         if (displayBarState)
             textMesh.text += "Bar state: " + barState.ToString() + "\n";
         if (displayBeatState)

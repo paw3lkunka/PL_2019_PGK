@@ -7,6 +7,9 @@ public enum BeatState { None, Bad, Good, Great, Perfect };
 public enum BarState { None, Average, Good, Perfect, Failed };
 public enum TimelineState { None, Countup, Playing, Paused, Interrupted };
 
+/// <summary>
+/// Main singleton class responsible for audio rhythm synchronization
+/// </summary>
 public partial class AudioTimeline : MonoBehaviour
 {
 #pragma warning disable
@@ -29,7 +32,7 @@ public partial class AudioTimeline : MonoBehaviour
     private TimelineState timelineState = TimelineState.None;
 
     // Rhythm window tolerance values
-    private double goodTolerance = 0.25f;
+    private double goodTolerance = 0.20f;
     private double greatTolerance = 0.08f;
     private double toleranceBias = 0.0f; // Use with caution as I don't have the patience to check if this value is correct
 
@@ -51,6 +54,7 @@ public partial class AudioTimeline : MonoBehaviour
 
     // Bar tracking
     private BeatState[] barBeatStates;
+    private BarState lastBarState;
 
     // Sequence time variables
     private double sequenceStartMoment;
@@ -141,7 +145,7 @@ public partial class AudioTimeline : MonoBehaviour
 
                 if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
                 {
-                    OnBeatFail();
+                    OnBeatHit(BeatState.Bad, currentBeatNumber);
                 }
                 else
                 {
@@ -153,7 +157,7 @@ public partial class AudioTimeline : MonoBehaviour
             }
             else
             {
-                OnBeatFail();
+                OnBeatHit(BeatState.Bad, currentBeatNumber);
             }
         }
     }

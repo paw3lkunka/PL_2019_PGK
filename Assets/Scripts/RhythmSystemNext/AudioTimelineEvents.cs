@@ -38,17 +38,28 @@ public partial class AudioTimeline
 
     private void BeatHitHandler(BeatState beatState, int beatNumber)
     {
-
+        switch (beatState)
+        {
+            case BeatState.None:
+            case BeatState.Bad:
+                OnBeatFail();
+                break;
+            case BeatState.Good:
+            case BeatState.Great:
+            case BeatState.Perfect:
+                break;
+        }
     }
 
     private void BeatFailHandler()
     {
+
         OnSequenceReset();
     }
 
     private void BarEndHandler(BarState barState)
     {
-
+        lastBarState = barState;
     }
 
     private void SequenceStartHandler()
@@ -67,8 +78,6 @@ public partial class AudioTimeline
         timelineState = TimelineState.Interrupted;
 
         lastBarState = BarState.Failed;
-        // Invoke sequence reset event
-        OnSequenceReset();
         // Start sequence reset coroutine
         StartCoroutine(SequenceResetCoroutine());
     }
