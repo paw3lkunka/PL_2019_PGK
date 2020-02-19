@@ -47,7 +47,7 @@ public class CrewSceneManager : MonoBehaviour
 
         if(input != null)
         {
-            input.Gameplay.SetWalkTarget.performed += SetShootTargetIndicator;
+            input.Gameplay.SetWalkTarget.performed += SetWalkTargetIndicator;
             input.Gameplay.SetWalkTarget.Enable();
 
             if (combatMode)
@@ -62,7 +62,7 @@ public class CrewSceneManager : MonoBehaviour
     {
         if(input != null)
         {
-            input.Gameplay.SetWalkTarget.performed -= SetShootTargetIndicator;
+            input.Gameplay.SetWalkTarget.performed -= SetWalkTargetIndicator;
             input.Gameplay.SetWalkTarget.Disable();
 
             if (combatMode)
@@ -153,7 +153,10 @@ public class CrewSceneManager : MonoBehaviour
 
     private void SetWalkTargetIndicator(InputAction.CallbackContext ctx)
     {
-        walkTargetIndicator.transform.position = cursorInstance.position;
+        if (!GameManager.Gui.isMouseOver)
+        {
+            walkTargetIndicator.transform.position = cursorInstance.position;
+        }
     }
 
     private void SetShootTargetIndicator(InputAction.CallbackContext ctx)

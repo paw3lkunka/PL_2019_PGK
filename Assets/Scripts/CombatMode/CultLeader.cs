@@ -100,6 +100,10 @@ public class CultLeader : Character
                 gameObject.SetActive(false);
                 break;
 
+            case "MainMap":
+                gameObject.SetActive(false);
+                break;
+
             default:
                 gameObject.SetActive(true);
                 Agent.Warp(CrewSceneManager.Instance.startPoint + FormationOffset);
