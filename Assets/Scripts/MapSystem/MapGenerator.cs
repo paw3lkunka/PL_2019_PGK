@@ -20,10 +20,13 @@ public class MapGenerator : MonoBehaviour
     public bool forceEmptyCentre = false;
     public bool foregroundMap = false;
 
+    private bool templeGenerated = false;
+
     public int seed;
     public int orderInLayer;
 
     [SerializeField] public GameObject shrineLocationPrefab;
+    [SerializeField] public GameObject templeLocationPrefab;
     public List<GameObject> locationPrefabs = new List<GameObject>();
     
 
@@ -41,6 +44,7 @@ public class MapGenerator : MonoBehaviour
     public int generationID;
 
     private List<Vector3> positions = new List<Vector3>();
+    private List<Vector3> unusedPositions = new List<Vector3>();
 
     #endregion
 
@@ -68,6 +72,18 @@ public class MapGenerator : MonoBehaviour
             randomOffsetRange.x = 0;
         if (randomOffsetRange.y < 0)
             randomOffsetRange.y = 0;
+    }
+
+    private void LateUpdate()
+    {
+        if(foregroundMap && !templeGenerated && GameManager.Instance.ShrinesVisited == 3)
+        {
+            int randomPos = Random.Range(0, unusedPositions.Count);
+            GameObject instance = Instantiate(templeLocationPrefab, unusedPositions[randomPos], Quaternion.identity, grid.transform);
+            instance.GetComponentInChildren<Location>().generationID = (int)generationID;
+            instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
+            templeGenerated = true;
+        }
     }
 
     #endregion
@@ -127,6 +143,7 @@ public class MapGenerator : MonoBehaviour
                 Vector3 position = new Vector3(i * cellSize.x, j * cellSize.y, 0);
                 position.x += Random.Range(-randomOffsetRange.x, randomOffsetRange.x) - halfWidth;
                 position.y += Random.Range(-randomOffsetRange.y, randomOffsetRange.y) - halfHight;
+                unusedPositions.Add(position);
 
                 while (index < locationPrefabs.Count && chances[index] < randomNumber)
                 {
@@ -138,6 +155,7 @@ public class MapGenerator : MonoBehaviour
                 {
                     GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
                     positions.Add(position);
+                    unusedPositions.RemoveAt(unusedPositions.Count - 1);
                     instance.GetComponentInChildren<Location>().generationID = (int)generationID;
                     instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
                 }

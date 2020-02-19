@@ -65,6 +65,8 @@ MonoBehaviour:
   orderInLayer: 1
   shrineLocationPrefab: {fileID: 4981993684732004272, guid: a2098d329e170964e8e6eb48979bf8bd,
     type: 3}
+  templeLocationPrefab: {fileID: 4981993684732004272, guid: a8e3f747bd270dc40863d26640849f53,
+    type: 3}
   locationPrefabs:
   - {fileID: 4981993684732004272, guid: 3d398aafe82766c44bc3bb87f8854863, type: 3}
   - {fileID: 3446350326676292440, guid: e68f1fb3fbca76d47bd9f73701ca480b, type: 3}
@@ -76,7 +78,7 @@ MonoBehaviour:
   emptyChance: 10
   isValid: 1
   spawnChances: 0a0000000a0000000500000005000000
-  generationID: -263888
+  generationID: -270412
 --- !u!114 &1903687780731101158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +97,7 @@ MonoBehaviour:
   seed: -1529569144
   orderInLayer: 0
   shrineLocationPrefab: {fileID: 0}
+  templeLocationPrefab: {fileID: 0}
   locationPrefabs:
   - {fileID: 3362617972761397169, guid: c11b3ff5651e46e4e8aef2374f5d71db, type: 3}
   - {fileID: 2597623936401417111, guid: d23b9d1ca2fe46c4e9419f8988329344, type: 3}
