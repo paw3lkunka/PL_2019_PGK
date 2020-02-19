@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4096785628992212864}
   - component: {fileID: 5239127474216285238}
   - component: {fileID: 7953584711275803335}
+  - component: {fileID: 5465302587958810991}
   m_Layer: 0
   m_Name: WaterTank
   m_TagString: Untagged
@@ -122,3 +123,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.62, y: 0.74}
   m_EdgeRadius: 0
+--- !u!114 &5465302587958810991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3105809539391934079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4732f245ab903514b89634700b45ff2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

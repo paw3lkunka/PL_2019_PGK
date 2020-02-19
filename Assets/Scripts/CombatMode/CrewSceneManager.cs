@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 [DisallowMultipleComponent]
 public class CrewSceneManager : MonoBehaviour
 {
-    #region Variables
 
+    #region Variables
     public static CrewSceneManager Instance { get; private set; }
 
     public List<GameObject> enemies = new List<GameObject>();
@@ -31,6 +31,25 @@ public class CrewSceneManager : MonoBehaviour
     public Transform cultLeader;
     public float cursorRange = 5.0f;
 
+    #endregion
+
+    #region Editor
+#if UNITY_EDITOR
+
+    private int nextId = 1;
+
+    private void OnValidate()
+    {
+        foreach ( var obj in FindObjectsOfType<DynamicObject>())
+        {
+            if (obj.ID == 0)
+            {
+                obj.SetId(nextId++);
+            }
+        }
+    }
+
+#endif
     #endregion
 
     #region MonoBehaviour
@@ -101,6 +120,11 @@ public class CrewSceneManager : MonoBehaviour
         var currentCursorColor = cursorInstanceRenderer.color;
         currentCursorColor.a = cursorLeaderDistance / cursorRange;
         cursorInstanceRenderer.color = currentCursorColor;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.currentLocation = null;    
     }
 
     private void OnDrawGizmos()

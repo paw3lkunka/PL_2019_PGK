@@ -27,6 +27,7 @@ public class Location : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameManager.Instance.savedPosition = GlobalReturnPoint;
+        GameManager.Instance.currentLocation = this;
         SceneManager.LoadScene(sceneName);
         GameManager.Instance.OnLocationEnterInvoke();
     }

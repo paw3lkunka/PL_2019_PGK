@@ -21,6 +21,7 @@ public class PatrollingEnemy : Enemy
 
     protected override void Awake()
     {
+        Debug.Log(gameObject.GetInstanceID());
         base.Awake();
     }
 

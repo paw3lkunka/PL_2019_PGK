@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Shooter))]
+[RequireComponent(typeof(Shooter),typeof(DynamicObject))]
 public class Enemy : Character
 {
     #region Variables
@@ -91,6 +91,7 @@ public class Enemy : Character
 
     public override void Die()
     {
+
         float gainedFaith = GameManager.Instance.FaithForKilledEnemy;
         GameManager.Instance.Faith += gainedFaith;
 
@@ -98,6 +99,7 @@ public class Enemy : Character
         {
             fatihTextEemitter.Emit("+" + (int)Mathf.Round(gainedFaith * 100), Color.green, 3);
         }
+        GetComponent<DynamicObject>().RememberAsDestroyed();
         base.Die();
     }
 

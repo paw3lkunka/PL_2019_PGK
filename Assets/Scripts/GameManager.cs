@@ -119,6 +119,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public List<GameObject> ourCrew;
 
+    public Location currentLocation;
+    public Dictionary<Location, HashSet<int>> destroyedDynamicObjects = new Dictionary<Location, HashSet<int>>();
+    public HashSet<int> CurrentLocationsDestroyedDynamicObjects { get => destroyedDynamicObjects[currentLocation]; }
+
     public int ShrinesVisited { get; set; }
 
     [HideInInspector]

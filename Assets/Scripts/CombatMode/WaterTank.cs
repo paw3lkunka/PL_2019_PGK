@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[RequireComponent(typeof(DynamicObject))]
 public class WaterTank : MonoBehaviour
 {
     #region Variables
@@ -20,7 +20,8 @@ public class WaterTank : MonoBehaviour
         {
             GameManager.Instance.Water += capacity;
             capacity = 0; //for sure
-            Destroy(gameObject);
+
+            GetComponent<DynamicObject>().DestroyAndRemember();
         }
     }
 
