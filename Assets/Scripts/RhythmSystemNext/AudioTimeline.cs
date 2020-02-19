@@ -12,6 +12,7 @@ public enum TimelineState { None, Countup, Playing, Paused, Interrupted };
 /// </summary>
 public partial class AudioTimeline : MonoBehaviour
 {
+    // 
 #pragma warning disable
     [Header("Timeline setup")]
     [SerializeField] private double songBpm = 80;
@@ -27,9 +28,7 @@ public partial class AudioTimeline : MonoBehaviour
     // Note that the timeline can be used to keep music synced between scenes if left "don't destroy on load"
     public static AudioTimeline Instance;
 
-    // Timeline states
-    
-    private TimelineState timelineState = TimelineState.None;
+    public TimelineState TimelineState { get; private set; } = TimelineState.None;
 
     // Rhythm window tolerance values
     private double goodTolerance = 0.20f;
@@ -42,8 +41,13 @@ public partial class AudioTimeline : MonoBehaviour
     private double beatDuration;
     public double NextBeatMoment { get; private set; }
     private int currentBeatNumber = 0;
+    public int CountupCounter { get; private set; } = 0;
+    private int pauseCounter = 0;
     private bool hasEncounteredPerfect = false;
     private bool wasCurrentBeatHit = false;
+    private bool hittingStarted = false;
+    private bool keepCombo = false;
+
 
     // Pause saving moments
     private double pauseMoment;
@@ -79,8 +83,9 @@ public partial class AudioTimeline : MonoBehaviour
     public event Action OnBeatFail;
     public event BarEndEvent OnBarEnd;
     public event Action OnSequenceStart;
+    public event Action OnCountupEnd;
     public event Action OnSequenceReset;
-    public event Action OnSequencePause;
+    public event Action<bool> OnSequencePause;
     public event Action OnSequenceResume;
 
     #endregion
@@ -96,27 +101,37 @@ public partial class AudioTimeline : MonoBehaviour
     /// </summary>
     public void Pause()
     {
-        if (timelineState == TimelineState.Playing)
+        if (TimelineState == TimelineState.Playing)
         {
+            hittingStarted = true;
+
             if (wasCurrentBeatHit == false)
             {
                 wasCurrentBeatHit = true;
                 
                 if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
                 {
-                    OnSequencePause();
+                    SequencePauseHandler(false);
                 }
                 else
                 {
-                    // And send the event with current beat state attached to
-                    OnBeatHit(currentBeatState, currentBeatNumber);
+                    if (pauseCounter >= beatsPerBar - 1)
+                    {
+                        SequencePauseHandler(true);
+                    }
+                    else
+                    {
+                        // And send the event with current beat state attached to
+                        BeatHitHandler(currentBeatState, currentBeatNumber);
+                        pauseCounter++;
+                    }
                 }
                 // Record the beat state for bar evaluation
                 barBeatStates[currentBeatNumber] = currentBeatState;
             }
             else
             {
-                OnSequencePause();
+                SequencePauseHandler(false);
             }
         }
     }
@@ -126,9 +141,9 @@ public partial class AudioTimeline : MonoBehaviour
     /// </summary>
     public void Resume()
     {
-        if (timelineState == TimelineState.Paused)
+        if (TimelineState == TimelineState.Paused)
         {
-            OnSequenceResume();
+            SequenceResumeHandler();
         }
     }
 
@@ -138,18 +153,20 @@ public partial class AudioTimeline : MonoBehaviour
     /// </summary>
     public void BeatHit()
     {
-        if (timelineState == TimelineState.Countup || timelineState == TimelineState.Playing)
+        if (TimelineState == TimelineState.Countup || TimelineState == TimelineState.Playing)
         {
+            hittingStarted = true;
+
             if (wasCurrentBeatHit == false)
             {
 
                 if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
                 {
-                    OnBeatHit(BeatState.Bad, currentBeatNumber);
+                    BeatHitHandler(BeatState.Bad, currentBeatNumber);
                 }
                 else
                 {
-                    OnBeatHit(currentBeatState, currentBeatNumber);
+                    BeatHitHandler(currentBeatState, currentBeatNumber);
                 }
                 wasCurrentBeatHit = true;
                 // Always record the beat state for bar evaluation
@@ -157,7 +174,7 @@ public partial class AudioTimeline : MonoBehaviour
             }
             else
             {
-                OnBeatHit(BeatState.Bad, currentBeatNumber);
+                BeatHitHandler(BeatState.Bad, currentBeatNumber);
             }
         }
     }
@@ -190,7 +207,7 @@ public partial class AudioTimeline : MonoBehaviour
     {
         // Make a check if update should check for beat and fire events
         // If yes, verify if events should fire as countup or not
-        switch (timelineState)
+        switch (TimelineState)
         {
             case TimelineState.None:
             case TimelineState.Paused:
@@ -226,18 +243,26 @@ public partial class AudioTimeline : MonoBehaviour
                 // The Perfect rhythm hit condition is checked here
                 if (TimeSinceSequenceStart >= NextBeatMoment && hasEncounteredPerfect == false)
                 {
+                    if (CountupCounter < beatsPerBar && TimelineState == TimelineState.Countup)
+                    {
+                        CountupCounter++;
+                    }
+                    else if (CountupCounter == beatsPerBar)
+                    {
+                        CountupEndHandler();
+                    }
 
                     hasEncounteredPerfect = true;
                     currentBeatState = BeatState.Perfect;
 
-                    // ---- Invoke the OnBeat event with corresponding parameter ----
-                    if (currentBeatNumber == beatsPerBar - 1)
+                    // ---- Invoke the BeatHandler event with corresponding parameter ----
+                    if (currentBeatNumber == 0)
                     {
-                        OnBeat(true);
+                        BeatHandler(true);
                     }
                     else
                     {
-                        OnBeat(false);
+                        BeatHandler(false);
                     }
 
                 }
@@ -260,6 +285,13 @@ public partial class AudioTimeline : MonoBehaviour
             if (!wasCurrentBeatHit)
             {
                 barBeatStates[currentBeatNumber] = BeatState.None;
+                if (hittingStarted)
+                {
+                    if (TimelineState != TimelineState.Countup)
+                    {
+                        BeatHitHandler(BeatState.None, currentBeatNumber);
+                    }
+                }
             }
 
             // Resetting state keeping variables for the next beat
@@ -290,7 +322,7 @@ public partial class AudioTimeline : MonoBehaviour
     private void TimelineInit()
     {
         beatDuration = 60.0d / songBpm;
-        OnSequenceStart();
+        SequenceStartHandler();
     }
 
     private void EvaluateBar()
@@ -323,30 +355,30 @@ public partial class AudioTimeline : MonoBehaviour
 
         if (bad > 0)
         {
-            OnBarEnd(BarState.Failed);
+            BarEndHandler(BarState.Failed);
         }
         else if (none > 0)
         {
             if (none == beatsPerBar)
             {
-                OnBarEnd(BarState.None);
+                BarEndHandler(BarState.None);
             }
             else
             {
-                OnBarEnd(BarState.Failed);
+                BarEndHandler(BarState.Failed);
             }
         }
         else if (perfect == beatsPerBar)
         {
-            OnBarEnd(BarState.Perfect);
+            BarEndHandler(BarState.Perfect);
         }
         else if (good == 0 && great > 0)
         {
-            OnBarEnd(BarState.Good);
+            BarEndHandler(BarState.Good);
         }
         else
         {
-            OnBarEnd(BarState.Average);
+            BarEndHandler(BarState.Average);
         }
     }
 

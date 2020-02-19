@@ -4,36 +4,12 @@ using UnityEngine;
 
 public partial class AudioTimeline
 {
-    private void OnEnable()
-    {
-        OnBeat += BeatHandler;
-        OnBeatHit += BeatHitHandler;
-        OnBeatFail += BeatFailHandler;
-        OnBarEnd += BarEndHandler;
-        OnSequenceStart += SequenceStartHandler;
-        OnSequenceReset += SequenceResetHandler;
-        OnSequencePause += SequencePauseHandler;
-        OnSequenceResume += SequenceResumeHandler;
-    }
-
-    private void OnDisable()
-    {
-        OnBeat -= BeatHandler;
-        OnBeatHit -= BeatHitHandler;
-        OnBeatFail -= BeatFailHandler;
-        OnBarEnd -= BarEndHandler;
-        OnSequenceStart -= SequenceStartHandler;
-        OnSequenceReset -= SequenceResetHandler;
-        OnSequencePause -= SequencePauseHandler;
-        OnSequenceResume -= SequenceResumeHandler;
-    }
-
     // ----------------------------------------------------
     // ---- Internal event handlers -----------------------
 
     private void BeatHandler(bool isMain)
     {
-
+        OnBeat?.Invoke(isMain);
     }
 
     private void BeatHitHandler(BeatState beatState, int beatNumber)
@@ -42,68 +18,95 @@ public partial class AudioTimeline
         {
             case BeatState.None:
             case BeatState.Bad:
-                OnBeatFail();
+                BeatFailHandler();
                 break;
             case BeatState.Good:
             case BeatState.Great:
             case BeatState.Perfect:
                 break;
         }
+        OnBeatHit?.Invoke(beatState, beatNumber);
     }
 
     private void BeatFailHandler()
     {
-
-        OnSequenceReset();
+        hittingStarted = false;
+        SequenceResetHandler();
+        OnBeatFail?.Invoke();
     }
 
     private void BarEndHandler(BarState barState)
     {
         lastBarState = barState;
+        OnBarEnd?.Invoke(barState);
     }
 
     private void SequenceStartHandler()
     {
         // ### TIMELINE STATE CHANGE ###
-        timelineState = TimelineState.Countup;
+        TimelineState = TimelineState.Countup;
+
+        currentBeatNumber = 0;
+        CountupCounter = 0;
 
         // Reset sequence start moment and set next beat moment
         sequenceStartMoment = AudioSettings.dspTime;
         NextBeatMoment = beatDuration;
+        OnSequenceStart?.Invoke();
+    }
+
+    private void CountupEndHandler()
+    {
+        // ### TIMELINE STATE CHANGE ###
+        TimelineState = TimelineState.Playing;
+        currentBeatNumber = 0;
+        CountupCounter = 0;
+        OnCountupEnd?.Invoke();
     }
 
     private void SequenceResetHandler()
     {
         // ### TIMELINE STATE CHANGE ###
-        timelineState = TimelineState.Interrupted;
+        TimelineState = TimelineState.Interrupted;
 
         lastBarState = BarState.Failed;
+
+        OnSequenceReset?.Invoke();
+
         // Start sequence reset coroutine
         StartCoroutine(SequenceResetCoroutine());
     }
 
-    private void SequencePauseHandler()
+    private void SequencePauseHandler(bool keepCombo)
     {
         // ### TIMELINE STATE CHANGE ###
-        timelineState = TimelineState.Paused;
+        TimelineState = TimelineState.Paused;
+        this.keepCombo = keepCombo;
 
         // Save beat moment variables
         pauseMoment = AudioSettings.dspTime;
+        OnSequencePause?.Invoke(keepCombo);
     }
 
     private void SequenceResumeHandler()
     {
-        // ### TIMELINE STATE CHANGE ###
-        timelineState = TimelineState.Countup;
-
-        // Restore beat moment variables corrected by time passed
-        NextBeatMoment = AudioSettings.dspTime + beatDuration;
+        pauseCounter = 0;
+        if (keepCombo)
+        {
+            SequenceStartHandler();
+        }
+        else
+        {
+            BeatFailHandler();
+        }
+        keepCombo = false;
+        OnSequenceResume?.Invoke();
     }
 
     // Additional helper functions
     private IEnumerator SequenceResetCoroutine()
     {
         yield return new WaitForSeconds((float)beatDuration * failedBeatResetOffset);
-        OnSequenceStart();
+        SequenceStartHandler();
     }
 }

@@ -161,11 +161,6 @@ public class RhythmMechanics : MonoBehaviour
         OnComboChange(Combo);
     }
 
-    private void ResetCombo()
-    {
-        OnComboChange(0);
-        OnRageStop();
-    }
 
     private void UpdateCounters(BeatState beatState, int beatNumber)
     {
@@ -198,9 +193,22 @@ public class RhythmMechanics : MonoBehaviour
         Rage = false;
     }
 
+    private void IncrementCombo()
+    {
+        Combo++;
+        OnComboChange(Combo);
+    }
+
+    private void ResetCombo()
+    {
+        Combo = 0;
+        OnComboChange(Combo);
+        OnRageStop();
+    }
+
     private void ComboChangeHandler(int value)
     {
-        Combo = value;
+
     }
 
     #endregion

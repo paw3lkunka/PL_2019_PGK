@@ -6,9 +6,20 @@ public class InputTest : MonoBehaviour
 {
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (Input.GetMouseButtonDown(0))
         {
             AudioTimeline.Instance.BeatHit();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (AudioTimeline.Instance.TimelineState != TimelineState.Paused)
+            {
+                AudioTimeline.Instance.Pause();
+            }
+            else
+            {
+                AudioTimeline.Instance.Resume();
+            }
         }
     }
 }

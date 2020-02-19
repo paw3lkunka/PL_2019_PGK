@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,11 +23,34 @@ public class SoundEffectsModule : MonoBehaviour
     private void OnEnable()
     {
         AudioTimeline.Instance.OnSequenceReset += PlayFailSound;
+        AudioTimeline.Instance.OnBeatHit += PlayBeatHitSound;
     }
 
     private void OnDisable()
     {
         AudioTimeline.Instance.OnSequenceReset -= PlayFailSound;
+        AudioTimeline.Instance.OnBeatHit -= PlayBeatHitSound;
+    }
+    
+    private void PlayBeatHitSound(BeatState beatState, int beatNumber)
+    {
+        switch (beatState)
+        {
+            case BeatState.None:
+            case BeatState.Bad:
+                if (badBeatHitSound != null)
+                    audioSource.PlayOneShot(badBeatHitSound);
+                break;
+            case BeatState.Good:
+                if (!goodBeatHitSound.IsRealNull())
+                    audioSource.PlayOneShot(goodBeatHitSound);
+                break;
+            case BeatState.Great:
+            case BeatState.Perfect:
+                if (!greatBeatHitSound.IsRealNull())
+                    audioSource.PlayOneShot(greatBeatHitSound);
+                break;
+        }
     }
 
     private void PlayFailSound()

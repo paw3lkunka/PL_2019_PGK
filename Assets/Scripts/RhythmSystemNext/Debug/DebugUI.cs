@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 public class DebugUI : MonoBehaviour
 {
+    public bool displayCountupNumber = true;
     public bool displayCombo = true;
     public bool displayRage = true;
+    public bool displayTimelineState = true;
     public bool displayBarState = true;
     public bool displayBeatState = true;
     public bool displayBeatNumber = true;
@@ -52,10 +54,14 @@ public class DebugUI : MonoBehaviour
     private void Update()
     {
         textMesh.text = "";
+        if (displayCountupNumber)
+            textMesh.text += "Countup counter: " + AudioTimeline.Instance.CountupCounter + "\n";
         if (displayCombo)
             textMesh.text += "Combo: " + RhythmMechanics.Instance.Combo + "\n";
         if (displayRage)
             textMesh.text += "Rage: " + RhythmMechanics.Instance.Rage + "\n";
+        if (displayTimelineState)
+            textMesh.text += "Timeline: " + AudioTimeline.Instance.TimelineState + "\n";
         if (displayBarState)
             textMesh.text += "Bar state: " + barState.ToString() + "\n";
         if (displayBeatState)

@@ -47,11 +47,15 @@ public class AdaptiveMusicMaster : MonoBehaviour
     private void OnEnable()
     {
         AudioTimeline.Instance.OnBeat += PlayNext;
+        AudioTimeline.Instance.OnBeatFail += StopPlayback;
+        AudioTimeline.Instance.OnSequencePause += StopPlayback;
     }
 
     private void OnDisable()
     {
         AudioTimeline.Instance.OnBeat -= PlayNext;
+        AudioTimeline.Instance.OnBeatFail -= StopPlayback;
+        AudioTimeline.Instance.OnSequencePause -= StopPlayback;
     }
 
     private void Awake()
@@ -85,23 +89,34 @@ public class AdaptiveMusicMaster : MonoBehaviour
 
     private void PlayNext(bool isMain)
     {
-        if (isMain)
+        if (isMain && AudioTimeline.Instance.TimelineState == TimelineState.Playing)
         {
             RandomizeClips();
 
-            if (drumsEnabled && !currentDrumClip.IsRealNull())
+            if (drumsEnabled && currentDrumClip != null)
             {
                 drumsSource.PlayOneShot(currentDrumClip);
             }
 
             if (musicEnabled &&/* !currentLightMusicClip.IsRealNull() && */!currentHeavyMusicClip.IsRealNull() &&
-                RhythmMechanics.Instance.Combo > 1)
+                RhythmMechanics.Instance.Combo > 0)
             {
                 //lightMusicSource.PlayOneShot(currentLightMusicClip);
                 heavyMusicSource.PlayOneShot(currentHeavyMusicClip);
             }
 
         }
+    }
+
+    private void StopPlayback(bool keepCombo)
+    {
+        StopPlayback();
+    }
+
+    private void StopPlayback()
+    {
+        drumsSource.Stop();
+        heavyMusicSource.Stop();
     }
 
     private void RandomizeClips()
