@@ -33,19 +33,13 @@ public class RhythmTester : MonoBehaviour
     private void OnEnable()
     {
         input.Gameplay.SetWalkTarget.performed += HitBeatInputTest;
-        input.Gameplay.SetWalkTarget.Enable();
-
         input.CombatMode.SetShootTarget.performed += HitBeatInputTest;
-        input.CombatMode.SetShootTarget.Enable();
     }
 
     private void OnDisable()
     {
         input.Gameplay.SetWalkTarget.performed -= HitBeatInputTest;
-        input.Gameplay.SetWalkTarget.Disable();
-
         input.CombatMode.SetShootTarget.performed -= HitBeatInputTest;
-        input.CombatMode.SetShootTarget.Disable();
     }
 
 

@@ -49,7 +49,6 @@ public class CultLeader : Character
         if(input != null)
         {
             input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
-            input.Gameplay.SetWalkTarget.Enable();
         }
     }
 
@@ -58,7 +57,6 @@ public class CultLeader : Character
         if (input != null)
         {
             input.Gameplay.SetWalkTarget.performed -= GoToCursorPosition;
-            input.Gameplay.SetWalkTarget.Disable();
         }
     }
 
