@@ -9,6 +9,7 @@ public enum InputSchedule
 {
     MouseKeyboard,
     Gamepad,
+    JoystickKeyboard,
     Touchscreen
 }
 

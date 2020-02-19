@@ -42,53 +42,28 @@ public class MapSceneManager : MonoBehaviour
     private void OnEnable()
     {
         InitializeCursor();
+    }
 
+    private void Update()
+    {
         switch (GameManager.Instance.inputSchedule)
         {
             case InputSchedule.MouseKeyboard:
-                input.Gameplay.MoveCursor.performed += MoveCursorPointer;
+                MoveCursorPointer();
                 break;
 
             case InputSchedule.Gamepad:
-                input.Gameplay.MoveCursor.performed += MoveCursorJoystick;
-                input.Gameplay.MoveCursor.canceled += ctx => nextCursorPosition = cultLeader.position;
+                MoveCursorGamepad();
+                break;
+
+            case InputSchedule.JoystickKeyboard:
+                MoveCursorJoystick();
                 break;
 
             case InputSchedule.Touchscreen:
                 break;
         }
-        input.Gameplay.MoveCursor.Enable();
 
-        if (input != null)
-        {
-            
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (input != null)
-        {
-            switch (GameManager.Instance.inputSchedule)
-            {
-                case InputSchedule.MouseKeyboard:
-                    input.Gameplay.MoveCursor.performed -= MoveCursorPointer;
-                    break;
-
-                case InputSchedule.Gamepad:
-                    input.Gameplay.MoveCursor.performed -= MoveCursorJoystick;
-                    input.Gameplay.MoveCursor.canceled -= ctx => cursorInstance.position = cultLeader.position;
-                    break;
-
-                case InputSchedule.Touchscreen:
-                    break;
-            }
-            input.Gameplay.MoveCursor.Disable();
-        }
-    }
-
-    private void Update()
-    {
         Vector3 vel = new Vector3();
         cursorInstance.position = Vector3.SmoothDamp(cursorInstance.position, nextCursorPosition, ref vel, 0.05f);
     }
@@ -166,17 +141,31 @@ public class MapSceneManager : MonoBehaviour
 
     #region Input
 
-    public void MoveCursorPointer(InputAction.CallbackContext ctx)
+    private void MoveCursorPointer()
     {
-        nextCursorPosition = Camera.main.ScreenToWorldPoint(ctx.ReadValue<Vector2>());
+        var inputValue = Mouse.current.position.ReadValue();
+        var nextCursorPosition = Camera.main.ScreenToWorldPoint(inputValue);
         nextCursorPosition.z = 0;
+
+        cursorInstance.position = nextCursorPosition;
     }
 
-    public void MoveCursorJoystick(InputAction.CallbackContext ctx)
+    private void MoveCursorGamepad()
     {
-        var joystickAxis = ctx.ReadValue<Vector2>();
-        nextCursorPosition = cultLeader.position + new Vector3(joystickAxis.x, joystickAxis.y) * cursorRange;
+        var joystickAxis = Gamepad.current.leftStick.ReadValue();
+        var nextCursorPosition = transform.position + new Vector3(joystickAxis.x, joystickAxis.y) * cursorRange;
         nextCursorPosition.z = 0;
+
+        cursorInstance.position = nextCursorPosition;
+    }
+
+    private void MoveCursorJoystick()
+    {
+        var joystickAxis = Joystick.current.stick.ReadValue();
+        var nextCursorPosition = transform.position + new Vector3(joystickAxis.x, joystickAxis.y) * cursorRange;
+        nextCursorPosition.z = 0;
+
+        cursorInstance.position = nextCursorPosition;
     }
 
     #endregion

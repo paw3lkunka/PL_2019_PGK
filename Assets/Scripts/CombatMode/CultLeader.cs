@@ -96,11 +96,6 @@ public class CultLeader : Character
     {
         switch (scene.name)
         {
-            case "MainMap":
-                MapSceneManager.Instance.cultLeader = transform;
-                gameObject.SetActive(false);
-                break;
-
             case "MainMenu":
                 gameObject.SetActive(false);
                 break;
