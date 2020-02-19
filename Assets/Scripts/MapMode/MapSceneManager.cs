@@ -46,26 +46,26 @@ public class MapSceneManager : MonoBehaviour
 
     private void Update()
     {
-        switch (GameManager.Instance.inputSchedule)
+        if (enabled)
         {
-            case InputSchedule.MouseKeyboard:
-                MoveCursorPointer();
-                break;
+            switch (GameManager.Instance.inputSchedule)
+            {
+                case InputSchedule.MouseKeyboard:
+                    MoveCursorPointer();
+                    break;
 
-            case InputSchedule.Gamepad:
-                MoveCursorGamepad();
-                break;
+                case InputSchedule.Gamepad:
+                    MoveCursorGamepad();
+                    break;
 
-            case InputSchedule.JoystickKeyboard:
-                MoveCursorJoystick();
-                break;
+                case InputSchedule.JoystickKeyboard:
+                    MoveCursorJoystick();
+                    break;
 
-            case InputSchedule.Touchscreen:
-                break;
+                case InputSchedule.Touchscreen:
+                    break;
+            }
         }
-
-        Vector3 vel = new Vector3();
-        cursorInstance.position = Vector3.SmoothDamp(cursorInstance.position, nextCursorPosition, ref vel, 0.05f);
     }
 
     private void FixedUpdate()
