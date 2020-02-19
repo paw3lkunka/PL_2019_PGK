@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2093641478962683857}
   - component: {fileID: 2093641478962683856}
   - component: {fileID: 2093641478962683859}
-  - component: {fileID: 2093641478962683863}
   - component: {fileID: 8722348248173576567}
   - component: {fileID: 1754788511799546763}
   m_Layer: 0
@@ -1101,20 +1100,6 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!114 &2093641478962683863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093641478962683869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d142a6e3c7b3c54db253cb1a65aa410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: Village
-  returnPoint: {x: 3, y: -5}
 --- !u!114 &8722348248173576567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1127,7 +1112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6fd743db7bb74fa77ed854f311c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SpawnChance>k__BackingField: 20
+  generationID: 0
+  sceneName: Village
+  returnPoint: {x: 3, y: -6}
 --- !u!156049354 &1754788511799546763
 Grid:
   m_ObjectHideFlags: 0

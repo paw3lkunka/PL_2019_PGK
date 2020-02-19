@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4981993684732004284}
   - component: {fileID: 4981993684732004285}
   - component: {fileID: 4981993684732004286}
-  - component: {fileID: 4981993684732004282}
   - component: {fileID: 3883139455901656699}
   - component: {fileID: 6820573000778786953}
   m_Layer: 0
@@ -1032,20 +1031,6 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!114 &4981993684732004282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4981993684732004272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d142a6e3c7b3c54db253cb1a65aa410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: Canion
-  returnPoint: {x: 0, y: 6}
 --- !u!114 &3883139455901656699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1058,7 +1043,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6fd743db7bb74fa77ed854f311c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SpawnChance>k__BackingField: 10
+  generationID: 0
+  sceneName: Canion
+  returnPoint: {x: 1, y: 6}
 --- !u!156049354 &6820573000778786953
 Grid:
   m_ObjectHideFlags: 0

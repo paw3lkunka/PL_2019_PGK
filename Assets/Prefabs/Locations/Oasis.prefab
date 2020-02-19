@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3446350326676292442}
   - component: {fileID: 3446350326676292447}
   - component: {fileID: 3446350326676292444}
-  - component: {fileID: 3446350326676292446}
   - component: {fileID: 9215802316494928893}
   - component: {fileID: 4987575992226952679}
   m_Layer: 0
@@ -983,20 +982,6 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!114 &3446350326676292446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3446350326676292440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d142a6e3c7b3c54db253cb1a65aa410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: Oasis
-  returnPoint: {x: -6, y: 0}
 --- !u!114 &9215802316494928893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1009,7 +994,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6fd743db7bb74fa77ed854f311c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SpawnChance>k__BackingField: 50
+  generationID: 0
+  sceneName: Oasis
+  returnPoint: {x: -6, y: 0}
 --- !u!156049354 &4987575992226952679
 Grid:
   m_ObjectHideFlags: 0
