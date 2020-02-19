@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class RhythmModule : MonoBehaviour
 {
+    #region Variables
+
 #pragma warning disable
     [SerializeField] private bool playOffbeat = false;
     [SerializeField] private AudioClip countupHiHat;
@@ -12,6 +14,10 @@ public class RhythmModule : MonoBehaviour
 #pragma warning restore
 
     private AudioSource rhythmSource;
+
+    #endregion
+
+    #region MonoBehaviour
 
     private void Awake()
     {
@@ -28,6 +34,10 @@ public class RhythmModule : MonoBehaviour
         AudioTimeline.Instance.OnBeat -= PlayCount;
     }
 
+    #endregion
+
+    #region Component
+
     public void PlayCount(bool isMain)
     {
         rhythmSource.PlayOneShot(countupKick);
@@ -43,4 +53,6 @@ public class RhythmModule : MonoBehaviour
         yield return new WaitForSeconds((float)(60.0d / AudioTimeline.Instance.SongBpm) / 2.0f);
         rhythmSource.PlayOneShot(countupHiHat);
     }
+
+    #endregion
 }

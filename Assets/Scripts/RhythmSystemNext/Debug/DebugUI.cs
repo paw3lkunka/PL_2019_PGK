@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class DebugUI : MonoBehaviour
 {
+    #region Variables
+
     public bool displayCountupNumber = true;
     public bool displayCombo = true;
     public bool displayRage = true;
@@ -21,6 +23,10 @@ public class DebugUI : MonoBehaviour
     private BarState barState = BarState.None;
     private BeatState beatState = BeatState.None;
     private int beatNumber = 0;
+
+    #endregion
+
+    #region MonoBehaviour
 
     void Start()
     {
@@ -38,17 +44,6 @@ public class DebugUI : MonoBehaviour
     {
         AudioTimeline.Instance.OnBarEnd -= BarDebug;
         AudioTimeline.Instance.OnBeatHit -= BeatDebug;
-    }
-
-    private void BarDebug(BarState barState)
-    {
-        this.barState = barState;
-    }
-
-    private void BeatDebug(BeatState beatState, int beatNumber)
-    {
-        this.beatState = beatState;
-        this.beatNumber = beatNumber;
     }
 
     private void Update()
@@ -76,4 +71,20 @@ public class DebugUI : MonoBehaviour
             textMesh.text += "Heavy track: " + adaptiveMusic.CurrentHeavyMusicClip.name + "\n";
     }
 
+    #endregion
+
+    #region Component
+
+    private void BarDebug(BarState barState)
+    {
+        this.barState = barState;
+    }
+
+    private void BeatDebug(BeatState beatState, int beatNumber)
+    {
+        this.beatState = beatState;
+        this.beatNumber = beatNumber;
+    }
+
+    #endregion
 }

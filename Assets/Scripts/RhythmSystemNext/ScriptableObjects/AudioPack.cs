@@ -5,10 +5,22 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AudioPack", menuName = "AudioPack/BaseAudioPack", order = 1)]
 public class AudioPack : ScriptableObject
 {
+    #region Variables
+
     public AudioClip mainClip;
     public AudioClip[] secondaryClips;
 
     public float[] secondaryClipsChances;
+
+    #endregion
+
+    #region MonoBehaviour
+
+
+
+    #endregion
+
+    #region Component
 
     public void InitClipChances()
     {
@@ -32,4 +44,6 @@ public class AudioPack : ScriptableObject
         }
         return sum;
     }
+
+    #endregion
 }

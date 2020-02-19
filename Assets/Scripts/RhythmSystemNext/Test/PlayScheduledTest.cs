@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class PlayScheduledTest : MonoBehaviour
 {
+    #region Variables
+
     public AudioSource audioSource;
     public AudioClip audio1;
     public AudioClip audio2;
@@ -12,6 +14,10 @@ public class PlayScheduledTest : MonoBehaviour
     private int which = 0;
 
     public double playMoment = 0;
+
+    #endregion
+
+    #region MonoBehaviour
 
     private void Start()
     {
@@ -27,6 +33,10 @@ public class PlayScheduledTest : MonoBehaviour
     {
         AudioTimeline.Instance.OnBeat -= PlayAlternating;
     }
+
+    #endregion
+
+    #region Component
 
     private void PlayAlternating(bool isMain)
     {
@@ -64,5 +74,6 @@ public class PlayScheduledTest : MonoBehaviour
     {
         audioSource.PlayOneShot(audio1);
     }
-    
+
+    #endregion
 }

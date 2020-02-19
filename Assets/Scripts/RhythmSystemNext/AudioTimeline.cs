@@ -3,16 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BeatState { None, Bad, Good, Great, Perfect };
-public enum BarState { None, Average, Good, Perfect, Failed };
-public enum TimelineState { None, Countup, Playing, Paused, Interrupted };
+public enum BeatState 
+{ 
+    None, 
+    Bad, 
+    Good, 
+    Great, 
+    Perfect 
+};
+
+public enum BarState 
+{ 
+    None, 
+    Average, 
+    Good, 
+    Perfect, 
+    Failed 
+};
+
+public enum TimelineState 
+{ 
+    None, 
+    Countup, 
+    Playing, 
+    Paused, 
+    Interrupted 
+};
 
 /// <summary>
 /// Main singleton class responsible for audio rhythm synchronization
 /// </summary>
 public partial class AudioTimeline : MonoBehaviour
 {
-    // 
+    #region Variables
+
+    // Singleton implementation
+    // Note that the timeline can be used to keep music synced between scenes if left "don't destroy on load"
+    public static AudioTimeline Instance;
+
 #pragma warning disable
     [Header("Timeline setup")]
     [SerializeField] private double songBpm = 80;
@@ -23,10 +51,6 @@ public partial class AudioTimeline : MonoBehaviour
     public double SongBpm => songBpm;
     public int BeatsPerBar => beatsPerBar;
 #pragma warning restore
-
-    // Singleton implementation
-    // Note that the timeline can be used to keep music synced between scenes if left "don't destroy on load"
-    public static AudioTimeline Instance;
 
     public TimelineState TimelineState { get; private set; } = TimelineState.None;
 
@@ -90,102 +114,11 @@ public partial class AudioTimeline : MonoBehaviour
 
     #endregion
 
-    // ----------------------------------------------------
-    // ---- Public methods for external use ---------------
-    #region PublicMethods
-
-    /// <summary>
-    /// Should be used similarly to BeatHit and works like this:
-    /// - if invoked not during a beat pauses immediately and invokes OnBeatFail on resume
-    /// - if invoked during a valid beat moment waits for another four pause inputs and pauses without failing
-    /// </summary>
-    public void Pause()
-    {
-        if (TimelineState == TimelineState.Playing)
-        {
-            hittingStarted = true;
-
-            if (wasCurrentBeatHit == false)
-            {
-                wasCurrentBeatHit = true;
-                
-                if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
-                {
-                    SequencePauseHandler(false);
-                }
-                else
-                {
-                    if (pauseCounter >= beatsPerBar - 1)
-                    {
-                        SequencePauseHandler(true);
-                    }
-                    else
-                    {
-                        // And send the event with current beat state attached to
-                        BeatHitHandler(currentBeatState, currentBeatNumber);
-                        pauseCounter++;
-                    }
-                }
-                // Record the beat state for bar evaluation
-                barBeatStates[currentBeatNumber] = currentBeatState;
-            }
-            else
-            {
-                SequencePauseHandler(false);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Resumes paused timeline, does nothing if timeline isn't paused
-    /// </summary>
-    public void Resume()
-    {
-        if (TimelineState == TimelineState.Paused)
-        {
-            SequenceResumeHandler();
-        }
-    }
-
-    /// <summary>
-    /// The most important method, should be invoked by input mechanisms that handle rhythm
-    /// Is responsible for determining at which state the beat was hit and invokes actions accordingly
-    /// </summary>
-    public void BeatHit()
-    {
-        if (TimelineState == TimelineState.Countup || TimelineState == TimelineState.Playing)
-        {
-            hittingStarted = true;
-
-            if (wasCurrentBeatHit == false)
-            {
-
-                if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
-                {
-                    BeatHitHandler(BeatState.Bad, currentBeatNumber);
-                }
-                else
-                {
-                    BeatHitHandler(currentBeatState, currentBeatNumber);
-                }
-                wasCurrentBeatHit = true;
-                // Always record the beat state for bar evaluation
-                barBeatStates[currentBeatNumber] = currentBeatState;
-            }
-            else
-            {
-                BeatHitHandler(BeatState.Bad, currentBeatNumber);
-            }
-        }
-    }
-
     #endregion
 
-    // ---------------------------------------------------------
-    // ---- Unity methods --------------------------------------
-    //
+    #region MonoBehaviour
+
     // NOTE: OnEnable and OnDisable moved to AudioTimelineEvents
-    #region UnityMethods
 
     private void Awake()
     {
@@ -315,6 +248,99 @@ public partial class AudioTimeline : MonoBehaviour
 
     #endregion
 
+    #region Component
+
+    // ----------------------------------------------------
+    // ---- Public methods for external use ---------------
+    #region PublicMethods
+
+    /// <summary>
+    /// Should be used similarly to BeatHit and works like this:
+    /// - if invoked not during a beat pauses immediately and invokes OnBeatFail on resume
+    /// - if invoked during a valid beat moment waits for another four pause inputs and pauses without failing
+    /// </summary>
+    public void Pause()
+    {
+        if (TimelineState == TimelineState.Playing)
+        {
+            hittingStarted = true;
+
+            if (wasCurrentBeatHit == false)
+            {
+                wasCurrentBeatHit = true;
+
+                if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
+                {
+                    SequencePauseHandler(false);
+                }
+                else
+                {
+                    if (pauseCounter >= beatsPerBar - 1)
+                    {
+                        SequencePauseHandler(true);
+                    }
+                    else
+                    {
+                        // And send the event with current beat state attached to
+                        BeatHitHandler(currentBeatState, currentBeatNumber);
+                        pauseCounter++;
+                    }
+                }
+                // Record the beat state for bar evaluation
+                barBeatStates[currentBeatNumber] = currentBeatState;
+            }
+            else
+            {
+                SequencePauseHandler(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Resumes paused timeline, does nothing if timeline isn't paused
+    /// </summary>
+    public void Resume()
+    {
+        if (TimelineState == TimelineState.Paused)
+        {
+            SequenceResumeHandler();
+        }
+    }
+
+    /// <summary>
+    /// The most important method, should be invoked by input mechanisms that handle rhythm
+    /// Is responsible for determining at which state the beat was hit and invokes actions accordingly
+    /// </summary>
+    public void BeatHit()
+    {
+        if (TimelineState == TimelineState.Countup || TimelineState == TimelineState.Playing)
+        {
+            hittingStarted = true;
+
+            if (wasCurrentBeatHit == false)
+            {
+
+                if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
+                {
+                    BeatHitHandler(BeatState.Bad, currentBeatNumber);
+                }
+                else
+                {
+                    BeatHitHandler(currentBeatState, currentBeatNumber);
+                }
+                wasCurrentBeatHit = true;
+                // Always record the beat state for bar evaluation
+                barBeatStates[currentBeatNumber] = currentBeatState;
+            }
+            else
+            {
+                BeatHitHandler(BeatState.Bad, currentBeatNumber);
+            }
+        }
+    }
+
+    #endregion
+
     // ----------------------------------------------------
     // ---- Timeline control methods ----------------------
     #region TimelineControl
@@ -384,4 +410,5 @@ public partial class AudioTimeline : MonoBehaviour
 
     #endregion
 
+    #endregion
 }

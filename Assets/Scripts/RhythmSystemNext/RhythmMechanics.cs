@@ -8,18 +8,20 @@ using UnityEngine;
 /// </summary>
 public class RhythmMechanics : MonoBehaviour
 {
+    #region Variables
+
+    // Singleton implementation
+    public static RhythmMechanics Instance;
+
 #pragma warning disable
     [Header("Statistics")]
     [SerializeField] private bool countBeats = true;
 #pragma warning restore
 
-    // Singleton implementation
-    public static RhythmMechanics Instance;
-
     // Combo and Rage control
     public int Combo { get; private set; }
     public bool Rage { get; private set; }
-    
+
     // Beat state counters
     public int BadBeats { get; private set; }
     public int GoodBeats { get; private set; }
@@ -36,49 +38,9 @@ public class RhythmMechanics : MonoBehaviour
 
     #endregion
 
-    // ----------------------------------------------------
-    // ---- Public methods for external use ---------------
-    #region PublicMethods
-
-    /// <summary>
-    /// Count percent of given beat state in current context
-    /// </summary>
-    /// <param name="beatState">The state to count percent of.</param>
-    /// <returns>Returns the percent of given beat state.</returns>
-    public float CountPercent(BeatState beatState)
-    {
-        int beats = 0;
-        switch (beatState)
-        {
-            case BeatState.None:
-                return 0.0f;
-                
-            case BeatState.Bad:
-                beats = BadBeats;
-                break;
-            case BeatState.Good:
-                beats = GoodBeats;
-                break;
-            case BeatState.Great:
-                beats = GreatBeats;
-                break;
-            case BeatState.Perfect:
-                beats = PerfectBeats;
-                break;
-        }
-
-        int sum = BadBeats + GoodBeats + GreatBeats + PerfectBeats;
-        if (sum == 0)
-            return -1.0f;
-        else
-            return (float)beats / sum;
-    }
-
     #endregion
 
-    // ---------------------------------------------------------
-    // ---- Unity methods --------------------------------------
-    #region UnityMethods
+    #region MonoBehaviour
 
     private void Awake()
     {
@@ -116,6 +78,48 @@ public class RhythmMechanics : MonoBehaviour
 
         if (countBeats)
             AudioTimeline.Instance.OnBeatHit -= UpdateCounters;
+    }
+
+    #endregion
+
+    #region Component
+
+    // ----------------------------------------------------
+    // ---- Public methods for external use ---------------
+    #region PublicMethods
+
+    /// <summary>
+    /// Count percent of given beat state in current context
+    /// </summary>
+    /// <param name="beatState">The state to count percent of.</param>
+    /// <returns>Returns the percent of given beat state.</returns>
+    public float CountPercent(BeatState beatState)
+    {
+        int beats = 0;
+        switch (beatState)
+        {
+            case BeatState.None:
+                return 0.0f;
+
+            case BeatState.Bad:
+                beats = BadBeats;
+                break;
+            case BeatState.Good:
+                beats = GoodBeats;
+                break;
+            case BeatState.Great:
+                beats = GreatBeats;
+                break;
+            case BeatState.Perfect:
+                beats = PerfectBeats;
+                break;
+        }
+
+        int sum = BadBeats + GoodBeats + GreatBeats + PerfectBeats;
+        if (sum == 0)
+            return -1.0f;
+        else
+            return (float)beats / sum;
     }
 
     #endregion
@@ -210,6 +214,8 @@ public class RhythmMechanics : MonoBehaviour
     {
 
     }
+
+    #endregion
 
     #endregion
 }

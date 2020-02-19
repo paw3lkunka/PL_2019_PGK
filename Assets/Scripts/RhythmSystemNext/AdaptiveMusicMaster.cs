@@ -6,6 +6,8 @@ public enum Randomizer { Random, Roulette }
 
 public class AdaptiveMusicMaster : MonoBehaviour
 {
+    #region Variables
+
 #pragma warning disable
     [Header("Audio Sources")]
     [SerializeField] private AudioSource drumsSource;
@@ -44,19 +46,9 @@ public class AdaptiveMusicMaster : MonoBehaviour
     private AudioClip currentHeavyMusicClip;
     public AudioClip CurrentHeavyMusicClip => currentHeavyMusicClip;
 
-    private void OnEnable()
-    {
-        AudioTimeline.Instance.OnBeat += PlayNext;
-        AudioTimeline.Instance.OnBeatFail += StopPlayback;
-        AudioTimeline.Instance.OnSequencePause += StopPlayback;
-    }
+    #endregion
 
-    private void OnDisable()
-    {
-        AudioTimeline.Instance.OnBeat -= PlayNext;
-        AudioTimeline.Instance.OnBeatFail -= StopPlayback;
-        AudioTimeline.Instance.OnSequencePause -= StopPlayback;
-    }
+    #region MonoBehaviour
 
     private void Awake()
     {
@@ -86,6 +78,24 @@ public class AdaptiveMusicMaster : MonoBehaviour
             heavyMusicPacks[i].InitClipChances();
         }
     }
+
+    private void OnEnable()
+    {
+        AudioTimeline.Instance.OnBeat += PlayNext;
+        AudioTimeline.Instance.OnBeatFail += StopPlayback;
+        AudioTimeline.Instance.OnSequencePause += StopPlayback;
+    }
+
+    private void OnDisable()
+    {
+        AudioTimeline.Instance.OnBeat -= PlayNext;
+        AudioTimeline.Instance.OnBeatFail -= StopPlayback;
+        AudioTimeline.Instance.OnSequencePause -= StopPlayback;
+    }
+
+    #endregion
+
+    #region Component
 
     private void PlayNext(bool isMain)
     {
@@ -135,7 +145,7 @@ public class AdaptiveMusicMaster : MonoBehaviour
                     // Roulette pack selection
                     currentDrumPack = RouletteAlgorithm(drumPacks, ref drumPacksChances);
                     break;
-            }   
+            }
         }
         // Randomize if the next MUSIC bar should use next internal variation of the pack
         if (Random.Range(0.0f, 1.0f) < nextMusicPackChance)
@@ -219,4 +229,5 @@ public class AdaptiveMusicMaster : MonoBehaviour
         return output;
     }
 
+    #endregion
 }

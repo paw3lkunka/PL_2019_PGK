@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class InputTest : MonoBehaviour
 {
+    #region Variables
+
+
+
+    #endregion
+
+    #region MonoBehaviour
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -22,4 +30,12 @@ public class InputTest : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

@@ -5,14 +5,20 @@ using UnityEngine.UI;
 
 public class RhythmTest : MonoBehaviour
 {
+    #region Variables
+
     public Image rhythmIndicator;
+
+    #endregion
+
+    #region MonoBehaviour
 
     private void Start()
     {
         rhythmIndicator = GameObject.Find("RhythmIndicator").GetComponent<Image>();
         if (rhythmIndicator.IsRealNull())
-        { 
-            rhythmIndicator = FindObjectOfType<Image>(); 
+        {
+            rhythmIndicator = FindObjectOfType<Image>();
         }
         rhythmIndicator.enabled = false;
     }
@@ -28,6 +34,10 @@ public class RhythmTest : MonoBehaviour
         AudioTimeline.Instance.OnBeat -= Indicate;
         AudioTimeline.Instance.OnBeatHit -= VisualizeBeatHit;
     }
+
+    #endregion
+
+    #region Component
 
     private void VisualizeBeatHit(BeatState state, int beatNumber)
     {
@@ -65,5 +75,7 @@ public class RhythmTest : MonoBehaviour
         rhythmIndicator.enabled = false;
         rhythmIndicator.color = Color.white;
     }
+
+    #endregion
 }
 

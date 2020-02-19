@@ -4,6 +4,20 @@ using UnityEngine;
 
 public partial class AudioTimeline
 {
+    #region Variables
+
+
+
+    #endregion
+
+    #region MonoBehaviour
+
+
+
+    #endregion
+
+    #region Component
+
     // ----------------------------------------------------
     // ---- Internal event handlers -----------------------
 
@@ -109,4 +123,6 @@ public partial class AudioTimeline
         yield return new WaitForSeconds((float)beatDuration * failedBeatResetOffset);
         SequenceStartHandler();
     }
+
+    #endregion
 }

@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SoundEffectsModule : MonoBehaviour
 {
+    #region Variables
+
 #pragma warning disable
     [SerializeField] private AudioClip goodBeatHitSound;
     [SerializeField] private AudioClip greatBeatHitSound;
@@ -14,6 +16,10 @@ public class SoundEffectsModule : MonoBehaviour
 #pragma warning restore
 
     private AudioSource audioSource;
+
+    #endregion
+
+    #region MonoBehaviour
 
     private void Start()
     {
@@ -31,7 +37,11 @@ public class SoundEffectsModule : MonoBehaviour
         AudioTimeline.Instance.OnSequenceReset -= PlayFailSound;
         AudioTimeline.Instance.OnBeatHit -= PlayBeatHitSound;
     }
-    
+
+    #endregion
+
+    #region Component
+
     private void PlayBeatHitSound(BeatState beatState, int beatNumber)
     {
         switch (beatState)
@@ -57,4 +67,6 @@ public class SoundEffectsModule : MonoBehaviour
     {
         audioSource.PlayOneShot(failSound);
     }
+
+    #endregion
 }
