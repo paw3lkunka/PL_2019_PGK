@@ -75,22 +75,25 @@ public class CrewSceneManager : MonoBehaviour
 
     private void Update()
     {
-        switch (GameManager.Instance.inputSchedule)
+        if(enabled)
         {
-            case InputSchedule.MouseKeyboard:
-                MoveCursorPointer();
-                break;
+            switch (GameManager.Instance.inputSchedule)
+            {
+                case InputSchedule.MouseKeyboard:
+                    MoveCursorPointer();
+                    break;
 
-            case InputSchedule.Gamepad:
-                MoveCursorGamepad();
-                break;
+                case InputSchedule.Gamepad:
+                    MoveCursorGamepad();
+                    break;
 
-            case InputSchedule.JoystickKeyboard:
-                MoveCursorJoystick();
-                break;
+                case InputSchedule.JoystickKeyboard:
+                    MoveCursorJoystick();
+                    break;
 
-            case InputSchedule.Touchscreen:
-                break;
+                case InputSchedule.Touchscreen:
+                    break;
+            }
         }
 
         var cursorLeaderDistance = Vector2.Distance(cultLeader.transform.position, cursorInstance.transform.position);
