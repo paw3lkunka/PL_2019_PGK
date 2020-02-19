@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class TextsEmitter : MonoBehaviour
 {
+    #region Variables
+
     public GameObject textPrefab;
-    /*
-    private void Start()
-    {
-        IEnumerator Routine()
-        {
-            while(true)
-            {
-                Emit("2137", Color.red, 3);
-                yield return new WaitForSeconds(.5f);
-            }
-        }
 
-        StartCoroutine(Routine());
-    }
-    */
+    #endregion
 
-    public void Emit( string text, Color color, float lifeTime)
+    #region MonoBehaviour
+
+
+
+    #endregion
+
+    #region Component
+
+    public void Emit(string text, Color color, float lifeTime)
     {
         GameObject obj = Instantiate(textPrefab, transform.position, Quaternion.identity);
         obj.GetComponent<FloatingText>().Set(text, color, lifeTime);
     }
+
+    #endregion
 }

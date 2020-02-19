@@ -12,9 +12,11 @@ public enum CharacterState
 [RequireComponent(typeof(Collider2D), typeof(NavMeshAgent))]
 public class Character : MonoBehaviour
 {
+    #region Variables
+
     // Unity Editor accesible fields
 #pragma warning disable
-    [SerializeField] private int hp;
+    [SerializeField] protected int hp;
     [Range(0, 20)]
     [SerializeField] protected float defence;
     [Header("Read Only")]
@@ -28,24 +30,30 @@ public class Character : MonoBehaviour
         set => characterState = value;
     }
 
-    protected NavMeshAgent agent;
-    protected TextsEmitter emitter;
+    public NavMeshAgent Agent { get; private set; }
+    public Rigidbody2D RBody2d { get; private set; }
+    public TextsEmitter healthTextEmitter;
+    public TextsEmitter fatihTextEemitter;
 
     private int maxHp;
     private HealthBar healthBar;
+
+    #endregion
+
+    #region MonoBehaviour
 
     protected virtual void Awake()
     {
         SetStateOn(CharacterState.CanMove);
         SetStateOn(CharacterState.CanAttack);
-        maxHp = hp;
-        agent = GetComponent<NavMeshAgent>();
-        emitter = GetComponentInChildren<TextsEmitter>();
+        Agent = GetComponent<NavMeshAgent>();
+        RBody2d = GetComponent<Rigidbody2D>();
     }
 
     protected virtual void Start()
     {
         healthBar = GetComponentInChildren<HealthBar>();
+        maxHp = hp;
     }
 
     protected virtual void Update()
@@ -58,17 +66,25 @@ public class Character : MonoBehaviour
         healthBar?.SetBar(hp, maxHp);
     }
 
+    #endregion
+
+    #region Component
+
     public virtual void TakeDamage(int damage)
     {
-        int realDamage = Mathf.CeilToInt((float)damage / (defence + 1));
+        int realDamage = Mathf.RoundToInt((float)damage / (defence + 1));
         hp -= Mathf.Max(realDamage, 0);
-        emitter.Emit("-" + realDamage, Color.red, 2f);
+
+        if (healthTextEmitter && realDamage > 0)
+        {
+            healthTextEmitter.Emit("-" + realDamage, Color.red, 2f);
+        }
     }
 
     public virtual void Die()
     {
         GameManager.Instance.ourCrew.Remove(gameObject);
-        CombatSceneManager.Instance.enemies.Remove(gameObject);
+        CrewSceneManager.Instance.enemies.Remove(gameObject);
         StartCoroutine(Routine());
 
         IEnumerator Routine()
@@ -97,4 +113,6 @@ public class Character : MonoBehaviour
     {
         characterState &= ~state;
     }
+
+    #endregion
 }

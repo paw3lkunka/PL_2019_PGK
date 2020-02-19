@@ -4,46 +4,55 @@ using UnityEngine;
 
 public class CameraPosition : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    #region Variables
 
-    // Update is called once per frame
-    void LateUpdate()
-    {
-        var crew = GameManager.Instance.ourCrew;
-        if( crew.Count == 0 )
-        {
-            return;
-        }
-        else if( crew.Count == 1 )
-        {
-            transform.position = (Vector2)crew[0].transform.position;
-            transform.position += Vector3.back * 10;
-        }
-        else
-        {
-            Vector2 min = Vector2.positiveInfinity;
-            Vector2 max = Vector2.negativeInfinity;
 
-            foreach( GameObject obj in crew )
+
+    #endregion
+
+    #region MonoBehaviour
+
+    private void LateUpdate()
+    {
+
+        if (GameManager.Instance.cultistNumber > 0)
+        {
+            var crew = GameManager.Instance.ourCrew;
+            if (GameManager.Instance.cultistNumber == 0)
             {
-                Vector2 pos = obj.transform.position;
-
-                max.x = Mathf.Max(max.x, pos.x);
-                max.y = Mathf.Max(max.y, pos.y);
-                min.x = Mathf.Min(min.x, pos.x);
-                min.y = Mathf.Min(min.y, pos.y);
-
-
-                transform.position = min + (max - min) / 2;
+                return;
+            }
+            else if (GameManager.Instance.cultistNumber == 1)
+            {
+                transform.position = (Vector2)crew[0].transform.position;
                 transform.position += Vector3.back * 10;
             }
+            else
+            {
+                Vector2 min = Vector2.positiveInfinity;
+                Vector2 max = Vector2.negativeInfinity;
 
+                foreach (GameObject obj in crew)
+                {
+                    Vector2 pos = obj.transform.position;
+
+                    max.x = Mathf.Max(max.x, pos.x);
+                    max.y = Mathf.Max(max.y, pos.y);
+                    min.x = Mathf.Min(min.x, pos.x);
+                    min.y = Mathf.Min(min.y, pos.y);
+
+                    transform.position = min + (max - min) / 2;
+                    transform.position += Vector3.back * 10;
+                }
+            }
         }
-
-
     }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

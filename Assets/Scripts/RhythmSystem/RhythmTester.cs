@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class RhythmTester : MonoBehaviour
 {
+    #region Variables
+
 #pragma warning disable
     [SerializeField] private RhythmController controller;
     [SerializeField] private Image rhythmIndicator;
@@ -16,12 +19,44 @@ public class RhythmTester : MonoBehaviour
     private Beat beatStatus;
     private Color transparent = new Color(0, 0, 0, 0);
 
-    private void Update()
+    private NewInput input;
+
+    #endregion
+
+    #region MonoBehaviour
+
+    private void Awake()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-        {
-            beatStatus = controller.HitBeat();
-        }
+        input = GameManager.Instance.input;
     }
 
+    private void OnEnable()
+    {
+        input.Gameplay.SetWalkTarget.performed += HitBeatInputTest;
+        input.CombatMode.SetShootTarget.performed += HitBeatInputTest;
+    }
+
+    private void OnDisable()
+    {
+        input.Gameplay.SetWalkTarget.performed -= HitBeatInputTest;
+        input.CombatMode.SetShootTarget.performed -= HitBeatInputTest;
+    }
+
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
+
+    #region Input
+
+    private void HitBeatInputTest(InputAction.CallbackContext ctx)
+    {
+        beatStatus = controller.HitBeat();
+    }
+
+    #endregion
 }

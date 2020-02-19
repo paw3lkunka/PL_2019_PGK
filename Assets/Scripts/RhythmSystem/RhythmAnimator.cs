@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class RhythmAnimator : MonoBehaviour
 {
+    #region Variables
+
 #pragma warning disable
     [Header("Rhythm pulse indicator")]
     [SerializeField] private Image rhythmIndicator;
@@ -32,6 +34,10 @@ public class RhythmAnimator : MonoBehaviour
 
     private bool cameraEffectsEnabledInternal = false;
     private float cameraEffectMultiplierInternal;
+
+    #endregion
+
+    #region MonoBehaviour
 
     private void Awake()
     {
@@ -61,6 +67,22 @@ public class RhythmAnimator : MonoBehaviour
         RhythmController.Instance.OnRageModeStart -= StartRageAnimation;
         RhythmController.Instance.OnRageModeEnd -= StopRageAnimation;
     }
+
+    private void Update()
+    {
+        rhythmIndicator.color = new Color(rhythmIndicator.color.r,
+                                            rhythmIndicator.color.g,
+                                            rhythmIndicator.color.b,
+                                            pulseCurve.Evaluate(RhythmController.Instance.NormalizedGoodTime));
+        if (cameraEffectsEnabled && cameraEffectsEnabledInternal)
+        {
+            mainCamera.orthographicSize = startCameraSize - cameraCurve.Evaluate(RhythmController.Instance.NormalizedGoodTime) * cameraEffectMultiplierInternal;
+        }
+    }
+
+    #endregion
+
+    #region Component
 
     private void BadHitAnimation()
     {
@@ -102,18 +124,6 @@ public class RhythmAnimator : MonoBehaviour
         cameraEffectMultiplierInternal = cameraEffectMultiplier;
     }
 
-    private void Update()
-    {
-        rhythmIndicator.color = new Color(  rhythmIndicator.color.r, 
-                                            rhythmIndicator.color.g, 
-                                            rhythmIndicator.color.b, 
-                                            pulseCurve.Evaluate((float)RhythmController.Instance.NormalizedGoodTime));
-        if (cameraEffectsEnabled && cameraEffectsEnabledInternal)
-        {
-            mainCamera.orthographicSize = startCameraSize - cameraCurve.Evaluate((float)RhythmController.Instance.NormalizedGoodTime) * cameraEffectMultiplierInternal;
-        }
-    }
-
     private IEnumerator HitAnimation(Color color)
     {
         coroutineTime = 0.0f;
@@ -127,4 +137,6 @@ public class RhythmAnimator : MonoBehaviour
         }
         hitIndicator.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     }
+
+    #endregion
 }

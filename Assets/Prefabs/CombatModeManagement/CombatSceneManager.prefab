@@ -205,36 +205,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51092555f173e5d409efd0d093fb97c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ourCrew: []
   enemies: []
-  OnLeftButton:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8345137823665700857}
-        m_MethodName: PlaceWalkTargetIndicator
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnRigthButton:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8345137823665700857}
-        m_MethodName: PlaceShootTargetIndicator
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   walkTargetIndicator: {fileID: 8345137823194368619}
   shootTargetIndicator: {fileID: 8345137823410966777}
-  startArea: {fileID: 0}
+  startPoint: {x: 0, y: 0}
+  combatMode: 1
+  cursorPrefab: {fileID: 2708359191388454103, guid: 0ba1999b5ea6cd945825800bc827b4e3,
+    type: 3}
+  cursorInstance: {fileID: 0}
+  cultLeader: {fileID: 0}
+  cursorRange: 5

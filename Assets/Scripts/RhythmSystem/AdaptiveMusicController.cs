@@ -1,26 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AdaptiveMusicController : MonoBehaviour
 {
+    #region Variables
+
 #pragma warning disable
-    [Header("Base audio and clips")]
-    // External components
-    [SerializeField] private AudioSource drumTrack;
-    [SerializeField] private AudioSource lightTrack;
-    [SerializeField] private AudioSource heavyTrack;
-
-    // Count up track
-    [SerializeField] private bool countUp = true;
-    [SerializeField] private AudioClip countUpClip;
-    // Audio loop clips arrays
-    [SerializeField] private AudioClip[] drumTrackClips;
-    [SerializeField] private AudioClip[] lightTrackClips;
-    [SerializeField] private AudioClip[] heavyTrackClips;
-
-    [Header("Adaptive music setup")]
+    [SerializeField] private AudioSource lightMusic;
+    [SerializeField] private AudioSource heavyMusic;
     [Space]
     [SerializeField] private float fadeTime = 2.0f;
     [SerializeField] private AnimationCurve fadeCurve;
@@ -28,9 +16,9 @@ public class AdaptiveMusicController : MonoBehaviour
 
     private float coroutineTime = 0.0f;
 
-    private int drumTrackIndex = 0;
-    private int lightTrackIndex = 0;
-    private int heavyTrackIndex = 0;
+    #endregion
+
+    #region MonoBehaviour
 
     private void OnEnable()
     {
@@ -48,25 +36,9 @@ public class AdaptiveMusicController : MonoBehaviour
         RhythmController.Instance.OnComboEnd -= FadeToNone;
     }
 
-    public void StartSequence()
-    {
-        drumTrackIndex = 0;
-        drumTrack.clip = drumTrackClips[drumTrackIndex];
-        lightTrackIndex = 0;
-        lightTrack.clip = lightTrackClips[lightTrackIndex];
-        heavyTrackIndex = 0;
-        heavyTrack.clip = heavyTrackClips[heavyTrackIndex];
-    }
+    #endregion
 
-    public void PlayBar(int beats, double beatMoment)
-    {
-
-    }
-
-    public void InterruptSequence()
-    {
-
-    }
+    #region Component
 
     private void FadeToNone()
     {
@@ -93,8 +65,8 @@ public class AdaptiveMusicController : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
 
-            heavyTrack.volume = Mathf.Clamp01(heavyTrack.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
-            lightTrack.volume = Mathf.Clamp01(lightTrack.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+            heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+            lightMusic.volume = Mathf.Clamp01(lightMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
 
             coroutineTime += Time.deltaTime;
         }
@@ -107,8 +79,8 @@ public class AdaptiveMusicController : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
 
-            heavyTrack.volume = Mathf.Clamp01(heavyTrack.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
-            lightTrack.volume = Mathf.Clamp01(lightTrack.volume + fadeCurve.Evaluate(coroutineTime / fadeTime));
+            heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+            lightMusic.volume = Mathf.Clamp01(lightMusic.volume + fadeCurve.Evaluate(coroutineTime / fadeTime));
 
             coroutineTime += Time.deltaTime;
         }
@@ -121,10 +93,12 @@ public class AdaptiveMusicController : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
 
-            heavyTrack.volume = Mathf.Clamp01(heavyTrack.volume + fadeCurve.Evaluate(coroutineTime / fadeTime));
-            lightTrack.volume = Mathf.Clamp01(lightTrack.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
+            heavyMusic.volume = Mathf.Clamp01(heavyMusic.volume + fadeCurve.Evaluate(coroutineTime / fadeTime));
+            lightMusic.volume = Mathf.Clamp01(lightMusic.volume - fadeCurve.Evaluate(coroutineTime / fadeTime));
 
             coroutineTime += Time.deltaTime;
         }
     }
+
+    #endregion
 }

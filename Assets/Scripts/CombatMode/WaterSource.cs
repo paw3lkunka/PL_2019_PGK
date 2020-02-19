@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class WaterSource : MonoBehaviour
 {
+    #region Variables
+
+
+
+    #endregion
+
+    #region MonoBehaviour
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (GameManager.Instance.ourCrew.IndexOf(collision.gameObject) != -1)
@@ -11,4 +19,12 @@ public class WaterSource : MonoBehaviour
             GameManager.Instance.Water = Mathf.Max(GameManager.Instance.Water, 0.8f);
         }
     }
+
+    #endregion
+
+    #region Component
+
+
+
+    #endregion
 }

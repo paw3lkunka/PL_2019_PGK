@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1903687780731101154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1903687780731101152}
+  - component: {fileID: 1903687780731101153}
+  - component: {fileID: 1903687780731101159}
+  - component: {fileID: 1903687780731101158}
+  - component: {fileID: 1262586932}
+  m_Layer: 0
+  m_Name: Grid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1903687780731101152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903687780731101154}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!156049354 &1903687780731101153
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903687780731101154}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
+--- !u!114 &1903687780731101159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903687780731101154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d193390e48b8e024dac2ec3e7f8069ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useCustomSeed: 0
+  forceEmptyCentre: 1
+  foregroundMap: 1
+  seed: -1298461497
+  orderInLayer: 1
+  shrineLocationPrefab: {fileID: 4981993684732004272, guid: a2098d329e170964e8e6eb48979bf8bd,
+    type: 3}
+  templeLocationPrefab: {fileID: 4981993684732004272, guid: a8e3f747bd270dc40863d26640849f53,
+    type: 3}
+  locationPrefabs:
+  - {fileID: 4981993684732004272, guid: 3d398aafe82766c44bc3bb87f8854863, type: 3}
+  - {fileID: 3446350326676292440, guid: e68f1fb3fbca76d47bd9f73701ca480b, type: 3}
+  - {fileID: 5411222064546742899, guid: 009f86796c565de49acbecdf5c63d9c8, type: 3}
+  - {fileID: 2093641478962683869, guid: b5bd9352e18ca3c46b96cf13eff21d0d, type: 3}
+  segments: {x: 5, y: 5}
+  cellSize: {x: 25, y: 25}
+  randomOffsetRange: {x: 8, y: 8}
+  emptyChance: 10
+  isValid: 1
+  spawnChances: 0a0000000a0000000500000005000000
+  generationID: -270412
+--- !u!114 &1903687780731101158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903687780731101154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d193390e48b8e024dac2ec3e7f8069ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useCustomSeed: 0
+  forceEmptyCentre: 0
+  foregroundMap: 0
+  seed: -1529569144
+  orderInLayer: 0
+  shrineLocationPrefab: {fileID: 0}
+  templeLocationPrefab: {fileID: 0}
+  locationPrefabs:
+  - {fileID: 3362617972761397169, guid: c11b3ff5651e46e4e8aef2374f5d71db, type: 3}
+  - {fileID: 2597623936401417111, guid: d23b9d1ca2fe46c4e9419f8988329344, type: 3}
+  - {fileID: 4581143527095184324, guid: c655411142485c9448aebbe7f8c58fc0, type: 3}
+  - {fileID: 1456937216547446262, guid: 89678630c0724d34db20acf70dbcad22, type: 3}
+  - {fileID: 60252798472323570, guid: 36b5822f23a2bac4da90b95f0f7c1092, type: 3}
+  - {fileID: 1242075967849162269, guid: 873996371eb6e4b4fac463aa7ee12223, type: 3}
+  - {fileID: 2732483792369399696, guid: 6a065c9bb6bdd034c8ab6c6ff96fa49a, type: 3}
+  - {fileID: 7010800582584849067, guid: fe1441f520c924a49b4b874cb6443280, type: 3}
+  - {fileID: 2465320423673713395, guid: e8ca4e3f78a2aae4bbd42ed89b1c8a40, type: 3}
+  - {fileID: 927654004902179335, guid: 86e374bf02350da46aa4cff7b5a1790b, type: 3}
+  - {fileID: 3860873968720567291, guid: c4ba70b2a92d9dd4eb3adba8c1a42e95, type: 3}
+  - {fileID: 2662553376607338592, guid: 2739db193d0177c4bbc8fa9f41579de3, type: 3}
+  - {fileID: 6693556358528973391, guid: 078c5d93c2b40834cbe8c463b4279f47, type: 3}
+  - {fileID: 5625853922355060470, guid: 6152f30b4c26f2345a6f055e0b3fa570, type: 3}
+  - {fileID: 8829995360576043564, guid: 5e29ac73665c6c5428b40064d9d7a6aa, type: 3}
+  - {fileID: 2199933342773272012, guid: 8ce22c9410cea0c4eba521ff12596487, type: 3}
+  segments: {x: 5, y: 5}
+  cellSize: {x: 25, y: 25}
+  randomOffsetRange: {x: 20, y: 20}
+  emptyChance: 20
+  isValid: 1
+  spawnChances: 0a0000000a0000000a0000000a0000000a0000000f0000000f0000000f0000000a0000000a0000000a0000000a0000000a0000000a0000000f0000000f000000
+  generationID: 20136
+--- !u!114 &1262586932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903687780731101154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7c99c8e57f8194c87a8086adc22f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foreground: {fileID: 1903687780731101159}
+  background: {fileID: 1903687780731101158}
+  useCustomMainSeed: 0
+  overrideInitialSeed: 1
+  clearPreSelected: 1
+  reshuffleEachTime: 0
+  backgroundIterations: 2
+  mainSeed: 0

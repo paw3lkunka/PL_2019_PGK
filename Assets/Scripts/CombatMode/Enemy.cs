@@ -7,6 +7,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Shooter))]
 public class Enemy : Character
 {
+    #region Variables
+
 #pragma warning disable
     [SerializeField]
     private float eyesightRange;
@@ -19,20 +21,33 @@ public class Enemy : Character
     protected GameObject chasedObject;
     protected Shooter shooter;
 
-    protected override void Start()
-    {
-        base.Start();
-        CombatSceneManager.Instance.enemies.Add(gameObject);
-    }
+    #endregion
+
+    #region MonoBehaviour
 
     protected override void Awake()
     {
-        base.Awake(); 
+        base.Awake();
 
         shooter = GetComponent<Shooter>();
 
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
+        Agent.updateRotation = false;
+        Agent.updateUpAxis = false;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    protected void OnEnable()
+    {
+        CrewSceneManager.Instance.enemies.Add(gameObject);
+    }
+
+    protected void OnDisable()
+    {
+        CrewSceneManager.Instance.enemies.Remove(gameObject);
     }
 
     protected override void Update()
@@ -40,14 +55,14 @@ public class Enemy : Character
         base.Update();
 
         var nearestDistance = GameManager.Instance.ourCrew.NearestFrom(transform.position);
-        if(!nearestDistance.Item1)
+        if (!nearestDistance.Item1)
         {
             return;
         }
 
-        if(!chasedObject)
+        if (!chasedObject)
         {
-            if(nearestDistance.Item2 < this.eyesightRange)
+            if (nearestDistance.Item2 < this.eyesightRange)
             {
                 chasedObject = nearestDistance.Item1;
             }
@@ -55,10 +70,10 @@ public class Enemy : Character
         else
         {
             chasedObject = nearestDistance.Item1;
-            
-            if(ShouldShoot())
+
+            if (ShouldShoot())
             {
-                agent.isStopped = true;
+                Agent.isStopped = true;
                 shooter.target = chasedObject.transform.position;
                 shooter.StartShooting();
                 return;
@@ -68,26 +83,42 @@ public class Enemy : Character
 
             if (ShouldChase())
             {
-                agent.isStopped = false;
-                agent.destination = chasedObject.transform.position;
+                Agent.isStopped = false;
+                Agent.destination = chasedObject.transform.position;
                 return;
             }
 
             chasedObject = null;
-            agent.isStopped = false;
+            Agent.isStopped = false;
         }
 
     }
+
+    #endregion
+
+    #region Component
 
     public override void Die()
     {
         float gainedFaith = GameManager.Instance.FaithForKilledEnemy;
         GameManager.Instance.Faith += gainedFaith;
-        emitter.Emit("+" + (int)(gainedFaith * 100), Color.green, 3);
+
+        if (fatihTextEemitter)
+        {
+            fatihTextEemitter.Emit("+" + (int)Mathf.Round(gainedFaith * 100), Color.green, 3);
+        }
         base.Die();
     }
-    
-    private bool ShouldShoot() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) <= this.shootingRange : false;
 
-    private bool ShouldChase() => chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) < this.chaseRange : false;
+    private bool ShouldShoot()
+    {
+        return chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) <= this.shootingRange : false;
+    }
+
+    private bool ShouldChase()
+    {
+        return chasedObject ? Vector2.Distance(chasedObject.transform.position, this.transform.position) < this.chaseRange : false;
+    }
+
+    #endregion
 }
