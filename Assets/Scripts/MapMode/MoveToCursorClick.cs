@@ -56,9 +56,7 @@ public class MoveToCursorClick : MonoBehaviour
     #endregion
 
     #region Component
-
-    public void ResetTarget() => targetPos = transform.position;
-
+    
     #endregion
 
     #region Input
