@@ -9,6 +9,7 @@ public enum InputSchedule
 {
     MouseKeyboard,
     Gamepad,
+    JoystickKeyboard,
     Touchscreen
 }
 
@@ -24,10 +25,7 @@ public class GameManager : MonoBehaviour
         get => skipTutorial;
         set => skipTutorial = value;
     }
-
-    public Scene mainMapScene;
-    public Scene locationScene;
-
+    
     public GameObject cultistPrefab;
     public GameObject leaderPrefab;
     public GameObject guiPrefab;
@@ -195,6 +193,7 @@ public class GameManager : MonoBehaviour
         Gui.gameObject.SetActive(false);
         ourCrew = new List<GameObject>();
 
+#pragma warning disable
         Instantiate(leaderPrefab, Vector3.zero, Quaternion.identity);
 
         for (int i = 0; i < initialCultistsNumber; i++)
@@ -202,6 +201,7 @@ public class GameManager : MonoBehaviour
             Instantiate(cultistPrefab, Vector3.zero, Quaternion.identity);
         }
         cultistNumber += 1;
+#pragma warning restore
     }
 
     private void ResetIndicatorsValues()

@@ -135,19 +135,13 @@ public partial class RhythmController : MonoBehaviour
         nextBeatMoment = TimeSinceEnable + (startOffset * beatTime) + fineTune;
 
         input.Gameplay.SetWalkTarget.performed += HitBeatInputHandler;
-        input.Gameplay.SetWalkTarget.Enable();
-
         input.CombatMode.SetShootTarget.performed += HitBeatInputHandler;
-        input.CombatMode.SetShootTarget.Enable();
     }
 
     private void OnDisable()
     {
         input.Gameplay.SetWalkTarget.performed -= HitBeatInputHandler;
-        input.Gameplay.SetWalkTarget.Disable();
-
         input.CombatMode.SetShootTarget.performed -= HitBeatInputHandler;
-        input.CombatMode.SetShootTarget.Disable();
     }
 
     private void Update()

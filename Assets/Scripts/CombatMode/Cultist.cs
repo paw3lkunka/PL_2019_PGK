@@ -76,10 +76,7 @@ public class Cultist : Character
         if(input != null)
         {
             input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
-            input.Gameplay.SetWalkTarget.Enable();
-
             input.CombatMode.SetShootTarget.performed += AimToCursorPosition;
-            input.CombatMode.SetShootTarget.Enable();
         }
     }
 
@@ -88,10 +85,7 @@ public class Cultist : Character
         if(input != null)
         {
             input.Gameplay.SetWalkTarget.performed -= GoToCursorPosition;
-            input.Gameplay.SetWalkTarget.Disable();
-
             input.CombatMode.SetShootTarget.performed -= AimToCursorPosition;
-            input.CombatMode.SetShootTarget.Disable();
         }
     }
 

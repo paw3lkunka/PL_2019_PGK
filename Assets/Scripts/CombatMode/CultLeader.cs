@@ -49,7 +49,6 @@ public class CultLeader : Character
         if(input != null)
         {
             input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
-            input.Gameplay.SetWalkTarget.Enable();
         }
     }
 
@@ -58,7 +57,6 @@ public class CultLeader : Character
         if (input != null)
         {
             input.Gameplay.SetWalkTarget.performed -= GoToCursorPosition;
-            input.Gameplay.SetWalkTarget.Disable();
         }
     }
 
@@ -96,12 +94,11 @@ public class CultLeader : Character
     {
         switch (scene.name)
         {
-            case "MainMap":
-                MapSceneManager.Instance.cultLeader = transform;
+            case "MainMenu":
                 gameObject.SetActive(false);
                 break;
 
-            case "MainMenu":
+            case "MainMap":
                 gameObject.SetActive(false);
                 break;
 

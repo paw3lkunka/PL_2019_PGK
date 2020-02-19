@@ -1222,7 +1222,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751508876}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.5, y: -12.5, z: 0}
+  m_LocalPosition: {x: -12, y: -12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1262586929}
@@ -3564,7 +3564,8 @@ PrefabInstance:
       propertyPath: maxNumberOfOccurrences.Array.data[1]
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1262586933, guid: a3704f0974fb05540b553aa0fbda1256, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a3704f0974fb05540b553aa0fbda1256, type: 3}
 --- !u!4 &1262586929 stripped
 Transform:
