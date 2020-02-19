@@ -85,36 +85,5 @@ public class MapGeneratorEditor : Editor
             }
             EditorGUI.indentLevel--;
         }
-
-        if (GUILayout.Button((showOccurrences ? "Hide" : "Show") + " location occurrences"))
-        {
-            showOccurrences = !showOccurrences;
-        }
-
-        if (showOccurrences)
-        {
-            EditorGUI.indentLevel++;
-            {
-                int index = 0;
-                foreach (GameObject prefab in generator.locationPrefabs)
-                {
-                    Location location = prefab.GetComponent<Location>();
-                    int value;
-                    try
-                    {
-                        value = generator.maxNumberOfOccurrences[index];
-                    }
-                    catch
-                    {
-                        value = 0;
-                    }
-                    int newValue = EditorGUILayout.IntField(prefab.name, value);
-                    generator.maxNumberOfOccurrences[index] = newValue > 0 ? newValue : 0;
-                    index++;
-                }
-                EditorUtility.SetDirty(target);
-            }
-            EditorGUI.indentLevel--;
-        }
     }
 }

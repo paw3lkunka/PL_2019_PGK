@@ -18,14 +18,16 @@ public class MapGenerator : MonoBehaviour
 
     public bool useCustomSeed = false;
     public bool forceEmptyCentre = false;
+    public bool foregroundMap = false;
 
     public int seed;
     public int orderInLayer;
 
+    [SerializeField] public GameObject shrineLocationPrefab;
     public List<GameObject> locationPrefabs = new List<GameObject>();
+    
 
     private Grid grid;
-    private List<int> actualNumberOfOccurences;
 
     public Vector2Int segments = new Vector2Int(5, 5);
     public Vector2Int cellSize = new Vector2Int(30, 30);
@@ -34,10 +36,11 @@ public class MapGenerator : MonoBehaviour
     [HideInInspector] public int emptyChance;
     [HideInInspector] public bool isValid;
     [HideInInspector] public List<int> spawnChances = new List<int>();
-    [HideInInspector] public List<int> maxNumberOfOccurrences = new List<int>();
 
 
     public int generationID;
+
+    private List<Vector3> positions = new List<Vector3>();
 
     #endregion
 
@@ -48,9 +51,6 @@ public class MapGenerator : MonoBehaviour
     {
         grid = GetComponent<Grid>();
         spawnChances.Resize(locationPrefabs.Count, 0);
-        maxNumberOfOccurrences.Resize(locationPrefabs.Count, 0);
-        actualNumberOfOccurences = new List<int>();
-        actualNumberOfOccurences.Resize(locationPrefabs.Count, 0);
 
         ValidatePrefabs();
 
@@ -128,7 +128,7 @@ public class MapGenerator : MonoBehaviour
                 position.x += Random.Range(-randomOffsetRange.x, randomOffsetRange.x) - halfWidth;
                 position.y += Random.Range(-randomOffsetRange.y, randomOffsetRange.y) - halfHight;
 
-                while (chances[index] < randomNumber)
+                while (index < locationPrefabs.Count && chances[index] < randomNumber)
                 {
                     randomNumber -= chances[index];
                     index++;
@@ -136,25 +136,45 @@ public class MapGenerator : MonoBehaviour
 
                 if(index < locationPrefabs.Count)
                 {
-                    if(maxNumberOfOccurrences[index] != 0 && actualNumberOfOccurences[index] < maxNumberOfOccurrences[index])
-                    {
-                        GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
-                        instance.GetComponentInChildren<Location>().generationID = (int)generationID;
-                        instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
-                        actualNumberOfOccurences[index]++;
-                        spawnChances[index] += 5;
-                    }
-                    else if(maxNumberOfOccurrences[index] == 0)
-                    {
-                        GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
-                        instance.GetComponentInChildren<Location>().generationID = (int)generationID;
-                        instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
-                    }
+                    GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
+                    positions.Add(position);
+                    instance.GetComponentInChildren<Location>().generationID = (int)generationID;
+                    instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
                 }
 
                 if (forceEmptyCentre)
                 {
                     FreeCentre();
+                }
+            }
+        }
+        if (foregroundMap)
+        {
+            for (int i = 0; i < 3; ++i)
+            {
+                int randomIndex;
+                while (true)
+                {
+                    randomIndex = Random.Range(0, positions.Count);
+                    if ((positions[randomIndex].x > 20 || positions[randomIndex].x < -20) && (positions[randomIndex].y > 20 || positions[randomIndex].y < -20))
+                    {
+                        for (int j = 0; j < transform.childCount; ++j)
+                        {
+                            if (transform.GetChild(j).position == positions[randomIndex])
+                            {
+                                #if UNITY_EDITOR
+                                DestroyImmediate(transform.GetChild(j).gameObject);
+                                #else
+                                Destroy(transform.GetChild(j).gameObject);
+                                #endif
+                                GameObject instance = Instantiate(shrineLocationPrefab, positions[randomIndex], Quaternion.identity, grid.transform);
+                                instance.GetComponentInChildren<Location>().generationID = (int)generationID;
+                                instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
+                                break;
+                            }
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -195,7 +215,7 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    #endregion
+#endregion
 }
 
 public static class ListExtra
