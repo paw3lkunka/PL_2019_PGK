@@ -25,6 +25,7 @@ public class MapGenerator : MonoBehaviour
     public List<GameObject> locationPrefabs = new List<GameObject>();
 
     private Grid grid;
+    private List<int> actualNumberOfOccurences;
 
     public Vector2Int segments = new Vector2Int(5, 5);
     public Vector2Int cellSize = new Vector2Int(30, 30);
@@ -33,6 +34,8 @@ public class MapGenerator : MonoBehaviour
     [HideInInspector] public int emptyChance;
     [HideInInspector] public bool isValid;
     [HideInInspector] public List<int> spawnChances = new List<int>();
+    [HideInInspector] public List<int> maxNumberOfOccurrences = new List<int>();
+
 
     public int generationID;
 
@@ -41,10 +44,13 @@ public class MapGenerator : MonoBehaviour
     #region MonoBehaviour
 
     //     NEVER ON VALIDATE WHEN THERE IS LOGIC!!!!!!!!!!!!!!!!!!!!!!!!!
-    private void OnEnable()
+    private void OnValidate()
     {
         grid = GetComponent<Grid>();
         spawnChances.Resize(locationPrefabs.Count, 0);
+        maxNumberOfOccurrences.Resize(locationPrefabs.Count, 0);
+        actualNumberOfOccurences = new List<int>();
+        actualNumberOfOccurences.Resize(locationPrefabs.Count, 0);
 
         ValidatePrefabs();
 
@@ -128,18 +134,22 @@ public class MapGenerator : MonoBehaviour
                     index++;
                 }
 
-                try
+                if(index < locationPrefabs.Count)
                 {
-                    GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
-                    instance.GetComponentInChildren<Location>().generationID = (int)generationID;
-                    instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
-                    //DestroyImmediate(instance.GetComponent<Grid>());
-                }
-                catch (System.ArgumentOutOfRangeException exc)
-                {
-                    //if index == locationPrefabs.Count cell should be empty - it's normal situation, else rethrow
-                    if (index != locationPrefabs.Count)
-                        throw exc;
+                    if(maxNumberOfOccurrences[index] != 0 && actualNumberOfOccurences[index] < maxNumberOfOccurrences[index])
+                    {
+                        GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
+                        instance.GetComponentInChildren<Location>().generationID = (int)generationID;
+                        instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
+                        actualNumberOfOccurences[index]++;
+                        spawnChances[index] += 5;
+                    }
+                    else if(maxNumberOfOccurrences[index] == 0)
+                    {
+                        GameObject instance = Instantiate(locationPrefabs[index], position, Quaternion.identity, grid.transform);
+                        instance.GetComponentInChildren<Location>().generationID = (int)generationID;
+                        instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
+                    }
                 }
 
                 if (forceEmptyCentre)
