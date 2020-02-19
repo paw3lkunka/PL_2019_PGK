@@ -60,6 +60,10 @@ public class GameManager : MonoBehaviour
     public float FaithForKilledCultist { get => faithForKilledCultist; set => faithForKilledCultist = value; }
     public float FaithForWoundedCultist { get => faithForWoundedCultist; set => faithForWoundedCultist = value; }
 
+    public bool mapGenerated = false;
+
+    public event System.Action OnLocationEnter;
+    public event System.Action OnLocationExit;
     public event System.Action OnGameOver;
 
     public GameObject GameOverScreenInstance
@@ -261,5 +265,12 @@ public class GameManager : MonoBehaviour
         FaithForKilledEnemy /= 2;
     }
 
-    #endregion    
+    #endregion
+
+    #region event invokes
+
+    public void OnLocationExitInvoke() => OnLocationExit?.Invoke();
+    public void OnLocationEnterInvoke() => OnLocationEnter?.Invoke();
+    
+    #endregion
 }

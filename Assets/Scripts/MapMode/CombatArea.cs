@@ -21,6 +21,7 @@ public class CombatArea : MonoBehaviour
     {
         GameManager.Instance.savedPosition = GlobalReturnPoint;
         SceneManager.LoadSceneAsync(sceneName);
+        GameManager.Instance.OnLocationEnterInvoke();
     }
 
     private void OnDrawGizmos()

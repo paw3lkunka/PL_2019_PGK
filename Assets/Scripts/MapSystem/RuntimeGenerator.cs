@@ -28,67 +28,85 @@ public class RuntimeGenerator : MonoBehaviour
 
     #region MonoBehaviour
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        GameManager.Instance.OnLocationEnter += OnLocationEnter;
+        GameManager.Instance.OnLocationExit += OnLocationExit;
+    }
+    
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnLocationEnter -= OnLocationEnter;
+        GameManager.Instance.OnLocationExit -= OnLocationExit;
+    }
+
     private void Start()
     {
-        Debug.Log("Wywołuję runtime generator");
-        if (!useCustomMainSeed)
+        if (!GameManager.Instance.mapGenerated)
         {
-            mainSeed = Random.Range(int.MinValue, int.MaxValue);
-        }
+            GameManager.Instance.mapGenerated = true;
 
-        Random.InitState(mainSeed);
-
-        if (forgroundSeed == null)
-        {
-            forgroundSeed = overrideInitialSeed ? Random.Range(int.MinValue, int.MaxValue) : foreground.seed;
-        }
-
-        if (backgroundSeeds == null)
-        {
-            backgroundSeeds = new int[backgroundIterations];
-            backgroundSeeds[0] = overrideInitialSeed ? Random.Range(int.MinValue, int.MaxValue) : background.seed;
-            for (int i = 1; i < backgroundIterations; i++)
+            if (!useCustomMainSeed)
             {
-                backgroundSeeds[i] = Random.Range(int.MinValue, int.MaxValue);
+                mainSeed = Random.Range(int.MinValue, int.MaxValue);
             }
-        }
 
-        if (clearPreSelected)
-        {
-            try
-            {
-                foreground.Clear();
-            }
-            catch(System.NullReferenceException)
-            {
-                //do nothing, ofcourse xD
-            }
-            foreground.useCustomSeed = true;
-            try
-            {
-                background.Clear();
-            }
-            catch(System.NullReferenceException)
-            {
-                //do nothiung
-            }
-            background.useCustomSeed = true;
-        }
+            Random.InitState(mainSeed);
 
-        foreground.seed = (int)forgroundSeed;
-        foreground.Generate();
+            if (forgroundSeed == null)
+            {
+                forgroundSeed = overrideInitialSeed ? Random.Range(int.MinValue, int.MaxValue) : foreground.seed;
+            }
 
-        for (int i = 0; i < backgroundIterations; i++)
-        {
-            background.seed = backgroundSeeds[i];
-            background.Generate();
-        }
+            if (backgroundSeeds == null)
+            {
+                backgroundSeeds = new int[backgroundIterations];
+                backgroundSeeds[0] = overrideInitialSeed ? Random.Range(int.MinValue, int.MaxValue) : background.seed;
+                for (int i = 1; i < backgroundIterations; i++)
+                {
+                    backgroundSeeds[i] = Random.Range(int.MinValue, int.MaxValue);
+                }
+            }
 
-        if (reshuffleEachTime)
-        {
-            forgroundSeed = null;
-            backgroundSeeds = null;
-        }
+            if (clearPreSelected)
+            {
+                try
+                {
+                    foreground.Clear();
+                }
+                catch (System.NullReferenceException)
+                {
+                    //do nothing, ofcourse xD
+                }
+                foreground.useCustomSeed = true;
+                try
+                {
+                    background.Clear();
+                }
+                catch (System.NullReferenceException)
+                {
+                    //do nothiung
+                }
+                background.useCustomSeed = true;
+            }
+
+            foreground.seed = (int)forgroundSeed;
+            foreground.Generate();
+
+            for (int i = 0; i < backgroundIterations; i++)
+            {
+                background.seed = backgroundSeeds[i];
+                background.Generate();
+            }
+
+            if (reshuffleEachTime)
+            {
+                forgroundSeed = null;
+                backgroundSeeds = null;
+            }
+
+        }        
     }
 
     private void Update()
@@ -100,7 +118,15 @@ public class RuntimeGenerator : MonoBehaviour
 
     #region Component
 
+    private void OnLocationEnter()
+    {
+        gameObject.SetActive(false);
+    }
 
+    private void OnLocationExit()
+    {
+        gameObject.SetActive(true);
+    }
 
     #endregion
 }
