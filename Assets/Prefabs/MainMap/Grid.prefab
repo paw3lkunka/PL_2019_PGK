@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1903687780731101153}
   - component: {fileID: 1903687780731101159}
   - component: {fileID: 1903687780731101158}
+  - component: {fileID: 1262586932}
+  - component: {fileID: 1262586933}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -57,20 +59,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d193390e48b8e024dac2ec3e7f8069ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useCustomSeed: 1
-  seed: -433399690
+  useCustomSeed: 0
+  forceEmptyCentre: 1
+  seed: -810224241
   orderInLayer: 1
   locationPrefabs:
   - {fileID: 4981993684732004272, guid: 3d398aafe82766c44bc3bb87f8854863, type: 3}
   - {fileID: 3446350326676292440, guid: e68f1fb3fbca76d47bd9f73701ca480b, type: 3}
   - {fileID: 5411222064546742899, guid: 009f86796c565de49acbecdf5c63d9c8, type: 3}
   - {fileID: 2093641478962683869, guid: b5bd9352e18ca3c46b96cf13eff21d0d, type: 3}
+  - {fileID: 4981993684732004272, guid: a2098d329e170964e8e6eb48979bf8bd, type: 3}
   segments: {x: 5, y: 5}
-  cellSize: {x: 30, y: 30}
+  cellSize: {x: 25, y: 25}
   randomOffsetRange: {x: 10, y: 10}
-  emptyChance: 30
+  emptyChance: 10
   isValid: 1
-  generationID: 20134
+  spawnChances: 0a0000000a000000050000000500000005000000
+  generationID: 43934
 --- !u!114 &1903687780731101158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useCustomSeed: 0
+  forceEmptyCentre: 0
   seed: -1529569144
   orderInLayer: 0
   locationPrefabs:
@@ -104,8 +110,41 @@ MonoBehaviour:
   - {fileID: 8829995360576043564, guid: 5e29ac73665c6c5428b40064d9d7a6aa, type: 3}
   - {fileID: 2199933342773272012, guid: 8ce22c9410cea0c4eba521ff12596487, type: 3}
   segments: {x: 5, y: 5}
-  cellSize: {x: 50, y: 50}
+  cellSize: {x: 25, y: 25}
   randomOffsetRange: {x: 20, y: 20}
-  emptyChance: 0
+  emptyChance: 20
   isValid: 1
+  spawnChances: 0a0000000a0000000a0000000a0000000a0000000f0000000f0000000f0000000a0000000a0000000a0000000a0000000a0000000a0000000f0000000f000000
   generationID: 20136
+--- !u!114 &1262586932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903687780731101154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7c99c8e57f8194c87a8086adc22f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foreground: {fileID: 1903687780731101159}
+  background: {fileID: 1903687780731101158}
+  useCustomMainSeed: 0
+  overrideInitialSeed: 1
+  clearPreSelected: 1
+  reshuffleEachTime: 0
+  backgroundIterations: 2
+  mainSeed: 0
+--- !u!114 &1262586933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903687780731101154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 662dd99731dc9154c87929bebb3af96d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
