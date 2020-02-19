@@ -40,10 +40,10 @@ public class MapGenerator : MonoBehaviour
 
     #region MonoBehaviour
 
+    //     NEVER ON VALIDATE WHEN THERE IS LOGIC!!!!!!!!!!!!!!!!!!!!!!!!!
     private void OnEnable()
     {
         grid = GetComponent<Grid>();
-        Debug.Log(grid.cellSize);
         spawnChances.Resize(locationPrefabs.Count, 0);
 
         ValidatePrefabs();
@@ -101,7 +101,6 @@ public class MapGenerator : MonoBehaviour
         for (int i = 0; i < locationPrefabs.Count; i++)
         {
             int chance = spawnChances[i];
-            Debug.Log("Spawn chances: " + spawnChances[i]);
             range += chance;
             chances.Add(chance);
         }
