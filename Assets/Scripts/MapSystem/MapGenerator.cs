@@ -22,7 +22,7 @@ public class MapGenerator : MonoBehaviour
     public int seed;
     public int orderInLayer;
 
-    public List<GameObject> locationPrefabs;
+    public List<GameObject> locationPrefabs = new List<GameObject>();
 
     private Grid grid;
 
@@ -40,11 +40,12 @@ public class MapGenerator : MonoBehaviour
 
     #region MonoBehaviour
 
-    private void OnValidate()
+    private void OnEnable()
     {
+        grid = GetComponent<Grid>();
+        Debug.Log(grid.cellSize);
         spawnChances.Resize(locationPrefabs.Count, 0);
 
-        grid = GetComponent<Grid>();
         ValidatePrefabs();
 
         if (segments.x < 1)
@@ -100,6 +101,7 @@ public class MapGenerator : MonoBehaviour
         for (int i = 0; i < locationPrefabs.Count; i++)
         {
             int chance = spawnChances[i];
+            Debug.Log("Spawn chances: " + spawnChances[i]);
             range += chance;
             chances.Add(chance);
         }
@@ -117,7 +119,7 @@ public class MapGenerator : MonoBehaviour
                 int randomNumber = Random.Range(0, range);
                 int index = 0;
 
-                Vector3 position = new Vector3(i * cellSize.x, j * cellSize.y);
+                Vector3 position = new Vector3(i * cellSize.x, j * cellSize.y, 0);
                 position.x += Random.Range(-randomOffsetRange.x, randomOffsetRange.x) - halfWidth;
                 position.y += Random.Range(-randomOffsetRange.y, randomOffsetRange.y) - halfHight;
 

@@ -41,7 +41,7 @@ public class PatrollingEnemy : Enemy
             GotoNextPoint();
         }
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = gizmoColor;
@@ -50,8 +50,9 @@ public class PatrollingEnemy : Enemy
             Gizmos.DrawSphere(p, .1f);
         }
     }
+#endif
 
-    #endregion
+#endregion
 
     #region Component
 
