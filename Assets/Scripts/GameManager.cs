@@ -121,7 +121,20 @@ public class GameManager : MonoBehaviour
 
     public Location currentLocation;
     public Dictionary<Location, HashSet<int>> destroyedDynamicObjects = new Dictionary<Location, HashSet<int>>();
-    public HashSet<int> CurrentLocationsDestroyedDynamicObjects { get => destroyedDynamicObjects[currentLocation]; }
+    public HashSet<int> CurrentLocationsDestroyedDynamicObjects
+    {
+        get
+        {
+            try
+            {
+                return destroyedDynamicObjects[currentLocation];
+            }
+            catch(KeyNotFoundException)
+            {
+                return null;
+            }
+        }
+    }
 
     public int ShrinesVisited { get; set; }
 
