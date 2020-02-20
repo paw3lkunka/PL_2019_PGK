@@ -33,7 +33,7 @@ public class EscapeArea : MonoBehaviour
 
     #region Component
 
-
+    
 
     #endregion
 }
