@@ -486,6 +486,7 @@ MonoBehaviour:
   easyModeGreatTolerance: 0.2
   hardModeGoodTolerance: 0.18
   hardModeGreatTolerance: 0.1
+  mapGenerated: 0
   water: 1
   faith: 0.6
   FaithUsageFactor: 0.0002
@@ -496,6 +497,7 @@ MonoBehaviour:
   FanaticFaithLevel: 0.9
   savedPosition: {x: 0, y: 0}
   ourCrew: []
+  currentLocation: {fileID: 0}
   inputSchedule: 0
 --- !u!1 &512776234
 GameObject:
@@ -968,7 +970,7 @@ GameObject:
   - component: {fileID: 609771116}
   - component: {fileID: 609771115}
   m_Layer: 5
-  m_Name: SkipTutorial
+  m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1015,7 +1017,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.15294118, g: 0.8117647, b: 0.30588236, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -1217,7 +1219,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.14925243, g: 0.8113208, b: 0.3023744, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -2026,7 +2028,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.15294118, g: 0.8117647, b: 0.30588236, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -2122,16 +2124,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1057578911}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_RepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 8b4784e79295c6c48a3160ca82cf544d,
+    type: 3}
+  m_PointAction: {fileID: 1054132383583890850, guid: 8b4784e79295c6c48a3160ca82cf544d,
+    type: 3}
+  m_MoveAction: {fileID: 3710738434707379630, guid: 8b4784e79295c6c48a3160ca82cf544d,
+    type: 3}
+  m_SubmitAction: {fileID: 2064916234097673511, guid: 8b4784e79295c6c48a3160ca82cf544d,
+    type: 3}
+  m_CancelAction: {fileID: -1967631576421560919, guid: 8b4784e79295c6c48a3160ca82cf544d,
+    type: 3}
+  m_LeftClickAction: {fileID: 8056856818456041789, guid: 8b4784e79295c6c48a3160ca82cf544d,
+    type: 3}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
+  m_TrackedDeviceSelectAction: {fileID: 0}
 --- !u!114 &1057578913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2595,7 +2610,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.15294118, g: 0.8117647, b: 0.30588236, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
