@@ -94,7 +94,7 @@ public class CrewSceneManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(enemies.Count);
+        
         if(enabled)
         {
             switch (GameManager.Instance.inputSchedule)
@@ -184,12 +184,14 @@ public class CrewSceneManager : MonoBehaviour
         if (!GameManager.Gui.isMouseOver)
         {
             walkTargetIndicator.transform.position = cursorInstance.position;
+            AudioTimeline.Instance.BeatHit();
         }
     }
 
     private void SetShootTargetIndicator(InputAction.CallbackContext ctx)
     {
         shootTargetIndicator.transform.position = cursorInstance.position;
+        AudioTimeline.Instance.BeatHit();
     }
 
     #endregion
