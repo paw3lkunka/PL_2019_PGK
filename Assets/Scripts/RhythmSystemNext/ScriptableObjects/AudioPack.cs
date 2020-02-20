@@ -2,43 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AudioPack", menuName = "AudioPack/BaseAudioPack", order = 1)]
+[CreateAssetMenu(fileName = "AudioPack_", menuName = "AudioPacks/AudioPack", order = 3)]
 public class AudioPack : ScriptableObject
 {
     #region Variables
 
-    public AudioClip mainClip;
-    public AudioClip[] secondaryClips;
-
-    public float[] secondaryClipsChances;
+    public AudioClip[] clips;
+    public float[] clipsChances;
 
     #endregion
 
-    #region MonoBehaviour
-
-
-
-    #endregion
 
     #region Component
 
     public void InitClipChances()
     {
-        if (secondaryClipsChances == null)
+        if (clipsChances == null)
         {
-            secondaryClipsChances = new float[secondaryClips.Length];
+            clipsChances = new float[clips.Length];
         }
 
-        for (int i = 0; i < secondaryClipsChances.Length; ++i)
+        for (int i = 0; i < clipsChances.Length; ++i)
         {
-            secondaryClipsChances[i] = Random.Range(0.0f, 1.0f);
+            clipsChances[i] = Random.Range(0.0f, 1.0f);
         }
     }
 
     public float GetSumOfClipChances()
     {
         float sum = 0.0f;
-        foreach (var chance in secondaryClipsChances)
+        foreach (var chance in clipsChances)
         {
             sum += chance;
         }

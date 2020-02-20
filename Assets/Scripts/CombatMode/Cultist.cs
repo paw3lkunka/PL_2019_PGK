@@ -57,13 +57,13 @@ public class Cultist : Character
 
         try
         {
-            RhythmController.Instance.OnRageModeStart += EnterRageMode;
+            RhythmMechanics.Instance.OnRageStart += EnterRageMode;
         }
         catch (System.NullReferenceException) { }
 
         try
         {
-            RhythmController.Instance.OnRageModeEnd += ExitRageMode;
+            RhythmMechanics.Instance.OnRageStop += ExitRageMode;
         }
         catch (System.NullReferenceException) { }
 
@@ -108,7 +108,7 @@ public class Cultist : Character
 
         if (CrewSceneManager.Instance.combatMode)
         {
-            if (RhythmController.Instance.Combo >= 1)
+            if (RhythmMechanics.Instance.Combo >= 1)
             {
                 SetStateOn(CharacterState.CanAttack);
             }
@@ -148,13 +148,13 @@ public class Cultist : Character
 
         try
         {
-            RhythmController.Instance.OnRageModeStart -= EnterRageMode;
+            RhythmMechanics.Instance.OnRageStart -= EnterRageMode;
         }
         catch (System.NullReferenceException) { }
 
         try
         {
-            RhythmController.Instance.OnRageModeEnd -= ExitRageMode;
+            RhythmMechanics.Instance.OnRageStop -= ExitRageMode;
         }
         catch (System.NullReferenceException) { }
 

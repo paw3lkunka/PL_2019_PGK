@@ -65,10 +65,10 @@ public class DebugUI : MonoBehaviour
             textMesh.text += "Beat number: " + beatNumber + "\n";
         if (adaptiveMusic != null && !adaptiveMusic.CurrentDrumClip.IsRealNull())
             textMesh.text += "Drum track: " + adaptiveMusic.CurrentDrumClip.name + "\n";
-        //if (!lightMusicSource.IsRealNull() && !lightMusicSource.clip.IsRealNull())
-        //    textMesh.text += "Drum track: " + lightMusicSource.clip.name + "\n";
-        if (adaptiveMusic != null && !adaptiveMusic.CurrentHeavyMusicClip.IsRealNull())
-            textMesh.text += "Heavy track: " + adaptiveMusic.CurrentHeavyMusicClip.name + "\n";
+        if (adaptiveMusic != null && !adaptiveMusic.CurrentMusicClip.Item1.IsRealNull())
+            textMesh.text += "Light track: " + adaptiveMusic.CurrentMusicClip.Item1.name + "\n";
+        if (adaptiveMusic != null && !adaptiveMusic.CurrentMusicClip.Item2.IsRealNull())
+            textMesh.text += "Heavy track: " + adaptiveMusic.CurrentMusicClip.Item2.name + "\n";
     }
 
     #endregion

@@ -39,7 +39,7 @@ public class DynamicObject : MonoBehaviour
     }
     public void DestroyAndRemember()
     {
-        GameManager.Instance.destroyedDynamicObjects[GameManager.Instance.currentLocation].Add(ID);
+        RememberAsDestroyed();
         Destroy(gameObject);
     }
 
