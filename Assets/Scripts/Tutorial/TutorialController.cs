@@ -35,7 +35,7 @@ public class TutorialController : MonoBehaviour
 
     private void Update()
     {
-        if (RhythmController.Instance.Combo >= minimumWalkCombo)
+        if (RhythmMechanics.Instance.Combo >= minimumWalkCombo)
         {
             Destroy(smokeWalk);
         }

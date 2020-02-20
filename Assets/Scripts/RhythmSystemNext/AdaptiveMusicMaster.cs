@@ -9,6 +9,8 @@ public class AdaptiveMusicMaster : MonoBehaviour
     #region Variables
 
 #pragma warning disable
+    [Header("Setup")]
+    [SerializeField] private float fadeSpeed;
     [Header("Audio Sources")]
     [SerializeField] private AudioSource drumsSource;
     [SerializeField] private AudioSource lightMusicSource;
@@ -20,9 +22,8 @@ public class AdaptiveMusicMaster : MonoBehaviour
     [SerializeField] [Range(0, 1)] private float internalMusicClipVariation;
     [Header("Music packs for drums and music")]
     [SerializeField] private AudioPack transitionStings;
-    [SerializeField] private AudioPack[] drumPacks;
-    [SerializeField] private AudioPack[] lightMusicPacks;
-    [SerializeField] private AudioPack[] heavyMusicPacks;
+    [SerializeField] private DrumPack[] drumPacks;
+    [SerializeField] private MusicPack[] musicPacks;
     [Header("Options")]
     [SerializeField] private Randomizer packRandomizer = Randomizer.Roulette;
     [SerializeField] private Randomizer clipRandomizer = Randomizer.Random;
@@ -31,20 +32,16 @@ public class AdaptiveMusicMaster : MonoBehaviour
     [SerializeField] private bool musicEnabled = true;
 #pragma warning restore
 
+    private int lastCombo = 0;
+
     private float[] drumPacksChances;
-    private float[] lightMusicPacksChances;
-    private float[] heavyMusicPacksChances;
+    private float[] musicPacksChances;
 
-    private AudioPack currentDrumPack;
-    private AudioPack currentLightMusicPack;
-    private AudioPack currentHeavyMusicPack;
+    private DrumPack currentDrumPack;
+    private MusicPack currentMusicPack;
 
-    private AudioClip currentDrumClip;
-    public AudioClip CurrentDrumClip => currentDrumClip;
-    private AudioClip currentLightMusicClip;
-    public AudioClip CurrentLightMusicClip => currentLightMusicClip;
-    private AudioClip currentHeavyMusicClip;
-    public AudioClip CurrentHeavyMusicClip => currentHeavyMusicClip;
+    public AudioClip CurrentDrumClip { get; private set; }
+    public System.Tuple<AudioClip, AudioClip> CurrentMusicClip { get; private set; } // ! First - light, Second - heavy
 
     #endregion
 
@@ -53,12 +50,10 @@ public class AdaptiveMusicMaster : MonoBehaviour
     private void Awake()
     {
         drumPacksChances = new float[drumPacks.Length];
-        lightMusicPacksChances = new float[lightMusicPacks.Length];
-        heavyMusicPacksChances = new float[heavyMusicPacks.Length];
+        musicPacksChances = new float[musicPacks.Length];
 
         currentDrumPack = drumPacks[0];
-        //currentLightMusicPack = lightMusicPacks[0];
-        currentHeavyMusicPack = heavyMusicPacks[0];
+        currentMusicPack = musicPacks[0];
 
         for (int i = 0; i < drumPacksChances.Length; ++i)
         {
@@ -66,16 +61,10 @@ public class AdaptiveMusicMaster : MonoBehaviour
             drumPacks[i].InitClipChances();
         }
 
-        for (int i = 0; i < lightMusicPacksChances.Length; ++i)
+        for (int i = 0; i < musicPacksChances.Length; ++i)
         {
-            lightMusicPacksChances[i] = Random.Range(0.0f, 1.0f);
-            lightMusicPacks[i].InitClipChances();
-        }
-
-        for (int i = 0; i < heavyMusicPacksChances.Length; ++i)
-        {
-            heavyMusicPacksChances[i] = Random.Range(0.0f, 1.0f);
-            heavyMusicPacks[i].InitClipChances();
+            musicPacksChances[i] = Random.Range(0.0f, 1.0f);
+            musicPacks[i].InitClipChances();
         }
     }
 
@@ -84,6 +73,8 @@ public class AdaptiveMusicMaster : MonoBehaviour
         AudioTimeline.Instance.OnBeat += PlayNext;
         AudioTimeline.Instance.OnBeatFail += StopPlayback;
         AudioTimeline.Instance.OnSequencePause += StopPlayback;
+        RhythmMechanics.Instance.OnRageStart += FadeToHeavy;
+        RhythmMechanics.Instance.OnRageStop += FadeToLight;
     }
 
     private void OnDisable()
@@ -91,11 +82,49 @@ public class AdaptiveMusicMaster : MonoBehaviour
         AudioTimeline.Instance.OnBeat -= PlayNext;
         AudioTimeline.Instance.OnBeatFail -= StopPlayback;
         AudioTimeline.Instance.OnSequencePause -= StopPlayback;
+        RhythmMechanics.Instance.OnRageStart -= FadeToHeavy;
+        RhythmMechanics.Instance.OnRageStop -= FadeToLight;
     }
 
     #endregion
 
     #region Component
+
+    private void FadeToLight()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeToLightCoroutine());
+    }
+
+    private void FadeToHeavy()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeToHeavyCoroutine());
+    }
+
+    private IEnumerator FadeToLightCoroutine()
+    {
+        while(lightMusicSource.volume < 0.99f)
+        {
+            lightMusicSource.volume = Mathf.Lerp(lightMusicSource.volume, 1.0f, Time.deltaTime * fadeSpeed);
+            heavyMusicSource.volume = Mathf.Lerp(heavyMusicSource.volume, 0.0f, Time.deltaTime * fadeSpeed);
+            yield return new WaitForEndOfFrame();
+        }
+        lightMusicSource.volume = 1.0f;
+        heavyMusicSource.volume = 0.0f;
+    }
+
+    private IEnumerator FadeToHeavyCoroutine()
+    {
+        while(heavyMusicSource.volume < 0.99f)
+        {
+            heavyMusicSource.volume = Mathf.Lerp(heavyMusicSource.volume, 1.0f, Time.deltaTime * fadeSpeed);
+            lightMusicSource.volume = Mathf.Lerp(lightMusicSource.volume, 0.0f, Time.deltaTime * fadeSpeed);
+            yield return new WaitForEndOfFrame();
+        }
+        heavyMusicSource.volume = 1.0f;
+        lightMusicSource.volume = 0.0f;
+    }
 
     private void PlayNext(bool isMain)
     {
@@ -103,16 +132,16 @@ public class AdaptiveMusicMaster : MonoBehaviour
         {
             RandomizeClips();
 
-            if (drumsEnabled && currentDrumClip != null)
+            if (drumsEnabled && CurrentDrumClip != null)
             {
-                drumsSource.PlayOneShot(currentDrumClip);
+                drumsSource.PlayOneShot(CurrentDrumClip);
             }
 
-            if (musicEnabled &&/* !currentLightMusicClip.IsRealNull() && */!currentHeavyMusicClip.IsRealNull() &&
+            if (musicEnabled && !CurrentMusicClip.Item1.IsRealNull() && !CurrentMusicClip.Item2.IsRealNull() &&
                 RhythmMechanics.Instance.Combo > 0)
             {
-                //lightMusicSource.PlayOneShot(currentLightMusicClip);
-                heavyMusicSource.PlayOneShot(currentHeavyMusicClip);
+                lightMusicSource.PlayOneShot(CurrentMusicClip.Item1);
+                heavyMusicSource.PlayOneShot(CurrentMusicClip.Item2);
             }
 
         }
@@ -127,6 +156,8 @@ public class AdaptiveMusicMaster : MonoBehaviour
     {
         drumsSource.Stop();
         heavyMusicSource.Stop();
+        lightMusicSource.volume = 1.0f;
+        heavyMusicSource.volume = 0.0f;
     }
 
     private void RandomizeClips()
@@ -143,7 +174,7 @@ public class AdaptiveMusicMaster : MonoBehaviour
                     break;
                 case Randomizer.Roulette:
                     // Roulette pack selection
-                    currentDrumPack = RouletteAlgorithm(drumPacks, ref drumPacksChances);
+                    currentDrumPack = drumPacks[RouletteAlgorithm(ref drumPacksChances)];
                     break;
             }
         }
@@ -153,12 +184,10 @@ public class AdaptiveMusicMaster : MonoBehaviour
             switch (packRandomizer)
             {
                 case Randomizer.Random:
-                    //currentLightMusicPack = lightMusicPacks[Random.Range(0, lightMusicPacks.Length)];
-                    currentHeavyMusicPack = heavyMusicPacks[Random.Range(0, heavyMusicPacks.Length)];
+                    currentMusicPack = musicPacks[Random.Range(0, musicPacks.Length)];
                     break;
                 case Randomizer.Roulette:
-                    //currentLightMusicPack = RouletteAlgorithm(lightMusicPacks, ref lightMusicPacksChances);
-                    currentHeavyMusicPack = RouletteAlgorithm(heavyMusicPacks, ref heavyMusicPacksChances);
+                    currentMusicPack = musicPacks[RouletteAlgorithm(ref musicPacksChances)];
                     break;
             }
         }
@@ -169,54 +198,55 @@ public class AdaptiveMusicMaster : MonoBehaviour
             switch (clipRandomizer)
             {
                 case Randomizer.Random:
-                    currentDrumClip = currentDrumPack.secondaryClips[Random.Range(0, currentDrumPack.secondaryClips.Length)];
+                    CurrentDrumClip = currentDrumPack.secondaryClips[Random.Range(0, currentDrumPack.secondaryClips.Length)];
                     break;
                 case Randomizer.Roulette:
-                    currentDrumClip = RouletteAlgorithm(currentDrumPack.secondaryClips, ref currentDrumPack.secondaryClipsChances);
+                    CurrentDrumClip = currentDrumPack.secondaryClips[RouletteAlgorithm(ref currentDrumPack.secondaryClipsChances)];
                     break;
             }
         }
         else
         {
-            currentDrumClip = currentDrumPack.mainClip;
+            CurrentDrumClip = currentDrumPack.mainClip;
         }
 
         if (Random.Range(0.0f, 1.0f) < internalMusicClipVariation)
         {
+            int index = 0;
             switch (clipRandomizer)
             {
                 case Randomizer.Random:
-                    //currentLightMusicClip = currentLightMusicPack.secondaryClips[Random.Range(0, currentLightMusicPack.secondaryClips.Length)];
-                    currentHeavyMusicClip = currentHeavyMusicPack.secondaryClips[Random.Range(0, currentHeavyMusicPack.secondaryClips.Length)];
+                    index = Random.Range(0, currentMusicPack.secondaryClipsHeavy.Length);
+                    
                     break;
                 case Randomizer.Roulette:
-                    //currentLightMusicClip = RouletteAlgorithm(currentLightMusicPack.secondaryClips, ref currentLightMusicPack.secondaryClipsChances);
-                    currentHeavyMusicClip = RouletteAlgorithm(currentHeavyMusicPack.secondaryClips, ref currentHeavyMusicPack.secondaryClipsChances);
+                    index = RouletteAlgorithm(ref currentMusicPack.secondaryClipsChances);
                     break;
             }
+
+            CurrentMusicClip = new System.Tuple<AudioClip, AudioClip>(currentMusicPack.secondaryClipsLight[index], currentMusicPack.secondaryClipsHeavy[index]);
         }
         else
         {
-            //currentLightMusicClip = currentLightMusicPack.mainClip;
-            currentHeavyMusicClip = currentHeavyMusicPack.mainClip;
+            CurrentMusicClip = new System.Tuple<AudioClip, AudioClip>(currentMusicPack.mainClipLight, currentMusicPack.mainClipHeavy);
         }
     }
 
-    private T RouletteAlgorithm<T>(T[] packs, ref float[] chances)
+    private int RouletteAlgorithm(ref float[] chances)
     {
-        T output = packs[0];
+        int output = 0;
         bool finished = false;
         float waveDecreaseRatio = Random.Range(0.0f, 0.5f);
         float waveIncreaseRatio = waveDecreaseRatio / (chances.Length - 1);
         float rand = Random.Range(0.0f, 1.0f);
 
-        for (int i = 0; i < packs.Length; ++i)
+        for (int i = 0; i < chances.Length; ++i)
         {
             if (rand < chances[i] && !finished)
             {
                 finished = true;
                 // Roulette random drum pack selection
-                output = packs[i];
+                output = i;
                 chances[i] -= waveDecreaseRatio;
             }
             else
