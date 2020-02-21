@@ -12,8 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e5c0440fdf08254bb74d4ae5553fc0e, type: 3}
   m_Name: MusicPack_Guitar1_01
   m_EditorClassIdentifier: 
-  mainClipLight: {fileID: 0}
-  mainClipHeavy: {fileID: 0}
-  secondaryClipsLight: []
-  secondaryClipsHeavy: []
+  mainClipLight: {fileID: 8300000, guid: 0c610449d212458459b02bf1c178f496, type: 3}
+  mainClipHeavy: {fileID: 8300000, guid: a84f202959d5bbe44b06ee76b8d7980c, type: 3}
+  secondaryClipsLight:
+  - {fileID: 8300000, guid: f563204706e5ebb4d973e420493d2d55, type: 3}
+  - {fileID: 8300000, guid: d7ff719696cd0a744b5576df4f7b3d0e, type: 3}
+  - {fileID: 8300000, guid: e4b27db6d0cc06742bcf5bf1ca564eea, type: 3}
+  - {fileID: 8300000, guid: a69abb5c96c6aa94f83a083c2dd927d1, type: 3}
+  - {fileID: 8300000, guid: 57f0c3e2cc41b544a8ae1d5a3fa737ac, type: 3}
+  secondaryClipsHeavy:
+  - {fileID: 8300000, guid: 2c03fe584b951fc47bc09944a96e2195, type: 3}
+  - {fileID: 8300000, guid: 10b0f9965508df4428b138031152f218, type: 3}
+  - {fileID: 8300000, guid: 3ce580afe2c7bf54ba877040c0a863b5, type: 3}
+  - {fileID: 8300000, guid: df41dfc88f15a3b42b8f5a671637a323, type: 3}
+  - {fileID: 8300000, guid: 0515cf8c08f9a87438ce75f29b4c907a, type: 3}
   secondaryClipsChances: []
