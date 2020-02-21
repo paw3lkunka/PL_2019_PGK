@@ -313,7 +313,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -477,6 +477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54cb16951f7c8ed448135d519a2068af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeSpeed: 1
   drumsSource: {fileID: 4482779334138351976}
   lightMusicSource: {fileID: 4482779334809664963}
   heavyMusicSource: {fileID: 4482779334211056799}
@@ -494,7 +495,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a911b44b617c24c4ebe21cee8e798084, type: 2}
   - {fileID: 11400000, guid: 77a063a50e209cd4a84e302a98ba2cf4, type: 2}
   packRandomizer: 1
-  clipRandomizer: 1
+  clipRandomizer: 0
   stingsEnabled: 0
   drumsEnabled: 1
   musicEnabled: 1
