@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Runtime.CompilerServices;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,10 +27,17 @@ public class DynamicObject : MonoBehaviour
         {
             value = GameManager.Instance.destroyedDynamicObjects[GameManager.Instance.currentLocation];
         }
-        catch(KeyNotFoundException)
+        catch(Exception exc)
         {
-            GameManager.Instance.destroyedDynamicObjects.Add(GameManager.Instance.currentLocation, new HashSet<int>());
-            value = GameManager.Instance.destroyedDynamicObjects[GameManager.Instance.currentLocation];
+            if(exc is KeyNotFoundException || exc is ArgumentNullException)
+            {
+                GameManager.Instance.destroyedDynamicObjects.Add(GameManager.Instance.currentLocation, new HashSet<int>());
+                value = GameManager.Instance.destroyedDynamicObjects[GameManager.Instance.currentLocation];
+            }
+            else
+            {
+                throw exc;
+            }
         }
         finally
         {

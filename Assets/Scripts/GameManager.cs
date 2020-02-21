@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -129,9 +129,16 @@ public class GameManager : MonoBehaviour
             {
                 return destroyedDynamicObjects[currentLocation];
             }
-            catch(KeyNotFoundException)
+            catch(Exception exc)
             {
-                return null;
+                if (exc is KeyNotFoundException || exc is ArgumentNullException)
+                {
+                    return null;
+                }
+                else
+                {
+                    throw exc;
+                }
             }
         }
     }
