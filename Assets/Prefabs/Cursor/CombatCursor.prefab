@@ -90,7 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2708359191388454103}
   - component: {fileID: 7799829982986104872}
-  - component: {fileID: 7303634526391232224}
+  - component: {fileID: 4334623006312127484}
   m_Layer: 5
   m_Name: CombatCursor
   m_TagString: Untagged
@@ -106,7 +106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4409867601511303180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.71036863, y: 0.22895071, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 456556981087167926}
@@ -153,7 +153,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: c6a1a2fda2f064a45a15bf395f5f767b, type: 3}
-  m_Color: {r: 0.24313726, g: 0.34117648, b: 0.2509804, a: 0.18368316}
+  m_Color: {r: 0.24313726, g: 0.34117648, b: 0.2509804, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7303634526391232224
+--- !u!114 &4334623006312127484
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,28 +172,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 4409867601511303180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9399ca7252355a408fac7e46d907b7d, type: 3}
+  m_Script: {fileID: 11500000, guid: deb1dfc15ffa8af4f85f892f332d65fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rhythmIndicator: {fileID: 8062777626510603856}
-  pulseCurve:
+  rhythmCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -202,10 +202,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   rhytmIndicatorMaxSize: 5
   hitIndicator: {fileID: 4641665355130209537}
-  animationTime: 0.4
+  animationTime: 0.6
   badHitColor: {r: 1, g: 0, b: 0, a: 1}
-  goodHitColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  goodHitColor: {r: 0, g: 1, b: 1, a: 1}
   greatHitColor: {r: 0, g: 1, b: 0, a: 1}
+  perfectHitColor: {r: 1, g: 0, b: 1, a: 1}
   hitCurve:
     serializedVersion: 2
     m_Curve:
@@ -219,7 +220,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.9958191
+      time: 1
       value: -0.0047073364
       inSlope: 0
       outSlope: 0
@@ -231,7 +232,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   hitIndicatorMaxSize: 3
-  cameraEffectsEnabled: 1
+  cameraEffectsEnabled: 0
   cameraCurve:
     serializedVersion: 2
     m_Curve:

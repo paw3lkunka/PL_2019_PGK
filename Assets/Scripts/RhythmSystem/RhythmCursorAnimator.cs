@@ -9,16 +9,21 @@ public class RhythmCursorAnimator : MonoBehaviour
     [SerializeField] private SpriteRenderer rhythmIndicator;
     [SerializeField] private AnimationCurve pulseCurve;
     [SerializeField] private float rhytmIndicatorMaxSize = 5.0f;
+    
     [Space]
+    
     [Header("Hit indicator")]
     [SerializeField] private SpriteRenderer hitIndicator;
     [SerializeField] private float animationTime;
     [SerializeField] private Color badHitColor = Color.red;
     [SerializeField] private Color goodHitColor = Color.yellow;
     [SerializeField] private Color greatHitColor = Color.green;
+    [SerializeField] private Color perfectHitColor = Color.magenta;
     [SerializeField] private AnimationCurve hitCurve;
     [SerializeField] private float hitIndicatorMaxSize = 3.0f;
+    
     [Space]
+    
     [Header("Camera effects")]
     [SerializeField] private bool cameraEffectsEnabled = true;
     [SerializeField] private AnimationCurve cameraCurve;
@@ -132,6 +137,7 @@ public class RhythmCursorAnimator : MonoBehaviour
     private IEnumerator HitAnimation(Color color)
     {
         coroutineTime = 0.0f;
+
         while (coroutineTime <= animationTime)
         {
             yield return new WaitForEndOfFrame();
@@ -140,6 +146,7 @@ public class RhythmCursorAnimator : MonoBehaviour
 
             coroutineTime += Time.deltaTime;
         }
+
         hitIndicator.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     }
 }

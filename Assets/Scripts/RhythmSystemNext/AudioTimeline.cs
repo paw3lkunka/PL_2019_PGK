@@ -95,6 +95,14 @@ public partial class AudioTimeline : MonoBehaviour
         get => NextBeatMoment - TimeSinceSequenceStart;
     }
 
+    /// <summary>
+    /// Normalized [1, 0] value of time to the very next beat 
+    /// </summary>
+    public float NormalizedTimeUntilNextBeat
+    {
+        get => Mathf.Clamp((float)(TimeUntilNextBeat / beatDuration), 0, 1);
+    }
+
     // ----------------------------------------------------
     // ---- Timeline events -------------------------------
     #region Events
