@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +21,14 @@ public class WaterTank : MonoBehaviour
             GameManager.Instance.Water += capacity;
             capacity = 0; //for sure
 
-            GetComponent<DynamicObject>().DestroyAndRemember();
+            try
+            {
+                GetComponent<DynamicObject>().DestroyAndRemember();
+            }
+            catch(NullReferenceException)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

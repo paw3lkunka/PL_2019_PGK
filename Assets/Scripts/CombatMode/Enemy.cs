@@ -108,7 +108,7 @@ public class Enemy : Character
         {
             fatihTextEemitter.Emit("+" + (int)Mathf.Round(gainedFaith * 100), Color.green, 3);
         }
-        GetComponent<DynamicObject>().RememberAsDestroyed();
+        GetComponent<DynamicObject>()?.RememberAsDestroyed();
         base.Die();
     }
 
