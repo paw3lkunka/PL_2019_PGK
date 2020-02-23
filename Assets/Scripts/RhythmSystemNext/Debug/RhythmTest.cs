@@ -46,15 +46,19 @@ public class RhythmTest : MonoBehaviour
             case BeatState.None:
                 rhythmIndicator.color = Color.black;
                 break;
+
             case BeatState.Bad:
                 rhythmIndicator.color = Color.red;
                 break;
+
             case BeatState.Good:
                 rhythmIndicator.color = Color.cyan;
                 break;
+
             case BeatState.Great:
                 rhythmIndicator.color = Color.green;
                 break;
+
             case BeatState.Perfect:
                 rhythmIndicator.color = Color.magenta;
                 break;

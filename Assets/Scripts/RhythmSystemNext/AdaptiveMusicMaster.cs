@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Randomizer { Random, Roulette }
+public enum Randomizer 
+{ 
+    Random, 
+    Roulette 
+}
 
 public class AdaptiveMusicMaster : MonoBehaviour
 {
@@ -11,19 +15,23 @@ public class AdaptiveMusicMaster : MonoBehaviour
 #pragma warning disable
     [Header("Setup")]
     [SerializeField] private float fadeSpeed;
+
     [Header("Audio Sources")]
     [SerializeField] private AudioSource drumsSource;
     [SerializeField] private AudioSource lightMusicSource;
     [SerializeField] private AudioSource heavyMusicSource;
+
     [Header("Adaptive music variation variables")]
     [SerializeField] [Range(0, 1)] private float nextRhythmPackChance;
     [SerializeField] [Range(0, 1)] private float internalRhythmClipVariation;
     [SerializeField] [Range(0, 1)] private float nextMusicPackChance;
     [SerializeField] [Range(0, 1)] private float internalMusicClipVariation;
+
     [Header("Music packs for drums and music")]
     [SerializeField] private AudioPack transitionStings;
     [SerializeField] private DrumPack[] drumPacks;
     [SerializeField] private MusicPack[] musicPacks;
+
     [Header("Options")]
     [SerializeField] private Randomizer packRandomizer = Randomizer.Roulette;
     [SerializeField] private Randomizer clipRandomizer = Randomizer.Random;
@@ -219,8 +227,8 @@ public class AdaptiveMusicMaster : MonoBehaviour
             {
                 case Randomizer.Random:
                     index = Random.Range(0, currentMusicPack.secondaryClipsHeavy.Length);
-                    
                     break;
+
                 case Randomizer.Roulette:
                     index = RouletteAlgorithm(ref currentMusicPack.secondaryClipsChances);
                     break;

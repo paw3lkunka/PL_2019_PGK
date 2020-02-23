@@ -11,8 +11,10 @@ public class RhythmAnimator : MonoBehaviour
 #pragma warning disable
     [Header("Rhythm pulse indicator")]
     [SerializeField] private Image rhythmIndicator;
-    [SerializeField] private AnimationCurve pulseCurve;
+    [SerializeField] private AnimationCurve rhythmCurve;
+
     [Space]
+    
     [Header("Hit indicator")]
     [SerializeField] private Image hitIndicator;
     [SerializeField] private float animationTime;
@@ -20,7 +22,9 @@ public class RhythmAnimator : MonoBehaviour
     [SerializeField] private Color goodHitColor = Color.yellow;
     [SerializeField] private Color greatHitColor = Color.green;
     [SerializeField] private AnimationCurve hitCurve;
+    
     [Space]
+    
     [Header("Camera effects")]
     [SerializeField] private bool cameraEffectsEnabled = true;
     [SerializeField] private AnimationCurve cameraCurve;
@@ -73,7 +77,8 @@ public class RhythmAnimator : MonoBehaviour
         rhythmIndicator.color = new Color(rhythmIndicator.color.r,
                                             rhythmIndicator.color.g,
                                             rhythmIndicator.color.b,
-                                            pulseCurve.Evaluate(RhythmController.Instance.NormalizedGoodTime));
+                                            rhythmCurve.Evaluate(RhythmController.Instance.NormalizedGoodTime));
+
         if (cameraEffectsEnabled && cameraEffectsEnabledInternal)
         {
             mainCamera.orthographicSize = startCameraSize - cameraCurve.Evaluate(RhythmController.Instance.NormalizedGoodTime) * cameraEffectMultiplierInternal;

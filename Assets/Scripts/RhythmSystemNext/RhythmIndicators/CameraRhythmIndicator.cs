@@ -1,25 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class CursorRhythmIndicator : MonoBehaviour
+public class CameraRhythmIndicator : MonoBehaviour
 {
     #region Variables
 
 #pragma warning disable
     [Header("Rhythm pulse indicator")]
-    [SerializeField] private SpriteRenderer rhythmIndicator;
+    [SerializeField] private Image rhythmIndicator;
     [SerializeField] private AnimationCurve rhythmCurve;
-    [SerializeField] private float rhytmIndicatorMaxSize = 5.0f;
 
     [Space]
-    
+
     [Header("Hit indicator")]
-    [SerializeField] private SpriteRenderer hitIndicator;
+    [SerializeField] private Image hitIndicator;
     [SerializeField] private AnimationCurve hitCurve;
-    [SerializeField] private float hitIndicatorMaxSize = 3.0f;
-    [SerializeField] private List<SpriteRenderer> beatHitSigns = new List<SpriteRenderer>(3);
-    
+    [SerializeField] [Range(0.0f, 1.0f)] private float hitIndicatorMinSize = 0.9f;
+
+    [Space]
+
+    [Header("Camera effects")]
+    [SerializeField] private bool cameraEffectsEnabled = true;
+    [SerializeField] private AnimationCurve cameraCurve;
+    [SerializeField] private float cameraEffectMultiplier = 0.05f;
+    [SerializeField] private float rageMultiplier = 2.0f;
+
     [Space]
 
     [Header("Hit colors")]
@@ -30,23 +37,43 @@ public class CursorRhythmIndicator : MonoBehaviour
     [SerializeField] private Color perfectHitColor = Color.magenta;
 #pragma warning restore
 
+    private Camera mainCamera;
+    private float startCameraSize;
+
+    private bool cameraEffectsEnabledInternal = false;
+    private float cameraEffectMultiplierInternal;
+
     #endregion
 
     #region MonoBehaviour
 
     private void Awake()
     {
+        mainCamera = Camera.main;
+        startCameraSize = mainCamera.orthographicSize;
+        cameraEffectMultiplierInternal = cameraEffectMultiplier;
+
         hitIndicator.color = noneHitColor;
     }
 
     private void OnEnable()
     {
         AudioTimeline.Instance.OnBeatHit += VisualizeBeatHit;
+
+        RhythmMechanics.Instance.OnComboChange += HandleComboAnimation;
+
+        RhythmMechanics.Instance.OnRageStart += StartRageAnimation;
+        RhythmMechanics.Instance.OnRageStop += StopRageAnimation;
     }
 
     private void OnDisable()
     {
         AudioTimeline.Instance.OnBeatHit -= VisualizeBeatHit;
+
+        RhythmMechanics.Instance.OnComboChange -= HandleComboAnimation;
+
+        RhythmMechanics.Instance.OnRageStart -= StartRageAnimation;
+        RhythmMechanics.Instance.OnRageStop -= StopRageAnimation;
     }
 
     private void Update()
@@ -55,17 +82,19 @@ public class CursorRhythmIndicator : MonoBehaviour
         {
             var indicatorFactor = AudioTimeline.Instance.NormalizedTimeUntilNextBeat;
 
-            var rhythmSize = rhytmIndicatorMaxSize - ((rhytmIndicatorMaxSize - 1) * (1.0f - indicatorFactor));
-            rhythmIndicator.transform.localScale = new Vector3(rhythmSize, rhythmSize, 0);
-
             rhythmIndicator.color = new Color(1.0f, 1.0f, 1.0f, rhythmCurve.Evaluate(indicatorFactor));
 
-            var hitSize = hitIndicatorMaxSize - ((hitIndicatorMaxSize - 1) * indicatorFactor);
+            var hitSize = 1.0f - ((1.0f - hitIndicatorMinSize) * (1.0f - indicatorFactor));
             hitIndicator.transform.localScale = new Vector3(hitSize, hitSize, 0);
 
             var newHitColor = hitIndicator.color;
             newHitColor.a = hitCurve.Evaluate(1.0f - indicatorFactor);
             hitIndicator.color = newHitColor;
+
+            if (cameraEffectsEnabled && cameraEffectsEnabledInternal)
+            {
+                mainCamera.orthographicSize = startCameraSize - cameraCurve.Evaluate(indicatorFactor) * cameraEffectMultiplierInternal;
+            }
         }
     }
 
@@ -101,18 +130,32 @@ public class CursorRhythmIndicator : MonoBehaviour
                 hitIndicator.color = noneHitColor;
                 break;
         }
+    }
 
-        if(beatNumber < 3)
+    private void HandleComboAnimation(int combo)
+    {
+        switch(combo)
         {
-            beatHitSigns[beatNumber].color = hitIndicator.color;
+            case 0:
+                cameraEffectsEnabledInternal = false;
+                break;
+
+            case 1:
+                cameraEffectsEnabledInternal = true;
+                cameraEffectMultiplierInternal = cameraEffectMultiplier;
+                break;
         }
-        else
-        {
-            foreach(var bhs in beatHitSigns)
-            {
-                bhs.color = noneHitColor;
-            }
-        }
+    }
+
+    private void StartRageAnimation()
+    {
+        cameraEffectsEnabledInternal = true;
+        cameraEffectMultiplierInternal = cameraEffectMultiplier * rageMultiplier;
+    }
+
+    private void StopRageAnimation()
+    {
+        cameraEffectMultiplierInternal = cameraEffectMultiplier;
     }
 
     #endregion
