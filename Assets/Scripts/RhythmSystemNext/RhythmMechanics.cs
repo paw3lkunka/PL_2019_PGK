@@ -79,6 +79,15 @@ public class RhythmMechanics : MonoBehaviour
         if (countBeats)
             AudioTimeline.Instance.OnBeatHit -= UpdateCounters;
     }
+    private void OnDestroy()
+    {
+        GameManager.Instance.StartCoroutine(Routine());
+        IEnumerator Routine()
+        {
+            yield return new WaitForEndOfFrame();
+            Instance = null;
+        }
+    }
 
     #endregion
 

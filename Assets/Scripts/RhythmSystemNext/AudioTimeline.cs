@@ -144,6 +144,16 @@ public partial class AudioTimeline : MonoBehaviour
 
     private void Start() => TimelineInit();
 
+    private void OnDestroy()
+    {
+        GameManager.Instance.StartCoroutine(Routine());
+        IEnumerator Routine()
+        {
+            yield return new WaitForEndOfFrame();
+            Instance = null;
+        }
+    }
+
     private void Update()
     {
         // Make a check if update should check for beat and fire events
