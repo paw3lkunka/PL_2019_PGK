@@ -51,7 +51,7 @@ public class ResourceUsage : MonoBehaviour
         {
             Amount = 1.0f;
         }
-        if (playerLastPosition.x != transform.position.x || playerLastPosition.y != transform.position.y)
+        if (MapSceneManager.Instance.playerPositionController.Moved)
         {
             if (isFaith)
             {
