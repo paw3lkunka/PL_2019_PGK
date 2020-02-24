@@ -257,6 +257,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ShowHideInfoLog",
+                    "type": "Button",
+                    "id": "30f9e3bb-ff1a-43ff-9d14-aedd2cc3d1a1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -598,6 +606,28 @@
                     "processors": "",
                     "groups": "Touchscreen",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ed0a616c-0e0c-4ab5-b93a-869b5f85b899",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard;JoystickKeyboard",
+                    "action": "ShowHideInfoLog",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d50da95e-91b0-43ca-8d08-ebd7df19abb0",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ShowHideInfoLog",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

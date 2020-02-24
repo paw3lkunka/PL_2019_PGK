@@ -270,6 +270,14 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ShowHideInfoLog"",
+                    ""type"": ""Button"",
+                    ""id"": ""30f9e3bb-ff1a-43ff-9d14-aedd2cc3d1a1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -613,6 +621,28 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed0a616c-0e0c-4ab5-b93a-869b5f85b899"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard;JoystickKeyboard"",
+                    ""action"": ""ShowHideInfoLog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d50da95e-91b0-43ca-8d08-ebd7df19abb0"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ShowHideInfoLog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -689,6 +719,7 @@ public class @NewInput : IInputActionCollection, IDisposable
         m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
         m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
+        m_UI_ShowHideInfoLog = m_UI.FindAction("ShowHideInfoLog", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -825,6 +856,7 @@ public class @NewInput : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_Cancel;
     private readonly InputAction m_UI_Click;
     private readonly InputAction m_UI_Point;
+    private readonly InputAction m_UI_ShowHideInfoLog;
     public struct UIActions
     {
         private @NewInput m_Wrapper;
@@ -834,6 +866,7 @@ public class @NewInput : IInputActionCollection, IDisposable
         public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
         public InputAction @Click => m_Wrapper.m_UI_Click;
         public InputAction @Point => m_Wrapper.m_UI_Point;
+        public InputAction @ShowHideInfoLog => m_Wrapper.m_UI_ShowHideInfoLog;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -858,6 +891,9 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @Point.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
                 @Point.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
                 @Point.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
+                @ShowHideInfoLog.started -= m_Wrapper.m_UIActionsCallbackInterface.OnShowHideInfoLog;
+                @ShowHideInfoLog.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnShowHideInfoLog;
+                @ShowHideInfoLog.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnShowHideInfoLog;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -877,6 +913,9 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
+                @ShowHideInfoLog.started += instance.OnShowHideInfoLog;
+                @ShowHideInfoLog.performed += instance.OnShowHideInfoLog;
+                @ShowHideInfoLog.canceled += instance.OnShowHideInfoLog;
             }
         }
     }
@@ -934,5 +973,6 @@ public class @NewInput : IInputActionCollection, IDisposable
         void OnCancel(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
+        void OnShowHideInfoLog(InputAction.CallbackContext context);
     }
 }
