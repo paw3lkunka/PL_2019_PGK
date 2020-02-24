@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int ShrinesVisited { get; set; }
+    public List<Location> ShrinesVisited { get; set; }
 
     [HideInInspector]
     public NewInput input;
@@ -162,6 +162,7 @@ public class GameManager : MonoBehaviour
 
         gameOverScreenInstance = null;
         input = new NewInput();
+        ShrinesVisited = new List<Location>();
 
         ResetIndicatorsValues();
         if (Instance == null)
@@ -234,7 +235,7 @@ public class GameManager : MonoBehaviour
         cultistNumber = initialCultistsNumber;
         water = 1.0f;
         faith = 0.5f;
-        ShrinesVisited = 0;
+        ShrinesVisited.Clear();
     }
 
     void GameOver()
