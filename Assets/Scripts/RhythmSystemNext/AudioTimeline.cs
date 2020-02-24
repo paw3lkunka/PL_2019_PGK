@@ -3,32 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BeatState 
-{ 
-    None, 
-    Bad, 
-    Good, 
-    Great, 
-    Perfect 
-};
+public enum BeatState { None, Bad, Good, Great, Perfect };
 
-public enum BarState 
-{ 
-    None, 
-    Average, 
-    Good, 
-    Perfect, 
-    Failed 
-};
+public enum BarState { None, Average, Good, Perfect, Failed };
 
-public enum TimelineState 
-{ 
-    None, 
-    Countup, 
-    Playing, 
-    Paused, 
-    Interrupted 
-};
+public enum TimelineState { None, Countup, Playing, Paused, Interrupted };
 
 /// <summary>
 /// Main singleton class responsible for audio rhythm synchronization
@@ -366,6 +345,8 @@ public partial class AudioTimeline : MonoBehaviour
     private void TimelineInit()
     {
         beatDuration = 60.0d / songBpm;
+        goodTolerance = GameManager.Instance.goodTolerance;
+        greatTolerance = GameManager.Instance.greatTolerance;
         SequenceStartHandler();
     }
 

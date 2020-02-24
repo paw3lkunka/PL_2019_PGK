@@ -40,8 +40,6 @@ public class AdaptiveMusicMaster : MonoBehaviour
     [SerializeField] private bool musicEnabled = true;
 #pragma warning restore
 
-    private int lastCombo = 0;
-
     private float[] drumPacksChances;
     private float[] musicPacksChances;
 
