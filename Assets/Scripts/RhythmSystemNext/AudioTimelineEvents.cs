@@ -45,6 +45,10 @@ public partial class AudioTimeline
     private void BeatFailHandler()
     {
         hittingStarted = false;
+        for (int i = 0; i < barBeatStates.Length; i++)
+        {
+            barBeatStates[i] = BeatState.None;
+        }
         SequenceResetHandler();
         OnBeatFail?.Invoke();
     }
