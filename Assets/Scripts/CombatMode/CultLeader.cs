@@ -73,6 +73,16 @@ public class CultLeader : Character
         {
             input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
         }
+
+        if (CrewSceneManager.Instance.combatMode)
+        {
+            gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(true);
+        }
+        else
+        {
+            // Hide HealthBar on neutral scenes
+            gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(false);
+        }
     }
 
     protected void OnDisable()

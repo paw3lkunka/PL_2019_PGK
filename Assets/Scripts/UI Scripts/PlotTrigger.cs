@@ -25,7 +25,7 @@ public class PlotTrigger : MonoBehaviour
     {
         // Triggers when there is only Cult Leader on Main Map scenes
         if (SceneManager.GetActiveScene().name.Equals("MainMap")
-            && GameManager.Instance.cultistNumber == 1
+            && GameManager.Instance.ourCrew.Count == 1
             && cultistLeaderAloneFlag
             && !collisionFlag)
         {
