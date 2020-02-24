@@ -50,9 +50,35 @@ public class MapGenerator : MonoBehaviour
 
     #region MonoBehaviour
 
-    //     NEVER ON VALIDATE WHEN THERE IS LOGIC!!!!!!!!!!!!!!!!!!!!!!!!!
     private void OnValidate()
     {
+        Initialize();
+    }
+
+    private void Awake()
+    {
+        Initialize();
+    }
+
+    private void LateUpdate()
+    {
+        if(foregroundMap && !templeGenerated && GameManager.Instance.ShrinesVisited.Count == 3)
+        {
+            int randomPos = Random.Range(0, unusedPositions.Count);
+            GameObject instance = Instantiate(templeLocationPrefab, unusedPositions[randomPos], Quaternion.identity, grid.transform);
+            instance.GetComponentInChildren<Location>().generationID = (int)generationID;
+            instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
+            templeGenerated = true;
+        }
+    }
+
+    #endregion
+
+    #region Component
+
+    private void Initialize()
+    {
+
         grid = GetComponent<Grid>();
         spawnChances.Resize(locationPrefabs.Count, 0);
 
@@ -73,22 +99,6 @@ public class MapGenerator : MonoBehaviour
         if (randomOffsetRange.y < 0)
             randomOffsetRange.y = 0;
     }
-
-    private void LateUpdate()
-    {
-        if(foregroundMap && !templeGenerated && GameManager.Instance.ShrinesVisited.Count == 3)
-        {
-            int randomPos = Random.Range(0, unusedPositions.Count);
-            GameObject instance = Instantiate(templeLocationPrefab, unusedPositions[randomPos], Quaternion.identity, grid.transform);
-            instance.GetComponentInChildren<Location>().generationID = (int)generationID;
-            instance.GetComponentInChildren<TilemapRenderer>().sortingOrder = orderInLayer;
-            templeGenerated = true;
-        }
-    }
-
-    #endregion
-
-    #region Component
 
     [ContextMenu("Validate")]
     public void ValidatePrefabs()
