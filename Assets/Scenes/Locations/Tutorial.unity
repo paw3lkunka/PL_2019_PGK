@@ -51590,7 +51590,7 @@ MonoBehaviour:
   smokeWalk: {fileID: 1384022558}
   smokeWater: {fileID: 518327700}
   startWaterLevel: 0.05
-  minimumWaterLevel: 0.98
+  minimumWaterLevel: 0.5
   smokeFaith: {fileID: 980800352}
   startFaithLevel: 0.4
   minimumFaithLevel: 0.5
@@ -157074,6 +157074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791e6124861d8ce4f89999a9179006c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  refillAmout: 0.3
 --- !u!4 &2108275189
 Transform:
   m_ObjectHideFlags: 0

@@ -475,7 +475,8 @@ MonoBehaviour:
     type: 3}
   guiPrefab: {fileID: 3964841480313498235, guid: 6541c3587567cef45b57211c9422aefb,
     type: 3}
-  eventSystem: {fileID: 1057578913}
+  eventSystem: {fileID: 2863971774119466850, guid: 2b313850830fc6c408e797fc815e39ff,
+    type: 3}
   gameOverScreenPrefab: {fileID: 7551444911920474970, guid: fee4c723ed7ba894896ff548b39a965f,
     type: 3}
   pauseScreen: {fileID: 7551444911920474970, guid: b0c247724801c414688d7960c300b983,
@@ -6628,18 +6629,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 982341546}
   m_CullTransparentMesh: 0
---- !u!114 &1057578913 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2863971774119466850, guid: 2b313850830fc6c408e797fc815e39ff,
-    type: 3}
-  m_PrefabInstance: {fileID: 2863971774539466947}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1399944875
 GameObject:
   m_ObjectHideFlags: 0
