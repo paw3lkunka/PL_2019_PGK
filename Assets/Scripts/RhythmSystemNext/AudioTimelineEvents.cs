@@ -101,9 +101,8 @@ public partial class AudioTimeline
         TimelineState = TimelineState.Paused;
         this.keepCombo = keepCombo;
 
-        // TODO: Probably not the best idea to do it this way so loot at it later
-        Instantiate(GameManager.Instance.pauseScreen);
         Time.timeScale = 0;
+        Instantiate(GameManager.Instance.pauseScreen);
 
         // Save beat moment variables
         pauseMoment = AudioSettings.dspTime;
@@ -113,6 +112,13 @@ public partial class AudioTimeline
     private void SequenceResumeHandler()
     {
         pauseCounter = 0;
+        Time.timeScale = 1;
+        
+        for (int i = 0; i < barBeatStates.Length; i++)
+        {
+            barBeatStates[i] = BeatState.None;
+        }
+
         if (keepCombo)
         {
             SequenceStartHandler();

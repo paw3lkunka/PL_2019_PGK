@@ -16,7 +16,6 @@ public class DebugUI : MonoBehaviour
     public bool displayBeatState = true;
     public bool displayBeatNumber = true;
     public TextMeshProUGUI textMesh;
-    public Image[] images;
 
     public AdaptiveMusicMaster adaptiveMusic;
 
@@ -30,8 +29,11 @@ public class DebugUI : MonoBehaviour
 
     void Start()
     {
-        images = GetComponentsInChildren<Image>();
+        if (!GameManager.Instance.Debug)
+            Destroy(gameObject);
+
         textMesh = GetComponent<TextMeshProUGUI>();
+        adaptiveMusic = FindObjectOfType<AdaptiveMusicMaster>();
     }
 
     private void OnEnable()

@@ -19,13 +19,27 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
+#pragma warning disable    
     [SerializeField] private bool skipTutorial = false;
+    [SerializeField] private bool cheats = false;
+    [SerializeField] private bool debug = false;
+#pragma warning restore
+
     public bool SkipTutorial
     {
         get => skipTutorial;
         set => skipTutorial = value;
     }
-    
+    public bool Cheats
+    {
+        get => cheats;
+        set => cheats = value;
+    }    
+    public bool Debug
+    {
+        get => debug;
+        set => debug = value;
+    }    
     public GameObject cultistPrefab;
     public GameObject leaderPrefab;
     public GameObject guiPrefab;

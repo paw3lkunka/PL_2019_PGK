@@ -12,7 +12,13 @@ public class UICheat : MonoBehaviour
 
     #region MonoBehaviour
 
-
+    private void Start() 
+    {
+        if (!GameManager.Instance.Cheats)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     #endregion
 

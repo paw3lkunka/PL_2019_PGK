@@ -16,6 +16,7 @@ public class RhythmMechanics : MonoBehaviour
 #pragma warning disable
     [Header("Statistics")]
     [SerializeField] private bool countBeats = true;
+    [SerializeField] private GameObject rhythmMechanicsUI;
 #pragma warning restore
 
     // Combo and Rage control
@@ -47,6 +48,7 @@ public class RhythmMechanics : MonoBehaviour
         if (Instance.IsRealNull())
         {
             Instance = this;
+            Instantiate(rhythmMechanicsUI);
         }
         else
         {
