@@ -131,12 +131,18 @@ public partial class AudioTimeline : MonoBehaviour
     {
         input.Gameplay.SetWalkTarget.performed += BeatHitInputHandler;
         input.CombatMode.SetShootTarget.performed += BeatHitInputHandler;
+
+        input.Gameplay.Pause.performed += PauseResumeInputHandler;
+        input.Gameplay.Pause.Enable();
     }
 
     private void OnDisable()
     {
         input.Gameplay.SetWalkTarget.performed -= BeatHitInputHandler;
         input.CombatMode.SetShootTarget.performed -= BeatHitInputHandler;
+
+        input.Gameplay.Pause.performed -= PauseResumeInputHandler;
+        input.Gameplay.Pause.Disable();
     }
 
     private void OnDestroy()
@@ -432,6 +438,20 @@ public partial class AudioTimeline : MonoBehaviour
     private void BeatHitInputHandler(InputAction.CallbackContext ctx)
     {
         AudioTimeline.Instance.BeatHit();
+    }
+
+    private void PauseResumeInputHandler(InputAction.CallbackContext ctx)
+    {
+        switch(TimelineState)
+        {
+            case TimelineState.Playing:
+                Pause();
+                break;
+
+            case TimelineState.Paused:
+                Resume();
+                break;
+        }
     }
 
     #endregion
