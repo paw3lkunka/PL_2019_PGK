@@ -15,8 +15,8 @@ MonoBehaviour:
   hp: 0
   defence: 0
   characterState: 0
-  healthTextEmitter: {fileID: 0}
-  fatihTextEemitter: {fileID: 0}
+  healthTextEmitter: {fileID: 1307117309858744262}
+  fatihTextEemitter: {fileID: 1607701036162116565}
   eyesightRange: 0
   shootingRange: 0
   chaseRange: 0
@@ -147,3 +147,27 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5441175726904241642}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1307117309858744262 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6458478774903106092, guid: 0b27d2dfa6df4ce42bf30127009f95da,
+    type: 3}
+  m_PrefabInstance: {fileID: 5441175726904241642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0355c48c8d5e2544e8854f81eda2a3ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1607701036162116565 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6759133304024368703, guid: 0b27d2dfa6df4ce42bf30127009f95da,
+    type: 3}
+  m_PrefabInstance: {fileID: 5441175726904241642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0355c48c8d5e2544e8854f81eda2a3ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

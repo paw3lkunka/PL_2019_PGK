@@ -29,6 +29,10 @@ public class Location : MonoBehaviour
     {
         cooldownVisualizer = GetComponentInChildren<Slider>();
         cooldownTimer = float.NegativeInfinity;
+        if (cooldownVisualizer)
+        {
+            cooldownVisualizer.value = 0.0f;
+        }
     }
 
     private void Update()
@@ -39,7 +43,6 @@ public class Location : MonoBehaviour
             if(cooldownVisualizer)
             {
                 cooldownVisualizer.value = Mathf.Clamp01(cooldownTimer/RespawnCooldown);
-                Debug.Log(cooldownTimer / RespawnCooldown);
             }
         }
     }
