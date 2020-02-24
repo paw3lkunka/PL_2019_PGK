@@ -51,7 +51,7 @@ public class ResourceUsage : MonoBehaviour
         {
             Amount = 1.0f;
         }
-        if (playerLastPosition.x != transform.position.x || playerLastPosition.y != transform.position.y)
+        if (MapSceneManager.Instance.playerPositionController.Moved)
         {
             if (isFaith)
             {
@@ -139,12 +139,13 @@ public class ResourceUsage : MonoBehaviour
 
     private void OnHighFaithLEvel()
     {
-        if ((Time.timeSinceLevelLoad - timeLastMemberCome) > 15.0f)
-        {
-            CrewSize += 1;
-            Instantiate(GameManager.Instance.cultistPrefab);
-            timeLastMemberCome = Time.timeSinceLevelLoad;
-        }
+        // Powiedzieli, żeby usunąć xD
+        //if ((Time.timeSinceLevelLoad - timeLastMemberCome) > 15.0f)
+        //{
+        //    CrewSize += 1;
+        //    Instantiate(GameManager.Instance.cultistPrefab);
+        //    timeLastMemberCome = Time.timeSinceLevelLoad;
+        //}
     }
 
     private void OnFanatic()

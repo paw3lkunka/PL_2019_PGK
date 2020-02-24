@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Collider2D))]
@@ -13,15 +14,34 @@ public class Location : MonoBehaviour
     public string sceneName;
     public Vector2 returnPoint;
 
+    public float RespawnCooldown;
+    [field: SerializeField]
+    public float cooldownTimer { get; private set; }
+
     public Vector2 GlobalReturnPoint => (Vector2)transform.position + returnPoint;
 
+    private Slider cooldownVisualizer;
     #endregion
 
     #region MonoBehaviour
 
-    private void OnValidate()
+    private void Start()
     {
-        transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+        cooldownVisualizer = GetComponentInChildren<Slider>();
+        cooldownTimer = float.NegativeInfinity;
+    }
+
+    private void Update()
+    {
+        if (MapSceneManager.Instance.playerPositionController.Moved)
+        {
+            cooldownTimer -= Time.deltaTime;
+            if(cooldownVisualizer)
+            {
+                cooldownVisualizer.value = Mathf.Clamp01(cooldownTimer/RespawnCooldown);
+                Debug.Log(cooldownTimer / RespawnCooldown);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,6 +50,17 @@ public class Location : MonoBehaviour
         GameManager.Instance.currentLocation = this;
         SceneManager.LoadScene(sceneName);
         GameManager.Instance.OnLocationEnterInvoke();
+        if(cooldownTimer < 0)
+        {
+            GameManager.Instance.destroyedDynamicObjects.Remove(this);
+        }
+        ResetCooldownTimer();
+    }
+
+
+    private void OnValidate()
+    {
+        transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
     }
 
     private void OnDrawGizmos()
@@ -42,7 +73,7 @@ public class Location : MonoBehaviour
 
     #region Component
 
-
+    public void ResetCooldownTimer() => cooldownTimer = RespawnCooldown;
 
     #endregion
 }

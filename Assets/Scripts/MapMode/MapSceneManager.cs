@@ -9,6 +9,8 @@ public class MapSceneManager : MonoBehaviour
 
     public static MapSceneManager Instance { get; private set; }
 
+    public PlayerPositionController playerPositionController;
+
     private float size = 0.3f;
     private float delta = 0.5f;
 

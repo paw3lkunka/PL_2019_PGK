@@ -104,6 +104,14 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""91e14fe2-6552-498c-adda-c3723a08dac3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -181,6 +189,28 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""JoystickKeyboard"",
                     ""action"": ""SetWalkTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2647c00-26b4-4631-a443-e33a9bcb21c2"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard;JoystickKeyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9d159ba-1edd-465c-82e7-f20b5c477165"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -640,6 +670,7 @@ public class @NewInput : IInputActionCollection, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_MoveCursor = m_Gameplay.FindAction("MoveCursor", throwIfNotFound: true);
         m_Gameplay_SetWalkTarget = m_Gameplay.FindAction("SetWalkTarget", throwIfNotFound: true);
+        m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -731,12 +762,14 @@ public class @NewInput : IInputActionCollection, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_MoveCursor;
     private readonly InputAction m_Gameplay_SetWalkTarget;
+    private readonly InputAction m_Gameplay_Pause;
     public struct GameplayActions
     {
         private @NewInput m_Wrapper;
         public GameplayActions(@NewInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveCursor => m_Wrapper.m_Gameplay_MoveCursor;
         public InputAction @SetWalkTarget => m_Wrapper.m_Gameplay_SetWalkTarget;
+        public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -752,6 +785,9 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @SetWalkTarget.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSetWalkTarget;
                 @SetWalkTarget.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSetWalkTarget;
                 @SetWalkTarget.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSetWalkTarget;
+                @Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -762,6 +798,9 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @SetWalkTarget.started += instance.OnSetWalkTarget;
                 @SetWalkTarget.performed += instance.OnSetWalkTarget;
                 @SetWalkTarget.canceled += instance.OnSetWalkTarget;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -875,6 +914,7 @@ public class @NewInput : IInputActionCollection, IDisposable
     {
         void OnMoveCursor(InputAction.CallbackContext context);
         void OnSetWalkTarget(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

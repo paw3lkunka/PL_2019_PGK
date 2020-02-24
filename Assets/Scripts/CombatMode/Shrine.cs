@@ -16,7 +16,14 @@ public class Shrine : MonoBehaviour
 
     private void Start()
     {
-        hiddenEnemies.SetActive(false);
+        if (GameManager.Instance.ShrinesVisited.Contains(GameManager.Instance.currentLocation))
+        {
+            visited = true;
+        }
+        else
+        {
+            hiddenEnemies.SetActive(false);
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -24,7 +31,7 @@ public class Shrine : MonoBehaviour
         if (!visited && collision.gameObject.GetComponent<Bullet>() == null)
         {
             hiddenEnemies.SetActive(true);
-            GameManager.Instance.ShrinesVisited += 1;
+            GameManager.Instance.ShrinesVisited.Add(GameManager.Instance.currentLocation);
             GameManager.Instance.Faith += 0.2f;
             visited = true;
         }

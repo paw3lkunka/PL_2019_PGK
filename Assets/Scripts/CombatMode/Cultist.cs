@@ -90,6 +90,7 @@ public class Cultist : Character
 
         GameManager.Instance.FanaticStart += EnterFanaticMode;
         GameManager.Instance.FanaticEnd += ExitFanaticMode;
+
     }
 
     protected void OnEnable()
@@ -98,6 +99,16 @@ public class Cultist : Character
         {
             input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
             input.CombatMode.SetShootTarget.performed += AimToCursorPosition;
+        }
+
+        if (CrewSceneManager.Instance.combatMode)
+        {
+            gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(true);
+        }
+        else
+        {
+            // Hide HealthBar on neutral scenes
+            gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(false);
         }
     }
 
@@ -137,13 +148,6 @@ public class Cultist : Character
             {
                 SetStateOff(CharacterState.CanAttack);
             }
-
-            gameObject.transform.GetChild(1).gameObject.SetActive(true);
-        }
-        else
-        {
-            // Hide HealthBar on neutral scenes
-            gameObject.transform.GetChild(1).gameObject.SetActive(false);
         }
 
         (GameObject, float) nearest = CrewSceneManager.Instance.enemies.NearestFrom(transform.position);

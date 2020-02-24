@@ -108,16 +108,21 @@ public class CursorRhythmIndicator : MonoBehaviour
                 break;
         }
 
-        if(beatNumber < 3)
+        if(beatNumber < 3 && state != BeatState.Bad)
         {
             beatHitSigns[beatNumber].color = hitIndicator.color;
         }
         else
         {
-            foreach(var bhs in beatHitSigns)
-            {
-                bhs.color = noneHitColor;
-            }
+            ClearBeatHitSigns();
+        }
+    }
+
+    private void ClearBeatHitSigns()
+    {
+        foreach (var bhs in beatHitSigns)
+        {
+            bhs.color = noneHitColor;
         }
     }
 
