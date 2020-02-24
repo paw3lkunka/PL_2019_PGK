@@ -6,7 +6,10 @@ public class WaterSource : MonoBehaviour
 {
     #region Variables
 
-
+#pragma warning disable
+    [SerializeField]
+    private float refillAmout = 0.3f;
+#pragma warning restore
 
     #endregion
 
@@ -16,7 +19,7 @@ public class WaterSource : MonoBehaviour
     {
         if (GameManager.Instance.ourCrew.IndexOf(collision.gameObject) != -1)
         {
-            GameManager.Instance.Water = Mathf.Max(GameManager.Instance.Water, 0.8f);
+            GameManager.Instance.Water = Mathf.Max(GameManager.Instance.Water, refillAmout);
         }
     }
 
