@@ -184,14 +184,12 @@ public class CrewSceneManager : MonoBehaviour
         if (!GameManager.Gui.isMouseOver)
         {
             walkTargetIndicator.transform.position = cursorInstance.position;
-            AudioTimeline.Instance.BeatHit();
         }
     }
 
     private void SetShootTargetIndicator(InputAction.CallbackContext ctx)
     {
         shootTargetIndicator.transform.position = cursorInstance.position;
-        AudioTimeline.Instance.BeatHit();
     }
 
     #endregion

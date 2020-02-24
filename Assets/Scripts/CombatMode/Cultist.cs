@@ -7,15 +7,31 @@ using UnityEngine.InputSystem;
 public class Cultist : Character
 {
     #region Variables
+    [Header("Standard mode behaviour")]
+    public float standardDamage;
+    public float standardSpeed;
+    public float standardDefence;
 
-    private Shooter shooter;
+    [Header("Rage mode behaviour")]
+    public float rageDamage;
+    public float rageSpeed;
+    public float rageDefence;
+
+    [Header("Fanatic behaviour")]
+    [Tooltip("May perform fanatic behaviour")]
     public bool isFanatic;
+    [Tooltip("Actully performs fanatic behaviour")]
     public bool fanaticState;
-
-    [Range(0, 0.001f)] public float fanaticStateEnterChance = 0.05f, fanaticStateExitChance = 0.01f;
+    [Range(0, 0.001f)]
+    public float fanaticStateEnterChance = 0.05f;
+    [Range(0, 0.001f)]
+    public float fanaticStateExitChance = 0.01f;
     public float fanaticAimDebuff;
 
+       
+    private Shooter shooter;
     private NewInput input;
+    
     private bool canMove;
     private bool canAttack;
 
@@ -25,6 +41,8 @@ public class Cultist : Character
 
     protected override void Awake()
     {
+        defence = standardDefence;
+
         SceneManager.sceneLoaded += OnSceneLoad;
         SceneManager.sceneUnloaded += OnSceneUnload;
         GameManager.Instance.OnGameOver += OnGameOver;
@@ -51,6 +69,9 @@ public class Cultist : Character
     protected override void Start()
     {
         base.Start();
+
+        shooter.baseDamage = standardDamage;
+        Agent.speed = standardSpeed;
 
         isFanatic = GameManager.Instance.Faith > GameManager.Instance.FanaticFaithLevel;
         fanaticState = false;
@@ -207,45 +228,20 @@ public class Cultist : Character
 
     private void EnterRageMode()
     {
-        shooter.baseDamage *= 1.5f;
-        Agent.speed *= 1.1f;
-        defence = .5f;
+        shooter.baseDamage = rageDamage;
+        Agent.speed = rageSpeed;
+        defence = rageDefence;
     }
 
     private void ExitRageMode()
     {
-        shooter.baseDamage /= 1.5f;
-        Agent.speed /= 1.1f;
-        defence = 0;
+        shooter.baseDamage = standardDamage;
+        Agent.speed = standardSpeed;
+        defence = standardDefence;
     }
 
     private void EnterFanaticMode() => isFanatic = true;
     private void ExitFanaticMode() => isFanatic = false;
-
-    #endregion
-
-    #region Taking damage
-
-    public override void TakeDamage(int damage)
-    {
-        GameManager.Instance.Faith -= GameManager.Instance.FaithForWoundedCultist;
-        base.TakeDamage(damage);
-    }
-
-    public override void Die()
-    {
-        GameManager.Instance.OnGameOver -= OnGameOver;
-        base.Die();
-
-        float lossedFaith = GameManager.Instance.FaithForKilledCultist;
-        GameManager.Instance.Faith -= lossedFaith;
-        fatihTextEemitter.Emit("-" + (int)(lossedFaith * 100), Color.green, 3);
-        GameManager.Instance.cultistNumber--;
-    }
-
-    #endregion
-
-    #region Event listeners
 
     /// <summary>
     /// SceneLoad listener
@@ -285,12 +281,32 @@ public class Cultist : Character
     /// </summary>
     private void OnGameOver()
     {
-        Destroy(gameObject);
         GameManager.Instance.OnGameOver -= OnGameOver;
     }
 
     #endregion
 
+    #region Taking damage
+
+    public override void TakeDamage(int damage)
+    {
+        GameManager.Instance.Faith -= GameManager.Instance.FaithForWoundedCultist;
+        base.TakeDamage(damage);
+    }
+
+    public override void Die()
+    {
+        GameManager.Instance.OnGameOver -= OnGameOver;
+        base.Die();
+
+        float lossedFaith = GameManager.Instance.FaithForKilledCultist;
+        GameManager.Instance.Faith -= lossedFaith;
+        fatihTextEemitter.Emit("-" + (int)(lossedFaith * 100), Color.green, 3);
+        GameManager.Instance.cultistNumber--;
+    }
+
+    #endregion
+    
     #region misc
     /// <summary>
     /// Returns position in formation from formation centre

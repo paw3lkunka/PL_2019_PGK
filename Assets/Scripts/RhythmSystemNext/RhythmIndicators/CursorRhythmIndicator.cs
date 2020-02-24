@@ -41,12 +41,18 @@ public class CursorRhythmIndicator : MonoBehaviour
 
     private void OnEnable()
     {
-        AudioTimeline.Instance.OnBeatHit += VisualizeBeatHit;
+        if(AudioTimeline.Instance != default(AudioTimeline))
+        {
+            AudioTimeline.Instance.OnBeatHit += VisualizeBeatHit;
+        }
     }
 
     private void OnDisable()
     {
-        AudioTimeline.Instance.OnBeatHit -= VisualizeBeatHit;
+        if (AudioTimeline.Instance != default(AudioTimeline))
+        {
+            AudioTimeline.Instance.OnBeatHit -= VisualizeBeatHit;
+        }
     }
 
     private void Update()
