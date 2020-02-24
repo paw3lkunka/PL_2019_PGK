@@ -484,7 +484,7 @@ MonoBehaviour:
   cultistNumber: 0
   faithForKilledEnemy: 0.02
   faithForKilledCultist: 0.05
-  faithForWoundedCultist: 0.005
+  faithForWoundedCultist: 0.001
   goodTolerance: 0.18
   greatTolerance: 0.1
   easyModeGoodTolerance: 0.15
@@ -494,8 +494,8 @@ MonoBehaviour:
   mapGenerated: 0
   water: 1
   faith: 0.6
-  FaithUsageFactor: 0.0002
-  WaterUsageFactor: 0.0001
+  FaithUsageFactor: 0.0001
+  WaterUsageFactor: 0.0005
   LowWaterLevel: 0.2
   LowFaithLevel: 0.2
   HighFaithLevel: 0.7
