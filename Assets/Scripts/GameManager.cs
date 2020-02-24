@@ -256,6 +256,7 @@ public class GameManager : MonoBehaviour
     {
         OnGameOver?.Invoke();
         gameOverScreenInstance = Instantiate(gameOverScreenPrefab);
+        Cursor.visible = true;
     }
 
     public void Restart()
