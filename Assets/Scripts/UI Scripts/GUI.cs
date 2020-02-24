@@ -124,5 +124,11 @@ public class GUI : MonoBehaviour
         isMouseOver = false;
     }
 
+    public void Initialize()
+    {
+        UICanvas.worldCamera = FindObjectOfType<Camera>();
+        UICanvas.sortingLayerName = "UI";
+    }
+
     #endregion
 }

@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(eventSystem);
-        Gui = Instantiate(guiPrefab).GetComponent<GUI>();
+        Gui = Instantiate(guiPrefab, new Vector3(0, 0, -10), Quaternion.identity).GetComponent<GUI>();
         Gui.gameObject.SetActive(false);
         ourCrew = new List<GameObject>();
 

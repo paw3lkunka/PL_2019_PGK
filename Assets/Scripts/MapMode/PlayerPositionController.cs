@@ -18,6 +18,7 @@ public class PlayerPositionController : MonoBehaviour
     void Start()
     {
         LoadPosition();
+        GameManager.Gui.Initialize();
     }
     private void Update()
     {

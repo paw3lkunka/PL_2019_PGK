@@ -17,6 +17,8 @@ public class PlotInformation : MonoBehaviour
 
     private void Start()
     {
+        GetComponentInParent<Canvas>().worldCamera = FindObjectOfType<Camera>();
+        GetComponentInParent<Canvas>().sortingLayerName = "UI";
         infoIndex = -1;
         NextText();
     }
@@ -44,6 +46,7 @@ public class PlotInformation : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            //AudioTimeline.Instance.Resume();
         }
     }
 

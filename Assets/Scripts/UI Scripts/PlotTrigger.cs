@@ -7,9 +7,11 @@ public class PlotTrigger : MonoBehaviour
 {
     #region Variables
 
+    public bool pauseRythmFlag = false;
     [SerializeField]
     public List<string> PlotText;
     public bool cultistLeaderAloneFlag;
+
 
     public GameObject panelPrefab;
     private GameObject panelInstance;
@@ -21,7 +23,7 @@ public class PlotTrigger : MonoBehaviour
 
     #region MonoBehaviour
 
-    private void Update()
+    private void LateUpdate()
     {
         // Triggers when there is only Cult Leader on Main Map scenes
         if (SceneManager.GetActiveScene().name.Equals("MainMap")
@@ -38,6 +40,10 @@ public class PlotTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (pauseRythmFlag)
+        {
+            AudioTimeline.Instance.Pause();
+        }
         if (!collisionFlag)
         {
             panelInstance = Instantiate(panelPrefab, Vector3.zero, Quaternion.identity);
