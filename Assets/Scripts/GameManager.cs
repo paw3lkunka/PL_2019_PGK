@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverScreenPrefab;
     private GameObject gameOverScreenInstance = null;
 
+    public GameObject pauseScreen;
+
     public static GUI Gui { get; private set; }
 
     public int initialCultistsNumber;
@@ -143,7 +145,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int ShrinesVisited { get; set; }
+    public List<Location> ShrinesVisited { get; set; }
 
     [HideInInspector]
     public NewInput input;
@@ -160,6 +162,7 @@ public class GameManager : MonoBehaviour
 
         gameOverScreenInstance = null;
         input = new NewInput();
+        ShrinesVisited = new List<Location>();
 
         ResetIndicatorsValues();
         if (Instance == null)
@@ -172,11 +175,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (cultistNumber <= 0 && gameOverScreenInstance == null)
-        {
-            GameOver();
-        }
-
-        if (Keyboard.current[Key.Escape].wasPressedThisFrame)
         {
             GameOver();
         }
@@ -237,7 +235,7 @@ public class GameManager : MonoBehaviour
         cultistNumber = initialCultistsNumber;
         water = 1.0f;
         faith = 0.5f;
-        ShrinesVisited = 0;
+        ShrinesVisited.Clear();
     }
 
     void GameOver()

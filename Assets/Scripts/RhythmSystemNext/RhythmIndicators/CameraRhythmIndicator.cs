@@ -82,7 +82,7 @@ public class CameraRhythmIndicator : MonoBehaviour
         {
             var indicatorFactor = AudioTimeline.Instance.NormalizedTimeUntilNextBeat;
 
-            rhythmIndicator.color = new Color(1.0f, 1.0f, 1.0f, rhythmCurve.Evaluate(indicatorFactor));
+            rhythmIndicator.color = new Color(rhythmIndicator.color.r, rhythmIndicator.color.g, rhythmIndicator.color.b, rhythmCurve.Evaluate(indicatorFactor));
 
             var hitSize = 1.0f - ((1.0f - hitIndicatorMinSize) * (1.0f - indicatorFactor));
             hitIndicator.transform.localScale = new Vector3(hitSize, hitSize, 0);
