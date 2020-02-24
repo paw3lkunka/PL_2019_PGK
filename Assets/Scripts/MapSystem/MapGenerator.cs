@@ -76,7 +76,7 @@ public class MapGenerator : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(foregroundMap && !templeGenerated && GameManager.Instance.ShrinesVisited == 3)
+        if(foregroundMap && !templeGenerated && GameManager.Instance.ShrinesVisited.Count == 3)
         {
             int randomPos = Random.Range(0, unusedPositions.Count);
             GameObject instance = Instantiate(templeLocationPrefab, unusedPositions[randomPos], Quaternion.identity, grid.transform);

@@ -23,6 +23,7 @@ public class PlotTrigger : MonoBehaviour
 
     private void Update()
     {
+        // Triggers when there is only Cult Leader on Main Map scenes
         if (SceneManager.GetActiveScene().name.Equals("MainMap")
             && GameManager.Instance.cultistNumber == 1
             && cultistLeaderAloneFlag
@@ -37,7 +38,7 @@ public class PlotTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!cultistLeaderAloneFlag && !collisionFlag)
+        if (!collisionFlag)
         {
             panelInstance = Instantiate(panelPrefab, Vector3.zero, Quaternion.identity);
             panelInstance.transform.position = new Vector3(100, 100, 0);
