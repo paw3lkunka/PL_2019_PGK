@@ -7,6 +7,14 @@ public class CultLeader : Character
 {
     #region Variables
 
+    [Header("Standard mode behaviour")]
+    public float standardSpeed;
+    public float standardDefence;
+
+    [Header("Rage mode behaviour")]
+    public float rageSpeed;
+    public float rageDefence;
+
     private NewInput input;
     private bool canMove;
 
@@ -39,6 +47,21 @@ public class CultLeader : Character
 
     protected override void Start()
     {
+        defence = standardDefence;
+        Agent.speed = standardSpeed;
+
+        try
+        {
+            RhythmMechanics.Instance.OnRageStart += EnterRageMode;
+        }
+        catch (System.NullReferenceException) { }
+
+        try
+        {
+            RhythmMechanics.Instance.OnRageStop += ExitRageMode;
+        }
+        catch (System.NullReferenceException) { }
+
         hp = 100;
         defence = 20;
         base.Start();
@@ -74,6 +97,18 @@ public class CultLeader : Character
 
     private void OnDestroy()
     {
+        try
+        {
+            RhythmMechanics.Instance.OnRageStart -= EnterRageMode;
+        }
+        catch (System.NullReferenceException) { }
+
+        try
+        {
+            RhythmMechanics.Instance.OnRageStop -= ExitRageMode;
+        }
+        catch (System.NullReferenceException) { }
+
         SceneManager.sceneLoaded -= OnSceneLoad;
         SceneManager.sceneUnloaded -= OnSceneUnload;
     }
@@ -81,6 +116,18 @@ public class CultLeader : Character
     #endregion
 
     #region Component
+
+    private void EnterRageMode()
+    {
+        Agent.speed = rageSpeed;
+        defence = rageDefence;
+    }
+
+    private void ExitRageMode()
+    {
+        Agent.speed = standardSpeed;
+        defence = standardDefence;
+    }
 
     public Vector2 FormationOffset
     {
