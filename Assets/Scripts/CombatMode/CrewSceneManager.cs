@@ -63,6 +63,7 @@ public class CrewSceneManager : MonoBehaviour
     private void OnEnable()
     {
         InitializeCursor();
+        GameManager.Gui.Initialize();
 
         if(input != null)
         {

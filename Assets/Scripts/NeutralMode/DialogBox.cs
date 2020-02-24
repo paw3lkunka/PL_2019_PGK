@@ -12,12 +12,6 @@ public class DialogBox : MonoBehaviour
 
     #region MonoBehaviour
 
-
-
-    #endregion
-
-    #region Component
-
     private void Awake()
     {
         // Set this in the middle of the screen
@@ -25,6 +19,10 @@ public class DialogBox : MonoBehaviour
         gameObject.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
         gameObject.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
     }
+
+    #endregion
+
+    #region Component
 
     public void Recruit()
     {
