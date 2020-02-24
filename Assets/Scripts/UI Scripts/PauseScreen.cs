@@ -9,7 +9,6 @@ public class PauseScreen : MonoBehaviour
 
     public void ResumeOnClick()
     {
-        Time.timeScale = 0;
         AudioTimeline.Instance.Resume();
         Destroy(gameObject);
     }
