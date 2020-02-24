@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
@@ -22,6 +22,7 @@ public class TutorialController : MonoBehaviour
 #pragma warning restore
 
     private int minimumWalkCombo = 4;
+    private List<Enemy> enemies;
 
     #endregion
 
@@ -29,12 +30,15 @@ public class TutorialController : MonoBehaviour
 
     private void Start()
     {
+        enemies = FindObjectsOfType<Enemy>().ToList();
         GameManager.Instance.Water = startWaterLevel;
         GameManager.Instance.Faith = startFaithLevel;
     }
 
     private void Update()
     {
+        enemies.RemoveAll(entry => entry == null);
+
         if (RhythmMechanics.Instance.Combo >= minimumWalkCombo)
         {
             Destroy(smokeWalk);
@@ -45,7 +49,7 @@ public class TutorialController : MonoBehaviour
             Destroy(smokeWater);
         }
 
-        if (GameManager.Instance.Faith >= minimumFaithLevel)
+        if (GameManager.Instance.Faith >= minimumFaithLevel || enemies.Count == 0)
         {
             Destroy(smokeFaith);
         }
