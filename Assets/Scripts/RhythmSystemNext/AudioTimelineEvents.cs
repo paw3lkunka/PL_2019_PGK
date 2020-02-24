@@ -97,6 +97,10 @@ public partial class AudioTimeline
         TimelineState = TimelineState.Paused;
         this.keepCombo = keepCombo;
 
+        // TODO: Probably not the best idea to do it this way so loot at it later
+        Instantiate(GameManager.Instance.pauseScreen);
+        Time.timeScale = 0;
+
         // Save beat moment variables
         pauseMoment = AudioSettings.dspTime;
         OnSequencePause?.Invoke(keepCombo);

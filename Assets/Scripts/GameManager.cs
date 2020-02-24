@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverScreenPrefab;
     private GameObject gameOverScreenInstance = null;
 
+    public GameObject pauseScreen;
+
     public static GUI Gui { get; private set; }
 
     public int initialCultistsNumber;
@@ -172,11 +174,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (cultistNumber <= 0 && gameOverScreenInstance == null)
-        {
-            GameOver();
-        }
-
-        if (Keyboard.current[Key.Escape].wasPressedThisFrame)
         {
             GameOver();
         }
