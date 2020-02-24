@@ -148,25 +148,26 @@ public class RhythmMechanics : MonoBehaviour
             case BarState.Average:
                 Combo++;
 
-                if (Combo > 9)
+                if (Combo > 9 && Rage == false)
                     OnRageStart();
-                else
+                else if (Combo < 9 && Rage == true)
                     OnRageStop();
 
                 break;
             case BarState.Good:
                 Combo++;
 
-                if (Combo > 3)
+                if (Combo > 3 && Rage == false)
                     OnRageStart();
-                else
+                else if (Combo < 3 && Rage == true)
                     OnRageStop();
 
                 break;
             case BarState.Perfect:
                 Combo++;
 
-                OnRageStart();
+                if (Rage == false)
+                    OnRageStart();
 
                 break;
         }
