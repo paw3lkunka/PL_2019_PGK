@@ -252,7 +252,7 @@ public class GameManager : MonoBehaviour
         ShrinesVisited.Clear();
     }
 
-    void GameOver()
+    public void GameOver()
     {
         OnGameOver?.Invoke();
         gameOverScreenInstance = Instantiate(gameOverScreenPrefab);

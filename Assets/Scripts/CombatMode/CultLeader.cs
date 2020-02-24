@@ -149,6 +149,7 @@ public class CultLeader : Character
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
+        GameManager.Instance.ourCrew.Add(gameObject);
         switch (scene.name)
         {
             case "MainMenu":
@@ -172,7 +173,6 @@ public class CultLeader : Character
         if (scene.name != "MainMap" && scene.name != "MainMenu")
         {
             GameManager.Instance.ourCrew.Remove(gameObject);
-            CrewSceneManager.Instance.enemies.Remove(gameObject);
         }
     }
 
@@ -183,6 +183,7 @@ public class CultLeader : Character
 
     public override void Die()
     {
+        GameManager.Instance.GameOver();
         GameManager.Instance.OnGameOver -= OnGameOver;
         base.Die();
     }

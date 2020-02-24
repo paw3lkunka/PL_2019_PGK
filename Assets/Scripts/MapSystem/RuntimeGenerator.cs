@@ -34,9 +34,20 @@ public class RuntimeGenerator : MonoBehaviour
         GameManager.Instance.OnLocationEnter += OnLocationEnter;
         GameManager.Instance.OnLocationExit += OnLocationExit;
     }
-    
+
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameOver += OnGameOver;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnGameOver -= OnGameOver;
+    }
+
     private void OnDestroy()
     {
+        GameManager.Instance.mapGenerated = false;
         GameManager.Instance.OnLocationEnter -= OnLocationEnter;
         GameManager.Instance.OnLocationExit -= OnLocationExit;
     }
@@ -109,11 +120,6 @@ public class RuntimeGenerator : MonoBehaviour
         }        
     }
 
-    private void Update()
-    {
-
-    }
-
     #endregion
 
     #region Component
@@ -126,6 +132,11 @@ public class RuntimeGenerator : MonoBehaviour
     private void OnLocationExit()
     {
         gameObject.SetActive(true);
+    }
+
+    private void OnGameOver()
+    {
+        Destroy(gameObject);
     }
 
     #endregion
