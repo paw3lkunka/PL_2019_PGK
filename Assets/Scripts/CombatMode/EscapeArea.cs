@@ -16,7 +16,7 @@ public class EscapeArea : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (GameManager.Instance.ourCrew.IndexOf(collision.gameObject) != -1)
+        if (GameManager.Instance.ourCrew.IndexOf(collision.gameObject) == 0)
         {
             GameManager.Instance.OnLocationExitInvoke();
             SceneManager.LoadScene("MainMap");
