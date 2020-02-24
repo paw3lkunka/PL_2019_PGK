@@ -281,7 +281,6 @@ public class Cultist : Character
     /// </summary>
     private void OnGameOver()
     {
-        Destroy(gameObject);
         GameManager.Instance.OnGameOver -= OnGameOver;
     }
 
