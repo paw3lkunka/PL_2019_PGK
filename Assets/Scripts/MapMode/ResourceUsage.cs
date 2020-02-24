@@ -126,10 +126,13 @@ public class ResourceUsage : MonoBehaviour
 
     private void OnLowLevel()
     {
-        if ((Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f)))
+        if ((Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) && GameManager.Instance.ourCrew.Count > 1)
         {
             CrewSize -= 1;
-            GameManager.Instance.ourCrew.RemoveAt(rand.Next() % (GameManager.Instance.ourCrew.Count - 1) + 1);
+            int removeIndex = rand.Next() % (GameManager.Instance.ourCrew.Count - 1) + 1;
+            Debug.Log(removeIndex);
+            Destroy(GameManager.Instance.ourCrew[removeIndex]);
+            GameManager.Instance.ourCrew.RemoveAt(removeIndex);
             timeLastMemberDied = Time.timeSinceLevelLoad;
         }
     }

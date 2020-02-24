@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum BeatState { None, Bad, Good, Great, Perfect };
 
@@ -101,6 +102,8 @@ public partial class AudioTimeline : MonoBehaviour
 
     #endregion
 
+    private NewInput input;
+
     #endregion
 
     #region MonoBehaviour
@@ -119,9 +122,22 @@ public partial class AudioTimeline : MonoBehaviour
         }
 
         barBeatStates = new BeatState[beatsPerBar];
+        input = GameManager.Instance.input;
     }
 
     private void Start() => TimelineInit();
+
+    private void OnEnable()
+    {
+        input.Gameplay.SetWalkTarget.performed += BeatHitInputHandler;
+        input.CombatMode.SetShootTarget.performed += BeatHitInputHandler;
+    }
+
+    private void OnDisable()
+    {
+        input.Gameplay.SetWalkTarget.performed -= BeatHitInputHandler;
+        input.CombatMode.SetShootTarget.performed -= BeatHitInputHandler;
+    }
 
     private void OnDestroy()
     {
@@ -408,6 +424,15 @@ public partial class AudioTimeline : MonoBehaviour
     }
 
     #endregion
+
+    #endregion
+
+    #region Input
+
+    private void BeatHitInputHandler(InputAction.CallbackContext ctx)
+    {
+        AudioTimeline.Instance.BeatHit();
+    }
 
     #endregion
 }
