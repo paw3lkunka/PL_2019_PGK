@@ -100,8 +100,12 @@ public class BarController : MonoBehaviour
     private void ChangeInstance()
     {
         instances[0].GetComponent<InformationBar>().barIndex = 0;
+        instances[0].GetComponent<RectTransform>().anchorMin = Vector2.zero;
+        instances[0].GetComponent<RectTransform>().anchorMax = Vector2.zero;
+        instances[0].transform.position = Vector3.zero;
         instances[0].GetComponent<InformationBar>().UpdateBar();
         instances[0].transform.position += new Vector3(0, 50 * canvas.transform.localScale.y, 0);
+
     }
 
     public void ShowLastTen()

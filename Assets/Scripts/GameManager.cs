@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
 #pragma warning disable    
     [SerializeField] private bool skipTutorial = false;
-    [SerializeField] private bool cheats = false;
+    [SerializeField] private bool cheats = true;
     [SerializeField] private bool debug = false;
 #pragma warning restore
 
@@ -228,11 +228,14 @@ public class GameManager : MonoBehaviour
     private void Initialize()
     {
         DontDestroyOnLoad(gameObject);
-        DontDestroyOnLoad(eventSystem);
         Gui = Instantiate(guiPrefab, new Vector3(0, 0, -10), Quaternion.identity).GetComponent<GUI>();
         Gui.gameObject.SetActive(false);
         ourCrew = new List<GameObject>();
+        RestartCultists();
+    }
 
+    public void RestartCultists()
+    {
 #pragma warning disable
         Instantiate(leaderPrefab, Vector3.zero, Quaternion.identity);
 
@@ -240,8 +243,16 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(cultistPrefab, Vector3.zero, Quaternion.identity);
         }
-        cultistNumber += 1;
 #pragma warning restore
+    }
+
+    public void RemoveCultistsFromCrew()
+    {
+        foreach (var cultist in ourCrew)
+        {
+            Destroy(cultist);
+        }
+        ourCrew.Clear();
     }
 
     private void ResetIndicatorsValues()

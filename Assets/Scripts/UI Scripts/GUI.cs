@@ -16,7 +16,6 @@ public class GUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI cultistsText;
 #pragma warning restore
 
-    public bool CheatSheet;
     public bool isMouseOver;
 
     private Image faithImage;
@@ -42,7 +41,7 @@ public class GUI : MonoBehaviour
     {
         faithImage = faithBar.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
         waterImage = waterBar.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
-        if (!CheatSheet)
+        if (!GameManager.Instance.Cheats)
         {
             transform.GetChild(0).gameObject.SetActive(false);
         }
@@ -50,7 +49,7 @@ public class GUI : MonoBehaviour
 
     public void Update()
     {
-        CrewIndicator = GameManager.Instance.cultistNumber;
+        CrewIndicator = GameManager.Instance.ourCrew.Count;
         WaterIndicator = GameManager.Instance.Water;
         FaithIndicator = GameManager.Instance.Faith;
 

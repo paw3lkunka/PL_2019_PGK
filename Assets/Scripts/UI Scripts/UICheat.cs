@@ -16,7 +16,7 @@ public class UICheat : MonoBehaviour
     {
         if (!GameManager.Instance.Cheats)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
