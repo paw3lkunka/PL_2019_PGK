@@ -74,7 +74,15 @@ public class ResourceUsage : MonoBehaviour
 
             playerLastPosition = transform.position;
 
-            if (CrewSize > 25) CrewSize = 25;
+            if (CrewSize > 25)
+            {
+                CrewSize = 25;
+                while(GameManager.Instance.ourCrew.Count > 25)
+                {
+                    Destroy(GameManager.Instance.ourCrew[GameManager.Instance.ourCrew.Count - 1]);
+                    GameManager.Instance.ourCrew.RemoveAt(GameManager.Instance.ourCrew.Count - 1);
+                }
+            }
         }
 
     }

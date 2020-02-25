@@ -76,6 +76,15 @@ public class BarController : MonoBehaviour
         {
             instances[0].SetActive(false);
         }
+
+        if(instances.Count > 0)
+        {
+            Debug.Log(instances[0].transform.localPosition);
+            Debug.Log(instances[0].GetComponent<RectTransform>().localPosition);
+            Debug.Log(FindObjectOfType<Camera>().ScreenToWorldPoint(instances[0].transform.position));
+            Debug.Log(FindObjectOfType<Camera>().ScreenToWorldPoint(instances[0].transform.localPosition));
+
+        }
     }
 
     #endregion
@@ -100,12 +109,9 @@ public class BarController : MonoBehaviour
     private void ChangeInstance()
     {
         instances[0].GetComponent<InformationBar>().barIndex = 0;
-        instances[0].GetComponent<RectTransform>().anchorMin = Vector2.zero;
-        instances[0].GetComponent<RectTransform>().anchorMax = Vector2.zero;
-        instances[0].transform.position = Vector3.zero;
+        //instances[0].transform.position = Vector3.zero;
+        //instances[0].transform.position += new Vector3(0, 50 * canvas.transform.localScale.y, 0);
         instances[0].GetComponent<InformationBar>().UpdateBar();
-        instances[0].transform.position += new Vector3(0, 50 * canvas.transform.localScale.y, 0);
-
     }
 
     public void ShowLastTen()
@@ -121,6 +127,7 @@ public class BarController : MonoBehaviour
                     instances[i].SetActive(true);
                     float y = 50 * canvas.transform.localScale.y + canvas.transform.localScale.y * instances[i].GetComponent<RectTransform>().rect.height * i;
                     instances[i].transform.position = new Vector3(0, y, 0);
+                    instances[i].transform.localPosition = new Vector3(0, y, 0);
                 }
             }
             else

@@ -97,7 +97,7 @@ public class CultLeader : Character
     {
         canMove = CheckState(CharacterState.CanMove);
 
-        if (GameManager.Instance.cultistNumber == 1)
+        if (GameManager.Instance.cultistNumber == 1 || GameManager.Instance.ourCrew.Count == 1)
         {
             defence = 0;
         }
@@ -149,7 +149,6 @@ public class CultLeader : Character
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        GameManager.Instance.ourCrew.Add(gameObject);
         switch (scene.name)
         {
             case "MainMenu":

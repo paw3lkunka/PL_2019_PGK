@@ -18,8 +18,7 @@ public class InformationBar : MonoBehaviour
         "A new cultist arrived to your tribe!",
         "Your cultist abandoned you,\n because of low faith level",
         "Your cultist died form dehydration,\n HOW DARE YOU",
-        "You cultist just died ;c",
-        "DZIAŁA"
+        "You cultist just died ;c"
     };
 
     #endregion

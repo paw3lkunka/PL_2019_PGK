@@ -236,9 +236,10 @@ public class GameManager : MonoBehaviour
 
     public void RestartCultists()
     {
+        cultistNumber = initialCultistsNumber;
 #pragma warning disable
         Instantiate(leaderPrefab, Vector3.zero, Quaternion.identity);
-
+        cultistNumber += 1;
         for (int i = 0; i < initialCultistsNumber; i++)
         {
             Instantiate(cultistPrefab, Vector3.zero, Quaternion.identity);
@@ -248,19 +249,20 @@ public class GameManager : MonoBehaviour
 
     public void RemoveCultistsFromCrew()
     {
-        foreach (var cultist in ourCrew)
+        for(int i = ourCrew.Count - 1; i >= 0; --i)
         {
-            Destroy(cultist);
+            Destroy(ourCrew[i]);
         }
         ourCrew.Clear();
+        cultistNumber = 0;
     }
 
     private void ResetIndicatorsValues()
     {
-        cultistNumber = initialCultistsNumber;
         water = 1.0f;
         faith = 0.5f;
         ShrinesVisited.Clear();
+        RemoveCultistsFromCrew();
     }
 
     public void GameOver()
