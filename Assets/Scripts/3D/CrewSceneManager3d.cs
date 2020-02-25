@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [DisallowMultipleComponent]
-public class CrewSceneManager3D : MonoBehaviour
+public class CrewSceneManager3d : MonoBehaviour
 {
 
     #region Variables
-    public static CrewSceneManager3D Instance { get; private set; }
+    public static CrewSceneManager3d Instance { get; private set; }
 
     public List<GameObject> enemies = new List<GameObject>();
 
@@ -23,10 +23,12 @@ public class CrewSceneManager3D : MonoBehaviour
     public NewInput input;
 
     public Transform cursorPrefab;
-    [HideInInspector] public Transform cursorInstance;
+    [HideInInspector]
+    public Transform cursorInstance;
     private SpriteRenderer cursorInstanceRenderer;
 
-    [HideInInspector] public Transform cultLeader;
+    [HideInInspector]
+    public Transform cultLeader;
     public float cursorRange = 5.0f;
 
     #endregion
@@ -61,6 +63,7 @@ public class CrewSceneManager3D : MonoBehaviour
     private void OnEnable()
     {
         InitializeCursor();
+        GameManager.Gui.Initialize();
 
         if(input != null)
         {
@@ -114,7 +117,7 @@ public class CrewSceneManager3D : MonoBehaviour
             }
         }
 
-        var cursorLeaderDistance = Vector2.Distance(cultLeader.transform.position, cursorInstance.transform.position);
+        var cursorLeaderDistance = Vector3.Distance(cultLeader.transform.position, cursorInstance.transform.position);
 
         var currentCursorColor = cursorInstanceRenderer.color;
         currentCursorColor.a = cursorLeaderDistance / cursorRange;
@@ -139,10 +142,11 @@ public class CrewSceneManager3D : MonoBehaviour
     private void InitializeCursor()
     {
         Cursor.visible = false;
-        cursorInstance = Instantiate(cursorPrefab, startPoint, cursorPrefab.rotation);
+        cursorInstance = Instantiate(cursorPrefab, startPoint, Quaternion.identity);
 
         cursorInstanceRenderer = cursorInstance.GetComponent<SpriteRenderer>();
         cursorInstanceRenderer.color = new Color(62.0f / 255.0f, 87.0f / 255.0f, 64.0f / 255.0f, 1.0f);
+        cursorInstanceRenderer.sortingOrder = 10;
     }
 
     #endregion
@@ -152,10 +156,17 @@ public class CrewSceneManager3D : MonoBehaviour
     private void MoveCursorPointer()
     {
         var inputValue = Mouse.current.position.ReadValue();
-        var nextCursorPosition = Camera.main.ScreenToWorldPoint(inputValue);
-        nextCursorPosition.z = 0;
+        var ray = Camera.main.ScreenPointToRay(inputValue);
 
-        cursorInstance.position = nextCursorPosition;
+        foreach( var hit in Physics.RaycastAll(ray, 100) )
+        {
+            // TODO replace by layer mask
+            if (hit.collider.CompareTag("Ground"))
+            {
+                cursorInstance.position = hit.point;
+                continue;
+            }
+        }        
     }
 
     private void MoveCursorGamepad()
@@ -190,4 +201,30 @@ public class CrewSceneManager3D : MonoBehaviour
     }
 
     #endregion
+}
+
+public static class Extensions3d
+{
+    public static (GameObject, float) NearestFrom3d(this List<GameObject> objs, Vector3 from)
+    {
+        GameObject target = null;
+        float minimum = float.PositiveInfinity;
+
+        foreach (GameObject enemy in objs)
+        {
+            if (!enemy)
+            {
+                continue;
+            }
+
+            float distance = Vector3.Distance(from, enemy.transform.position);
+            if (distance < minimum)
+            {
+                target = enemy;
+                minimum = distance;
+            }
+        }
+
+        return (target, minimum);
+    }
 }
