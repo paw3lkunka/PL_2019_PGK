@@ -288,7 +288,7 @@ public class GameManager : MonoBehaviour
         greatTolerance = hardModeGreatTolerance;
 
         Gui.gameObject.SetActive(true);
-        SceneManager.LoadScene(SkipTutorial ? "MainMap" : "Tutorial");
+        SceneManager.LoadScene(SkipTutorial ? "MainMap" : "TutorialNew");
     }
 
     public void EasyModeStart()
@@ -297,7 +297,7 @@ public class GameManager : MonoBehaviour
         greatTolerance = easyModeGreatTolerance;
 
         Gui.gameObject.SetActive(true);
-        SceneManager.LoadScene(SkipTutorial ? "MainMap" : "Tutorial");
+        SceneManager.LoadScene(SkipTutorial ? "MainMap" : "TutorialNew");
     }
 
     public void Exit()
