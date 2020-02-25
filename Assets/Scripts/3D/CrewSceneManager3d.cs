@@ -157,11 +157,16 @@ public class CrewSceneManager3d : MonoBehaviour
     {
         var inputValue = Mouse.current.position.ReadValue();
         var ray = Camera.main.ScreenPointToRay(inputValue);
-        RaycastHit hit;
-        Physics.Raycast(ray, out hit);
-        var nextCursorPosition = hit.point;
 
-        cursorInstance.position = nextCursorPosition;
+        foreach( var hit in Physics.RaycastAll(ray, 100) )
+        {
+            // TODO replace by layer mask
+            if (hit.collider.CompareTag("Ground"))
+            {
+                cursorInstance.position = hit.point;
+                continue;
+            }
+        }        
     }
 
     private void MoveCursorGamepad()
