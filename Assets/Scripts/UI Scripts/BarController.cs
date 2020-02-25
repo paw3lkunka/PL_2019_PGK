@@ -77,6 +77,9 @@ public class BarController : MonoBehaviour
             instances[0].SetActive(false);
         }
 
+        //TODO
+        //Debug.Log("Zakomentowałem to");
+        /*
         if(instances.Count > 0)
         {
             Debug.Log(instances[0].transform.localPosition);
@@ -85,6 +88,7 @@ public class BarController : MonoBehaviour
             Debug.Log(FindObjectOfType<Camera>().ScreenToWorldPoint(instances[0].transform.localPosition));
 
         }
+        */
     }
 
     #endregion

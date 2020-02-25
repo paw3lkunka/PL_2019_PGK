@@ -66,6 +66,11 @@ public class Enemy : Character
             {
                 chasedObject = nearestDistance.Item1;
             }
+            else
+            {
+                chasedObject = null;
+                shooter.StopShooting();
+            }
         }
         else
         {
