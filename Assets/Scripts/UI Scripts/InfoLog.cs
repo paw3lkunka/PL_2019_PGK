@@ -11,16 +11,15 @@ public class InfoLog : MonoBehaviour
 
     public static InfoLog Instance { get; private set; }
 
-#pragma warning disable
-    [SerializeField] private float secondsForShow = 10.0f;
-#pragma warning restore
-
     private Image background;
     private TextMeshProUGUI header;
     private TextMeshProUGUI text;
 
+    private TextMeshProUGUI zoneIndicator;
+
     private bool isShown;
-    private bool isLocked = true;
+    private bool isLocked;
+    private bool isInInfoZone;
 
     private float secondsTillHide;
 
@@ -34,13 +33,19 @@ public class InfoLog : MonoBehaviour
     {
         Instance = this;
 
-        secondsTillHide = secondsForShow;
-
         background = GetComponent<Image>();
         header = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         text = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        zoneIndicator = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
         input = GameManager.Instance.input;
+
+        HideLog();
+    }
+
+    private void Start()
+    {
+        zoneIndicator.CrossFadeAlpha(0.0f, 0.05f, false);
     }
 
     private void OnEnable()
@@ -57,11 +62,11 @@ public class InfoLog : MonoBehaviour
 
     private void Update()
     {
-        if(isLocked == false)
+        if(isShown && !isLocked)
         {
             secondsTillHide -= Time.deltaTime;
 
-            if(secondsTillHide <= 0)
+            if (secondsTillHide <= 0)
             {
                 HideLog();
             }
@@ -78,8 +83,11 @@ public class InfoLog : MonoBehaviour
         background.CrossFadeAlpha(1.0f, 0.5f, false);
         header.CrossFadeAlpha(1.0f, 0.5f, false);
         text.CrossFadeAlpha(1.0f, 0.5f, false);
-
-        secondsTillHide = secondsForShow;
+        
+        if(isInInfoZone)
+        {
+            zoneIndicator.CrossFadeAlpha(0.0f, 0.5f, false);
+        }
     }
 
     public void HideLog()
@@ -88,12 +96,44 @@ public class InfoLog : MonoBehaviour
         background.CrossFadeAlpha(0.0f, 0.5f, false);
         header.CrossFadeAlpha(0.0f, 0.5f, false);
         text.CrossFadeAlpha(0.0f, 0.5f, false);
+
+        if (isInInfoZone)
+        {
+            zoneIndicator.CrossFadeAlpha(1.0f, 0.5f, false);
+        }
     }
 
     public void SetInfo(string newHeader, string newText)
     {
         header.text = newHeader;
         text.text = newText;
+    }
+
+    public void ShowLogForSeconds(string newHeader, string newText, float seconds)
+    {
+        SetInfo(newHeader, newText);
+        secondsTillHide = seconds;
+        ShowLog();
+    }
+
+    public void EnterInfoLogZone()
+    {
+        isInInfoZone = true;
+
+        if(!isShown)
+        {
+            zoneIndicator.CrossFadeAlpha(1.0f, 0.5f, false);
+        }
+    }
+
+    public void ExitInfoLogZone()
+    {
+        isInInfoZone = false;
+
+        if(!isShown)
+        {
+            zoneIndicator.CrossFadeAlpha(0.0f, 0.5f, false);
+        }
     }
 
     #endregion
