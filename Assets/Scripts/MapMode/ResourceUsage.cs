@@ -47,10 +47,6 @@ public class ResourceUsage : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Amount = 1.0f;
-        }
         if (MapSceneManager.Instance.playerPositionController.Moved)
         {
             if (isFaith)
