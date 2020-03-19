@@ -6,7 +6,7 @@ public class PatrollingEnemy3d : Enemy3d
 
 #pragma warning disable
     [SerializeField]
-    private Vector2[] patrolPoints;
+    private Vector3[] patrolPoints;
 #pragma warning restore
 
 #if UNITY_EDITOR
@@ -46,9 +46,9 @@ public class PatrollingEnemy3d : Enemy3d
     private void OnDrawGizmos()
     {
         Gizmos.color = gizmoColor;
-        foreach (Vector2 p in patrolPoints)
+        foreach (var p in patrolPoints)
         {
-            Gizmos.DrawSphere(p, .1f);
+            Gizmos.DrawSphere(p, 0.5f);
         }
     }
 #endif

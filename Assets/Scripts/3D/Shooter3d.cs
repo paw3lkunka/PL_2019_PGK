@@ -37,7 +37,7 @@ public class Shooter3d : MonoBehaviour
         if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
             obj.layer = LayerMask.NameToLayer("EnemiesBullets");
 
-        obj.GetComponent<Bullet>().Shoot(target - transform.position);
+        obj.GetComponent<Bullet3d>().Shoot(target - transform.position);
     }
 
     private IEnumerator ShootingRoutine()

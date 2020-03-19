@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6636756641588606529}
   - component: {fileID: 6636756641588606531}
   - component: {fileID: 6636756641588606530}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 6636756642392982898}
   - component: {fileID: 6636756642887275903}
   - component: {fileID: 6636756642887275904}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cultist_v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,8 @@ MonoBehaviour:
   baseDamage: 3
   attackInterval: 0.2
   variation: 0.5
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 3442411279601363415, guid: 0a716ed3f66e4914dbd20a97a70347c3,
+    type: 3}
   target: {x: 0, y: 0, z: 0}
 --- !u!1001 &6636756642359807401
 PrefabInstance:
@@ -329,6 +330,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 3685369499204346748, guid: b89987d8e7548d24d878634c37e49a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1277797546667867616, guid: b89987d8e7548d24d878634c37e49a61,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -398,6 +404,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.4675901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276246932645060688, guid: b89987d8e7548d24d878634c37e49a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 264810977743644533, guid: b89987d8e7548d24d878634c37e49a61,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b89987d8e7548d24d878634c37e49a61, type: 3}
