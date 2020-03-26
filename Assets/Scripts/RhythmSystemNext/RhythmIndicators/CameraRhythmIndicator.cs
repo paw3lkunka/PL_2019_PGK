@@ -47,10 +47,10 @@ public class CameraRhythmIndicator : MonoBehaviour
 
     #region MonoBehaviour
 
-    private void Awake()
+    private void Start()
     {
         mainCamera = Camera.main;
-        startCameraSize = mainCamera.orthographicSize;
+        startCameraSize = mainCamera.fieldOfView;
         cameraEffectMultiplierInternal = cameraEffectMultiplier;
 
         hitIndicator.color = noneHitColor;
@@ -93,7 +93,7 @@ public class CameraRhythmIndicator : MonoBehaviour
 
             if (cameraEffectsEnabled && cameraEffectsEnabledInternal)
             {
-                mainCamera.orthographicSize = startCameraSize - cameraCurve.Evaluate(indicatorFactor) * cameraEffectMultiplierInternal;
+                mainCamera.fieldOfView = startCameraSize - cameraCurve.Evaluate(indicatorFactor) * cameraEffectMultiplierInternal;
             }
         }
     }
