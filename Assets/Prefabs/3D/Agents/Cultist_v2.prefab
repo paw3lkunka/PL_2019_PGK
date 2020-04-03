@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6636756641588606529}
   - component: {fileID: 6636756641588606531}
   - component: {fileID: 6636756641588606530}
+  - component: {fileID: 455667832753776216}
   m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
@@ -78,6 +79,26 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &455667832753776216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6636756641588606528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc3c6447a9d6b12449b6108bd1ddeeef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 6636756641588606530}
+  threshold: 0.05
+  useDebug: 1
+  up: {fileID: 2100000, guid: 0d7191e006d3c884e8249c0613cabe17, type: 2}
+  down: {fileID: 2100000, guid: 7d4f2d7f453cb6349b38efb175268a05, type: 2}
+  useNegativeScale: 1
+  left: {fileID: 2100000, guid: 054960306acc80e419cda7ef789313e3, type: 2}
+  right: {fileID: 2100000, guid: a4ef610676a4e7943bcb3c0eb20b6def, type: 2}
 --- !u!1 &6636756642392982897
 GameObject:
   m_ObjectHideFlags: 0
