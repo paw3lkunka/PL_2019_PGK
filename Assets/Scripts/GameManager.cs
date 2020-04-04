@@ -234,6 +234,11 @@ public class GameManager : MonoBehaviour
         RestartCultists();
     }
 
+    public void LoadCustomScene(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
+
     public void RestartCultists()
     {
         cultistNumber = initialCultistsNumber;

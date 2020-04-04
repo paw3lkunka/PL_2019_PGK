@@ -5,8 +5,7 @@ public class PatrollingEnemy3d : Enemy3d
     #region Variables
 
 #pragma warning disable
-    [SerializeField]
-    private Vector3[] patrolPoints;
+    [SerializeField] private Transform[] patrolPoints;
 #pragma warning restore
 
 #if UNITY_EDITOR
@@ -46,9 +45,12 @@ public class PatrollingEnemy3d : Enemy3d
     private void OnDrawGizmos()
     {
         Gizmos.color = gizmoColor;
-        foreach (var p in patrolPoints)
+        if (patrolPoints.Length > 0)
         {
-            Gizmos.DrawSphere(p, 0.5f);
+            foreach (var p in patrolPoints)
+            {
+                Gizmos.DrawSphere(p.position, 0.5f);
+            }
         }
     }
 #endif
@@ -64,7 +66,7 @@ public class PatrollingEnemy3d : Enemy3d
             return;
         }
 
-        Agent.destination = patrolPoints[destPoint];
+        Agent.destination = patrolPoints[destPoint].position;
 
         destPoint = (destPoint + 1) % patrolPoints.Length;
     }
