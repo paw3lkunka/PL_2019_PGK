@@ -11454,6 +11454,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3143279563993299372, guid: 4df24f1b20056de40826ff2093d55aca,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 7445830757614172466}
+    - target: {fileID: 3143279563993299372, guid: 4df24f1b20056de40826ff2093d55aca,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 2097608333
+      objectReference: {fileID: 0}
+    - target: {fileID: 3143279563993299372, guid: 4df24f1b20056de40826ff2093d55aca,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4df24f1b20056de40826ff2093d55aca, type: 3}
 --- !u!1001 &1356547907
@@ -38351,6 +38366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791e6124861d8ce4f89999a9179006c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  refillAmout: 0.3
 --- !u!1 &1822049281
 GameObject:
   m_ObjectHideFlags: 0
@@ -38687,3 +38703,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dccb0e34f710924bb81ab94260a4269, type: 3}
+--- !u!20 &7445830757614172466 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7445830758222196401, guid: 0dccb0e34f710924bb81ab94260a4269,
+    type: 3}
+  m_PrefabInstance: {fileID: 7445830757614172465}
+  m_PrefabAsset: {fileID: 0}

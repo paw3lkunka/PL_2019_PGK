@@ -65,63 +65,59 @@ public class CrewSceneManager : MonoBehaviour
         InitializeCursor();
         GameManager.Gui.Initialize();
 
-        if(input != null)
-        {
-            input.Gameplay.SetWalkTarget.performed += SetWalkTargetIndicator;
-            input.Gameplay.SetWalkTarget.Enable();
+        input.Gameplay.SetWalkTarget.performed += SetWalkTargetIndicator;
+        input.Gameplay.SetWalkTarget.Enable();
 
-            if (combatMode)
-            {
-                input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
-                input.CombatMode.SetShootTarget.Enable();
-            }
+        if (combatMode)
+        {
+            input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
+            input.CombatMode.SetShootTarget.Enable();
         }
     }
     
     private void OnDisable()
     {
-        if(input != null)
-        {
-            input.Gameplay.SetWalkTarget.performed -= SetWalkTargetIndicator;
-            input.Gameplay.SetWalkTarget.Disable();
+        input.Gameplay.SetWalkTarget.performed -= SetWalkTargetIndicator;
+        input.Gameplay.SetWalkTarget.Disable();
 
-            if (combatMode)
-            {
-                input.CombatMode.SetShootTarget.performed -= SetShootTargetIndicator;
-                input.CombatMode.SetShootTarget.Disable();
-            }
+        if (combatMode)
+        {
+            input.CombatMode.SetShootTarget.performed -= SetShootTargetIndicator;
+            input.CombatMode.SetShootTarget.Disable();
         }
     }
 
     private void Update()
     {
-        
         if(enabled)
         {
-            switch (GameManager.Instance.inputSchedule)
+            switch (GameManager.Instance.currentInputScheme)
             {
-                case InputSchedule.MouseKeyboard:
+                case InputSchemeEnum.MouseKeyboard:
                     MoveCursorPointer();
                     break;
 
-                case InputSchedule.Gamepad:
+                case InputSchemeEnum.Gamepad:
                     MoveCursorGamepad();
                     break;
-
-                case InputSchedule.JoystickKeyboard:
+                    
+                case InputSchemeEnum.JoystickKeyboard:
                     MoveCursorJoystick();
                     break;
 
-                case InputSchedule.Touchscreen:
+                case InputSchemeEnum.Touchscreen:
                     break;
             }
         }
 
-        var cursorLeaderDistance = Vector2.Distance(cultLeader.transform.position, cursorInstance.transform.position);
+        if(cultLeader)
+        {
+            var cursorLeaderDistance = Vector2.Distance(cultLeader.transform.position, cursorInstance.transform.position);
 
-        var currentCursorColor = cursorInstanceRenderer.color;
-        currentCursorColor.a = cursorLeaderDistance / cursorRange;
-        cursorInstanceRenderer.color = currentCursorColor;
+            var currentCursorColor = cursorInstanceRenderer.color;
+            currentCursorColor.a = cursorLeaderDistance / cursorRange;
+            cursorInstanceRenderer.color = currentCursorColor;
+        }        
     }
 
     private void OnDestroy()
@@ -182,10 +178,7 @@ public class CrewSceneManager : MonoBehaviour
 
     private void SetWalkTargetIndicator(InputAction.CallbackContext ctx)
     {
-        if (!GameManager.Gui.isMouseOver)
-        {
-            walkTargetIndicator.transform.position = cursorInstance.position;
-        }
+        walkTargetIndicator.transform.position = cursorInstance.position;
     }
 
     private void SetShootTargetIndicator(InputAction.CallbackContext ctx)

@@ -63,10 +63,7 @@ public class MoveToCursorClick : MonoBehaviour
 
     private void SetWalkTarget(InputAction.CallbackContext ctx)
     {
-        if (!GameManager.Gui.isMouseOver)
-        {
-            targetPos = MapSceneManager.Instance.cursorInstance.position;
-        }
+        targetPos = MapSceneManager.Instance.cursorInstance.position;
     }
 
     #endregion

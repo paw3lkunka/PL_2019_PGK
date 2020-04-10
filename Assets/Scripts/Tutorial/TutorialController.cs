@@ -62,16 +62,9 @@ public class TutorialController : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        GameManager.Instance.RemoveCultistsFromCrew();
-        GameManager.Instance.RestartCultists();
-    }
-
     #endregion
 
     #region Component
-
 
 
     #endregion

@@ -33,23 +33,15 @@ public class RuntimeGenerator : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         GameManager.Instance.OnLocationEnter += OnLocationEnter;
         GameManager.Instance.OnLocationExit += OnLocationExit;
-    }
-
-    private void OnEnable()
-    {
         GameManager.Instance.OnGameOver += OnGameOver;
     }
-
-    private void OnDisable()
-    {
-        GameManager.Instance.OnGameOver -= OnGameOver;
-    }
-
+    
     private void OnDestroy()
     {
         GameManager.Instance.mapGenerated = false;
         GameManager.Instance.OnLocationEnter -= OnLocationEnter;
         GameManager.Instance.OnLocationExit -= OnLocationExit;
+        GameManager.Instance.OnGameOver -= OnGameOver;
     }
 
     private void Start()

@@ -306,6 +306,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3143279563993299372, guid: 4df24f1b20056de40826ff2093d55aca,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 231368551}
+    - target: {fileID: 3143279563993299372, guid: 4df24f1b20056de40826ff2093d55aca,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 2097608333
+      objectReference: {fileID: 0}
+    - target: {fileID: 3143279563993299372, guid: 4df24f1b20056de40826ff2093d55aca,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4df24f1b20056de40826ff2093d55aca, type: 3}
 --- !u!1 &181936916
@@ -9843,6 +9858,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dccb0e34f710924bb81ab94260a4269, type: 3}
+--- !u!20 &231368551 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7445830758222196401, guid: 0dccb0e34f710924bb81ab94260a4269,
+    type: 3}
+  m_PrefabInstance: {fileID: 231368550}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &258349896 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1679860599912029667, guid: 0357eb8436591624499dc93282e9badd,

@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class Cultist : Character
 {
     #region Variables
+    public GameObject healthBarReference;
     [Header("Standard mode behaviour")]
     public float standardDamage;
     public float standardSpeed;
@@ -103,12 +104,12 @@ public class Cultist : Character
 
         if (CrewSceneManager.Instance.combatMode)
         {
-            gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(true);
+            healthBarReference.SetActive(true);
         }
         else
         {
             // Hide HealthBar on neutral scenes
-            gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(false);
+            healthBarReference.SetActive(false);
         }
     }
 

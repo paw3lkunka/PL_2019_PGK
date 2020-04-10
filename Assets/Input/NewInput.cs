@@ -82,6 +82,17 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""action"": ""SetShootTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d6a2da85-95fe-44a9-992d-6793a4bf2884"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SetShootTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -91,9 +102,9 @@ public class @NewInput : IInputActionCollection, IDisposable
             ""actions"": [
                 {
                     ""name"": ""MoveCursor"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""ca9e273c-fe69-4b34-9937-3cfec5ef9452"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -109,6 +120,14 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""91e14fe2-6552-498c-adda-c3723a08dac3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ShowHideInfoLog"",
+                    ""type"": ""Button"",
+                    ""id"": ""eeab1485-5897-4f47-95a2-b7d3322bd800"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -194,6 +213,17 @@ public class @NewInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""2eb1061a-e354-46e7-92e5-d01e9b3ee2c8"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SetWalkTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a2647c00-26b4-4631-a443-e33a9bcb21c2"",
                     ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
@@ -222,6 +252,50 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70e51b2a-0997-45f4-b47c-170b7d015a14"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa1a53e8-97f0-434d-8ff3-7bc6a1462bb8"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard;JoystickKeyboard"",
+                    ""action"": ""ShowHideInfoLog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4a9e25f-ce6e-4c52-8dd8-a2df92fb60aa"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ShowHideInfoLog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2fdbf37d-b185-427a-9ff1-5872b57cd2b8"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ShowHideInfoLog"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -267,14 +341,6 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""name"": ""Point"",
                     ""type"": ""PassThrough"",
                     ""id"": ""e24b6683-2a2c-468b-83f2-10534a0bd322"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ShowHideInfoLog"",
-                    ""type"": ""Button"",
-                    ""id"": ""30f9e3bb-ff1a-43ff-9d14-aedd2cc3d1a1"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -621,28 +687,6 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ed0a616c-0e0c-4ab5-b93a-869b5f85b899"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MouseKeyboard;JoystickKeyboard"",
-                    ""action"": ""ShowHideInfoLog"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d50da95e-91b0-43ca-8d08-ebd7df19abb0"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ShowHideInfoLog"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -712,6 +756,7 @@ public class @NewInput : IInputActionCollection, IDisposable
         m_Gameplay_MoveCursor = m_Gameplay.FindAction("MoveCursor", throwIfNotFound: true);
         m_Gameplay_SetWalkTarget = m_Gameplay.FindAction("SetWalkTarget", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
+        m_Gameplay_ShowHideInfoLog = m_Gameplay.FindAction("ShowHideInfoLog", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -719,7 +764,6 @@ public class @NewInput : IInputActionCollection, IDisposable
         m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
         m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
-        m_UI_ShowHideInfoLog = m_UI.FindAction("ShowHideInfoLog", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -805,6 +849,7 @@ public class @NewInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_MoveCursor;
     private readonly InputAction m_Gameplay_SetWalkTarget;
     private readonly InputAction m_Gameplay_Pause;
+    private readonly InputAction m_Gameplay_ShowHideInfoLog;
     public struct GameplayActions
     {
         private @NewInput m_Wrapper;
@@ -812,6 +857,7 @@ public class @NewInput : IInputActionCollection, IDisposable
         public InputAction @MoveCursor => m_Wrapper.m_Gameplay_MoveCursor;
         public InputAction @SetWalkTarget => m_Wrapper.m_Gameplay_SetWalkTarget;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
+        public InputAction @ShowHideInfoLog => m_Wrapper.m_Gameplay_ShowHideInfoLog;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -830,6 +876,9 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @ShowHideInfoLog.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShowHideInfoLog;
+                @ShowHideInfoLog.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShowHideInfoLog;
+                @ShowHideInfoLog.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShowHideInfoLog;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -843,6 +892,9 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @ShowHideInfoLog.started += instance.OnShowHideInfoLog;
+                @ShowHideInfoLog.performed += instance.OnShowHideInfoLog;
+                @ShowHideInfoLog.canceled += instance.OnShowHideInfoLog;
             }
         }
     }
@@ -856,7 +908,6 @@ public class @NewInput : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_Cancel;
     private readonly InputAction m_UI_Click;
     private readonly InputAction m_UI_Point;
-    private readonly InputAction m_UI_ShowHideInfoLog;
     public struct UIActions
     {
         private @NewInput m_Wrapper;
@@ -866,7 +917,6 @@ public class @NewInput : IInputActionCollection, IDisposable
         public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
         public InputAction @Click => m_Wrapper.m_UI_Click;
         public InputAction @Point => m_Wrapper.m_UI_Point;
-        public InputAction @ShowHideInfoLog => m_Wrapper.m_UI_ShowHideInfoLog;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -891,9 +941,6 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @Point.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
                 @Point.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
                 @Point.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
-                @ShowHideInfoLog.started -= m_Wrapper.m_UIActionsCallbackInterface.OnShowHideInfoLog;
-                @ShowHideInfoLog.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnShowHideInfoLog;
-                @ShowHideInfoLog.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnShowHideInfoLog;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -913,9 +960,6 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
-                @ShowHideInfoLog.started += instance.OnShowHideInfoLog;
-                @ShowHideInfoLog.performed += instance.OnShowHideInfoLog;
-                @ShowHideInfoLog.canceled += instance.OnShowHideInfoLog;
             }
         }
     }
@@ -965,6 +1009,7 @@ public class @NewInput : IInputActionCollection, IDisposable
         void OnMoveCursor(InputAction.CallbackContext context);
         void OnSetWalkTarget(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnShowHideInfoLog(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -973,6 +1018,5 @@ public class @NewInput : IInputActionCollection, IDisposable
         void OnCancel(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
-        void OnShowHideInfoLog(InputAction.CallbackContext context);
     }
 }

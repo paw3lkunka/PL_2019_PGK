@@ -24,7 +24,7 @@ public class RestartButtonScript : MonoBehaviour
 
     public void RestartOnClick()
     {
-        GameManager.Instance.Restart();
+        GameManager.Instance.BackToMenu();
     }
 
     #endregion

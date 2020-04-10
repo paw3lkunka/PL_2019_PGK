@@ -134,9 +134,7 @@ public class ResourceUsage : MonoBehaviour
         {
             CrewSize -= 1;
             int removeIndex = rand.Next() % (GameManager.Instance.ourCrew.Count - 1) + 1;
-            Debug.Log(removeIndex);
-            Destroy(GameManager.Instance.ourCrew[removeIndex]);
-            GameManager.Instance.ourCrew.RemoveAt(removeIndex);
+            GameManager.Instance.ourCrew[removeIndex].GetComponent<Cultist>().Die();
             timeLastMemberDied = Time.timeSinceLevelLoad;
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class CultLeader : Character
 {
     #region Variables
-
+    public GameObject healthBarReference;
     [Header("Standard mode behaviour")]
     public float standardSpeed;
     public float standardDefence;
@@ -76,12 +76,12 @@ public class CultLeader : Character
 
         if (CrewSceneManager.Instance.combatMode)
         {
-            gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(true);
+            healthBarReference.SetActive(true);
         }
         else
         {
             // Hide HealthBar on neutral scenes
-            gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(false);
+            healthBarReference.SetActive(false);
         }
     }
 
@@ -169,10 +169,10 @@ public class CultLeader : Character
 
     private void OnSceneUnload(Scene scene)
     {
-        if (scene.name != "MainMap" && scene.name != "MainMenu")
-        {
-            GameManager.Instance.ourCrew.Remove(gameObject);
-        }
+        //if (scene.name != "MainMap" && scene.name != "MainMenu")
+        //{
+        //    GameManager.Instance.ourCrew.Remove(gameObject);
+        //}
     }
 
     public override void TakeDamage(int damage)

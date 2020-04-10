@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
-public enum InputSchedule
+public enum InputSchemeEnum
 {
     MouseKeyboard,
     Gamepad,
@@ -161,9 +161,26 @@ public class GameManager : MonoBehaviour
 
     public List<Location> ShrinesVisited { get; set; }
 
+    // Input related global variables
+    #region Input Fields
+
     [HideInInspector]
     public NewInput input;
-    public InputSchedule inputSchedule;
+    
+    private PlayerInput playerInput;
+    [HideInInspector]
+    public event Action<PlayerInput> InputSchemeChange
+    {
+        add { playerInput.onControlsChanged += value; }
+        remove { playerInput.onControlsChanged -= value; }
+    }
+
+    public InputSchemeEnum currentInputScheme;
+
+    #endregion
+    
+    private bool firstLoad = false;
+    public bool won = false;
 
     #endregion
 
@@ -176,14 +193,26 @@ public class GameManager : MonoBehaviour
 
         gameOverScreenInstance = null;
         input = new NewInput();
+        playerInput = GetComponent<PlayerInput>();
         ShrinesVisited = new List<Location>();
 
         ResetIndicatorsValues();
         if (Instance == null)
         {
             Instance = this;
-            Initialize();
+            DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoad;
         }
+    }
+
+    private void OnEnable()
+    {
+        InputSchemeChange += OnInputSchemeChange;
+    }
+
+    private void OnDisable()
+    {
+        InputSchemeChange -= OnInputSchemeChange;
     }
 
     private void Update()
@@ -227,10 +256,11 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(eventSystem);
         Gui = Instantiate(guiPrefab, new Vector3(0, 0, -10), Quaternion.identity).GetComponent<GUI>();
         Gui.gameObject.SetActive(false);
         ourCrew = new List<GameObject>();
+        Destroy(gameOverScreenInstance);
         RestartCultists();
     }
 
@@ -259,7 +289,6 @@ public class GameManager : MonoBehaviour
             Destroy(ourCrew[i]);
         }
         ourCrew.Clear();
-        cultistNumber = 0;
     }
 
     private void ResetIndicatorsValues()
@@ -273,18 +302,16 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         OnGameOver?.Invoke();
-        gameOverScreenInstance = Instantiate(gameOverScreenPrefab);
+        if (won)
+        {
+            Destroy(Gui.transform.root.gameObject);
+            SceneManager.LoadScene("EndgameScene");
+        }
+        else
+        {
+            gameOverScreenInstance = Instantiate(gameOverScreenPrefab);
+        }
         Cursor.visible = true;
-    }
-
-    public void Restart()
-    {
-        ResetIndicatorsValues();
-        SceneManager.LoadScene("MainMenu");
-        Destroy(Gui.gameObject);
-        Gui = null;
-        Destroy(GameOverScreenInstance);
-        Initialize();
     }
 
     public void HardModeStart()
@@ -320,12 +347,40 @@ public class GameManager : MonoBehaviour
         FaithForKilledEnemy /= 2;
     }
 
+    public void BackToMenu()
+    {
+        ResetIndicatorsValues();
+        Destroy(gameOverScreenInstance);
+        Gui.gameObject.SetActive(false);
+        RestartCultists();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+
     #endregion
 
     #region event invokes
 
     public void OnLocationExitInvoke() => OnLocationExit?.Invoke();
     public void OnLocationEnterInvoke() => OnLocationEnter?.Invoke();
-    
+
+    public void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        if(!firstLoad && scene.name.Equals("MainMenu"))
+        {
+            Initialize();
+            firstLoad = true;
+        }
+    }
+
+    #endregion
+
+    #region Input
+
+    private void OnInputSchemeChange(PlayerInput obj)
+    {
+        currentInputScheme = (InputSchemeEnum)(Enum.Parse(typeof(InputSchemeEnum), obj.currentControlScheme));
+    }
+
     #endregion
 }

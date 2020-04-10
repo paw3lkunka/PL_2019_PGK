@@ -192,6 +192,10 @@ PrefabInstance:
       propertyPath: spawnChances.Array.data[2]
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1262586932, guid: a3704f0974fb05540b553aa0fbda1256, type: 3}
+      propertyPath: reshuffleEachTime
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3704f0974fb05540b553aa0fbda1256, type: 3}
 --- !u!1001 &1988005042
@@ -362,29 +366,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cf7d06c13046f441857d7fb3dde8b8d, type: 3}
---- !u!1 &7243372781306124307 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7243372780804643250, guid: 8cf7d06c13046f441857d7fb3dde8b8d,
-    type: 3}
-  m_PrefabInstance: {fileID: 7243372781306124306}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7243372781306124308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7243372781306124307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0afe8d6cf65f47f498f5cb8b994ff365, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseRythmFlag: 0
-  PlotText:
-  - You lost all of your followers, but it isn't over. You can always make an effort
-    to recruit some. Try find some town.
-  cultistLeaderAloneFlag: 1
-  panelPrefab: {fileID: 5759907447699433961, guid: b3256da19cddcba4bba00320dfb7c1e9,
-    type: 3}
-  collisionFlag: 0

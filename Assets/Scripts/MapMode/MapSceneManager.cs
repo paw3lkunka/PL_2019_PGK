@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MapSceneManager : MonoBehaviour
+public class MapSceneManager : MonoBehaviour, IInfoLogInvoker
 {
     #region Variables
 
@@ -44,27 +44,28 @@ public class MapSceneManager : MonoBehaviour
     private void OnEnable()
     {
         InitializeCursor();
+        InfoLogInvokerExtensions.SetInfoLog(this);
     }
 
     private void Update()
     {
         if (enabled)
         {
-            switch (GameManager.Instance.inputSchedule)
+            switch (GameManager.Instance.currentInputScheme)
             {
-                case InputSchedule.MouseKeyboard:
+                case InputSchemeEnum.MouseKeyboard:
                     MoveCursorPointer();
                     break;
 
-                case InputSchedule.Gamepad:
+                case InputSchemeEnum.Gamepad:
                     MoveCursorGamepad();
                     break;
 
-                case InputSchedule.JoystickKeyboard:
+                case InputSchemeEnum.JoystickKeyboard:
                     MoveCursorJoystick();
                     break;
 
-                case InputSchedule.Touchscreen:
+                case InputSchemeEnum.Touchscreen:
                     break;
             }
         }
@@ -77,6 +78,62 @@ public class MapSceneManager : MonoBehaviour
             DestroyAllDots();
             positions.Clear();
         }
+    }
+
+    #endregion
+
+    #region IInfoLogInvoker
+
+    public void SetInfoLog()
+    {
+        var shrinesVisited = GameManager.Instance.ShrinesVisited.Count;
+        string mapInfoLogHeader = null;
+        string mapInfoLogText = null;
+
+        if (shrinesVisited >= 3)
+        {
+            mapInfoLogHeader = "Call of the temple";
+            mapInfoLogText = "Our holy place is calling us right now... ";
+        }
+        else
+        {
+            switch (Random.Range(0, 2))
+            {
+                case 0:
+                    mapInfoLogHeader = "Energy resonates in the desert";
+                    break;
+
+                case 1:
+                    mapInfoLogHeader = "Echo of our ancestors";
+                    break;
+
+                case 2:
+                    mapInfoLogHeader = "Elder ruins call";
+                    break;
+            }
+
+            switch (Random.Range(0, 2))
+            {
+                case 0:
+                    mapInfoLogText = "I hear the voice calling us to pray...";
+                    break;
+
+                case 1:
+                    mapInfoLogText = "We must find our bloody roots...";
+                    break;
+
+                case 2:
+                    mapInfoLogText = "Let's open the gate to our destiny...";
+                    break;
+            }
+        }
+
+        InfoLog.Instance.ShowLogForSeconds(mapInfoLogText, mapInfoLogHeader, 10.0f);
+    }
+
+    public void UpdateInfoLog()
+    {
+        //Nothing to do here
     }
 
     #endregion

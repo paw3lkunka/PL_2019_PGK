@@ -98,21 +98,21 @@ public class CrewSceneManager3d : MonoBehaviour
         
         if(enabled)
         {
-            switch (GameManager.Instance.inputSchedule)
+            switch (GameManager.Instance.currentInputScheme)
             {
-                case InputSchedule.MouseKeyboard:
+                case InputSchemeEnum.MouseKeyboard:
                     MoveCursorPointer();
                     break;
 
-                case InputSchedule.Gamepad:
+                case InputSchemeEnum.Gamepad:
                     MoveCursorGamepad();
                     break;
 
-                case InputSchedule.JoystickKeyboard:
+                case InputSchemeEnum.JoystickKeyboard:
                     MoveCursorJoystick();
                     break;
 
-                case InputSchedule.Touchscreen:
+                case InputSchemeEnum.Touchscreen:
                     break;
             }
         }

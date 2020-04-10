@@ -61,6 +61,7 @@ public class Character : MonoBehaviour
         if (hp <= 0)
         {
             Die();
+            return;
         }
 
         healthBar?.SetBar(hp, maxHp);
@@ -85,6 +86,7 @@ public class Character : MonoBehaviour
     {
         GameManager.Instance.ourCrew.Remove(gameObject);
         CrewSceneManager.Instance.enemies.Remove(gameObject);
+        /*
         StartCoroutine(Routine());
 
         IEnumerator Routine()
@@ -92,6 +94,8 @@ public class Character : MonoBehaviour
             yield return new WaitForEndOfFrame();
             Destroy(gameObject);
         }
+        */
+        Destroy(gameObject);
     }
 
     public void FlipState(CharacterState state)
