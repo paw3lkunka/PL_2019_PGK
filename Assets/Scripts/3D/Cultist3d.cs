@@ -101,7 +101,7 @@ public class Cultist3d : Character3d
             input.CombatMode.SetShootTarget.performed += AimToCursorPosition;
         }
 
-        if (CrewSceneManager3d.Instance.combatMode)
+        if (FindObjectOfType<CrewSceneManager3d>().combatMode)
         {
             gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(true);
         }

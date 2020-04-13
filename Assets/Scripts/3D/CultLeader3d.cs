@@ -23,11 +23,10 @@ public class CultLeader3d : Character3d
     #region MonoBehaviour
 
     protected override void Awake()
-    {
+    {        
         SceneManager.sceneLoaded += OnSceneLoad;
         SceneManager.sceneUnloaded += OnSceneUnload;
         GameManager.Instance.OnGameOver += OnGameOver;
-
         DontDestroyOnLoad(gameObject);
         GameManager.Instance.ourCrew.Add(gameObject);
 
@@ -48,6 +47,9 @@ public class CultLeader3d : Character3d
 
     protected override void Start()
     {
+        Agent.Warp(CrewSceneManager3d.Instance.startPoint + FormationOffset);
+        //CrewSceneManager3d.Instance.cultLeader = transform; // ! Moved as a Crew Scene Manager responsibility
+
         defence = standardDefence;
         Agent.speed = standardSpeed;
 
@@ -69,13 +71,14 @@ public class CultLeader3d : Character3d
     }
 
     protected void OnEnable()
-    {
-        if(input != null)
+    { 
+        
+        if (input != null)
         {
             input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
         }
 
-        if (CrewSceneManager3d.Instance.combatMode)
+        if (FindObjectOfType<CrewSceneManager3d>().combatMode)
         {
             gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(true);
         }
@@ -162,8 +165,6 @@ public class CultLeader3d : Character3d
 
             default:
                 gameObject.SetActive(true);
-                Agent.Warp(CrewSceneManager3d.Instance.startPoint + FormationOffset);
-                CrewSceneManager3d.Instance.cultLeader = transform;
                 break;
         }
     }

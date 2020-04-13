@@ -60,6 +60,11 @@ public class CrewSceneManager3d : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        cultLeader = FindObjectOfType<CultLeader3d>().transform;
+    }
+
     private void OnEnable()
     {
         InitializeCursor();

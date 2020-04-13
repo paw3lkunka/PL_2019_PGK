@@ -149,12 +149,12 @@ public partial class AudioTimeline : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.Instance.StartCoroutine(Routine());
-        IEnumerator Routine()
-        {
-            yield return new WaitForEndOfFrame();
-            Instance = null;
-        }
+        //GameManager.Instance.StartCoroutine(Routine());
+        //IEnumerator Routine()
+        //{
+        //    yield return new WaitForEndOfFrame();
+        //    Instance = null;
+        //}
     }
 
     private void Update()

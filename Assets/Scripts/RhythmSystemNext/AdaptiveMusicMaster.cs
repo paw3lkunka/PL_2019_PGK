@@ -99,14 +99,14 @@ public class AdaptiveMusicMaster : MonoBehaviour
     private void FadeToLight()
     {
         StopAllCoroutines();
-        Debug.Log("Fade to light");
+        //Debug.Log("Fade to light");
         StartCoroutine(FadeToLightCoroutine());
     }
 
     private void FadeToHeavy()
     {
         StopAllCoroutines();
-        Debug.Log("Fade to heavy");
+        //Debug.Log("Fade to heavy");
         StartCoroutine(FadeToHeavyCoroutine());
     }
 

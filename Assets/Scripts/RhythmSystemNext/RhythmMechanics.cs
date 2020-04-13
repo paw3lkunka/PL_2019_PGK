@@ -83,12 +83,12 @@ public class RhythmMechanics : MonoBehaviour
     }
     private void OnDestroy()
     {
-        GameManager.Instance.StartCoroutine(Routine());
-        IEnumerator Routine()
-        {
-            yield return new WaitForEndOfFrame();
-            Instance = null;
-        }
+        //GameManager.Instance.StartCoroutine(Routine());
+        //IEnumerator Routine()
+        //{
+        //    yield return new WaitForEndOfFrame();
+        //    Instance = null;
+        //}
     }
 
     #endregion
