@@ -18,7 +18,7 @@ public class RecruitNewCultist : MonoBehaviour
     {
         if (other.gameObject.CompareTag("NPC") && instanced == null)
         {
-            instanced = Instantiate(dialogBox, Vector3.zero, Quaternion.identity, GameManager.Gui.UICanvas.transform);
+            instanced = Instantiate(dialogBox, Vector3.zero, Quaternion.identity, ApplicationManager.Gui.UICanvas.transform);
 
             instanced.GetComponent<DialogBox>().caller = other.gameObject;
         }

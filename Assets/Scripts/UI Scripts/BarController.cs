@@ -19,46 +19,50 @@ public class BarController : MonoBehaviour
 
     void Start()
     {
-        lastCultistNumber = GameManager.Instance.cultistNumber;
+        lastCultistNumber = GameplayManager.Instance.ourCrew.Count;
         prefab.SetActive(false);
     }
 
     void LateUpdate()
     {
-        if (lastCultistNumber < GameManager.Instance.cultistNumber)
+        if (lastCultistNumber < GameplayManager.Instance.ourCrew.Count)
         {
             prefab.GetComponent<InformationBar>().informationIndex = 0;
             ChangeInstance();
 
             instanceBeginTime = Time.time;
-            lastCultistNumber = GameManager.Instance.cultistNumber;
+            lastCultistNumber = GameplayManager.Instance.ourCrew.Count;
             changed = true;
         }
-        else if (lastCultistNumber > GameManager.Instance.cultistNumber && GameManager.Instance.Water < 0.2f && SceneManager.GetActiveScene().name.Equals("MainMap"))
+        else if (lastCultistNumber > GameplayManager.Instance.ourCrew.Count 
+                && GameplayManager.Instance.Water < 0.2f 
+                && SceneManager.GetActiveScene().name.Equals(ApplicationManager.Instance.worldMapScene))
         {
             prefab.GetComponent<InformationBar>().informationIndex = 2;
             ChangeInstance();
 
             instanceBeginTime = Time.time;
-            lastCultistNumber = GameManager.Instance.cultistNumber;
+            lastCultistNumber = GameplayManager.Instance.ourCrew.Count;
             changed = true;
         }
-        else if (lastCultistNumber > GameManager.Instance.cultistNumber && GameManager.Instance.Faith < 0.2f && SceneManager.GetActiveScene().name.Equals("MainMap"))
+        else if (lastCultistNumber > GameplayManager.Instance.ourCrew.Count 
+                && GameplayManager.Instance.Faith < 0.2f 
+                && SceneManager.GetActiveScene().name.Equals(ApplicationManager.Instance.worldMapScene))
         {
             prefab.GetComponent<InformationBar>().informationIndex = 1;
             ChangeInstance();
 
             instanceBeginTime = Time.time;
-            lastCultistNumber = GameManager.Instance.cultistNumber;
+            lastCultistNumber = GameplayManager.Instance.ourCrew.Count;
             changed = true;
         }
-        else if (lastCultistNumber > GameManager.Instance.cultistNumber)
+        else if (lastCultistNumber > GameplayManager.Instance.ourCrew.Count)
         {
             prefab.GetComponent<InformationBar>().informationIndex = 3;
             ChangeInstance();
 
             instanceBeginTime = Time.time;
-            lastCultistNumber = GameManager.Instance.cultistNumber;
+            lastCultistNumber = GameplayManager.Instance.ourCrew.Count;
             changed = true;
         }
 

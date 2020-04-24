@@ -29,7 +29,7 @@ public class DebugUI : MonoBehaviour
 
     void Start()
     {
-        if (!GameManager.Instance.Debug)
+        if (!ApplicationManager.Instance.Debug)
             Destroy(gameObject);
 
         textMesh = GetComponent<TextMeshProUGUI>();

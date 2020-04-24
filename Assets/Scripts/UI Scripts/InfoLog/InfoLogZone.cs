@@ -90,7 +90,7 @@ public class InfoLogZone : MonoBehaviour, IInfoLogInvoker
             finalText += "\n";
         }
 
-        switch (GameManager.Instance.currentInputScheme)
+        switch (ApplicationManager.Instance.CurrentInputScheme)
         {
             case InputSchemeEnum.MouseKeyboard:
                 finalText += keyboardText;
