@@ -29,19 +29,19 @@ public class ResourceUsage : MonoBehaviour
 
         if (isFaith)
         {
-            ApplicationManager.Instance.LowFaithLevelStart += SetLow;
-            ApplicationManager.Instance.LowFaithLevelEnd += UnsetLow;
+            GameplayManager.Instance.LowFaithLevelStart += SetLow;
+            GameplayManager.Instance.LowFaithLevelEnd += UnsetLow;
 
-            ApplicationManager.Instance.HighFaithLevelStart += SetHigh;
-            ApplicationManager.Instance.HighFaithLevelEnd += UnsetHigh;
+            GameplayManager.Instance.HighFaithLevelStart += SetHigh;
+            GameplayManager.Instance.HighFaithLevelEnd += UnsetHigh;
 
-            ApplicationManager.Instance.FanaticStart += SetFanatic;
-            ApplicationManager.Instance.FanaticEnd += UnsetFanatic;
+            GameplayManager.Instance.FanaticStart += SetFanatic;
+            GameplayManager.Instance.FanaticEnd += UnsetFanatic;
         }
         else
         {
-            ApplicationManager.Instance.LowWaterLevelStart += SetLow;
-            ApplicationManager.Instance.LowWaterLevelEnd += UnsetLow;
+            GameplayManager.Instance.LowWaterLevelStart += SetLow;
+            GameplayManager.Instance.LowWaterLevelEnd += UnsetLow;
         }
     }
 
@@ -49,42 +49,47 @@ public class ResourceUsage : MonoBehaviour
     {
         if (MapSceneManager.Instance.playerPositionController.Moved)
         {
+            int crewSize = GameplayManager.Instance.ourCrew.Count;
             if (isFaith)
             {
-                Amount -= UsageFactor * (CrewSize > 7.0f ? (CrewSize / 7) : 1.0f);
+                Amount -= UsageFactor * (crewSize > 7 ? (crewSize / 7.0f) : 1.0f);
                 //"Faith strenghtening"
-                Amount += UsageFactor * (CrewSize > 9.0f ? (CrewSize / 9) : 0.0f);
+                Amount += UsageFactor * (crewSize > 9 ? (crewSize / 9.0f) : 0.0f);
             }
             else
             {
-                Amount -= UsageFactor * (CrewSize > 5.0f ? (CrewSize / 5) : 1.0f);
+                Amount -= UsageFactor * (crewSize > 5 ? (crewSize / 5.0f) : 1.0f);
             }
 
             if (low)
+            {
                 OnLowLevel();
+            }
 
             if (isFaith)
             {
                 if (high)
-                    OnHighFaithLEvel();
+                {
+                    OnHighFaithLevel();
+                }
 
                 if (fanatic)
+                {
                     OnFanatic();
+                }
             }
 
             playerLastPosition = transform.position;
 
-            if (CrewSize > 25)
+            if (crewSize > 25)
             {
-                CrewSize = 25;
-                while(ApplicationManager.Instance.ourCrew.Count > 25)
+                while(GameplayManager.Instance.ourCrew.Count > 25)
                 {
-                    Destroy(ApplicationManager.Instance.ourCrew[ApplicationManager.Instance.ourCrew.Count - 1]);
-                    ApplicationManager.Instance.ourCrew.RemoveAt(ApplicationManager.Instance.ourCrew.Count - 1);
+                    Destroy(GameplayManager.Instance.ourCrew[GameplayManager.Instance.ourCrew.Count - 1]);
+                    GameplayManager.Instance.ourCrew.RemoveAt(GameplayManager.Instance.ourCrew.Count - 1);
                 }
             }
         }
-
     }
 
     #endregion
@@ -97,49 +102,42 @@ public class ResourceUsage : MonoBehaviour
         {
             if (isFaith)
             {
-                return ApplicationManager.Instance.faithUsageFactor;
+                return GameplayManager.Instance.faithUsageFactor;
             }
             else
             {
-                return ApplicationManager.Instance.waterUsageFactor;
+                return GameplayManager.Instance.waterUsageFactor;
             }
         }
     }
 
     private float Amount
     {
-        get => isFaith ? ApplicationManager.Instance.Faith : ApplicationManager.Instance.Water;
+        get => isFaith ? GameplayManager.Instance.Faith : GameplayManager.Instance.Water;
         set
         {
             if (isFaith)
             {
-                ApplicationManager.Instance.Faith = value;
+                GameplayManager.Instance.Faith = value;
             }
             else
             {
-                ApplicationManager.Instance.Water = value;
+                GameplayManager.Instance.Water = value;
             }
         }
-    }
-
-    private int CrewSize
-    {
-        get => ApplicationManager.Instance.cultistNumber;
-        set => ApplicationManager.Instance.cultistNumber = value;
     }
 
     private void OnLowLevel()
     {
-        if ((Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) && ApplicationManager.Instance.ourCrew.Count > 1)
+        if ((Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) && GameplayManager.Instance.ourCrew.Count > 1)
         {
-            CrewSize -= 1;
-            int removeIndex = rand.Next() % (ApplicationManager.Instance.ourCrew.Count - 1) + 1;
-            ApplicationManager.Instance.ourCrew[removeIndex].GetComponent<Cultist>().Die();
+            int removeIndex = rand.Next() % (GameplayManager.Instance.ourCrew.Count - 1) + 1;
+            GameplayManager.Instance.ourCrew[removeIndex].GetComponent<Cultist3d>().Die();
             timeLastMemberDied = Time.timeSinceLevelLoad;
         }
     }
 
-    private void OnHighFaithLEvel()
+    private void OnHighFaithLevel()
     {
         // Powiedzieli, żeby usunąć xD
         //if ((Time.timeSinceLevelLoad - timeLastMemberCome) > 15.0f)

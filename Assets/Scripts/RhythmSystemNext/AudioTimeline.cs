@@ -13,13 +13,9 @@ public enum TimelineState { None, Countup, Playing, Paused, Interrupted };
 /// <summary>
 /// Main singleton class responsible for audio rhythm synchronization
 /// </summary>
-public partial class AudioTimeline : MonoBehaviour
+public partial class AudioTimeline : Singleton<AudioTimeline>
 {
     #region Variables
-
-    // Singleton implementation
-    // Note that the timeline can be used to keep music synced between scenes if left "don't destroy on load"
-    public static AudioTimeline Instance;
 
 #pragma warning disable
     [Header("Timeline setup")]
@@ -112,15 +108,6 @@ public partial class AudioTimeline : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance.IsRealNull())
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         barBeatStates = new BeatState[beatsPerBar];
         input = ApplicationManager.Instance.Input;
     }
@@ -145,16 +132,6 @@ public partial class AudioTimeline : MonoBehaviour
 
         input.Gameplay.Pause.performed -= PauseResumeInputHandler;
         input.Gameplay.Pause.Disable();
-    }
-
-    private void OnDestroy()
-    {
-        ApplicationManager.Instance.StartCoroutine(Routine());
-        IEnumerator Routine()
-        {
-            yield return new WaitForEndOfFrame();
-            Instance = null;
-        }
     }
 
     private void Update()
@@ -369,8 +346,8 @@ public partial class AudioTimeline : MonoBehaviour
     private void TimelineInit()
     {
         beatDuration = 60.0d / songBpm;
-        goodTolerance = ApplicationManager.Instance.goodTolerance;
-        greatTolerance = ApplicationManager.Instance.greatTolerance;
+        goodTolerance = ApplicationManager.Instance.GoodTolerance;
+        greatTolerance = ApplicationManager.Instance.GreatTolerance;
         SequenceStartHandler();
     }
 

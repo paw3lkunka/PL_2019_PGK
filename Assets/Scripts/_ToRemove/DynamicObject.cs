@@ -14,7 +14,7 @@ public class DynamicObject : MonoBehaviour
 
     private void OnEnable()
     {
-        if (ApplicationManager.Instance.CurrentLocationsDestroyedDynamicObjects?.Contains(ID) ?? false)
+        if (GameplayManager.Instance.CurrentLocationsDestroyedDynamicObjects?.Contains(ID) ?? false)
         {
             Destroy(gameObject);
         }
@@ -25,12 +25,12 @@ public class DynamicObject : MonoBehaviour
         HashSet<int> value = null;
         try
         {
-            value = ApplicationManager.Instance.destroyedDynamicObjects[ApplicationManager.Instance.currentLocation];
+            value = GameplayManager.Instance.destroyedDynamicObjects[GameplayManager.Instance.currentLocation];
         }
         catch (KeyNotFoundException)
         {
-            ApplicationManager.Instance.destroyedDynamicObjects.Add(ApplicationManager.Instance.currentLocation, new HashSet<int>());
-            value = ApplicationManager.Instance.destroyedDynamicObjects[ApplicationManager.Instance.currentLocation];
+            GameplayManager.Instance.destroyedDynamicObjects.Add(GameplayManager.Instance.currentLocation, new HashSet<int>());
+            value = GameplayManager.Instance.destroyedDynamicObjects[GameplayManager.Instance.currentLocation];
         }
         catch (ArgumentNullException)
         {

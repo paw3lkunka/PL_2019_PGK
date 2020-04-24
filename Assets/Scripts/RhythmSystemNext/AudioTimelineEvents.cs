@@ -4,17 +4,6 @@ using UnityEngine;
 
 public partial class AudioTimeline
 {
-    #region Variables
-
-
-
-    #endregion
-
-    #region MonoBehaviour
-
-
-
-    #endregion
 
     #region Component
 
@@ -102,7 +91,8 @@ public partial class AudioTimeline
         this.keepCombo = keepCombo;
 
         Time.timeScale = 0;
-        Instantiate(ApplicationManager.Instance.pauseScreen);
+        // TODO: Interface with UI Overlay manager
+        //Instantiate(ApplicationManager.Instance.pauseScreen);
 
         // Save beat moment variables
         pauseMoment = AudioSettings.dspTime;

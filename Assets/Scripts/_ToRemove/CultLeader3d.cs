@@ -29,7 +29,7 @@ public class CultLeader3d : Character3d
         ApplicationManager.Instance.OnGameOver += OnGameOver;
 
         DontDestroyOnLoad(gameObject);
-        ApplicationManager.Instance.ourCrew.Add(gameObject);
+        GameplayManager.Instance.ourCrew.Add(gameObject);
 
         string sceneName = SceneManager.GetActiveScene().name;
         if (sceneName == "MainMap" || sceneName == "MainMenu")
@@ -75,7 +75,7 @@ public class CultLeader3d : Character3d
             input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
         }
 
-        if (CrewSceneManager3d.Instance.combatMode)
+        if (CombatSceneManager.Instance.sceneMode == CombatSceneMode.Hostile)
         {
             gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(true);
         }
@@ -98,7 +98,7 @@ public class CultLeader3d : Character3d
     {
         canMove = CheckState(CharacterState.CanMove);
 
-        if (ApplicationManager.Instance.cultistNumber == 1 || ApplicationManager.Instance.ourCrew.Count == 1)
+        if (GameplayManager.Instance.ourCrew.Count == 1)
         {
             defence = 0;
         }
@@ -162,8 +162,8 @@ public class CultLeader3d : Character3d
 
             default:
                 gameObject.SetActive(true);
-                Agent.Warp(CrewSceneManager3d.Instance.startPoint + FormationOffset);
-                CrewSceneManager3d.Instance.cultLeader = transform;
+                Agent.Warp(CombatSceneManager.Instance.startPoint.position + FormationOffset);
+                CombatSceneManager.Instance.cultLeaderTransform = transform;
                 break;
         }
     }
@@ -172,7 +172,7 @@ public class CultLeader3d : Character3d
     {
         if (scene.name != "MainMap" && scene.name != "MainMenu")
         {
-            ApplicationManager.Instance.ourCrew.Remove(gameObject);
+            GameplayManager.Instance.ourCrew.Remove(gameObject);
         }
     }
 
@@ -201,21 +201,22 @@ public class CultLeader3d : Character3d
 
     private void GoToCursorPosition(InputAction.CallbackContext ctx)
     {
-        if (Agent.enabled && !ApplicationManager.Gui.isMouseOver && canMove)
-        {
-            var cursorPosition = CrewSceneManager3d.Instance.cursorInstance.position;
+        // TODO: Check gui mouse over
+        //if (Agent.enabled && !ApplicationManager.Gui.isMouseOver && canMove)
+        //{
+            var cursorPosition = CombatCursorManager.Instance.mainCursor.transform.position;
             var nextDestination = cursorPosition + FormationOffset;
 
             Agent.SetDestination(nextDestination);
-        }
+        //}
     }
 
     private void AimToCursorPosition(InputAction.CallbackContext ctx)
     {
-        var cursorPosition = CrewSceneManager3d.Instance.cursorInstance.position;
+        var cursorPosition = CombatCursorManager.Instance.mainCursor.transform.position;
         var nextTarget = cursorPosition + FormationOffset;
 
-        GetComponent<Shooter>().target = nextTarget;
+        GetComponent<Shooter3d>().target = nextTarget;
     }
 
     #endregion

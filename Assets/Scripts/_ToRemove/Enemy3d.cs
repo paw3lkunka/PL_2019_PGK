@@ -42,19 +42,19 @@ public class Enemy3d : Character3d
 
     protected void OnEnable()
     {
-        CrewSceneManager3d.Instance.enemies.Add(gameObject);
+        CombatSceneManager.Instance.enemies.Add(gameObject);
     }
 
     protected void OnDisable()
     {
-        CrewSceneManager3d.Instance.enemies.Remove(gameObject);
+        CombatSceneManager.Instance.enemies.Remove(gameObject);
     }
 
     protected override void Update()
     {
         base.Update();
 
-        var nearestDistance = ApplicationManager.Instance.ourCrew.NearestFrom(transform.position);
+        var nearestDistance = GameplayManager.Instance.ourCrew.NearestFrom3d(transform.position);
         if (!nearestDistance.Item1)
         {
             return;
@@ -105,13 +105,12 @@ public class Enemy3d : Character3d
 
     public override void Die()
     {
+        float gainedFaith = GameplayManager.Instance.faithForKilledEnemy;
+        GameplayManager.Instance.Faith += gainedFaith;
 
-        float gainedFaith = ApplicationManager.Instance.FaithForKilledEnemy;
-        ApplicationManager.Instance.Faith += gainedFaith;
-
-        if (fatihTextEemitter)
+        if (faithTextEmitter)
         {
-            fatihTextEemitter.Emit("+" + (int)Mathf.Round(gainedFaith * 100), Color.green, 3);
+            faithTextEmitter.Emit("+" + (int)Mathf.Round(gainedFaith * 100), Color.green, 3);
         }
         GetComponent<DynamicObject>()?.RememberAsDestroyed();
         base.Die();

@@ -86,7 +86,7 @@ public class MapSceneManager : MonoBehaviour, IInfoLogInvoker
 
     public void SetInfoLog()
     {
-        var shrinesVisited = ApplicationManager.Instance.ShrinesVisited.Count;
+        var shrinesVisited = GameplayManager.Instance.ShrinesVisited.Count;
         string mapInfoLogHeader = null;
         string mapInfoLogText = null;
 
@@ -143,7 +143,7 @@ public class MapSceneManager : MonoBehaviour, IInfoLogInvoker
     private void InitializeCursor()
     {
         Cursor.visible = false;
-        cursorInstance = Instantiate(cursorPrefab, ApplicationManager.Instance.savedPosition, Quaternion.identity);
+        cursorInstance = Instantiate(cursorPrefab, GameplayManager.Instance.lastWorldMapPosition, Quaternion.identity);
 
         cursorInstanceRenderer = cursorInstance.GetComponent<SpriteRenderer>();
         cursorInstanceRenderer.color = new Color(62.0f / 255.0f, 87.0f / 255.0f, 64.0f / 255.0f, 1.0f);

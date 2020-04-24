@@ -18,8 +18,8 @@ public class PlayerPositionController : MonoBehaviour
     void Start()
     {
         LoadPosition();
-        ApplicationManager.Gui.Initialize();
     }
+
     private void Update()
     {
         Delta = (Vector2)transform.position - lastPos;
@@ -32,7 +32,7 @@ public class PlayerPositionController : MonoBehaviour
 
     public void LoadPosition()
     {
-        transform.position = ApplicationManager.Instance.savedPosition;
+        transform.position = GameplayManager.Instance.lastWorldMapPosition;
     }
 
     #endregion

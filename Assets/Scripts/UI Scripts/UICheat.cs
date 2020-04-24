@@ -14,7 +14,7 @@ public class UICheat : MonoBehaviour
 
     private void Start() 
     {
-        if (!ApplicationManager.Instance.Cheats)
+        if (!ApplicationManager.Instance.enableCheats)
         {
             gameObject.SetActive(false);
         }

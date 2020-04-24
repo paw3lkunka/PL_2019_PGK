@@ -29,7 +29,7 @@ public class DebugUI : MonoBehaviour
 
     void Start()
     {
-        if (!ApplicationManager.Instance.Debug)
+        if (!ApplicationManager.Instance.debugOverlay)
             Destroy(gameObject);
 
         textMesh = GetComponent<TextMeshProUGUI>();
@@ -65,11 +65,11 @@ public class DebugUI : MonoBehaviour
             textMesh.text += "Beat state: " + beatState.ToString() + "\n";
         if (displayBeatNumber)
             textMesh.text += "Beat number: " + beatNumber + "\n";
-        if (adaptiveMusic != null && !adaptiveMusic.CurrentDrumClip.IsRealNull())
+        if (adaptiveMusic != null && adaptiveMusic.CurrentDrumClip != null)
             textMesh.text += "Drum track: " + adaptiveMusic.CurrentDrumClip.name + "\n";
-        if (adaptiveMusic != null && !adaptiveMusic.CurrentMusicClip.Item1.IsRealNull())
+        if (adaptiveMusic != null && adaptiveMusic.CurrentMusicClip.Item1 != null)
             textMesh.text += "Light track: " + adaptiveMusic.CurrentMusicClip.Item1.name + "\n";
-        if (adaptiveMusic != null && !adaptiveMusic.CurrentMusicClip.Item2.IsRealNull())
+        if (adaptiveMusic != null && adaptiveMusic.CurrentMusicClip.Item2 != null)
             textMesh.text += "Heavy track: " + adaptiveMusic.CurrentMusicClip.Item2.name + "\n";
     }
 

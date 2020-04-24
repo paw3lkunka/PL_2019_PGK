@@ -33,7 +33,7 @@ public class Character3d : MonoBehaviour
     public NavMeshAgent Agent { get; private set; }
     public Rigidbody RBody { get; private set; }
     public TextsEmitter healthTextEmitter;
-    public TextsEmitter fatihTextEemitter;
+    public TextsEmitter faithTextEmitter;
 
     private int maxHp;
     private HealthBar healthBar;
