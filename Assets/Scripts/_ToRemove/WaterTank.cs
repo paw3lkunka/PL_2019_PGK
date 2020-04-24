@@ -16,9 +16,9 @@ public class WaterTank : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (ApplicationManager.Instance.ourCrew.IndexOf(collision.gameObject) != -1)
+        if (GameplayManager.Instance.ourCrew.IndexOf(collision.gameObject) != -1)
         {
-            ApplicationManager.Instance.Water += capacity;
+            GameplayManager.Instance.Water += capacity;
             capacity = 0; //for sure
 
             try

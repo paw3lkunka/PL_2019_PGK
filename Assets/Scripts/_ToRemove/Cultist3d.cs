@@ -73,7 +73,7 @@ public class Cultist3d : Character3d
         shooter.baseDamage = standardDamage;
         Agent.speed = standardSpeed;
 
-        isFanatic = GameplayManager.Instance.Faith > ApplicationManager.Instance.fanaticFaithLevel;
+        isFanatic = GameplayManager.Instance.Faith > GameplayManager.Instance.fanaticFaithLevel;
         fanaticState = false;
 
         try
@@ -101,7 +101,7 @@ public class Cultist3d : Character3d
             input.CombatMode.SetShootTarget.performed += AimToCursorPosition;
         }
 
-        if (CrewSceneManager3d.Instance.combatMode)
+        if (CombatSceneManager.Instance.sceneMode == CombatSceneMode.Hostile)
         {
             gameObject.transform.GetComponentInChildren<HealthBar>().gameObject.SetActive(true);
         }
@@ -138,7 +138,7 @@ public class Cultist3d : Character3d
         }
 
 
-        if (CrewSceneManager3d.Instance.combatMode)
+        if (CombatSceneManager.Instance.sceneMode == CombatSceneMode.Hostile)
         {
             if (RhythmMechanics.Instance.Combo >= 1)
             {
@@ -150,9 +150,9 @@ public class Cultist3d : Character3d
             }
         }
 
-        (GameObject, float) nearest = CrewSceneManager3d.Instance.enemies.NearestFrom3d(transform.position);
+        (GameObject, float) nearest = CombatSceneManager.Instance.enemies.NearestFrom3d(transform.position);
         canMove = CheckState(CharacterState.CanMove);
-        canAttack = CrewSceneManager3d.Instance.combatMode && CheckState(CharacterState.CanAttack);
+        canAttack = CombatSceneManager.Instance.sceneMode == CombatSceneMode.Hostile && CheckState(CharacterState.CanAttack);
 
         if (fanaticState)
         {
@@ -183,8 +183,8 @@ public class Cultist3d : Character3d
         }
         catch (System.NullReferenceException) { }
 
-        ApplicationManager.Instance.FanaticStart -= EnterFanaticMode;
-        ApplicationManager.Instance.FanaticEnd -= ExitFanaticMode;
+        GameplayManager.Instance.FanaticStart -= EnterFanaticMode;
+        GameplayManager.Instance.FanaticEnd -= ExitFanaticMode;
     }
 
     #endregion
@@ -264,7 +264,7 @@ public class Cultist3d : Character3d
 
             default:
                 gameObject.SetActive(true);
-                Agent.Warp(CrewSceneManager3d.Instance.startPoint + FormationOffset);
+                Agent.Warp(CombatSceneManager.Instance.startPoint.position + FormationOffset);
                 break;
         }
     }
@@ -276,7 +276,7 @@ public class Cultist3d : Character3d
     {
         if (scene.name != "MainMap" && scene.name != "MainMenu")
         {
-            CrewSceneManager3d.Instance.enemies.Remove(gameObject);
+            CombatSceneManager.Instance.enemies.Remove(gameObject);
         }
     }
 
@@ -294,7 +294,7 @@ public class Cultist3d : Character3d
 
     public override void TakeDamage(int damage)
     {
-        ApplicationManager.Instance.Faith -= ApplicationManager.Instance.FaithForWoundedCultist;
+        GameplayManager.Instance.Faith -= GameplayManager.Instance.faithForWoundedCultist;
         base.TakeDamage(damage);
     }
 
@@ -303,10 +303,9 @@ public class Cultist3d : Character3d
         ApplicationManager.Instance.OnGameOver -= OnGameOver;
         base.Die();
 
-        float lossedFaith = ApplicationManager.Instance.FaithForKilledCultist;
-        ApplicationManager.Instance.Faith -= lossedFaith;
-        fatihTextEemitter.Emit("-" + (int)(lossedFaith * 100), Color.green, 3);
-        ApplicationManager.Instance.cultistNumber--;
+        float lostFaith = GameplayManager.Instance.faithForKilledCultist;
+        GameplayManager.Instance.Faith -= lostFaith;
+        faithTextEmitter.Emit("-" + (int)(lostFaith * 100), Color.green, 3);
     }
 
     #endregion
@@ -319,7 +318,7 @@ public class Cultist3d : Character3d
     {
         get
         {
-            int index = ApplicationManager.Instance.ourCrew.IndexOf(gameObject);
+            int index = GameplayManager.Instance.ourCrew.IndexOf(gameObject);
             switch (index % 8 + 1)
             {
                 default:
@@ -351,9 +350,10 @@ public class Cultist3d : Character3d
 
     private void GoToCursorPosition(InputAction.CallbackContext ctx)
     {
-        if (Agent.enabled && !ApplicationManager.Gui.isMouseOver && canMove)
+        // TODO: Check for gui mouse over
+        if (Agent.enabled/* && !ApplicationManager.Gui.isMouseOver*/ && canMove)
         {
-            var cursorPosition = CrewSceneManager3d.Instance.cursorInstance.position;
+            var cursorPosition = CombatCursorManager.Instance.mainCursor.transform.position;
             var nextDestination = cursorPosition + FormationOffset;
             Agent.SetDestination(nextDestination);
         }
@@ -370,7 +370,7 @@ public class Cultist3d : Character3d
                 0 // TODO do przemyślenia
             );
 
-            var cursorPosition = CrewSceneManager3d.Instance.cursorInstance.position;
+            var cursorPosition = CombatCursorManager.Instance.mainCursor.transform.position;
             var nextTarget = cursorPosition + targetOffset;
 
             GetComponent<Shooter3d>().target = nextTarget;

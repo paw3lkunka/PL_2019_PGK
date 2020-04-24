@@ -59,39 +59,10 @@ public class ApplicationManager : Singleton<ApplicationManager>
         remove { playerInput.onControlsChanged -= value; }
     }
 
-    // * ===== Game state ==================================================
-    public bool IsGameOver { get; private set; } = false;
-
-    // * ===== Location variables ==========================================
-
-    public Location currentLocation;
-    public Dictionary<Location, HashSet<int>> destroyedDynamicObjects = new Dictionary<Location, HashSet<int>>();
-    public HashSet<int> CurrentLocationsDestroyedDynamicObjects
-    {
-        get
-        {
-            try
-            {
-                return destroyedDynamicObjects[currentLocation];
-            }
-            catch (ArgumentNullException e)
-            {
-                return null;
-            }
-            catch (KeyNotFoundException e)
-            {
-                return null;
-            }
-        }
-    }
-
-    // * ===== Game events =================================================
-    public event System.Action OnLocationEnter;
-    public event System.Action OnLocationExit;
+    // * ===== Game over event ===============================================
     public event System.Action OnGameOver;
-    
 
-#region MonoBehaviour
+    #region MonoBehaviour
 
     private void Awake() 
     {
@@ -102,21 +73,22 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     private void OnEnable()
     {
-        InputSchemeChange += OnInputSchemeChange;
+        // TODO: Input scheme change
+        //InputSchemeChange += OnInputSchemeChange;
     }
 
     private void OnDisable()
     {
-        InputSchemeChange -= OnInputSchemeChange;
+        // TODO: Input scheme change
+        //InputSchemeChange -= OnInputSchemeChange;
     }
 
-#endregion
+    #endregion
 
-#region ManagerMethods
+    #region ManagerMethods
 
     public void GameOver(bool won = false)
     {
-        IsGameOver = true;
         OnGameOver?.Invoke();
 
         if (won)
@@ -152,7 +124,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
             case GameMode.Normal:
                 // Load appropriate scene
-                SceneManager.LoadScene(skipTutorial ? startScene : tutorialScene);
+                SceneManager.LoadScene(skipTutorial ? worldMapScene : tutorialScene);
                 break;
         }
     }

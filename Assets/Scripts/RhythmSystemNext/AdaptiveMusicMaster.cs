@@ -145,7 +145,7 @@ public class AdaptiveMusicMaster : MonoBehaviour
                 drumsSource.PlayOneShot(CurrentDrumClip);
             }
 
-            if (musicEnabled && !CurrentMusicClip.Item1.IsRealNull() && !CurrentMusicClip.Item2.IsRealNull() &&
+            if (musicEnabled && CurrentMusicClip.Item1 != null && CurrentMusicClip.Item2 != null &&
                 RhythmMechanics.Instance.Combo > 0)
             {
                 lightMusicSource.PlayOneShot(CurrentMusicClip.Item1);

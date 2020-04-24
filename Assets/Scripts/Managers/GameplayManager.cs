@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,7 +56,36 @@ public class GameplayManager : Singleton<GameplayManager>
     public Vector3 lastWorldMapPosition;
 
     // * ===== Gameplay progress statistics =========================
+    
+    public bool mapGenerated;
     public List<Location> ShrinesVisited { get; set; }
+
+    // * ===== Location variables ==========================================
+
+    public Location currentLocation;
+    public Dictionary<Location, HashSet<int>> destroyedDynamicObjects = new Dictionary<Location, HashSet<int>>();
+    public HashSet<int> CurrentLocationsDestroyedDynamicObjects
+    {
+        get
+        {
+            try
+            {
+                return destroyedDynamicObjects[currentLocation];
+            }
+            catch (ArgumentNullException e)
+            {
+                return null;
+            }
+            catch (KeyNotFoundException e)
+            {
+                return null;
+            }
+        }
+    }
+
+    // * ===== Game events =================================================
+    public event System.Action OnLocationEnter;
+    public event System.Action OnLocationExit;
 
     // * ===== Resource value events ================================
     public event System.Action LowWaterLevelStart;
@@ -87,7 +117,7 @@ public class GameplayManager : Singleton<GameplayManager>
         // ! ----- Game over condition -----
         if (ourCrew.Count <= 0)
         {
-            ApplicationManager.Instance.GameOver();
+            ApplicationManager.Instance.GameOver(false);
         }
 
         // ! ----- Game events update -----
@@ -119,9 +149,9 @@ public class GameplayManager : Singleton<GameplayManager>
         faithLastFrame = faith;
     }
 
-#endregion
+    #endregion
 
-#region ManagerMethods
+    #region ManagerMethods
 
     /// <summary>
     /// Reset all resources and fields to their default values
@@ -160,5 +190,8 @@ public class GameplayManager : Singleton<GameplayManager>
         faithForKilledCultist /= faithBoost;
     }
 
-#endregion
+    public void OnLocationExitInvoke() => OnLocationExit?.Invoke();
+    public void OnLocationEnterInvoke() => OnLocationEnter?.Invoke();
+
+    #endregion
 }

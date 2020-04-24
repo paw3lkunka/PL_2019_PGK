@@ -49,13 +49,13 @@ public class Location : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        ApplicationManager.Instance.savedPosition = GlobalReturnPoint;
-        ApplicationManager.Instance.currentLocation = this;
+        GameplayManager.Instance.lastWorldMapPosition = GlobalReturnPoint;
+        GameplayManager.Instance.currentLocation = this;
         SceneManager.LoadScene(sceneName);
-        ApplicationManager.Instance.OnLocationEnterInvoke();
+        GameplayManager.Instance.OnLocationEnterInvoke();
         if(cooldownTimer < 0)
         {
-            ApplicationManager.Instance.destroyedDynamicObjects.Remove(this);
+            GameplayManager.Instance.destroyedDynamicObjects.Remove(this);
         }
         ResetCooldownTimer();
     }

@@ -6,12 +6,9 @@ using UnityEngine;
 /// <summary>
 /// Responsible for handling of Combo, Rage and counting beat hit states for statistics
 /// </summary>
-public class RhythmMechanics : MonoBehaviour
+public class RhythmMechanics : Singleton<RhythmMechanics>
 {
     #region Variables
-
-    // Singleton implementation
-    public static RhythmMechanics Instance;
 
 #pragma warning disable
     [Header("Statistics")]
@@ -43,19 +40,6 @@ public class RhythmMechanics : MonoBehaviour
 
     #region MonoBehaviour
 
-    private void Awake()
-    {
-        if (Instance.IsRealNull())
-        {
-            Instance = this;
-            Instantiate(rhythmMechanicsUI);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     private void OnEnable()
     {
         OnRageStart += RageStartHandler;
@@ -80,15 +64,6 @@ public class RhythmMechanics : MonoBehaviour
 
         if (countBeats)
             AudioTimeline.Instance.OnBeatHit -= UpdateCounters;
-    }
-    private void OnDestroy()
-    {
-        ApplicationManager.Instance.StartCoroutine(Routine());
-        IEnumerator Routine()
-        {
-            yield return new WaitForEndOfFrame();
-            Instance = null;
-        }
     }
 
     #endregion

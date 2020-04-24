@@ -9,7 +9,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager>
     [SerializeField] private float cursorRange = 5.0f;
 #pragma warning restore
 
-    private GameObject mainCursor;
+    public GameObject mainCursor;
     private MeshRenderer cursorRenderer;
     
     private GameObject walkTargetIndicator;
@@ -111,7 +111,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager>
     private void MoveCursorGamepad()
     {
         var joystickAxis = Gamepad.current.leftStick.ReadValue();
-        var nextCursorPosition = CombatSceneManager.Instance.CultLeaderTransform.position
+        var nextCursorPosition = CombatSceneManager.Instance.cultLeaderTransform.position
                                     + new Vector3(joystickAxis.x, joystickAxis.y) * cursorRange;
         nextCursorPosition.z = 0;
 
@@ -121,7 +121,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager>
     private void MoveCursorJoystick()
     {
         var joystickAxis = Joystick.current.stick.ReadValue();
-        var nextCursorPosition = CombatSceneManager.Instance.CultLeaderTransform.position
+        var nextCursorPosition = CombatSceneManager.Instance.cultLeaderTransform.position
                                     + new Vector3(joystickAxis.x, joystickAxis.y) * cursorRange;
         nextCursorPosition.z = 0;
         mainCursor.transform.position = nextCursorPosition;

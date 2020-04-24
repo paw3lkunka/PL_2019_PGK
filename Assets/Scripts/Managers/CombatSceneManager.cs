@@ -14,7 +14,7 @@ public class CombatSceneManager : Singleton<CombatSceneManager>
     public Transform startPoint;
     public List<GameObject> enemies; // TODO: Change GameObject to enemy component
 
-    public Transform CultLeaderTransform { get; private set; }
+    public Transform cultLeaderTransform;
 
 #region MonoBehaviour
 

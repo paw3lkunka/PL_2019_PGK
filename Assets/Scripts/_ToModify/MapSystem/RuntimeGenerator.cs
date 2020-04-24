@@ -31,24 +31,24 @@ public class RuntimeGenerator : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        ApplicationManager.Instance.OnLocationEnter += OnLocationEnter;
-        ApplicationManager.Instance.OnLocationExit += OnLocationExit;
+        GameplayManager.Instance.OnLocationEnter += OnLocationEnter;
+        GameplayManager.Instance.OnLocationExit += OnLocationExit;
         ApplicationManager.Instance.OnGameOver += OnGameOver;
     }
     
     private void OnDestroy()
     {
-        ApplicationManager.Instance.mapGenerated = false;
-        ApplicationManager.Instance.OnLocationEnter -= OnLocationEnter;
-        ApplicationManager.Instance.OnLocationExit -= OnLocationExit;
+        GameplayManager.Instance.mapGenerated = false;
+        GameplayManager.Instance.OnLocationEnter -= OnLocationEnter;
+        GameplayManager.Instance.OnLocationExit -= OnLocationExit;
         ApplicationManager.Instance.OnGameOver -= OnGameOver;
     }
 
     private void Start()
     {
-        if (!ApplicationManager.Instance.mapGenerated)
+        if (!GameplayManager.Instance.mapGenerated)
         {
-            ApplicationManager.Instance.mapGenerated = true;
+            GameplayManager.Instance.mapGenerated = true;
 
             if (!useCustomMainSeed)
             {

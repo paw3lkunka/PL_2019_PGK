@@ -52,12 +52,12 @@ public class SoundEffectsModule : MonoBehaviour
                     audioSource.PlayOneShot(badBeatHitSound);
                 break;
             case BeatState.Good:
-                if (!goodBeatHitSound.IsRealNull())
+                if (goodBeatHitSound != null)
                     audioSource.PlayOneShot(goodBeatHitSound);
                 break;
             case BeatState.Great:
             case BeatState.Perfect:
-                if (!greatBeatHitSound.IsRealNull())
+                if (greatBeatHitSound != null)
                     audioSource.PlayOneShot(greatBeatHitSound);
                 break;
         }

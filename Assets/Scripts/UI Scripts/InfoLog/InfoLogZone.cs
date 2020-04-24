@@ -38,7 +38,7 @@ public class InfoLogZone : MonoBehaviour, IInfoLogInvoker
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.GetComponent<CultLeader>())
+        if(collision.GetComponent<CultLeader3d>())
         {
             InfoLog.Instance.EnterInfoLogZone();
             InfoLogInvokerExtensions.SetInfoLog(this);
@@ -47,7 +47,7 @@ public class InfoLogZone : MonoBehaviour, IInfoLogInvoker
 
     protected void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<CultLeader>())
+        if (collision.GetComponent<CultLeader3d>())
         {
             InfoLog.Instance.ExitInfoLogZone();
         }

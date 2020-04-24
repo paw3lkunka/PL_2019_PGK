@@ -16,7 +16,7 @@ public class RhythmTest : MonoBehaviour
     private void Start()
     {
         rhythmIndicator = GameObject.Find("RhythmIndicator").GetComponent<Image>();
-        if (rhythmIndicator.IsRealNull())
+        if (rhythmIndicator)
         {
             rhythmIndicator = FindObjectOfType<Image>();
         }
