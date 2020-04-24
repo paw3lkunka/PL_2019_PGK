@@ -82,7 +82,8 @@ MonoBehaviour:
   savedPosition: {x: 0, y: 0}
   ourCrew: []
   currentLocation: {fileID: 0}
-  inputSchedule: 0
+  currentInputScheme: 0
+  won: 0
 --- !u!114 &5075504622887975360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,9 +109,49 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f852d4ee-ebdc-4263-b8eb-9423cf3bacdc
+    m_ActionName: CombatMode/SetShootTarget[/XInputControllerWindows/buttonEast,/XInputControllerWindows/rightTrigger,/Mouse/rightButton,/Keyboard/x,/XInputControllerWindows/leftShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ca9e273c-fe69-4b34-9937-3cfec5ef9452
+    m_ActionName: Gameplay/MoveCursor[/XInputControllerWindows/leftStick,/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5099243b-0a5d-4979-830c-5104fc7c9a30
+    m_ActionName: Gameplay/SetWalkTarget[/XInputControllerWindows/buttonSouth,/XInputControllerWindows/leftTrigger,/Mouse/leftButton,/Keyboard/z,/XInputControllerWindows/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 91e14fe2-6552-498c-adda-c3723a08dac3
+    m_ActionName: Gameplay/Pause[/Keyboard/p,/Keyboard/escape,/XInputControllerWindows/start,/XInputControllerWindows/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eeab1485-5897-4f47-95a2-b7d3322bd800
+    m_ActionName: Gameplay/ShowHideInfoLog[/Keyboard/c,/XInputControllerWindows/select,/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2dcaafd9-677b-44fa-bcb2-61d99ff6f07b
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/XInputControllerWindows/leftStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/dpad/up,/XInputControllerWindows/dpad/down,/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fb4af374-6ee6-4ac2-ae98-a72b9eb3bef9
+    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d7d82c7-749c-4a32-bc05-c7f5fe878446
+    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ad71600f-21dc-4a98-b0d7-f35facf3c01f
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e24b6683-2a2c-468b-83f2-10534a0bd322
+    m_ActionName: UI/Point[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: MouseKeyboard
-  m_DefaultActionMap: 
+  m_DefaultActionMap: CombatMode
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

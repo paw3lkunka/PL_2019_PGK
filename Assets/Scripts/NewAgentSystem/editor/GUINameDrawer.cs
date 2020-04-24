@@ -1,8 +1,5 @@
-﻿using System.ComponentModel;
-using UnityEditor;
-using UnityEditor.UIElements;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CustomPropertyDrawer(typeof(GUIName))]
 public class GUINameDrawer : PropertyDrawer
