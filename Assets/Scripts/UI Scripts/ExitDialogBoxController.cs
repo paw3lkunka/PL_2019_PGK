@@ -14,11 +14,6 @@ public class ExitDialogBoxController : MonoBehaviour
 
     #endregion
 
-    #region MonoBehaviour
-
-
-    #endregion
-
     #region Component
 
     public void DialogCaller()
@@ -35,7 +30,7 @@ public class ExitDialogBoxController : MonoBehaviour
 
     public void YesOption()
     {
-        GameManager.Instance.BackToMenu();
+        ApplicationManager.Instance.MainMenu();
         Destroy(boxInstance);
     }
 

@@ -122,7 +122,7 @@ public partial class AudioTimeline : MonoBehaviour
         }
 
         barBeatStates = new BeatState[beatsPerBar];
-        input = GameManager.Instance.input;
+        input = ApplicationManager.Instance.Input;
     }
 
     private void Start() => TimelineInit();
@@ -149,7 +149,7 @@ public partial class AudioTimeline : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.Instance.StartCoroutine(Routine());
+        ApplicationManager.Instance.StartCoroutine(Routine());
         IEnumerator Routine()
         {
             yield return new WaitForEndOfFrame();
@@ -369,8 +369,8 @@ public partial class AudioTimeline : MonoBehaviour
     private void TimelineInit()
     {
         beatDuration = 60.0d / songBpm;
-        goodTolerance = GameManager.Instance.goodTolerance;
-        greatTolerance = GameManager.Instance.greatTolerance;
+        goodTolerance = ApplicationManager.Instance.goodTolerance;
+        greatTolerance = ApplicationManager.Instance.greatTolerance;
         SequenceStartHandler();
     }
 

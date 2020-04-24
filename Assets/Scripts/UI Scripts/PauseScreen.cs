@@ -15,7 +15,7 @@ public class PauseScreen : MonoBehaviour
 
     public void ExitOnClick()
     {
-        GameManager.Instance.Exit();
+        ApplicationManager.Instance.ExitGame();
     }
 
     #endregion

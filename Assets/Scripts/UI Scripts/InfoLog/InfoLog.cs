@@ -40,7 +40,7 @@ public class InfoLog : MonoBehaviour
         header = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         text = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
-        input = GameManager.Instance.input;
+        input = ApplicationManager.Instance.Input;
 
         HideLog();
     }
@@ -61,7 +61,7 @@ public class InfoLog : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.InputSchemeChange += OnInputSchemeChange;
+        ApplicationManager.Instance.InputSchemeChange += OnInputSchemeChange;
 
         input.Gameplay.ShowHideInfoLog.performed += ShowHideInputHandler;
         input.Gameplay.ShowHideInfoLog.Enable();
@@ -69,7 +69,7 @@ public class InfoLog : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.Instance.InputSchemeChange -= OnInputSchemeChange;
+        ApplicationManager.Instance.InputSchemeChange -= OnInputSchemeChange;
 
         input.Gameplay.ShowHideInfoLog.performed -= ShowHideInputHandler;
         input.Gameplay.ShowHideInfoLog.Disable();

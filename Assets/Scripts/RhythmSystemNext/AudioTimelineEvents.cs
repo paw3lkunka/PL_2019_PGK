@@ -102,7 +102,7 @@ public partial class AudioTimeline
         this.keepCombo = keepCombo;
 
         Time.timeScale = 0;
-        Instantiate(GameManager.Instance.pauseScreen);
+        Instantiate(ApplicationManager.Instance.pauseScreen);
 
         // Save beat moment variables
         pauseMoment = AudioSettings.dspTime;

@@ -26,8 +26,8 @@ public class DialogBox : MonoBehaviour
 
     public void Recruit()
     {
-        Instantiate(GameManager.Instance.cultistPrefab);
-        GameManager.Instance.cultistNumber += 1;
+        Instantiate(ApplicationManager.Instance.prefabDatabase.cultists[0]);
+        ApplicationManager.Instance.cultistNumber += 1;
         Destroy(caller);
         Destroy(gameObject);
     }

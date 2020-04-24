@@ -41,7 +41,7 @@ public class GUI : MonoBehaviour
     {
         faithImage = faithBar.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
         waterImage = waterBar.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>();
-        if (!GameManager.Instance.Cheats)
+        if (!ApplicationManager.Instance.enableCheats)
         {
             transform.GetChild(0).gameObject.SetActive(false);
         }
@@ -49,9 +49,9 @@ public class GUI : MonoBehaviour
 
     public void Update()
     {
-        CrewIndicator = GameManager.Instance.ourCrew.Count;
-        WaterIndicator = GameManager.Instance.Water;
-        FaithIndicator = GameManager.Instance.Faith;
+        CrewIndicator = GameplayManager.Instance.ourCrew.Count;
+        WaterIndicator = GameplayManager.Instance.Water;
+        FaithIndicator = GameplayManager.Instance.Faith;
 
         if (FaithIndicator >= 0.9f)
         {
