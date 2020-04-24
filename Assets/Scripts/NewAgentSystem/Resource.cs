@@ -33,9 +33,14 @@ public struct Resource
     public float Set(float value) => current = Mathf.Clamp(value, 0, max);
 
     /// <summary>
-    /// Max value, allways is bigger or equal 0.W
+    /// Max value, allways is bigger or equal maximum.
     /// </summary>
     public float Max { get => max; set => max = Mathf.Max(value, 0); }
+
+    /// <summary>
+    /// Resturns value divided by maximum.
+    /// </summary>
+    public float Normalized { get => current / max; }
 
     [SerializeField]
     private float current;
@@ -65,4 +70,29 @@ public struct Resource
     public static bool operator <= (Resource res1, Resource res2) => res1.current <= res2.current;
     #endregion
 
+    public override bool Equals(object obj)
+    {
+        try
+        {
+            Resource that = (Resource)obj;
+            return this.current == that.current && this.max == that.max;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public override int GetHashCode()
+    {
+        int result = 2137;
+        result = 997 * result * current.GetHashCode();
+        result = 997 * result * max.GetHashCode();
+        return result;
+    }
+
+    public override string ToString()
+    {
+        return $"{current}[0,{max}]"; 
+    }
 }

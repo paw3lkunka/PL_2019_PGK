@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class Projectile : MonoBehaviour
 {
     public float damageMin;
@@ -9,10 +10,15 @@ public class Projectile : MonoBehaviour
     public float range;
     public float speed;
 
+    //TODO push force
+    //Stun
+
     private Vector3 stepVector;
     private float stepScalar;
     private float distance;
-    public void ShootTo(Vector3 target)
+
+    //TODO documentation
+    public void ShootAt(Vector3 target)
     {
         stepVector = (target - transform.position).normalized * speed;
         stepScalar = stepVector.magnitude;
@@ -40,6 +46,7 @@ public class Projectile : MonoBehaviour
 
         if(victim)
         {
+            //todo layer mask
             victim.Damage(Random.Range(damageMin, damageMax));
         }
 
