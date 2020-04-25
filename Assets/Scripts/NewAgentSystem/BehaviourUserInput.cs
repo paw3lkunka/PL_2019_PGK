@@ -1,29 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Moveable))]
 public class BehaviourUserInput : MonoBehaviour, IBehaviour
 {
-    Vector3 cursor;
+    private Moveable moveable;
+    private Vector3 cursor;
+    //todo position in formation
+    private Vector3 offset = Vector3.zero;
 
     public void UpdateTarget(Vector3? target)
     {
-        throw new System.NotImplementedException();
+        moveable.Go(target ?? cursor);
     }
+
+    private void GoToCursorPosition(InputAction.CallbackContext ctx)
+    {
+        cursor = CombatCursorManager.Instance.MainCursor.transform.position + offset;
+        UpdateTarget(cursor);
+    }
+
 
     #region MonoBehaviour
 
     private void Awake()
     {
-        //TODO - position from group
-        cursor = transform.position;
+        moveable = GetComponent<Moveable>();
     }
 
-    private void FixedUpdate()
+    private void OnEnable()
     {
-        //TODO - position from group
-        cursor = CombatCursorManager.Instance.MainCursor.transform.position;
+        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
+    }
 
+    private void OnDisable()
+    {
+        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed -= GoToCursorPosition;
     }
 
     #endregion

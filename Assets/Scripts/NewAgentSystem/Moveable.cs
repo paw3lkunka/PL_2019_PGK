@@ -8,16 +8,17 @@ public class Moveable : MonoBehaviour
     [Flags]
     public enum Flags
     {
+        nothing = 0,
         canMove = 0b0000_0001,
     }
 
-    public Flags flags;
+    public Flags flags = Flags.canMove;
 
     public virtual float SpeedBase 
     { get => navMeshAgent.speed; set => navMeshAgent.speed = value; }
 
     [SerializeField]
-    private float speedBase;
+    private float speedBase = 1;
 
 
     /// <summary>

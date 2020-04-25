@@ -13,6 +13,11 @@ public class PrefabDatabase : ScriptableObject
     public List<GameObject> cultists;
     public List<GameObject> enemies;
 
+    [Header("Main menu")]
+    public GameObject mainMenuGUI;
+    public GameObject optionsMenuGUI;
+    public GameObject difficultyMenuGUI;
+
     [Header("Gui prefabs")]
     public GameObject combatSceneGUI;
     public GameObject worldSceneGUI;

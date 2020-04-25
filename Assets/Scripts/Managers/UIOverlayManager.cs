@@ -4,29 +4,47 @@ using UnityEngine;
 
 public class UIOverlayManager : Singleton<UIOverlayManager>
 {
-    private Canvas mainCanvas;
+    public GameObject baseUILayer;
+    public Canvas mainCanvas;
+
     private Stack<GameObject> guiObjects;
 
 #region MonoBehaviour
     
+    private void Awake()
+    {
+        guiObjects = new Stack<GameObject>();
+    }
+
     private void Start() 
     {
-        mainCanvas = Instantiate(new Canvas());
-        mainCanvas.name = "Main Canvas";
+        if (mainCanvas == null)
+        {
+            GameObject canvasObject = Instantiate(new GameObject());
+            canvasObject.name = "Main Canvas";
+            mainCanvas = canvasObject.AddComponent<Canvas>();
+            mainCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        }
+        if (baseUILayer)
+        {
+            guiObjects.Push(baseUILayer);
+        }
     }
 
 #endregion
 
 #region ManagerMethods
 
-    public void PushToCanvas(GameObject guiPrefab)
+    public void PushToCanvas(GameObject guiPrefab, bool hideLast = false)
     {
+        guiObjects.Peek()?.SetActive(!hideLast);
         guiObjects.Push(Instantiate(guiPrefab, mainCanvas.transform));
     }
 
     public void PopFromCanvas()
     {
         Destroy(guiObjects.Pop());
+        guiObjects.Peek()?.SetActive(true);
     }
 
 #endregion
