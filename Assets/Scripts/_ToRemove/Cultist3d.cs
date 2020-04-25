@@ -353,7 +353,7 @@ public class Cultist3d : Character3d
         // TODO: Check for gui mouse over
         if (Agent.enabled/* && !ApplicationManager.Gui.isMouseOver*/ && canMove)
         {
-            var cursorPosition = CombatCursorManager.Instance.mainCursor.transform.position;
+            var cursorPosition = CombatCursorManager.Instance.MainCursor.transform.position;
             var nextDestination = cursorPosition + FormationOffset;
             Agent.SetDestination(nextDestination);
         }
@@ -370,7 +370,7 @@ public class Cultist3d : Character3d
                 0 // TODO do przemyślenia
             );
 
-            var cursorPosition = CombatCursorManager.Instance.mainCursor.transform.position;
+            var cursorPosition = CombatCursorManager.Instance.MainCursor.transform.position;
             var nextTarget = cursorPosition + targetOffset;
 
             GetComponent<Shooter3d>().target = nextTarget;

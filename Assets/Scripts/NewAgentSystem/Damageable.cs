@@ -12,12 +12,12 @@ public class Damageable : MonoBehaviour
         canBeDamaged = 0b0000_0010,
     }
 
-    public Flags flags;
+    public Flags flags = Flags.canBeDamaged | Flags.canBeHeald;
 
-    public Resource health;
+    public Resource health = new Resource(10,10);
 
     [field: SerializeField, GUIName("Defence")]
-    public float DefenseBase {get; set;}
+    public float DefenseBase { get; set; } = 0;
 
     /// <summary>
     /// Heal agent with given amount of hp
@@ -56,7 +56,7 @@ public class Damageable : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(health < 0)
+        if(health <= 0)
         {
             Destroy(gameObject);
         }

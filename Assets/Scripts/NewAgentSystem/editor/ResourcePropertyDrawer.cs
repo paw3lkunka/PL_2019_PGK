@@ -6,12 +6,6 @@ using UnityEngine.UIElements;
 [CustomPropertyDrawer(typeof(Resource))]
 public class ResourcePropertyDrawer : PropertyDrawer
 {
-
-    public override VisualElement CreatePropertyGUI(SerializedProperty property)
-    {
-        return base.CreatePropertyGUI(property);
-    }
-
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         var currentRect = new Rect(position.x, position.y, position.width * 0.666666666f, EditorGUIUtility.singleLineHeight);
@@ -31,35 +25,10 @@ public class ResourcePropertyDrawer : PropertyDrawer
         {
             currentProp.floatValue = maxProp.floatValue;
         }
-    }
 
-
-    // Multifloat version
-/*    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-        SerializedProperty currentProp = property.FindPropertyRelative("current");
-        SerializedProperty maxProp = property.FindPropertyRelative("max");
-
-        float[] values =
+        if (currentProp.floatValue < 0)
         {
-            currentProp.floatValue,
-            maxProp.floatValue
-        };
-
-        GUIContent[] labels =
-        {
-            new GUIContent("value"),
-            new GUIContent("max")
-        };
-
-        EditorGUI.MultiFloatField(position, label, labels, values);
-
-        if (values[0] > values[1])
-        {
-            values[0] = values[1];
+            currentProp.floatValue = 0;
         }
-
-        currentProp.floatValue = values[0];
-        maxProp.floatValue = values[1];
-    }*/
+    }
 }

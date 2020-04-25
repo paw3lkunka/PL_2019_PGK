@@ -2,17 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BehaviourUserInput : MonoBehaviour
+public class BehaviourUserInput : MonoBehaviour, IBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    Vector3 cursor;
+
+    public void UpdateTarget(Vector3? target)
     {
-        
+        throw new System.NotImplementedException();
     }
 
-    // Update is called once per frame
-    void Update()
+    #region MonoBehaviour
+
+    private void Awake()
     {
-        
+        //TODO - position from group
+        cursor = transform.position;
     }
+
+    private void FixedUpdate()
+    {
+        //TODO - position from group
+        cursor = CombatCursorManager.Instance.MainCursor.transform.position;
+
+    }
+
+    #endregion
 }

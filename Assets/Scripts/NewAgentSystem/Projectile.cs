@@ -5,10 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Projectile : MonoBehaviour
 {
-    public float damageMin;
-    public float damageMax;
-    public float range;
-    public float speed;
+    public float damageMin = 1;
+    public float damageMax = 1;
+    public float range = 10;
+    public float speed = 1;
 
     //TODO push force
     //Stun

@@ -204,7 +204,7 @@ public class CultLeader3d : Character3d
         // TODO: Check gui mouse over
         //if (Agent.enabled && !ApplicationManager.Gui.isMouseOver && canMove)
         //{
-            var cursorPosition = CombatCursorManager.Instance.mainCursor.transform.position;
+            var cursorPosition = CombatCursorManager.Instance.MainCursor.transform.position;
             var nextDestination = cursorPosition + FormationOffset;
 
             Agent.SetDestination(nextDestination);
@@ -213,7 +213,7 @@ public class CultLeader3d : Character3d
 
     private void AimToCursorPosition(InputAction.CallbackContext ctx)
     {
-        var cursorPosition = CombatCursorManager.Instance.mainCursor.transform.position;
+        var cursorPosition = CombatCursorManager.Instance.MainCursor.transform.position;
         var nextTarget = cursorPosition + FormationOffset;
 
         GetComponent<Shooter3d>().target = nextTarget;

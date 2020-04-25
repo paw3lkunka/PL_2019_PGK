@@ -5,11 +5,11 @@ using UnityEngine.InputSystem;
 
 public class CombatCursorManager : Singleton<CombatCursorManager>
 {
-#pragma warning disable
-    [SerializeField] private float cursorRange = 5.0f;
-#pragma warning restore
+    [field: SerializeField, GUIName("CursorRange")]
+    public float CursorRange { get; private set; } = 5.0f;
 
-    public GameObject mainCursor;
+    [HideInInspector]
+    public GameObject MainCursor { get; private set; }
     private MeshRenderer cursorRenderer;
     
     private GameObject walkTargetIndicator;
@@ -85,11 +85,11 @@ public class CombatCursorManager : Singleton<CombatCursorManager>
     private void InitializeCursor()
     {
         Cursor.visible = false;
-        mainCursor = Instantiate(   ApplicationManager.Instance.prefabDatabase.cursorPrefab, 
+        MainCursor = Instantiate(   ApplicationManager.Instance.prefabDatabase.cursorPrefab, 
                                         CombatSceneManager.Instance.startPoint.position, 
                                         Quaternion.identity);
 
-        cursorRenderer = mainCursor.GetComponent<MeshRenderer>();
+        cursorRenderer = MainCursor.GetComponent<MeshRenderer>();
     }
 
     private void MoveCursorPointer()
@@ -102,7 +102,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager>
             // TODO: replace tag with layer mask
             if (hit.collider.CompareTag("Ground"))
             {
-                mainCursor.transform.position = hit.point;
+                MainCursor.transform.position = hit.point;
                 continue;
             }
         }        
@@ -112,30 +112,30 @@ public class CombatCursorManager : Singleton<CombatCursorManager>
     {
         var joystickAxis = Gamepad.current.leftStick.ReadValue();
         var nextCursorPosition = CombatSceneManager.Instance.cultLeaderTransform.position
-                                    + new Vector3(joystickAxis.x, joystickAxis.y) * cursorRange;
+                                    + new Vector3(joystickAxis.x, joystickAxis.y) * CursorRange;
         nextCursorPosition.z = 0;
 
-        mainCursor.transform.position = nextCursorPosition;
+        MainCursor.transform.position = nextCursorPosition;
     }
 
     private void MoveCursorJoystick()
     {
         var joystickAxis = Joystick.current.stick.ReadValue();
         var nextCursorPosition = CombatSceneManager.Instance.cultLeaderTransform.position
-                                    + new Vector3(joystickAxis.x, joystickAxis.y) * cursorRange;
+                                    + new Vector3(joystickAxis.x, joystickAxis.y) * CursorRange;
         nextCursorPosition.z = 0;
-        mainCursor.transform.position = nextCursorPosition;
+        MainCursor.transform.position = nextCursorPosition;
     }
 
     private void SetWalkTargetIndicator(InputAction.CallbackContext ctx)
     {
         // TODO: Check mouse over gui
-        walkTargetIndicator.transform.position = mainCursor.transform.position;
+        walkTargetIndicator.transform.position = MainCursor.transform.position;
     }
 
     private void SetShootTargetIndicator(InputAction.CallbackContext ctx)
     {
-        shootTargetIndicator.transform.position = mainCursor.transform.position;
+        shootTargetIndicator.transform.position = MainCursor.transform.position;
     }
     
 #endregion

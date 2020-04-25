@@ -2,28 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooting : MonoBehaviour
+public class Shooting : MonoBehaviour, IAttack
 {
     public enum Flags
     {
+        Nothing = 0b0000_0000,
         canShoot = 0b0000_0001,
     }
 
     public GameObject projectilePrefab;
 
-    public Flags flags;
+    public Flags flags = Flags.canShoot;
 
 
     [field: SerializeField, GUIName("DamageMultiplier")]
-    public float DamageMultiplier { get; set; }
+    public float DamageMultiplier { get; set; } = 1;
 
     [field: SerializeField, GUIName("RangeMultiplier")]
-    public float RangeMultiplier { get; set; }
+    public float RangeMultiplier { get; set; } = 1;
 
     [field: SerializeField, GUIName("IntervalMultiplier")]
-    public float IntervalMultiplier { get; set; }
+    public float IntervalMultiplier { get; set; } = 1;
 
-    public void Shoot(Vector3 target)
+    public void Attack(Vector3 target)
     {
         this.target = target;
 
@@ -33,13 +34,33 @@ public class Shooting : MonoBehaviour
         }
     }
 
+    public void HoldFire()
+    {
+        if(shootRoutine != null)
+        {
+            StopCoroutine(shootRoutine);
+            shootRoutine = null;
+        }        
+    }
+
     protected virtual Projectile CreateProjectile()
     {
-        var projectile = Instantiate(projectilePrefab).GetComponent<Projectile>();
+        var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity).GetComponent<Projectile>();
         projectile.damageMin *= DamageMultiplier;
         projectile.damageMax *= DamageMultiplier;
         projectile.range *= RangeMultiplier;
+        SetLayerMask(projectile);
         return projectile;
+    }
+
+    protected void SetLayerMask(Projectile proj)
+    {
+        var obj = proj.gameObject;
+        if (gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
+            obj.layer = LayerMask.NameToLayer("PlayerBullets");
+
+        if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
+            obj.layer = LayerMask.NameToLayer("EnemiesBullets");
     }
 
     private IEnumerator ShootRoutine()
@@ -64,14 +85,18 @@ public class Shooting : MonoBehaviour
         {
             Debug.LogError("ProjectilePrefab is invalid!");
         }
+        if(gameObject.layer != LayerMask.NameToLayer("PlayerCrew")
+            && gameObject.layer != LayerMask.NameToLayer("Enemies"))
+        {
+            Debug.LogError("GameObject has invalid layer!");
+        }
     }
 
     private void FixedUpdate()
     {
         if( (flags & Flags.canShoot) == 0 )
         {
-            StopCoroutine(shootRoutine);
-            shootRoutine = null;
+            HoldFire();
         }
     }
 
