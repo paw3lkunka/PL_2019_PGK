@@ -56,11 +56,19 @@ public class Shooting : MonoBehaviour, IAttack
     protected void SetLayerMask(Projectile proj)
     {
         var obj = proj.gameObject;
-        if (gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
-            obj.layer = LayerMask.NameToLayer("PlayerBullets");
 
-        if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
+        if (gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
+        {
+            obj.layer = LayerMask.NameToLayer("PlayerBullets");
+        }
+        else if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
+        {
             obj.layer = LayerMask.NameToLayer("EnemiesBullets");
+        }
+        else
+        {
+            Debug.LogError($"GameObject {gameObject.name} has invalid layer!");
+        }
     }
 
     private IEnumerator ShootRoutine()

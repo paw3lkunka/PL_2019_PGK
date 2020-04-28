@@ -132,7 +132,8 @@ public class ResourceUsage : MonoBehaviour
         if ((Time.timeSinceLevelLoad - timeLastMemberDied) > (25.0f * (Amount / 0.3f)) && GameplayManager.Instance.ourCrew.Count > 1)
         {
             int removeIndex = rand.Next() % (GameplayManager.Instance.ourCrew.Count - 1) + 1;
-            GameplayManager.Instance.ourCrew[removeIndex].GetComponent<Cultist3d>().Die();
+            //HACK
+            GameplayManager.Instance.ourCrew[removeIndex].GetComponent<_CultLeader>();//.Die();
             timeLastMemberDied = Time.timeSinceLevelLoad;
         }
     }

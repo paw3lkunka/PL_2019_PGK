@@ -12,11 +12,24 @@ public class CombatSceneManager : Singleton<CombatSceneManager>
     [Header("Base config")]
     public CombatSceneMode sceneMode;
     public Transform startPoint;
-    public List<GameObject> enemies; // TODO: Change GameObject to enemy component
+    public List<Damageable> enemies;
+    public List<Damageable> ourCrew;
+    public _CultLeader cultLeader;
+    [Tooltip("If checked, meneger automaticlly removes null emements from $ourCrew and $enemies")]
+    public bool cleanLists = true;
 
     public Transform cultLeaderTransform;
 
-#region MonoBehaviour
+    #region MonoBehaviour
+
+    private void LateUpdate()
+    {
+        if(cleanLists)
+        {
+            enemies.RemoveAll((item) => !item || item == null);
+            ourCrew.RemoveAll((item) => !item || item == null);
+        }
+    }
 
     private void OnEnable() 
     {
@@ -29,24 +42,6 @@ public class CombatSceneManager : Singleton<CombatSceneManager>
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(startPoint.position, .2f);
     }
-
-#endregion
-
-#region Editor
-
-    #if UNITY_EDITOR
-    private int nextId = 1;
-    private void OnValidate()
-    {
-        foreach ( var obj in FindObjectsOfType<DynamicObject>())
-        {
-            if (obj.ID == 0)
-            {
-                obj.SetId(nextId++);
-            }
-        }
-    }
-    #endif
 
 #endregion
 }

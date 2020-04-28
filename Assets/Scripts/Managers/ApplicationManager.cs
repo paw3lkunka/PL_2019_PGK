@@ -22,6 +22,8 @@ public enum InputSchemeEnum
 /// </summary>
 public class ApplicationManager : Singleton<ApplicationManager>
 {
+    public Difficulty defaultDifficulty; 
+
     [Header("Scene configuration")] // * =====================================
     public string menuScene;
     public string worldMapScene;
@@ -46,12 +48,13 @@ public class ApplicationManager : Singleton<ApplicationManager>
     public float hardModeGreatTolerance = 0.2f;
 
     // Tolerances set depending on game mode selected
-    public float GoodTolerance { get; private set; }
-    public float GreatTolerance { get; private set; }
+    public float GoodTolerance { get; private set; } = float.NaN;
+    public float GreatTolerance { get; private set; } = float.NaN;
 
     // * ===== New input system ==============================================
     public NewInput Input { get; private set; }
     private PlayerInput playerInput;
+    [field: SerializeField, GUIName("CurrentInputScheme")]
     public InputSchemeEnum CurrentInputScheme { get; private set; }
     public event System.Action<PlayerInput> InputSchemeChange
     {
@@ -69,6 +72,10 @@ public class ApplicationManager : Singleton<ApplicationManager>
         // ? +++++ Initialize new input system +++++
         Input = new NewInput();
         playerInput = GetComponent<PlayerInput>();
+        if (SceneManager.GetActiveScene().name != menuScene)
+        {
+            SetDifficulty(defaultDifficulty);
+        }
     }
 
     private void OnEnable()

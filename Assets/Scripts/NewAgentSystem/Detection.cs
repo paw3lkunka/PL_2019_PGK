@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Detection : MonoBehaviour
 {
     //TODO replace with cultist list reference
-    public Transform[] MOCKEnemies = new Transform[0];
+    private List<Damageable> enemies;
 
 
     /// <summary>
@@ -70,23 +71,23 @@ public class Detection : MonoBehaviour
                 case DetectionStrategy.accidental:
                     func = AccidentalStartegy;
                     break;
+                case DetectionStrategy.random:
+                    func = RandomStrategy;
+                    break;
                 case DetectionStrategy.nearest:
                     func = NearestStartegy;
                     break;
                 case DetectionStrategy.farthest:
                     func = FarthestStartegy;
                     break;
-                case DetectionStrategy.random:
-                    func = () => throw new NotImplementedException();
-                    break;
                 case DetectionStrategy.strongest:
-                    func = () => throw new NotImplementedException();
+                    func = StrongestStartegy;
                     break;
                 case DetectionStrategy.weakest:
-                    func = () => throw new NotImplementedException();
+                    func = WeakestStartegy;
                     break;
                 default:
-                    func = () => throw new NotImplementedException();
+                    func = UndefinedStrategy;
                     break;
             }
             return func;
@@ -96,41 +97,133 @@ public class Detection : MonoBehaviour
     #region Strategies
     private Vector3? AccidentalStartegy()
     {
-        foreach (var enemy in MOCKEnemies)
+        foreach (var enemy in enemies)
         {
-            if ((enemy.position - transform.position).magnitude < DetectionRange)
+            if ((enemy.transform.position - transform.transform.position).magnitude < DetectionRange)
             {
-                return enemy.position;
+                return enemy.transform.position;
             }
         }
         return null;
     }
+
+    private Vector3? RandomStrategy()
+    {
+        int length = enemies.Count;
+        int[] order = new int[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            order[i] = i;
+        }
+
+        for (int i = 0; i < length; i++)
+        {
+            int rand = UnityEngine.Random.Range(0, length);
+            (order[i], order[rand]) = (order[rand], order[i]);
+        }
+
+        foreach (int i in order)
+        {
+            if ((enemies[i].transform.position - transform.transform.position).magnitude < DetectionRange)
+            {
+                return enemies[i].transform.position;
+            }
+        }
+        return null;
+    }
+
     private Vector3? NearestStartegy()
     {
         float distance = DetectionRange;
         Vector3? target = null;
-        foreach (var enemy in MOCKEnemies)
+        foreach (var enemy in enemies)
         {
-            if ((enemy.position - transform.position).magnitude < distance)
+            float currDistance = (enemy.transform.position - transform.position).magnitude;
+
+            if (currDistance < distance)
             {
-                target = enemy.position;
+                distance = currDistance;
+                target = enemy.transform.position;
             }
         }
         return target;
     }
+
     private Vector3? FarthestStartegy()
     {
         float distance = 0;
         Vector3? target = null;
-        foreach (var enemy in MOCKEnemies)
+        foreach (var enemy in enemies)
         {
-            float currDistance = (enemy.position - transform.position).magnitude;
+            float currDistance = (enemy.transform.position - transform.position).magnitude;
+
             if (currDistance > distance && currDistance < DetectionRange)
             {
-                target = enemy.position;
+                target = enemy.transform.position;
             }
         }
         return target;
     }
+
+    private Vector3? StrongestStartegy()
+    {
+        float hp = 0;
+        Vector3? target = null;
+        foreach (var enemy in enemies)
+        {
+            float currDistance = (enemy.transform.position - transform.position).magnitude;
+
+            if (currDistance < DetectionRange && enemy.health > hp)
+            {
+                hp = enemy.health;
+                target = enemy.transform.position;
+            }
+        }
+        return target;
+    }
+
+    private Vector3? WeakestStartegy()
+    {
+        float hp = float.PositiveInfinity;
+        Vector3? target = null;
+        foreach (var enemy in enemies)
+        {
+            float currDistance = (enemy.transform.position - transform.position).magnitude;
+
+            if (currDistance < DetectionRange && enemy.health < hp)
+            {
+                hp = enemy.health;
+                target = enemy.transform.position;
+            }
+        }
+        return target;
+    }
+
+    private Vector3? UndefinedStrategy()
+    {
+        Debug.LogError($"{gameObject.name} use undefined strategy!");
+        return null;
+    }
     #endregion
+
+    #region MonoBehaviour
+    private void Start()
+    {
+        if (gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
+        {
+            enemies = CombatSceneManager.Instance.enemies;
+        }
+        else if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
+        {
+            enemies = CombatSceneManager.Instance.ourCrew;
+        }
+        else
+        {
+            Debug.LogError($"GameObject {gameObject.name} has invalid layer!");
+        }
+    }
+
+    #endregion
+
 }

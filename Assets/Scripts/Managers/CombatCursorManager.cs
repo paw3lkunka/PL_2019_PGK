@@ -12,45 +12,35 @@ public class CombatCursorManager : Singleton<CombatCursorManager>
     public GameObject MainCursor { get; private set; }
     private MeshRenderer cursorRenderer;
     
-    private GameObject walkTargetIndicator;
-    private GameObject shootTargetIndicator;
-    
-    private NewInput input;
+    public GameObject walkTargetIndicator;
+    public GameObject shootTargetIndicator;
     
 #region MonoBehaviour
-    private void Start()
-    {
-        input = ApplicationManager.Instance.Input;
-    }
-
     private void OnEnable() 
     {
         InitializeCursor();
 
-        if (input != null)
-        {
-            input.Gameplay.SetWalkTarget.performed += SetWalkTargetIndicator;
-            input.Gameplay.SetWalkTarget.Enable();
+        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += SetWalkTargetIndicator;
+        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Enable();
 
-            if (CombatSceneManager.Instance.sceneMode == CombatSceneMode.Hostile)
-            {
-                input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
-                input.CombatMode.SetShootTarget.Enable();
-            }
+        if (CombatSceneManager.Instance.sceneMode == CombatSceneMode.Hostile)
+        {
+            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
+            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Enable();
         }
     }
 
     private void OnDisable() 
     {
-        if (input != null)
+        if (ApplicationManager.Instance.Input != null)
         {
-            input.Gameplay.SetWalkTarget.performed -= SetWalkTargetIndicator;
-            input.Gameplay.SetWalkTarget.Disable();
+            ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed -= SetWalkTargetIndicator;
+            ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Disable();
 
             if (CombatSceneManager.Instance.sceneMode == CombatSceneMode.Hostile)
             {
-                input.CombatMode.SetShootTarget.performed -= SetShootTargetIndicator;
-                input.CombatMode.SetShootTarget.Disable();
+                ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= SetShootTargetIndicator;
+                ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Disable();
             }
         }
     }

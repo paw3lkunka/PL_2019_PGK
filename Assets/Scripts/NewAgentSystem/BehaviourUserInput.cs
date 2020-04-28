@@ -18,6 +18,7 @@ public class BehaviourUserInput : MonoBehaviour, IBehaviour
 
     private void GoToCursorPosition(InputAction.CallbackContext ctx)
     {
+        //TODO rythm sync
         cursor = CombatCursorManager.Instance.MainCursor.transform.position + offset;
         UpdateTarget(cursor);
     }

@@ -72,11 +72,11 @@ public class GameplayManager : Singleton<GameplayManager>
             {
                 return destroyedDynamicObjects[currentLocation];
             }
-            catch (ArgumentNullException e)
+            catch (ArgumentNullException)
             {
                 return null;
             }
-            catch (KeyNotFoundException e)
+            catch (KeyNotFoundException)
             {
                 return null;
             }
