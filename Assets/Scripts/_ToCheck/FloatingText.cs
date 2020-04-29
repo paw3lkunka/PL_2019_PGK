@@ -49,12 +49,9 @@ public class FloatingText : MonoBehaviour
 
     #region Component
 
-    public void Set(string text, Color color, float lifeTime)
+    public void Set(string text)
     {
         tmPro.text = text;
-        tmPro.color = color;
-
-        this.lifeTime = lifeTime;
     }
 
     #endregion

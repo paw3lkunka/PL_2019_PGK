@@ -58,6 +58,7 @@ public class Moveable : MonoBehaviour
     protected void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.updateRotation = false;
     }
 
     #endregion

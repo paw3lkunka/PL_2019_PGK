@@ -4,25 +4,47 @@ using UnityEngine;
 
 public class TextsEmitter : MonoBehaviour
 {
-    #region Variables
+    enum Mode
+    {
+        damage,
+        faithGained,
+        faithLost
+    }
 
-    public GameObject textPrefab;
+    [SerializeField]
+    private Mode mode;
 
-    #endregion
+    public void Emit(GameObject prefab,string text)
+    {
+        GameObject obj = Instantiate(prefab, transform.position, Quaternion.identity);
+        obj.GetComponent<FloatingText>().Set(text);
+    }
+
+    void DamageTextEmission(float damage) => Emit(ApplicationManager.Instance.prefabDatabase.floatingTextLife, "-" + damage);
 
     #region MonoBehaviour
 
-
-
-    #endregion
-
-    #region Component
-
-    public void Emit(string text, Color color, float lifeTime)
+    private void OnEnable()
     {
-        GameObject obj = Instantiate(textPrefab, transform.position, Quaternion.identity);
-        obj.GetComponent<FloatingText>().Set(text, color, lifeTime);
+        switch(mode)
+        {
+            case Mode.damage:
+                GetComponentInParent<Damageable>().DamageTaken += DamageTextEmission;
+                break;
+        }
     }
+
+    private void OnDisable()
+    {
+        switch (mode)
+        {
+            case Mode.damage:
+                GetComponentInParent<Damageable>().DamageTaken -= DamageTextEmission;
+                break;
+        }
+
+    }
+
 
     #endregion
 }

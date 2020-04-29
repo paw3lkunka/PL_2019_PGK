@@ -19,6 +19,8 @@ public class Damageable : MonoBehaviour
     [field: SerializeField, GUIName("Defence")]
     public float DefenseBase { get; set; } = 0;
 
+    public event Action<float> DamageTaken;
+
     /// <summary>
     /// Heal agent with given amount of hp
     /// </summary>
@@ -42,6 +44,12 @@ public class Damageable : MonoBehaviour
         {
             float realDamage = CalculateDamage(hitPoints);
             health -= realDamage;
+
+            if( realDamage != 0 && DamageTaken != null)
+            {
+                DamageTaken(realDamage);
+            }
+
             return realDamage;
         }
         else

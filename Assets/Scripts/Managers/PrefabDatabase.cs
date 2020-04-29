@@ -23,4 +23,10 @@ public class PrefabDatabase : ScriptableObject
     public GameObject worldSceneGUI;
     public GameObject rhythmGUI;
     public GameObject pauseGUI;
+
+    [Header("World space UI")]
+    public GameObject healthBar;
+    public GameObject floatingTextEmmiter;
+    public GameObject floatingTextLife;
+    public GameObject floatingTextFaith;
 }

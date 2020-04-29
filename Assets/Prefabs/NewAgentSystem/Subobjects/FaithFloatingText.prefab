@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 6671453847892862788, guid: 8f323b308894f3b4190b51a8f71e7bfe,
         type: 3}
       propertyPath: m_Name
-      value: FloatingText Variant
+      value: FaithFloatingText
       objectReference: {fileID: 0}
     - target: {fileID: 6671453847892862790, guid: 8f323b308894f3b4190b51a8f71e7bfe,
         type: 3}
@@ -70,7 +70,27 @@ PrefabInstance:
     - target: {fileID: 6671453847892862791, guid: 8f323b308894f3b4190b51a8f71e7bfe,
         type: 3}
       propertyPath: speed
-      value: -0.01
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671453848841189811, guid: 8f323b308894f3b4190b51a8f71e7bfe,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.79589653
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671453848841189811, guid: 8f323b308894f3b4190b51a8f71e7bfe,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671453848841189811, guid: 8f323b308894f3b4190b51a8f71e7bfe,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671453848841189811, guid: 8f323b308894f3b4190b51a8f71e7bfe,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294901963
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f323b308894f3b4190b51a8f71e7bfe, type: 3}
