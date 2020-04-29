@@ -101,7 +101,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager>
     private void MoveCursorGamepad()
     {
         var joystickAxis = Gamepad.current.leftStick.ReadValue();
-        var nextCursorPosition = CombatSceneManager.Instance.cultLeaderTransform.position
+        var nextCursorPosition = CombatSceneManager.Instance.cultLeader.transform.position
                                     + new Vector3(joystickAxis.x, joystickAxis.y) * CursorRange;
         nextCursorPosition.z = 0;
 
@@ -111,7 +111,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager>
     private void MoveCursorJoystick()
     {
         var joystickAxis = Joystick.current.stick.ReadValue();
-        var nextCursorPosition = CombatSceneManager.Instance.cultLeaderTransform.position
+        var nextCursorPosition = CombatSceneManager.Instance.cultLeader.transform.position
                                     + new Vector3(joystickAxis.x, joystickAxis.y) * CursorRange;
         nextCursorPosition.z = 0;
         MainCursor.transform.position = nextCursorPosition;

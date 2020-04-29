@@ -833,6 +833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a1dd2a4b10a6948a20a94be6c457e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 0}
 --- !u!114 &570413123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,7 +998,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &815868082
 PrefabInstance:
@@ -1428,7 +1429,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1381101804
 GameObject:
@@ -1439,11 +1440,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1381101808}
+  - component: {fileID: 1381101813}
+  - component: {fileID: 1381101812}
+  - component: {fileID: 1381101811}
+  - component: {fileID: 1381101810}
   - component: {fileID: 1381101807}
   - component: {fileID: 1381101806}
   - component: {fileID: 1381101805}
-  m_Layer: 0
-  m_Name: Cylinder
+  - component: {fileID: 1381101809}
+  m_Layer: 8
+  m_Name: Kazik-Lider Kultu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1524,6 +1530,84 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1381101809
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381101804}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5000001
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1381101810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381101804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a1dd2a4b10a6948a20a94be6c457e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 0}
+--- !u!114 &1381101811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381101804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e212bb0f9cdc7034ab524f1f45e05a07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flags: 1
+  speedBase: 5
+--- !u!114 &1381101812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381101804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7349583da3b164a9eace07e971208a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1381101813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381101804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 913218bf5bb8d784d9b0608f60cd69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flags: 3
+  health:
+    current: 10
+    max: 10
+  <DefenseBase>k__BackingField: 0
 --- !u!1 &1659216541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1837,9 +1921,9 @@ MonoBehaviour:
   - {fileID: 1764090512}
   ourCrew:
   - {fileID: 570413115}
-  cultLeader: {fileID: 0}
+  cultLeader: {fileID: 1381101812}
+  formationScale: 3
   cleanLists: 1
-  cultLeaderTransform: {fileID: 1381101808}
 --- !u!114 &1899779894
 MonoBehaviour:
   m_ObjectHideFlags: 0

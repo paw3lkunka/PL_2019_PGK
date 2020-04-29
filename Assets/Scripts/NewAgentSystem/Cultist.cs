@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Cultist : MonoBehaviour
 {
+    private Damageable damageable;
     private IAttack attack;
     private IBehaviour behaviour;
 
@@ -14,6 +15,7 @@ public class Cultist : MonoBehaviour
 
     private void Awake()
     {
+        damageable = GetComponent<Damageable>();
         attack = GetComponent<IAttack>();
         behaviour = GetComponent<IBehaviour>();
     }
@@ -32,12 +34,14 @@ public class Cultist : MonoBehaviour
 
     private void OnEnable()
     {
+        CombatSceneManager.Instance.ourCrew.Add(damageable);
         ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += AttackCursorPosition;
         AudioTimeline.Instance.OnBeatFail += FailBit;
     }
 
     private void OnDisable()
     {
+        CombatSceneManager.Instance.ourCrew.Remove(damageable);
         ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackCursorPosition;
         AudioTimeline.Instance.OnBeatFail -= FailBit;
     }

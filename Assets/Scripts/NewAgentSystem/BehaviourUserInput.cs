@@ -9,7 +9,7 @@ public class BehaviourUserInput : MonoBehaviour, IBehaviour
     private Moveable moveable;
     private Vector3 cursor;
     //todo position in formation
-    private Vector3 offset = Vector3.zero;
+    public Vector3 offset = Vector3.zero;
 
     public void UpdateTarget(Vector3? target)
     {
