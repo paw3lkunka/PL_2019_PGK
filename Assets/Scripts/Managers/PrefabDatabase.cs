@@ -7,8 +7,9 @@ public class PrefabDatabase : ScriptableObject
 {
     [Header("Cursor prefabs")]
     public GameObject cursorPrefab;
-    
+
     [Header("Entities")]
+    public GameObject projectile;
     public GameObject cultLeader;
     public List<GameObject> cultists;
     public List<GameObject> enemies;

@@ -37,8 +37,8 @@ public class ApplicationManager : Singleton<ApplicationManager>
     public bool enableCheats = false;
     public bool debugOverlay = false;
 
-    [Header("Prefab database")] // * =========================================
-    public PrefabDatabase prefabDatabase;
+    //[Header("Prefab database")] // * =========================================
+    public static PrefabDatabase prefabDatabase;
 
     [Header("Rhythm System Config")] // * ===================================
     public float easyModeGoodTolerance = 0.18f;
@@ -76,6 +76,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
         {
             SetDifficulty(defaultDifficulty);
         }
+        prefabDatabase = (PrefabDatabase)Resources.Load("PrefabDatabase");
     }
 
     private void OnEnable()

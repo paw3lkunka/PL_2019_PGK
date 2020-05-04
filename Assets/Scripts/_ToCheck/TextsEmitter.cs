@@ -11,8 +11,9 @@ public class TextsEmitter : MonoBehaviour
         faithLost
     }
 
-    [SerializeField]
-    private Mode mode;
+#pragma warning disable
+    [SerializeField] private Mode mode;
+#pragma warning restore
 
     public void Emit(GameObject prefab,string text)
     {
@@ -20,16 +21,22 @@ public class TextsEmitter : MonoBehaviour
         obj.GetComponent<FloatingText>().Set(text);
     }
 
-    void DamageTextEmission(float damage) => Emit(ApplicationManager.Instance.prefabDatabase.floatingTextLife, "-" + damage);
+    void DamageTextEmission(float damage) => Emit(ApplicationManager.prefabDatabase.floatingTextLife, "-" + damage);
 
     #region MonoBehaviour
 
     private void OnEnable()
     {
-        switch(mode)
+        switch (mode)
         {
             case Mode.damage:
                 GetComponentInParent<Damageable>().DamageTaken += DamageTextEmission;
+                break;
+            case Mode.faithGained:
+                Debug.LogWarning("TextsEmitter.Mode.faithGained NOT IMPLEMENTED!");
+                break;
+            case Mode.faithLost:
+                Debug.LogWarning("TextsEmitter.Mode.faithLost NOT IMPLEMENTED!");
                 break;
         }
     }

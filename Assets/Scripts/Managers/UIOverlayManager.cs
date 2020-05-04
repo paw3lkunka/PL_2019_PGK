@@ -47,7 +47,7 @@ public class UIOverlayManager : Singleton<UIOverlayManager>
                 guiObjects.Peek().Item1?.SetActive(false);
                 break;
             case PushBehaviour.Lock:
-                guiObjects.Push((Instantiate(ApplicationManager.Instance.prefabDatabase.lockGUI, mainCanvas.transform), PushBehaviour.Lock));
+                guiObjects.Push((Instantiate(ApplicationManager.prefabDatabase.lockGUI, mainCanvas.transform), PushBehaviour.Lock));
                 break;
         }
         guiObjects.Push((Instantiate(guiPrefab, mainCanvas.transform), behaviour));

@@ -30,7 +30,7 @@ public class CombatSceneManager : Singleton<CombatSceneManager>
             var behav = d.GetComponent<BehaviourUserInput>();
             if(behav)
             {
-                behav.offset = formation[i++] * formationScale;
+                behav.formationOffset = formation[i++] * formationScale;
             }
         }
     }
@@ -98,8 +98,8 @@ public class CombatSceneManager : Singleton<CombatSceneManager>
 
     private void OnEnable() 
     {
-        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.prefabDatabase.combatSceneGUI);
-        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.prefabDatabase.rhythmGUI);
+        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.prefabDatabase.combatSceneGUI);
+        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.prefabDatabase.rhythmGUI);
     }
 
     private void OnDrawGizmos()

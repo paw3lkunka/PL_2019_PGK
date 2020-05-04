@@ -75,7 +75,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager>
     private void InitializeCursor()
     {
         Cursor.visible = false;
-        MainCursor = Instantiate(   ApplicationManager.Instance.prefabDatabase.cursorPrefab, 
+        MainCursor = Instantiate(   ApplicationManager.prefabDatabase.cursorPrefab, 
                                         CombatSceneManager.Instance.startPoint.position, 
                                         Quaternion.identity);
 
