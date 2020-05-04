@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PushBehaviour { Nothing, Hide, Lock };
+
 public class UIOverlayManager : Singleton<UIOverlayManager>
 {
     public GameObject baseUILayer;
     public Canvas mainCanvas;
 
-    private Stack<GameObject> guiObjects;
+    private Stack<(GameObject, PushBehaviour)> guiObjects;
 
 #region MonoBehaviour
     
     private void Awake()
     {
-        guiObjects = new Stack<GameObject>();
+        guiObjects = new Stack<(GameObject, PushBehaviour)>();
     }
 
     private void Start() 
@@ -27,7 +29,7 @@ public class UIOverlayManager : Singleton<UIOverlayManager>
         }
         if (baseUILayer)
         {
-            guiObjects.Push(baseUILayer);
+            guiObjects.Push((baseUILayer, PushBehaviour.Nothing));
         }
     }
 
@@ -35,17 +37,40 @@ public class UIOverlayManager : Singleton<UIOverlayManager>
 
 #region ManagerMethods
 
-    public void PushToCanvas(GameObject guiPrefab, bool hideLast = false)
+    public void PushToCanvas(GameObject guiPrefab, PushBehaviour behaviour = PushBehaviour.Nothing)
     {
-        guiObjects.Peek()?.SetActive(!hideLast);
-        guiObjects.Push(Instantiate(guiPrefab, mainCanvas.transform));
+        switch (behaviour)
+        {
+            case PushBehaviour.Nothing:
+                break;
+            case PushBehaviour.Hide:
+                guiObjects.Peek().Item1?.SetActive(false);
+                break;
+            case PushBehaviour.Lock:
+                guiObjects.Push((Instantiate(ApplicationManager.Instance.prefabDatabase.lockGUI, mainCanvas.transform), PushBehaviour.Lock));
+                break;
+        }
+        guiObjects.Push((Instantiate(guiPrefab, mainCanvas.transform), behaviour));
     }
 
     public void PopFromCanvas()
     {
-        Destroy(guiObjects.Pop());
-        guiObjects.Peek()?.SetActive(true);
+        
+        switch (guiObjects.Peek().Item2)
+        {
+            case PushBehaviour.Nothing:
+                Destroy(guiObjects.Pop().Item1);
+                break;
+            case PushBehaviour.Hide:
+                Destroy(guiObjects.Pop().Item1);
+                guiObjects.Peek().Item1?.SetActive(true);
+                break;
+            case PushBehaviour.Lock:
+                Destroy(guiObjects.Pop().Item1);
+                Destroy(guiObjects.Pop().Item1);
+                break;
+        }
     }
 
-#endregion
+    #endregion
 }

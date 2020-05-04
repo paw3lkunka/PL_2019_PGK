@@ -19,6 +19,7 @@ public class PrefabDatabase : ScriptableObject
     public GameObject difficultyMenuGUI;
 
     [Header("Gui prefabs")]
+    public GameObject lockGUI;
     public GameObject combatSceneGUI;
     public GameObject worldSceneGUI;
     public GameObject rhythmGUI;
