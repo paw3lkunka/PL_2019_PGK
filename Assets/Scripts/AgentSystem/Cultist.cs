@@ -9,8 +9,6 @@ public class Cultist : MonoBehaviour
     private IAttack attack;
     private IBehaviour behaviour;
 
-
-
     #region MonoBehaviour
 
     private void Awake()
@@ -23,6 +21,7 @@ public class Cultist : MonoBehaviour
     private void AttackCursorPosition(InputAction.CallbackContext ctx)
     {
         Vector3 target = CombatCursorManager.Instance.MainCursor.transform.position;
+        target.y = transform.position.y;
         
         if (RhythmMechanics.Instance.Combo > 0)
         {
