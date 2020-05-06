@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Damageable),typeof(Detection))]
 public class Cultist : MonoBehaviour
 {
     private Damageable damageable;
+    private Detection detection;
     private IAttack attack;
     private IBehaviour behaviour;
 
@@ -14,6 +16,7 @@ public class Cultist : MonoBehaviour
     private void Awake()
     {
         damageable = GetComponent<Damageable>();
+        detection = GetComponent<Detection>();
         attack = GetComponent<IAttack>();
         behaviour = GetComponent<IBehaviour>();
     }
@@ -26,6 +29,10 @@ public class Cultist : MonoBehaviour
         if (RhythmMechanics.Instance.Combo > 0)
         {
             attack?.Attack(target);
+            if (detection.Func() == null)
+            {
+                attack?.HoldFire();
+            }
         }
     }
 

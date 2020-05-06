@@ -38,11 +38,11 @@ public class Detection : MonoBehaviour
         /// <summary>
         /// Returns target with greatest amount of heaktg in detection range.
         /// </summary>
-        strongest, // TODO not implemented
+        strongest,
         /// <summary>
         /// Returns target with smallest amount of heaktg in detection range.
         /// </summary>
-        weakest, // TODO not implemented
+        weakest,
     }
 
     /// <summary>
