@@ -11,6 +11,7 @@ public class FloatingText : MonoBehaviour
 
 #pragma warning disable
     [SerializeField] private float lifeTime;
+    [SerializeField] private float fadeOutTime;
     [SerializeField] private float speed;
     [SerializeField] private float entropy;
     [SerializeField] private float amplitude;
@@ -19,18 +20,21 @@ public class FloatingText : MonoBehaviour
     [SerializeField] private float amplitudeAcc;
 #pragma warning restore
 
+    private float fadeOutTimer;
+
     #endregion
 
     #region MonoBehaviour
 
     private void Awake()
     {
+        fadeOutTimer = fadeOutTime;
         tmPro = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void Update()
     {
-        transform.Translate(Mathf.Sin(Time.time * entropy) * amplitude, speed, 0);
+        transform.Translate(0, speed, Mathf.Sin(Time.time * entropy) * amplitude);
 
         lifeTime -= Time.deltaTime;
 
@@ -41,18 +45,27 @@ public class FloatingText : MonoBehaviour
 
         if (lifeTime < 0)
         {
-            Destroy(gameObject);
+            fadeOutTimer -= Time.deltaTime;
+
+            Color nColor = tmPro.color;
+            nColor.a = fadeOutTimer / fadeOutTime;
+            tmPro.color = nColor;
+
+            tmPro.color /= fadeOutTime;
+
+            if (fadeOutTimer < 0)
+            {
+                Destroy(gameObject);
+            }
+
         }
     }
 
     #endregion
-
-    #region Component
 
     public void Set(string text)
     {
         tmPro.text = text;
     }
 
-    #endregion
 }

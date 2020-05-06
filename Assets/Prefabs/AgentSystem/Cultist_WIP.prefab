@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 2333728046995635756}
   - component: {fileID: 7425834142536354765}
   - component: {fileID: 7526696578712632604}
+  - component: {fileID: 7379796028654906305}
   m_Layer: 8
   m_Name: Cultist_WIP
   m_TagString: Untagged
@@ -274,6 +275,20 @@ MonoBehaviour:
   <SpeedBase>k__BackingField: 3
   <SpeedBoosted>k__BackingField: 5
   <IsBoosted>k__BackingField: 0
+--- !u!114 &7379796028654906305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6636756642392982897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c47db17fe0320f4ab6bbd223fc0a5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Strategy>k__BackingField: 1
+  <DetectionRange>k__BackingField: 10
 --- !u!1001 &6636756642359807401
 PrefabInstance:
   m_ObjectHideFlags: 0
