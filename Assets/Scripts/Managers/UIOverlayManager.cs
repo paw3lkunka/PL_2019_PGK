@@ -90,7 +90,6 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
         {
             EventSystem.current.SetSelectedGameObject(selectable.gameObject);
         }
-
     }
 
     #endregion

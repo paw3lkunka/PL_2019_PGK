@@ -11,7 +11,7 @@ public class UISelectOnHightlight  : MonoBehaviour, IPointerEnterHandler, IDesel
 {
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!EventSystem.current.alreadySelecting)
+        if(!EventSystem.current.alreadySelecting)
         {
             EventSystem.current.SetSelectedGameObject(this.gameObject);
         }
