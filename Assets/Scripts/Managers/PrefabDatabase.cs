@@ -5,6 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PrefabDatabase", menuName = "Database/PrefabDatabase", order = 0)]
 public class PrefabDatabase : ScriptableObject 
 {
+    [Header("Managers")]
+    public GameObject applicationManager;
+    public GameObject gameplayManager;
+    public GameObject worldSceneManager;
+
     [Header("Cursor prefabs")]
     public GameObject cursorPrefab;
 

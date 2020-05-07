@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Singleton<T> : Singleton where T : MonoBehaviour
+public abstract class Singleton<T, K> : Singleton where T : MonoBehaviour where K : InstancingMode
 {
     private static T _instance;
+    private static readonly K _lazy = null;
     private static readonly object Lock = new object();
     [SerializeField] private bool _persistent = true;
 
@@ -23,6 +24,7 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour
                 {
                     return _instance;
                 }
+
                 var instances = FindObjectsOfType<T>();
                 var count = instances.Length;
                 if (count > 0)
@@ -42,22 +44,39 @@ public abstract class Singleton<T> : Singleton where T : MonoBehaviour
                     return _instance = instances[0];
                 }
 
-                Debug.Log($"<color=blue>[{nameof(Singleton)}<{typeof(T)}>] An instance is needed in the scene and no existiong instances were found, so a new instance will be created.</color>");
-                return _instance = new GameObject($"({nameof(Singleton)}){typeof(T)}").AddComponent<T>();
+                if (_lazy is ForbidLazyInstancing)
+                {
+                    Debug.LogError($"An insance of {typeof(T)} was requested, but {typeof(T)} doesn't allow lazy instancing!");
+                    return null;
+                }
+
+                switch (_instance)
+                {
+                    case ApplicationManager applicationManager:
+                        Debug.Log($"<color=green>[ApplicationManager] An instance was created from prefab.</color>");
+                        return _instance = Instantiate(((PrefabDatabase)Resources.Load("PrefabDatabase")).applicationManager).GetComponent<T>();
+                    case GameplayManager gameplayManager:
+                        Debug.Log($"<color=green>[GameplayManager] An instance was created from prefab.</color>");
+                        return _instance = Instantiate(((PrefabDatabase)Resources.Load("PrefabDatabase")).gameplayManager).GetComponent<T>();
+                    case WorldSceneManager worldSceneManager:
+                        Debug.Log($"<color=green>[WorldSceneManager] An instance was created from prefab.</color>");
+                        return _instance = Instantiate(((PrefabDatabase)Resources.Load("PrefabDatabase")).worldSceneManager).GetComponent<T>();
+                    default:
+                        Debug.Log($"<color=blue>[{nameof(Singleton)}<{typeof(T)}>] An instance is needed in the scene and no existing instances were found, so a new instance will be created.</color>");
+                        return _instance = new GameObject($"({nameof(Singleton)}){typeof(T)}").AddComponent<T>();
+                }
+
             }
         }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (_persistent)
         {
             DontDestroyOnLoad(gameObject);
         }
-        OnAwake();
     }
-
-    protected virtual void OnAwake() {}
 }
 
 public abstract class Singleton : MonoBehaviour
@@ -69,3 +88,7 @@ public abstract class Singleton : MonoBehaviour
         Quitting = true;    
     }
 }
+
+public class InstancingMode {}
+public class AllowLazyInstancing : InstancingMode {}
+public class ForbidLazyInstancing : InstancingMode {}

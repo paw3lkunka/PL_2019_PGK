@@ -13,7 +13,7 @@ public enum TimelineState { None, Countup, Playing, Paused, Interrupted };
 /// <summary>
 /// Main singleton class responsible for audio rhythm synchronization
 /// </summary>
-public partial class AudioTimeline : Singleton<AudioTimeline>
+public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstancing>
 {
     #region Variables
 
@@ -106,8 +106,9 @@ public partial class AudioTimeline : Singleton<AudioTimeline>
 
     // NOTE: OnEnable and OnDisable moved to AudioTimelineEvents
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         barBeatStates = new BeatState[beatsPerBar];
         input = ApplicationManager.Instance.Input;
     }

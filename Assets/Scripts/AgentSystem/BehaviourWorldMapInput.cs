@@ -41,8 +41,11 @@ public class BehaviourWorldMapInput : MonoBehaviour
 
     private void OnDisable()
     {
-        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed -= GoToCursorPosition;
-        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Disable();
+        if (ApplicationManager.Instance)
+        {
+            ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed -= GoToCursorPosition;
+            ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Disable();
+        }
     }
 
     #endregion

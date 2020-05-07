@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CombatCursorManager : Singleton<CombatCursorManager>
+public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInstancing>
 {
     [field: SerializeField, GUIName("CursorRange")]
     public float CursorRange { get; private set; } = 5.0f;

@@ -4,17 +4,18 @@ using UnityEngine;
 
 public enum PushBehaviour { Nothing, Hide, Lock };
 
-public class UIOverlayManager : Singleton<UIOverlayManager>
+public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
 {
     public GameObject baseUILayer;
     public Canvas mainCanvas;
 
     private Stack<(GameObject, PushBehaviour)> guiObjects;
 
-#region MonoBehaviour
-    
-    private void Awake()
+    #region MonoBehaviour
+
+    protected override void Awake()
     {
+        base.Awake();
         guiObjects = new Stack<(GameObject, PushBehaviour)>();
     }
 

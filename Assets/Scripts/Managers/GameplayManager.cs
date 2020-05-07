@@ -9,7 +9,7 @@ using UnityEngine;
 // TODO: Add events
 //      - OnCultistDie
 //      - OnCultistAdd
-public class GameplayManager : Singleton<GameplayManager>
+public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 {
 #pragma warning disable
     [Header("Basic resources")]
@@ -100,10 +100,11 @@ public class GameplayManager : Singleton<GameplayManager>
     public event System.Action FanaticStart;
     public event System.Action FanaticEnd;
 
-#region MonoBehaviour
+    #region MonoBehaviour
 
-    private void Awake() 
+    protected override void Awake()
     {
+        base.Awake();
         // ? +++++ Init double buffered variables +++++
         waterLastFrame = water;
         faithLastFrame = faith;
