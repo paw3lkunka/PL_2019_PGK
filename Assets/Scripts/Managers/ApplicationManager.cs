@@ -81,14 +81,12 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     private void OnEnable()
     {
-        // TODO: Input scheme change
-        //InputSchemeChange += OnInputSchemeChange;
+        InputSchemeChange += OnInputSchemeChange;
     }
 
     private void OnDisable()
     {
-        // TODO: Input scheme change
-        //InputSchemeChange -= OnInputSchemeChange;
+        InputSchemeChange -= OnInputSchemeChange;
     }
 
     #endregion
@@ -153,6 +151,15 @@ public class ApplicationManager : Singleton<ApplicationManager>
                 GreatTolerance = hardModeGreatTolerance;
                 break;
         }
+    }
+
+#endregion
+
+#region EventHandlers
+
+    private void OnInputSchemeChange(PlayerInput obj)
+    {
+        CurrentInputScheme = (InputSchemeEnum)(Enum.Parse(typeof(InputSchemeEnum), obj.currentControlScheme));
     }
 
 #endregion
