@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public enum PushBehaviour { Nothing, Hide, Lock };
 
@@ -32,6 +34,8 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
         {
             guiObjects.Push((baseUILayer, PushBehaviour.Nothing));
         }
+
+        EventSystem.current.SetSelectedGameObject( mainCanvas.GetComponentInChildren<Selectable>().gameObject );
     }
 
 #endregion
@@ -52,11 +56,12 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
                 break;
         }
         guiObjects.Push((Instantiate(guiPrefab, mainCanvas.transform), behaviour));
+
+        EventSystem.current.SetSelectedGameObject( guiObjects.Peek().Item1.GetComponentInChildren<Selectable>().gameObject );
     }
 
     public void PopFromCanvas()
     {
-        
         switch (guiObjects.Peek().Item2)
         {
             case PushBehaviour.Nothing:
@@ -71,6 +76,8 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
                 Destroy(guiObjects.Pop().Item1);
                 break;
         }
+
+        EventSystem.current.SetSelectedGameObject( guiObjects.Peek().Item1.GetComponentInChildren<Selectable>().gameObject );
     }
 
     #endregion
