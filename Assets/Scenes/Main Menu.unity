@@ -654,6 +654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 448027337}
   - component: {fileID: 448027336}
+  - component: {fileID: 448027338}
   m_Layer: 0
   m_Name: Application Manager
   m_TagString: Untagged
@@ -703,6 +704,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &448027338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448027335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 8b4784e79295c6c48a3160ca82cf544d,
+    type: 3}
+  m_NotificationBehavior: 3
+  m_UIInputModule: {fileID: 1982202585}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: MouseKeyboard
+  m_DefaultActionMap: CombatMode
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 978511764}
 --- !u!1 &839118388
 GameObject:
   m_ObjectHideFlags: 0
@@ -5828,6 +5860,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1982202585 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2863971774119466851, guid: 2b313850830fc6c408e797fc815e39ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 2863971774539466947}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2045256730
 GameObject:
   m_ObjectHideFlags: 0
