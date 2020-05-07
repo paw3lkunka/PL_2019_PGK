@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class Singleton<T, K> : Singleton where T : MonoBehaviour where K : InstancingMode
 {
     private static T _instance;
-    private static readonly K _lazy = null;
     private static readonly object Lock = new object();
     [SerializeField] private bool _persistent = true;
 
@@ -44,21 +43,21 @@ public abstract class Singleton<T, K> : Singleton where T : MonoBehaviour where 
                     return _instance = instances[0];
                 }
 
-                if (_lazy is ForbidLazyInstancing)
+                if (typeof(K).Name == "ForbidLazyInstancing")
                 {
                     Debug.LogError($"An insance of {typeof(T)} was requested, but {typeof(T)} doesn't allow lazy instancing!");
                     return null;
                 }
 
-                switch (_instance)
+                switch (typeof(T).Name)
                 {
-                    case ApplicationManager applicationManager:
+                    case "ApplicationManager":
                         Debug.Log($"<color=green>[ApplicationManager] An instance was created from prefab.</color>");
                         return _instance = Instantiate(((PrefabDatabase)Resources.Load("PrefabDatabase")).applicationManager).GetComponent<T>();
-                    case GameplayManager gameplayManager:
+                    case "GameplayManager":
                         Debug.Log($"<color=green>[GameplayManager] An instance was created from prefab.</color>");
                         return _instance = Instantiate(((PrefabDatabase)Resources.Load("PrefabDatabase")).gameplayManager).GetComponent<T>();
-                    case WorldSceneManager worldSceneManager:
+                    case "WorldSceneManager":
                         Debug.Log($"<color=green>[WorldSceneManager] An instance was created from prefab.</color>");
                         return _instance = Instantiate(((PrefabDatabase)Resources.Load("PrefabDatabase")).worldSceneManager).GetComponent<T>();
                     default:

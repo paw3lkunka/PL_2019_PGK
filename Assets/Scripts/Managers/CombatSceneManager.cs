@@ -9,8 +9,6 @@ public enum CombatSceneMode { Neutral, Hostile, Friendly }
 /// </summary>
 public class CombatSceneManager : Singleton<CombatSceneManager, ForbidLazyInstancing>
 {
-       
-
     [Header("Base config")]
     public CombatSceneMode sceneMode;
     public Transform startPoint;

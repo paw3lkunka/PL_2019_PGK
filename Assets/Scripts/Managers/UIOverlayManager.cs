@@ -35,7 +35,11 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
             guiObjects.Push((baseUILayer, PushBehaviour.Nothing));
         }
 
-        EventSystem.current.SetSelectedGameObject( mainCanvas.GetComponentInChildren<Selectable>().gameObject );
+        var selectable = mainCanvas.GetComponentInChildren<Selectable>();
+        if (selectable)
+        {
+            EventSystem.current.SetSelectedGameObject( selectable.gameObject );
+        }
     }
 
 #endregion
@@ -57,7 +61,11 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
         }
         guiObjects.Push((Instantiate(guiPrefab, mainCanvas.transform), behaviour));
 
-        EventSystem.current.SetSelectedGameObject( guiObjects.Peek().Item1.GetComponentInChildren<Selectable>().gameObject );
+        var selectable = guiObjects.Peek().Item1.GetComponentInChildren<Selectable>();
+        if (selectable)
+        {
+            EventSystem.current.SetSelectedGameObject(selectable.gameObject);
+        }
     }
 
     public void PopFromCanvas()
@@ -77,7 +85,12 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
                 break;
         }
 
-        EventSystem.current.SetSelectedGameObject( guiObjects.Peek().Item1.GetComponentInChildren<Selectable>().gameObject );
+        var selectable = guiObjects.Peek().Item1.GetComponentInChildren<Selectable>();
+        if (selectable)
+        {
+            EventSystem.current.SetSelectedGameObject(selectable.gameObject);
+        }
+
     }
 
     #endregion
