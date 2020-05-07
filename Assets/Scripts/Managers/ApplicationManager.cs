@@ -20,7 +20,7 @@ public enum InputSchemeEnum
 /// Handles global game configuration, provides access to scene persistent components.
 /// Should persist throughout whole application.
 /// </summary>
-public class ApplicationManager : Singleton<ApplicationManager>
+public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstancing>
 {
     public Difficulty defaultDifficulty; 
 
@@ -56,19 +56,27 @@ public class ApplicationManager : Singleton<ApplicationManager>
     private PlayerInput playerInput;
     [field: SerializeField, GUIName("CurrentInputScheme")]
     public InputSchemeEnum CurrentInputScheme { get; private set; }
-    public event System.Action<PlayerInput> InputSchemeChange
+    public event Action<PlayerInput> InputSchemeChange
     {
         add { playerInput.onControlsChanged += value; }
         remove { playerInput.onControlsChanged -= value; }
     }
 
     // * ===== Game over event ===============================================
-    public event System.Action OnGameOver;
+#pragma warning disable
+    public event Action NewGameEvent;
+    public event Action BackToMenuEvent;
+    public event Action EnterLocationEvent;
+    public event Action ExitLocationEvent;
+    public event Action GameOverEvent;
+    public event Action WinGameEvent;
+#pragma warning restore
 
     #region MonoBehaviour
 
-    private void Awake() 
+    protected override void Awake() 
     {
+        base.Awake();
         // ? +++++ Initialize new input system +++++
         Input = new NewInput();
         playerInput = GetComponent<PlayerInput>();
@@ -95,7 +103,7 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     public void GameOver(bool won = false)
     {
-        OnGameOver?.Invoke();
+        GameOverEvent?.Invoke();
 
         if (won)
         {
@@ -120,6 +128,8 @@ public class ApplicationManager : Singleton<ApplicationManager>
 
     public void StartGame(GameMode mode, Difficulty difficulty)
     {
+        
+
         SetDifficulty(difficulty);
         switch(mode)
         {

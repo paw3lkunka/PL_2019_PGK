@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Responsible for handling of Combo, Rage and counting beat hit states for statistics
 /// </summary>
-public class RhythmMechanics : Singleton<RhythmMechanics>
+public class RhythmMechanics : Singleton<RhythmMechanics, ForbidLazyInstancing>
 {
     #region Variables
 

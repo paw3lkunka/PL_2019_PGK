@@ -6,17 +6,18 @@ using UnityEngine.EventSystems;
 
 public enum PushBehaviour { Nothing, Hide, Lock };
 
-public class UIOverlayManager : Singleton<UIOverlayManager>
+public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
 {
     public GameObject baseUILayer;
     public Canvas mainCanvas;
 
     private Stack<(GameObject, PushBehaviour)> guiObjects;
 
-#region MonoBehaviour
-    
-    private void Awake()
+    #region MonoBehaviour
+
+    protected override void Awake()
     {
+        base.Awake();
         guiObjects = new Stack<(GameObject, PushBehaviour)>();
     }
 
@@ -34,7 +35,11 @@ public class UIOverlayManager : Singleton<UIOverlayManager>
             guiObjects.Push((baseUILayer, PushBehaviour.Nothing));
         }
 
-        EventSystem.current.SetSelectedGameObject( mainCanvas.GetComponentInChildren<Selectable>().gameObject );
+        var selectable = mainCanvas.GetComponentInChildren<Selectable>();
+        if (selectable)
+        {
+            EventSystem.current.SetSelectedGameObject( selectable.gameObject );
+        }
     }
 
 #endregion
@@ -56,7 +61,11 @@ public class UIOverlayManager : Singleton<UIOverlayManager>
         }
         guiObjects.Push((Instantiate(guiPrefab, mainCanvas.transform), behaviour));
 
-        EventSystem.current.SetSelectedGameObject( guiObjects.Peek().Item1.GetComponentInChildren<Selectable>().gameObject );
+        var selectable = guiObjects.Peek().Item1.GetComponentInChildren<Selectable>();
+        if (selectable)
+        {
+            EventSystem.current.SetSelectedGameObject(selectable.gameObject);
+        }
     }
 
     public void PopFromCanvas()
@@ -76,7 +85,12 @@ public class UIOverlayManager : Singleton<UIOverlayManager>
                 break;
         }
 
-        EventSystem.current.SetSelectedGameObject( guiObjects.Peek().Item1.GetComponentInChildren<Selectable>().gameObject );
+        var selectable = guiObjects.Peek().Item1.GetComponentInChildren<Selectable>();
+        if (selectable)
+        {
+            EventSystem.current.SetSelectedGameObject(selectable.gameObject);
+        }
+
     }
 
     #endregion
