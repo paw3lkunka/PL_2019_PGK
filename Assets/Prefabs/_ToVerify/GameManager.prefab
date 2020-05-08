@@ -1,0 +1,157 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7308153602558408664
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7308153602558408665}
+  - component: {fileID: 7308153602558408670}
+  - component: {fileID: 5075504622887975360}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7308153602558408665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7308153602558408664}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.662555, y: -17.623192, z: -5.5761566}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7308153602558408670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7308153602558408664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e65a8f4685fdf947b27064f0d530aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skipTutorial: 0
+  cheats: 0
+  debug: 0
+  cultistPrefab: {fileID: 2659117062321255298, guid: fca019f3bf262b545a9cbe48dc96d017,
+    type: 3}
+  leaderPrefab: {fileID: 2659117062321255298, guid: 19a007f48af59e74698d1ff79c8bba41,
+    type: 3}
+  guiPrefab: {fileID: 3964841480313498235, guid: ac454071794e2fd44a8d644efaf1a665,
+    type: 3}
+  eventSystem: {fileID: 2863971774119466850, guid: 2b313850830fc6c408e797fc815e39ff,
+    type: 3}
+  gameOverScreenPrefab: {fileID: 7551444911920474970, guid: fee4c723ed7ba894896ff548b39a965f,
+    type: 3}
+  pauseScreen: {fileID: 7551444911920474970, guid: b0c247724801c414688d7960c300b983,
+    type: 3}
+  initialCultistsNumber: 4
+  cultistNumber: 0
+  faithForKilledEnemy: 0.02
+  faithForKilledCultist: 0.05
+  faithForWoundedCultist: 0.001
+  goodTolerance: 0.18
+  greatTolerance: 0.1
+  easyModeGoodTolerance: 0.15
+  easyModeGreatTolerance: 0.08
+  hardModeGoodTolerance: 0.1
+  hardModeGreatTolerance: 0.03
+  mapGenerated: 0
+  water: 1
+  faith: 0.6
+  FaithUsageFactor: 0.0001
+  WaterUsageFactor: 0.0005
+  LowWaterLevel: 0.2
+  LowFaithLevel: 0.2
+  HighFaithLevel: 0.7
+  FanaticFaithLevel: 0.9
+  savedPosition: {x: 0, y: 0}
+  ourCrew: []
+  currentLocation: {fileID: 0}
+  currentInputScheme: 0
+  won: 0
+--- !u!114 &5075504622887975360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7308153602558408664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 8b4784e79295c6c48a3160ca82cf544d,
+    type: 3}
+  m_NotificationBehavior: 3
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f852d4ee-ebdc-4263-b8eb-9423cf3bacdc
+    m_ActionName: CombatMode/SetShootTarget[/XInputControllerWindows/buttonEast,/XInputControllerWindows/rightTrigger,/Mouse/rightButton,/Keyboard/x,/XInputControllerWindows/leftShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ca9e273c-fe69-4b34-9937-3cfec5ef9452
+    m_ActionName: Gameplay/MoveCursor[/XInputControllerWindows/leftStick,/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5099243b-0a5d-4979-830c-5104fc7c9a30
+    m_ActionName: Gameplay/SetWalkTarget[/XInputControllerWindows/buttonSouth,/XInputControllerWindows/leftTrigger,/Mouse/leftButton,/Keyboard/z,/XInputControllerWindows/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 91e14fe2-6552-498c-adda-c3723a08dac3
+    m_ActionName: Gameplay/Pause[/Keyboard/p,/Keyboard/escape,/XInputControllerWindows/start,/XInputControllerWindows/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eeab1485-5897-4f47-95a2-b7d3322bd800
+    m_ActionName: Gameplay/ShowHideInfoLog[/Keyboard/c,/XInputControllerWindows/select,/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2dcaafd9-677b-44fa-bcb2-61d99ff6f07b
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/XInputControllerWindows/leftStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/dpad/up,/XInputControllerWindows/dpad/down,/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fb4af374-6ee6-4ac2-ae98-a72b9eb3bef9
+    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d7d82c7-749c-4a32-bc05-c7f5fe878446
+    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ad71600f-21dc-4a98-b0d7-f35facf3c01f
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e24b6683-2a2c-468b-83f2-10534a0bd322
+    m_ActionName: UI/Point[/Mouse/position]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: MouseKeyboard
+  m_DefaultActionMap: CombatMode
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
