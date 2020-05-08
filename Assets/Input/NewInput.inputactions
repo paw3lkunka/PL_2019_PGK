@@ -69,6 +69,17 @@
                     "action": "SetShootTarget",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d6a2da85-95fe-44a9-992d-6793a4bf2884",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SetShootTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -78,9 +89,9 @@
             "actions": [
                 {
                     "name": "MoveCursor",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "ca9e273c-fe69-4b34-9937-3cfec5ef9452",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 },
@@ -96,6 +107,14 @@
                     "name": "Pause",
                     "type": "Button",
                     "id": "91e14fe2-6552-498c-adda-c3723a08dac3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ShowHideInfoLog",
+                    "type": "Button",
+                    "id": "eeab1485-5897-4f47-95a2-b7d3322bd800",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -181,6 +200,17 @@
                 },
                 {
                     "name": "",
+                    "id": "2eb1061a-e354-46e7-92e5-d01e9b3ee2c8",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SetWalkTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a2647c00-26b4-4631-a443-e33a9bcb21c2",
                     "path": "<Keyboard>/p",
                     "interactions": "",
@@ -209,6 +239,50 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70e51b2a-0997-45f4-b47c-170b7d015a14",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa1a53e8-97f0-434d-8ff3-7bc6a1462bb8",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard;JoystickKeyboard",
+                    "action": "ShowHideInfoLog",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4a9e25f-ce6e-4c52-8dd8-a2df92fb60aa",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ShowHideInfoLog",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2fdbf37d-b185-427a-9ff1-5872b57cd2b8",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ShowHideInfoLog",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -254,14 +328,6 @@
                     "name": "Point",
                     "type": "PassThrough",
                     "id": "e24b6683-2a2c-468b-83f2-10534a0bd322",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "ShowHideInfoLog",
-                    "type": "Button",
-                    "id": "30f9e3bb-ff1a-43ff-9d14-aedd2cc3d1a1",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -606,28 +672,6 @@
                     "processors": "",
                     "groups": "Touchscreen",
                     "action": "Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ed0a616c-0e0c-4ab5-b93a-869b5f85b899",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "MouseKeyboard;JoystickKeyboard",
-                    "action": "ShowHideInfoLog",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d50da95e-91b0-43ca-8d08-ebd7df19abb0",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "ShowHideInfoLog",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

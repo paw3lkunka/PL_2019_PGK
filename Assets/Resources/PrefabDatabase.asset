@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbfdef53c64b75043950c0422959814b, type: 3}
+  m_Name: PrefabDatabase
+  m_EditorClassIdentifier: 
+  applicationManager: {fileID: 3939624071639559093, guid: fa940f2f6fd965446b320b88b3a78c58,
+    type: 3}
+  gameplayManager: {fileID: 5974553869645294481, guid: 45f635e17c2945b41bf516a76336591f,
+    type: 3}
+  worldSceneManager: {fileID: 8768567639389186472, guid: 0cf7e9c19a3c23c4bb5d400cb9f85215,
+    type: 3}
+  cursorPrefab: {fileID: 3870629398234883695, guid: 83108b59583ac004f8de2d1423b83ff6,
+    type: 3}
+  projectile: {fileID: 8095409769981030929, guid: 6b1c8cbf535f79c4189921a67b299702,
+    type: 3}
+  cultLeader: {fileID: 5187142443108444329, guid: 4c5622ccf73091341ab49c8be7f87851,
+    type: 3}
+  cultists:
+  - {fileID: 6636756642392982897, guid: 7da5128f9daad514089da38b4d8fd063, type: 3}
+  enemies:
+  - {fileID: 2291516834466926753, guid: a449f89c505448749b9e2b003ef3f4a7, type: 3}
+  - {fileID: 8838099999731528073, guid: 542915116b5b4b74c9bd47ede70b7f21, type: 3}
+  mainMenuGUI: {fileID: 3582436752930991861, guid: 804bc138c67d02d4e9d37e68e50557eb,
+    type: 3}
+  optionsMenuGUI: {fileID: 5575501208778806695, guid: 5058fc24627623741a9d055948dcfbb3,
+    type: 3}
+  difficultyMenuGUI: {fileID: 3545288915048254156, guid: e2fc0445dadac8149b27152636596f25,
+    type: 3}
+  lockGUI: {fileID: 1524760110341462737, guid: 023f2fa3ffbe9614fbbda92d3a1a0c75, type: 3}
+  combatSceneGUI: {fileID: 0}
+  worldSceneGUI: {fileID: 0}
+  rhythmGUI: {fileID: 0}
+  pauseGUI: {fileID: 0}
+  healthBar: {fileID: 3685369499204346748, guid: b89987d8e7548d24d878634c37e49a61,
+    type: 3}
+  floatingTextEmmiter: {fileID: 6174354719818725633, guid: d28186ea97da95543a83cfbbff84aead,
+    type: 3}
+  floatingTextLife: {fileID: 6671453847892862788, guid: 8f323b308894f3b4190b51a8f71e7bfe,
+    type: 3}
+  floatingTextFaith: {fileID: 2305930432605828687, guid: 1c4ecf09ee23df84c972ebfcea75114a,
+    type: 3}
