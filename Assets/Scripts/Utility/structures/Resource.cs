@@ -2,6 +2,8 @@
 using System;
 using UnityEngine;
 
+public enum ResourceType { Water, Faith, Health }
+
 /// <summary>
 /// Stores float value clamped to [0, max]
 /// </summary>

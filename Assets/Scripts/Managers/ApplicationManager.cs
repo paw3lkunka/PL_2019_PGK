@@ -38,7 +38,7 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
     public bool debugOverlay = false;
 
     //[Header("Prefab database")] // * =========================================
-    public static PrefabDatabase prefabDatabase;
+    public PrefabDatabase PrefabDatabase { get; private set; }
 
     [Header("Rhythm System Config")] // * ===================================
     public float easyModeGoodTolerance = 0.18f;
@@ -84,7 +84,7 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
         {
             SetDifficulty(defaultDifficulty);
         }
-        prefabDatabase = (PrefabDatabase)Resources.Load("PrefabDatabase");
+        PrefabDatabase = (PrefabDatabase)Resources.Load("PrefabDatabase");
     }
 
     private void OnEnable()
@@ -160,6 +160,15 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
                 GoodTolerance = hardModeGoodTolerance;
                 GreatTolerance = hardModeGreatTolerance;
                 break;
+        }
+    }
+
+    public void EnterLocation(string locationName)
+    {
+        if (SceneManager.GetSceneByName(locationName) != null)
+        {
+            EnterLocationEvent?.Invoke();
+            SceneManager.LoadScene(locationName);
         }
     }
 

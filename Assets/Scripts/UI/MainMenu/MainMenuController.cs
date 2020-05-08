@@ -6,11 +6,11 @@ public class MainMenuController : MonoBehaviour
 {
     public void Play()
     {
-        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.prefabDatabase.difficultyMenuGUI, PushBehaviour.Hide);
+        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.difficultyMenuGUI, PushBehaviour.Hide);
     }
 
     public void Options()
     {
-        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.prefabDatabase.optionsMenuGUI, PushBehaviour.Lock);
+        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.optionsMenuGUI, PushBehaviour.Lock);
     }
 }

@@ -14,8 +14,17 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     
     public GameObject walkTargetIndicator;
     public GameObject shootTargetIndicator;
-    
-#region MonoBehaviour
+
+    private Camera mainCamera;
+
+    #region MonoBehaviour
+
+    protected override void Awake()
+    {
+        base.Awake();
+        mainCamera = Camera.main;
+    }
+
     private void OnEnable() 
     {
         InitializeCursor();
@@ -75,7 +84,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     private void InitializeCursor()
     {
         Cursor.visible = false;
-        MainCursor = Instantiate(   ApplicationManager.prefabDatabase.cursorPrefab, 
+        MainCursor = Instantiate(   ApplicationManager.Instance.PrefabDatabase.cursorPrefab, 
                                         CombatSceneManager.Instance.startPoint.position, 
                                         Quaternion.identity);
 
@@ -85,7 +94,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     private void MoveCursorPointer()
     {
         var inputValue = Mouse.current.position.ReadValue();
-        var ray = Camera.main.ScreenPointToRay(inputValue);
+        var ray = mainCamera.ScreenPointToRay(inputValue);
 
         foreach( var hit in Physics.RaycastAll(ray, 100) )
         {

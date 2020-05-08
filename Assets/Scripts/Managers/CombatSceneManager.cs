@@ -96,14 +96,17 @@ public class CombatSceneManager : Singleton<CombatSceneManager, ForbidLazyInstan
 
     private void OnEnable() 
     {
-        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.prefabDatabase.combatSceneGUI);
-        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.prefabDatabase.rhythmGUI);
+        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.combatSceneGUI);
+        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.rhythmGUI);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(startPoint.position, .2f);
+        if (startPoint)
+        {
+            Gizmos.DrawSphere(startPoint.position, .2f);
+        }
     }
 
 #endregion
