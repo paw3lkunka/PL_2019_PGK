@@ -19,9 +19,9 @@ public class ResourcesUIController : MonoBehaviour
     {
         // TODO: Add support for unnormalized water amount
         waterBar.fillAmount = GameplayManager.Instance.Water;
-        waterAmount.text = (GameplayManager.Instance.Water * 100).ToString();
+        waterAmount.text = System.Math.Round((GameplayManager.Instance.Water * 100), 1).ToString("0.0");
         // TODO: Add support for unnormalized faith amount
         faithBar.fillAmount = GameplayManager.Instance.Faith;
-        faithAmount.text = (GameplayManager.Instance.Faith * 100).ToString();
+        faithAmount.text = System.Math.Round((GameplayManager.Instance.Faith * 100), 1).ToString("0.0");
     }
 }
