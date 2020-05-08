@@ -172,6 +172,14 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
         }
     }
 
+    public void BackToMap()
+    {
+        BackToMenuEvent?.Invoke();
+        SceneManager.LoadScene(worldMapScene);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
 #endregion
 
 #region EventHandlers

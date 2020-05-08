@@ -53,7 +53,11 @@ public class TextEmitter : MonoBehaviour
             case Mode.Manual:
                 break;
             case Mode.Damage:
-                GetComponentInParent<Damageable>().DamageTaken -= DamageTextEmission;
+                var damageable = GetComponentInParent<Damageable>();
+                if (damageable)
+                {
+                    damageable.DamageTaken -= DamageTextEmission;
+                }
                 break;
         }
 
