@@ -22,10 +22,7 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
     {
         base.Awake();
         guiObjects = new Stack<(GameObject, PushBehaviour)>();
-    }
 
-    private void Start() 
-    {
         if (mainCanvas == null)
         {
             GameObject canvasObject = Instantiate(new GameObject());
@@ -62,7 +59,7 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
                 guiObjects.Peek().Item1?.SetActive(false);
                 break;
             case PushBehaviour.Lock:
-                guiObjects.Push((Instantiate(ApplicationManager.prefabDatabase.lockGUI, mainCanvas.transform), PushBehaviour.Lock));
+                guiObjects.Push((Instantiate(ApplicationManager.Instance.PrefabDatabase.lockGUI, mainCanvas.transform), PushBehaviour.Lock));
                 break;
         }
         guiObjects.Push((Instantiate(guiPrefab, mainCanvas.transform), behaviour));

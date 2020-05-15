@@ -12,6 +12,6 @@ public class DamageableB : Damageable, IBoostable
     [field: SerializeField, GUIName("IsBoosted")]
     public bool IsBoosted { get; set; }
 
-    protected override float CalculateDamage(float hitPoints) => Mathf.Clamp(hitPoints - (IsBoosted ? DefenseBoost : DefenseBase), 0, health);
+    protected override float CalculateDamage(float hitPoints) => Mathf.Clamp(hitPoints - (IsBoosted ? DefenseBoost : DefenseBase), 0, Health);
 
 }

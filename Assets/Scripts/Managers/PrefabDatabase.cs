@@ -35,7 +35,7 @@ public class PrefabDatabase : ScriptableObject
 
     [Header("World space UI")]
     public GameObject healthBar;
-    public GameObject floatingTextEmmiter;
-    public GameObject floatingTextLife;
-    public GameObject floatingTextFaith;
+    public GameObject floatingTextEmitter;
+    public GameObject floatingTextResourceLost;
+    public GameObject floatingTextResourceGained;
 }

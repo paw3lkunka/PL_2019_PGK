@@ -46,7 +46,7 @@ public class UICheat : MonoBehaviour
 
     public void AddCultist()
     {
-        Instantiate(ApplicationManager.prefabDatabase.cultists[0]);
+        Instantiate(ApplicationManager.Instance.PrefabDatabase.cultists[0]);
     }
 
     #endregion
