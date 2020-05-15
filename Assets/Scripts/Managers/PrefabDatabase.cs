@@ -30,6 +30,8 @@ public class PrefabDatabase : ScriptableObject
     public GameObject worldSceneGUI;
     public GameObject rhythmGUI;
     public GameObject pauseGUI;
+    public GameObject controlsSheet;
+    public GameObject controlsSheetElement;
 
     [Header("World space UI")]
     public GameObject healthBar;
