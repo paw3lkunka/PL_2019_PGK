@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Gameplay manager. Should be created at the start of game.
@@ -177,6 +178,23 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
             Destroy(ourCrew[i]);
         }
         ourCrew.Clear();
+    }
+
+    public void EnterLocation(string locationName)
+    {
+        if (SceneManager.GetSceneByName(locationName) != null)
+        {
+            OnLocationEnterInvoke();
+            lastWorldMapPosition = GameObject.FindGameObjectWithTag("Leader").transform.position;
+            SceneManager.LoadScene(locationName);
+        }
+    }
+
+    public void ExitLocation()
+    {
+        OnLocationExitInvoke();
+        SceneManager.LoadScene(ApplicationManager.Instance.worldMapScene);
+        Cursor.visible = true;
     }
 
     public void FaithBoostOn()

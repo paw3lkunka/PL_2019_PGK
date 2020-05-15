@@ -24,7 +24,10 @@ public class Location : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        StartCoroutine(EnterLocationRoutine());
+        if (WorldSceneManager.Instance.CanEnterLocations)
+        {
+            StartCoroutine(EnterLocationRoutine());
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -46,7 +49,7 @@ public class Location : MonoBehaviour
 
             if (timeElapsedToEnter >= enterDelay)
             {
-                ApplicationManager.Instance.EnterLocation(locationName);
+                GameplayManager.Instance.EnterLocation(locationName);
             }
 
             yield return new WaitForEndOfFrame();

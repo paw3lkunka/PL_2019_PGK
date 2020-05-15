@@ -66,8 +66,6 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
 #pragma warning disable
     public event Action NewGameEvent;
     public event Action BackToMenuEvent;
-    public event Action EnterLocationEvent;
-    public event Action ExitLocationEvent;
     public event Action GameOverEvent;
     public event Action WinGameEvent;
 #pragma warning restore
@@ -161,23 +159,6 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
                 GreatTolerance = hardModeGreatTolerance;
                 break;
         }
-    }
-
-    public void EnterLocation(string locationName)
-    {
-        if (SceneManager.GetSceneByName(locationName) != null)
-        {
-            EnterLocationEvent?.Invoke();
-            SceneManager.LoadScene(locationName);
-        }
-    }
-
-    public void BackToMap()
-    {
-        BackToMenuEvent?.Invoke();
-        SceneManager.LoadScene(worldMapScene);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
 
 #endregion

@@ -8,7 +8,7 @@ public class ExitZone : MonoBehaviour
     {
         if (other.CompareTag("Leader"))
         {
-            ApplicationManager.Instance.BackToMap();
+            GameplayManager.Instance.ExitLocation();
         }
     }
 }
