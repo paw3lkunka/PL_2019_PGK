@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 595295469290311758}
   - component: {fileID: 595295469290311756}
   - component: {fileID: 595295469290311759}
+  - component: {fileID: 8168699290600604886}
   m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
@@ -296,6 +297,27 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8168699290600604886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595295469290311761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc3c6447a9d6b12449b6108bd1ddeeef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 595295469290311759}
+  threshold: 0.001
+  frames: 13
+  animationSpeed: 5
+  up: {fileID: 2100000, guid: 2ba0a63ebbe361442807f5cd86c6a60d, type: 2}
+  down: {fileID: 2100000, guid: 893b3a9bb002d1442a65f4fdf685a451, type: 2}
+  useNegativeScale: 0
+  left: {fileID: 2100000, guid: f0632360ad73d25499c08a6d57430da1, type: 2}
+  right: {fileID: 2100000, guid: aa7f601f84505f449b55a942b926f192, type: 2}
 --- !u!1 &1817935156536409482
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,9 +553,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flags: 3
-  health:
-    current: 100
-    max: 100
+  <Health>k__BackingField:
+    current: 10
+    max: 10
   <DefenseBase>k__BackingField: 0
   <DefenseBoost>k__BackingField: 3
   <IsBoosted>k__BackingField: 0
