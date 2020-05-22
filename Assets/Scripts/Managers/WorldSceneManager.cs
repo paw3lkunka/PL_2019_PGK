@@ -13,11 +13,23 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 #pragma warning restore
     public bool CanEnterLocations { get; private set; } = true;
 
+    private MapGenerator mapGenerator;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        mapGenerator = FindObjectOfType<MapGenerator>();
+    }
+
     private void Start()
     {
         var leader = GameObject.FindGameObjectWithTag("Leader");
         leader.transform.position = GameplayManager.Instance.lastWorldMapPosition;
         StartCoroutine(LocationCooldown(locationCooldown));
+
+        mapGenerator.seed = GameplayManager.Instance.mapGenerationSeed;
+        mapGenerator.useCustomSeed = true;
+        mapGenerator.Generate();
     }
 
     private IEnumerator LocationCooldown(float delay)
