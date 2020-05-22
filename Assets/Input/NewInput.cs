@@ -67,7 +67,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""JoystickKeyboard"",
+                    ""groups"": ""JoystickKeyboard;MouseKeyboard"",
                     ""action"": ""SetShootTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -206,7 +206,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""JoystickKeyboard"",
+                    ""groups"": ""JoystickKeyboard;MouseKeyboard"",
                     ""action"": ""SetWalkTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -295,6 +295,17 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""ShowHideInfoLog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f7c93c3-1998-4091-a3fa-0f93fb7a4b7f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard;JoystickKeyboard"",
                     ""action"": ""ShowHideInfoLog"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

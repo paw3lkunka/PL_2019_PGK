@@ -13,6 +13,9 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
 
     private Stack<(GameObject, PushBehaviour)> guiObjects;
 
+    public GameObject controlsSheetPrefab;
+    public ControlsSheet ControlsSheet { get; private set; }
+
     #region MonoBehaviour
 
     protected override void Awake()
@@ -31,6 +34,9 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
         {
             guiObjects.Push((baseUILayer, PushBehaviour.Nothing));
         }
+
+        PushToCanvas(controlsSheetPrefab);
+        ControlsSheet = guiObjects.Peek().Item1.GetComponent<ControlsSheet>();
 
         var selectable = mainCanvas.GetComponentInChildren<Selectable>();
         if (selectable)

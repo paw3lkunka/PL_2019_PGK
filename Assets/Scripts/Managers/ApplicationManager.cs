@@ -167,7 +167,9 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
 
     private void OnInputSchemeChange(PlayerInput obj)
     {
-        CurrentInputScheme = (InputSchemeEnum)(Enum.Parse(typeof(InputSchemeEnum), obj.currentControlScheme));
+        InputSchemeEnum newScheme;
+        Enum.TryParse<InputSchemeEnum>(obj.currentControlScheme, true, out newScheme);
+        CurrentInputScheme = newScheme;
     }
 
 #endregion
