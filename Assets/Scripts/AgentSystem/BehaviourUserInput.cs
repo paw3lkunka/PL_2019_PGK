@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Moveable))]
 public class BehaviourUserInput : MonoBehaviour, IBehaviour
 {
+    public static bool controlEnabled = true;
     private Moveable moveable;
     private Vector3 cursor;
     //todo position in formation
@@ -18,9 +19,11 @@ public class BehaviourUserInput : MonoBehaviour, IBehaviour
 
     private void GoToCursorPosition(InputAction.CallbackContext ctx)
     {
-        //TODO rythm sync
-        cursor = CombatCursorManager.Instance.MainCursor.transform.position + formationOffset;
-        UpdateTarget(cursor);
+        if (controlEnabled)
+        {
+            cursor = CombatCursorManager.Instance.MainCursor.transform.position + formationOffset;
+            UpdateTarget(cursor);
+        }
     }
 
 

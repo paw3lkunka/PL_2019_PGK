@@ -16,7 +16,7 @@ public class CombatSceneManager : Singleton<CombatSceneManager, ForbidLazyInstan
     public List<Damageable> ourCrew;
     public CultLeader cultLeader;
     public float formationScale = 1;
-    [Tooltip("If checked, meneger automaticlly removes null emements from $ourCrew and $enemies")]
+    [Tooltip("If checked, manager automatically removes null emements from $ourCrew and $enemies")]
     public bool cleanLists = true;
 
 
@@ -83,6 +83,11 @@ public class CombatSceneManager : Singleton<CombatSceneManager, ForbidLazyInstan
         }
 
         CalculateOffsets();
+
+        if (sceneMode != CombatSceneMode.Hostile)
+        {
+            Cursor.visible = true;
+        }
     }
 
     private void LateUpdate()
