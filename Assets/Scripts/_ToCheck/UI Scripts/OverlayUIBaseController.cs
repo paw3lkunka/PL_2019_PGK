@@ -13,7 +13,7 @@ public class OverlayUIBaseController : MonoBehaviour
 
     private void OnDisable()
     {
-        UIOverlayManager.Instance.ControlsSheet.RemoveSheetElement(ButtonActionType.UICancel);
+        UIOverlayManager.Instance?.ControlsSheet.RemoveSheetElement(ButtonActionType.UICancel);
 
         ApplicationManager.Instance.Input.UI.Cancel.performed -= ctx => Back();
     }
