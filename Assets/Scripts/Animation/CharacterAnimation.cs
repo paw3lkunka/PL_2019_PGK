@@ -26,14 +26,17 @@ public class CharacterAnimation : MonoBehaviour
 
 #region PrivateFields
     private Vector3 lastFramePos;
-    #endregion
 
     private float animationTime = 0.0f;
     private int currentFrame = 0;
+    private float texScale;
+#endregion
 
     private void Start()
     {
         lastFramePos = transform.position;
+        texScale = 1.0f / frames;
+        currentFrame = 0;
     }
 
     private void Update()
@@ -108,7 +111,7 @@ public class CharacterAnimation : MonoBehaviour
             currentFrame = 0;
         }
 
-        meshRenderer.sharedMaterial.SetTextureScale("_MainTex", new Vector2(1.0f / frames, 1.0f));
+        meshRenderer.sharedMaterial.SetTextureScale("_MainTex", new Vector2(texScale, 1.0f));
         meshRenderer.sharedMaterial.SetTextureOffset("_MainTex", new Vector2((float)currentFrame / frames, 0.0f));
 
         lastFramePos = transform.position;
