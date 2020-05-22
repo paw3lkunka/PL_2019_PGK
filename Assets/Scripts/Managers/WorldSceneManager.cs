@@ -30,10 +30,7 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         mapGenerator.seed = GameplayManager.Instance.mapGenerationSeed;
         mapGenerator.useCustomSeed = true;
         mapGenerator.Generate();
-    }
 
-    private void OnEnable()
-    {
         UIOverlayManager.Instance?.ControlsSheet.Clear();
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Choose destination");
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Pause, "Pause menu");

@@ -8,11 +8,6 @@ public class DifficultyController : MonoBehaviour
     public bool EnableCheats { get; set; }
     public bool DebugScene { get; set; }
 
-    public void OnEnable()
-    {
-        UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.UICancel, "Go back");
-    }
-
     public void Easy()
     {
         ApplicationManager.Instance.enableCheats = EnableCheats;
