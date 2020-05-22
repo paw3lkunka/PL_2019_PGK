@@ -32,12 +32,12 @@ public class BehaviourGuard : MonoBehaviour, IBehaviour
     }
 
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = gizmoColor; 
         Gizmos.DrawSphere(post, 0.5f);
     }
-#if UNITY_EDITOR
     public Color gizmoColor = Color.magenta;
 #endif
     #endregion

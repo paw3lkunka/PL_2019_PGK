@@ -26,7 +26,7 @@ public class DialogBox : MonoBehaviour
 
     public void Recruit()
     {
-        GameplayManager.Instance.ourCrew.Add(Instantiate(ApplicationManager.prefabDatabase.cultists[0]));
+        GameplayManager.Instance.ourCrew.Add(Instantiate(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
         Destroy(caller);
         Destroy(gameObject);
     }

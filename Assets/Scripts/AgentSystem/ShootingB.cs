@@ -22,7 +22,7 @@ public class ShootingB : Shooting
     {
         if(IsBoosted)
         {
-            var projectile = Instantiate(ApplicationManager.prefabDatabase.projectile, transform.position, Quaternion.identity).GetComponent<Projectile>();
+            var projectile = Instantiate(ApplicationManager.Instance.PrefabDatabase.projectile, transform.position, Quaternion.identity).GetComponent<Projectile>();
             projectile.damageMin *= DamageBoost;
             projectile.damageMax *= DamageBoost;
             projectile.range *= RangeMultiplierBoost;

@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
 [RequireComponent(typeof(Selectable))]
 public class UISelectOnHightlight  : MonoBehaviour, IPointerEnterHandler, IDeselectHandler
 {

@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8186838517809974985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8186838517809974984}
+  - component: {fileID: 8186838517809974989}
+  - component: {fileID: 8186838517809974991}
+  - component: {fileID: 3400001999571193406}
+  m_Layer: 5
+  m_Name: ControlsSheet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8186838517809974984
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186838517809974985}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -50, y: -50}
+  m_SizeDelta: {x: 300, y: 250}
+  m_Pivot: {x: 1, y: 1}
+--- !u!222 &8186838517809974989
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186838517809974985}
+  m_CullTransparentMesh: 0
+--- !u!114 &8186838517809974991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186838517809974985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 2
+  m_Spacing: 5
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+--- !u!114 &3400001999571193406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186838517809974985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4060981affa52e091a9182e897ac96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sheetElement: {fileID: 7056735208443265230, guid: 3fd6e925c05e457eeb7d4248bd50f6cc,
+    type: 3}
+  walkMouseKeyboardBinding: 0000000000000000
+  shootMouseKeyboardBinding: 0000000000000000
+  interactMouseKeyboardBinding: 0000000000000000
+  pauseMouseKeyboardBinding: 0000000000000000
+  walkJoystickKeyboardBinding: 0000000000000000
+  shootJoystickKeyboardBinding: 0000000000000000
+  interactJoystickKeyboardBinding: 0000000000000000
+  pauseJoystickKeyboardBinding: 0000000000000000
+  walkGamepadBinding: 0000000000000000
+  shootGamepadBinding: 0000000000000000
+  interactGamepadBinding: 0000000000000000
+  pauseGamepadBinding: 0000000000000000
+  standardKeyboardSprite: {fileID: 21300000, guid: f0b60f994ac5aa64fa78b69d14cba6b2,
+    type: 3}
+  normalKeyboardChanges:
+  - button: 87
+    text: XD
+  specialKeyboardSprites:
+  - button: 3
+    image: {fileID: 21300000, guid: a0ec2012a063c87439bc18b0ccbe7a6f, type: 3}
+  gamepadSprites:
+  - button: 1
+    image: {fileID: 21300000, guid: f8bb5f3dc9799d849b9a1b0679f8fde5, type: 3}
