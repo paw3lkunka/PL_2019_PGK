@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -215,6 +216,85 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1222391498
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612888, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612889, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: mainCanvas
+      value: 
+      objectReference: {fileID: 4505284148163858098}
+    - target: {fileID: 7385136167289612889, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: baseUILayer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385136167289612890, guid: 6c1d17e120bf5b545846bb8a567a95c0,
+        type: 3}
+      propertyPath: m_Name
+      value: UI Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6c1d17e120bf5b545846bb8a567a95c0, type: 3}
 --- !u!1 &1297343864
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,11 +368,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4482779334437213217, guid: 2c7217f1c5abb954fae106c34383e101,
-        type: 3}
-      propertyPath: m_Name
-      value: New Rhythm System
-      objectReference: {fileID: 0}
     - target: {fileID: 4482779334437213216, guid: 2c7217f1c5abb954fae106c34383e101,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -348,6 +423,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4482779334437213217, guid: 2c7217f1c5abb954fae106c34383e101,
+        type: 3}
+      propertyPath: m_Name
+      value: New Rhythm System
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c7217f1c5abb954fae106c34383e101, type: 3}
 --- !u!1001 &4505284148163858097
@@ -357,11 +437,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4505284148465837081, guid: 75acf6c7e299ed446b4ff547c0d32ae6,
+    - target: {fileID: 4505284148025278230, guid: 75acf6c7e299ed446b4ff547c0d32ae6,
         type: 3}
-      propertyPath: m_Name
-      value: Debug
-      objectReference: {fileID: 0}
+      propertyPath: adaptiveMusic
+      value: 
+      objectReference: {fileID: 323447878}
     - target: {fileID: 4505284148465837080, guid: 75acf6c7e299ed446b4ff547c0d32ae6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -417,15 +497,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4505284148465837081, guid: 75acf6c7e299ed446b4ff547c0d32ae6,
+        type: 3}
+      propertyPath: m_Name
+      value: Debug
+      objectReference: {fileID: 0}
     - target: {fileID: 4505284149396399175, guid: 75acf6c7e299ed446b4ff547c0d32ae6,
         type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 994601006}
-    - target: {fileID: 4505284148025278230, guid: 75acf6c7e299ed446b4ff547c0d32ae6,
-        type: 3}
-      propertyPath: adaptiveMusic
-      value: 
-      objectReference: {fileID: 323447878}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75acf6c7e299ed446b4ff547c0d32ae6, type: 3}
+--- !u!223 &4505284148163858098 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 4505284149396399175, guid: 75acf6c7e299ed446b4ff547c0d32ae6,
+    type: 3}
+  m_PrefabInstance: {fileID: 4505284148163858097}
+  m_PrefabAsset: {fileID: 0}

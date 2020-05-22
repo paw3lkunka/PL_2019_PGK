@@ -3,5 +3,8 @@ public enum ButtonActionType
     Walk,
     Shoot,
     Interact,
-    Pause
+    Pause,
+    UINavigate,
+    UISubmit,
+    UICancel
 }

@@ -23,6 +23,9 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
         base.Awake();
         guiObjects = new Stack<(GameObject, PushBehaviour)>();
 
+        PushToCanvas(controlsSheetPrefab);
+        ControlsSheet = guiObjects.Peek().Item1.GetComponent<ControlsSheet>();
+
         if (mainCanvas == null)
         {
             GameObject canvasObject = Instantiate(new GameObject());
@@ -34,9 +37,6 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
         {
             guiObjects.Push((baseUILayer, PushBehaviour.Nothing));
         }
-
-        PushToCanvas(controlsSheetPrefab);
-        ControlsSheet = guiObjects.Peek().Item1.GetComponent<ControlsSheet>();
 
         var selectable = mainCanvas.GetComponentInChildren<Selectable>();
         if (selectable)
@@ -57,6 +57,7 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
                 break;
             case PushBehaviour.Hide:
                 guiObjects.Peek().Item1?.SetActive(false);
+                ControlsSheet.gameObject.SetActive(true);
                 break;
             case PushBehaviour.Lock:
                 guiObjects.Push((Instantiate(ApplicationManager.Instance.PrefabDatabase.lockGUI, mainCanvas.transform), PushBehaviour.Lock));
