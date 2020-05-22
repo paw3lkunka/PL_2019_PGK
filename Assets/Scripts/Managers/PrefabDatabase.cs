@@ -32,14 +32,16 @@ public class PrefabDatabase : ScriptableObject
     public GameObject pauseGUI;
     public GameObject controlsSheet;
     public GameObject controlsSheetElement;
+    public GameObject recruitGUI;
+    public GameObject insufficientFundsDialog;
 
     [Header("World space UI")]
     public GameObject healthBar;
     public GameObject floatingTextEmitter;
     public GameObject floatingTextResourceLost;
     public GameObject floatingTextResourceGained;
-
-    [Header("World space UI")]
+    
+    [Header("Locations and enviro")]
     public List<GameObject> locations;
     public List<GameObject> enviro;
 }

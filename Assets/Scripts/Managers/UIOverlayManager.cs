@@ -49,7 +49,7 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
 
 #region ManagerMethods
 
-    public void PushToCanvas(GameObject guiPrefab, PushBehaviour behaviour = PushBehaviour.Nothing)
+    public GameObject PushToCanvas(GameObject guiPrefab, PushBehaviour behaviour = PushBehaviour.Nothing)
     {
         switch (behaviour)
         {
@@ -63,13 +63,16 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
                 guiObjects.Push((Instantiate(ApplicationManager.Instance.PrefabDatabase.lockGUI, mainCanvas.transform), PushBehaviour.Lock));
                 break;
         }
-        guiObjects.Push((Instantiate(guiPrefab, mainCanvas.transform), behaviour));
+        GameObject instantiated = Instantiate(guiPrefab, mainCanvas.transform);
+        guiObjects.Push((instantiated, behaviour));
 
         var selectable = guiObjects.Peek().Item1.GetComponentInChildren<Selectable>();
         if (selectable)
         {
             EventSystem.current.SetSelectedGameObject(selectable.gameObject);
         }
+
+        return instantiated;
     }
 
     public void PopFromCanvas()
