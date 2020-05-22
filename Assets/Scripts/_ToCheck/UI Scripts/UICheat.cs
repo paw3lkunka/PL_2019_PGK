@@ -26,22 +26,22 @@ public class UICheat : MonoBehaviour
 
     public void AddWater()
     {
-        GameplayManager.Instance.Water += 0.1f;
+        GameplayManager.Instance.Water += 1.0f;
     }
 
     public void Dehydration()
     {
-        GameplayManager.Instance.Water -= 0.1f;
+        GameplayManager.Instance.Water -= 1.0f;
     }
 
     public void AddFaith()
     {
-        GameplayManager.Instance.Faith += 0.1f;
+        GameplayManager.Instance.Faith += 1.0f;
     }
 
     public void LoseFaith()
     {
-        GameplayManager.Instance.Faith -= 0.1f;
+        GameplayManager.Instance.Faith -= 1.0f;
     }
 
     public void AddCultist()

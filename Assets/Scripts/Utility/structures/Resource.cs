@@ -19,6 +19,7 @@ public struct Resource
     {
         this.max = max;
         this.current = Mathf.Clamp(current, 0, max);
+        InitialValue = current;
     }
 
     /// <summary>
@@ -43,6 +44,8 @@ public struct Resource
     /// Resturns value divided by maximum.
     /// </summary>
     public float Normalized { get => current / max; }
+
+    public float InitialValue { get; private set; }
 
     [SerializeField]
     private float current;

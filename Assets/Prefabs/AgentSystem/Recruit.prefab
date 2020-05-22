@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c5943ed352abdc74aa1da4e97283c49a, type: 2}
+  - {fileID: 2100000, guid: f63df0fb76ba5c84dbdeeaf3d2490d3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,14 +113,11 @@ GameObject:
   - component: {fileID: 6636756642392982892}
   - component: {fileID: 6636756642392982899}
   - component: {fileID: 6636756642392982898}
-  - component: {fileID: 2120696425884443978}
-  - component: {fileID: 5771701300516187836}
-  - component: {fileID: 2333728046995635756}
-  - component: {fileID: 7425834142536354765}
+  - component: {fileID: 3743551780139388693}
   - component: {fileID: 7526696578712632604}
-  - component: {fileID: 7379796028654906305}
+  - component: {fileID: 40918670885925636}
   m_Layer: 8
-  m_Name: Cultist_WIP
+  m_Name: Recruit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,7 +193,7 @@ NavMeshAgent:
   m_BaseOffset: 0.41
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2120696425884443978
+--- !u!114 &3743551780139388693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,61 +202,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6636756642392982897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba300785f517be34bb40d53eac226884, type: 3}
+  m_Script: {fileID: 11500000, guid: 86a897917d10dfc49b75c5a1340fdaf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5771701300516187836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6636756642392982897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a1dd2a4b10a6948a20a94be6c457e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  formationOffset: {x: 0, y: 0, z: 0}
---- !u!114 &2333728046995635756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6636756642392982897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14a89ab4667eb97449e3051aeb37f5f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flags: 1
-  <DamageMultiplier>k__BackingField: 1
-  <RangeMultiplier>k__BackingField: 1
-  <IntervalMultiplier>k__BackingField: 1
-  <DamageBoost>k__BackingField: 2
-  <RangeBoost>k__BackingField: 1
-  <RangeMultiplierBoost>k__BackingField: 2
-  <IsBoosted>k__BackingField: 0
---- !u!114 &7425834142536354765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6636756642392982897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5499bc9f128334bb7d89844d47fff9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flags: 3
-  <Health>k__BackingField:
-    current: 10
-    max: 10
-  <DefenseBase>k__BackingField: 0
-  <DefenseBoost>k__BackingField: 1
-  <IsBoosted>k__BackingField: 0
+  targetChangeInterval: {x: 0, y: 15}
+  maxRange: 10
 --- !u!114 &7526696578712632604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +223,7 @@ MonoBehaviour:
   <SpeedBase>k__BackingField: 3
   <SpeedBoosted>k__BackingField: 5
   <IsBoosted>k__BackingField: 0
---- !u!114 &7379796028654906305
+--- !u!114 &40918670885925636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -285,11 +232,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6636756642392982897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c47db17fe0320f4ab6bbd223fc0a5ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d28b92ed76547f48bd0afd1c5429c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Strategy>k__BackingField: 1
-  <DetectionRange>k__BackingField: 10
 --- !u!1001 &6636756642359807401
 PrefabInstance:
   m_ObjectHideFlags: 0
