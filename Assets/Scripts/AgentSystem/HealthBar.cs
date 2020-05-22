@@ -14,6 +14,6 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-        bar.fillAmount = damageable.health.Normalized;
+        bar.fillAmount = damageable.Health.Normalized;
     }
 }

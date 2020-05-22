@@ -174,9 +174,9 @@ public class Detection : MonoBehaviour
         {
             float currDistance = (enemy.transform.position - transform.position).magnitude;
 
-            if (currDistance < DetectionRange && enemy.health > hp)
+            if (currDistance < DetectionRange && enemy.Health > hp)
             {
-                hp = enemy.health;
+                hp = enemy.Health;
                 target = enemy.transform.position;
             }
         }
@@ -191,9 +191,9 @@ public class Detection : MonoBehaviour
         {
             float currDistance = (enemy.transform.position - transform.position).magnitude;
 
-            if (currDistance < DetectionRange && enemy.health < hp)
+            if (currDistance < DetectionRange && enemy.Health < hp)
             {
-                hp = enemy.health;
+                hp = enemy.Health;
                 target = enemy.transform.position;
             }
         }

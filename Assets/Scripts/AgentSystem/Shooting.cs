@@ -44,7 +44,7 @@ public class Shooting : MonoBehaviour, IAttack
 
     protected virtual Projectile CreateProjectile()
     {
-        var projectile = Instantiate(ApplicationManager.prefabDatabase.projectile, transform.position, Quaternion.identity).GetComponent<Projectile>();
+        var projectile = Instantiate(ApplicationManager.Instance.PrefabDatabase.projectile, transform.position, Quaternion.identity).GetComponent<Projectile>();
         projectile.damageMin *= DamageMultiplier;
         projectile.damageMax *= DamageMultiplier;
         projectile.range *= RangeMultiplier;

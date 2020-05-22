@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Collider2D))]
-public class Location : MonoBehaviour
+public class Location_OLD : MonoBehaviour
 {
     #region Variables
 
@@ -49,15 +49,15 @@ public class Location : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameplayManager.Instance.lastWorldMapPosition = GlobalReturnPoint;
-        GameplayManager.Instance.currentLocation = this;
-        SceneManager.LoadScene(sceneName);
-        GameplayManager.Instance.OnLocationEnterInvoke();
-        if(cooldownTimer < 0)
-        {
-            GameplayManager.Instance.destroyedDynamicObjects.Remove(this);
-        }
-        ResetCooldownTimer();
+        //GameplayManager.Instance.lastWorldMapPosition = GlobalReturnPoint;
+        //GameplayManager.Instance.currentLocation = this;
+        //SceneManager.LoadScene(sceneName);
+        //GameplayManager.Instance.OnLocationEnterInvoke();
+        //if(cooldownTimer < 0)
+        //{
+        //    GameplayManager.Instance.destroyedDynamicObjects.Remove(this);
+        //}
+        //ResetCooldownTimer();
     }
 
 

@@ -34,6 +34,8 @@ public class BehaviourPatrol : MonoBehaviour, IBehaviour
             }
         }
     }
+
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = gizmoColor;
@@ -45,15 +47,12 @@ public class BehaviourPatrol : MonoBehaviour, IBehaviour
             }
         }
     }
+    public Color gizmoColor = Color.magenta;
+#endif
     #endregion
 
     public void UpdateTarget(Vector3? target)
     {
         moveable.Go(target ?? patrolPoints[index].position);
     }
-
-
-#if UNITY_EDITOR
-    public Color gizmoColor = Color.magenta;
-#endif
 }

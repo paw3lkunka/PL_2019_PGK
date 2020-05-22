@@ -14,7 +14,8 @@ public class Damageable : MonoBehaviour
 
     public Flags flags = Flags.canBeDamaged | Flags.canBeHealed;
 
-    public Resource health = new Resource(10,10);
+    [field: SerializeField, GUIName("Health")]
+    public Resource Health { get; private set; } = new Resource(10, 10);
 
     [field: SerializeField, GUIName("Defence")]
     public float DefenseBase { get; set; } = 0;
@@ -25,11 +26,11 @@ public class Damageable : MonoBehaviour
     /// Heal agent with given amount of hp
     /// </summary>
     /// <param name="hp">health to add</param>
-    void Heal(float hp)
+    public void Heal(float hp)
     {
         if( (flags & Flags.canBeHealed) != 0 )
         {
-            health.Set(hp);
+            Health.Set(hp);
         }
     }
 
@@ -43,7 +44,7 @@ public class Damageable : MonoBehaviour
         if ((flags & Flags.canBeDamaged) != 0)
         {
             float realDamage = CalculateDamage(hitPoints);
-            health -= realDamage;
+            Health -= realDamage;
 
             if( realDamage != 0 && DamageTaken != null)
             {
@@ -58,13 +59,13 @@ public class Damageable : MonoBehaviour
         }
     }
 
-    protected virtual float CalculateDamage(float hitPoints) => Mathf.Clamp(hitPoints - DefenseBase, 0, health);
+    protected virtual float CalculateDamage(float hitPoints) => Mathf.Clamp(hitPoints - DefenseBase, 0, Health);
 
     #region Mono Behaviour
 
     private void LateUpdate()
     {
-        if(health <= 0)
+        if(Health <= 0)
         {
             Destroy(gameObject);
         }

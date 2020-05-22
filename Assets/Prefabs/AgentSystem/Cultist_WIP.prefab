@@ -93,13 +93,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 6636756641588606530}
-  threshold: 0.02
-  useDebug: 1
-  up: {fileID: 2100000, guid: 0d7191e006d3c884e8249c0613cabe17, type: 2}
-  down: {fileID: 2100000, guid: 7d4f2d7f453cb6349b38efb175268a05, type: 2}
-  useNegativeScale: 1
-  left: {fileID: 2100000, guid: 054960306acc80e419cda7ef789313e3, type: 2}
-  right: {fileID: 2100000, guid: a4ef610676a4e7943bcb3c0eb20b6def, type: 2}
+  threshold: 0.001
+  frames: 13
+  animationSpeed: 5
+  up: {fileID: 2100000, guid: 4b245544a59c4c940b916664dd42347e, type: 2}
+  down: {fileID: 2100000, guid: d23ab81fd5e52a14d80edbc3b5353f32, type: 2}
+  useNegativeScale: 0
+  left: {fileID: 2100000, guid: c5943ed352abdc74aa1da4e97283c49a, type: 2}
+  right: {fileID: 2100000, guid: 29f5981fef701f545bd4963c4ec7bf93, type: 2}
 --- !u!1 &6636756642392982897
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,9 +254,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flags: 3
-  health:
-    current: 40
-    max: 40
+  <Health>k__BackingField:
+    current: 10
+    max: 10
   <DefenseBase>k__BackingField: 0
   <DefenseBoost>k__BackingField: 1
   <IsBoosted>k__BackingField: 0
