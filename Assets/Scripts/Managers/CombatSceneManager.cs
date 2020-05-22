@@ -88,6 +88,17 @@ public class CombatSceneManager : Singleton<CombatSceneManager, ForbidLazyInstan
         {
             Cursor.visible = true;
         }
+
+        UIOverlayManager.Instance.ControlsSheet.Clear();
+        UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Walk");
+
+        if(sceneMode == CombatSceneMode.Hostile)
+        {
+            UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Shoot, "Shoot");
+        }
+
+
+        UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Pause, "Pause");
     }
 
     private void LateUpdate()
