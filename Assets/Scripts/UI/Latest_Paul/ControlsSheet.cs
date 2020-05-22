@@ -66,7 +66,7 @@ public class ControlsSheet : MonoBehaviour
 
     private void Start()
     {
-        AddSheetElement(ButtonActionType.Shoot, "make a poo");
+        AddSheetElement(ButtonActionType.Shoot, "do something");
     }
 
     private void OnEnable()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,6 +32,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 #pragma warning restore
 
     [Header("Gameplay Config")] // * ===================================
+    [ReadOnly]
+    public int mapGenerationSeed; 
     public int initialCultistsNumber = 4;
     public float faithForKilledEnemy = 0.01f;
     public float faithForKilledCultist = 0.02f;
@@ -57,7 +60,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     // * ===== Gameplay progress statistics =========================
     
-    public bool mapGenerated;
     public List<Location> ShrinesVisited { get; set; }
 
     // * ===== Location variables ==========================================
@@ -111,6 +113,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
         // ? +++++ Initialize shrine list +++++
         ShrinesVisited = new List<Location>();
+        mapGenerationSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
     }
 
     private void Update() 
