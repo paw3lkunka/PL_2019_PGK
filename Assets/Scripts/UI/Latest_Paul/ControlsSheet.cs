@@ -17,18 +17,27 @@ public class ControlsSheet : MonoBehaviour
     public KeyboardButtons[] shootMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] interactMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] pauseMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
+    public Sprite uiNavigateMouseKeyboardBinding;
+    public Sprite uiSubmitMouseKeyboardBinding;
+    public Sprite uiCancelMouseKeyboardBinding;
 
     [Header("Keyboard bindings")]
     public KeyboardButtons[] walkJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] shootJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] interactJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] pauseJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
+    public Sprite uiNavigateJoystickKeyboardBinding;
+    public Sprite uiSubmitJoystickKeyboardBinding;
+    public Sprite uiCancelJoystickKeyboardBinding;
 
     [Header("Gamepad bindings")]
     public GamepadButtons[] walkGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
     public GamepadButtons[] shootGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
     public GamepadButtons[] interactGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
     public GamepadButtons[] pauseGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
+    public Sprite uiNavigateGamepadBinding;
+    public Sprite uiSubmitGamepadBinding;
+    public Sprite uiCancelGamepadBinding;
 
     [Header("Sprites & Captions")]
     public Sprite standardKeyboardSprite;
@@ -62,11 +71,6 @@ public class ControlsSheet : MonoBehaviour
         pauseMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Pause, "Mouse");
         pauseJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Pause, "Joystick");
         pauseGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.Pause, "Gamepad");
-    }
-
-    private void Start()
-    {
-        AddSheetElement(ButtonActionType.Shoot, "make a poo");
     }
 
     private void OnEnable()
@@ -148,6 +152,21 @@ public class ControlsSheet : MonoBehaviour
                     case ButtonActionType.Pause:
                         keyboardButton = pauseMouseKeyboardBinding[prior];
                         break;
+
+                    case ButtonActionType.UINavigate:
+                        image.sprite = uiNavigateMouseKeyboardBinding;
+                        textMesh.text = "";
+                        return;
+
+                    case ButtonActionType.UISubmit:
+                        image.sprite = uiSubmitMouseKeyboardBinding;
+                        textMesh.text = "";
+                        return;
+
+                    case ButtonActionType.UICancel:
+                        image.sprite = uiCancelMouseKeyboardBinding;
+                        textMesh.text = "";
+                        return;
                 }
 
                 if(keyboardButton >= KeyboardButtons.first_standard_noChange && keyboardButton <= KeyboardButtons.last_standard_noChange)
@@ -189,6 +208,21 @@ public class ControlsSheet : MonoBehaviour
                     case ButtonActionType.Pause:
                         joystickButton = pauseJoystickKeyboardBinding[prior];
                         break;
+
+                    case ButtonActionType.UINavigate:
+                        image.sprite = uiNavigateJoystickKeyboardBinding;
+                        textMesh.text = "";
+                        return;
+
+                    case ButtonActionType.UISubmit:
+                        image.sprite = uiSubmitJoystickKeyboardBinding;
+                        textMesh.text = "";
+                        return;
+
+                    case ButtonActionType.UICancel:
+                        image.sprite = uiCancelJoystickKeyboardBinding;
+                        textMesh.text = "";
+                        return;
                 }
 
                 if(joystickButton >= KeyboardButtons.first_standard_noChange && joystickButton <= KeyboardButtons.last_standard_noChange)
@@ -230,6 +264,21 @@ public class ControlsSheet : MonoBehaviour
                     case ButtonActionType.Pause:
                         gamepadButton = pauseGamepadBinding[prior];
                         break;
+
+                    case ButtonActionType.UINavigate:
+                        image.sprite = uiNavigateGamepadBinding;
+                        textMesh.text = "";
+                        return;
+
+                    case ButtonActionType.UISubmit:
+                        image.sprite = uiSubmitGamepadBinding;
+                        textMesh.text = "";
+                        return;
+
+                    case ButtonActionType.UICancel:
+                        image.sprite = uiCancelGamepadBinding;
+                        textMesh.text = "";
+                        return;
                 }
 
                 image.sprite = gamepadSprites.FirstOrDefault(c => c.button.Equals(gamepadButton)).image;
@@ -250,6 +299,16 @@ public class ControlsSheet : MonoBehaviour
         var element = transform.GetChild(index).gameObject;
         Destroy(element);
         currentSheetElements.RemoveAt(index);
+    }
+
+    public void Clear()
+    {
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+        
+        currentSheetElements.Clear();
     }
 
     public void UpdateButton(ButtonActionType action, BindingPriority priority)
