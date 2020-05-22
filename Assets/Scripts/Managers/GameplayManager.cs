@@ -14,20 +14,19 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 {
 #pragma warning disable
     [Header("Basic resources")]
-    // TODO: Implement resource class with max, min and value
-    [Range(0, 1), SerializeField] private float water = 1.0f;
-    private float waterLastFrame;
-    public float Water 
+    [SerializeField] private Resource water = new Resource(100.0f, 100.0f);
+    private float waterPercentLastFrame;
+    public Resource Water 
     { 
-        get => water; 
-        set => water = Mathf.Clamp01(value);
+        get => water;
+        set => water.Set(value);
     }
-    [Range(0, 1), SerializeField] private float faith = 0.5f;
-    private float faithLastFrame;
-    public float Faith
+    [SerializeField] private Resource faith = new Resource(25.0f, 35.0f);
+    private float faithPercentLastFrame;
+    public Resource Faith
     {
         get => faith;
-        set => faith = Mathf.Clamp01(value);
+        set => faith.Set(value);
     }
 #pragma warning restore
 
@@ -107,8 +106,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         base.Awake();
         // ? +++++ Init double buffered variables +++++
-        waterLastFrame = water;
-        faithLastFrame = faith;
+        waterPercentLastFrame = water.Normalized;
+        faithPercentLastFrame = faith;
 
         // ? +++++ Initialize shrine list +++++
         ShrinesVisited = new List<Location>();
@@ -123,32 +122,32 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         }
 
         // ! ----- Game events update -----
-        if (water < lowWaterLevel && waterLastFrame >= lowWaterLevel)
+        if (water.Normalized < lowWaterLevel && waterPercentLastFrame >= lowWaterLevel)
             LowWaterLevelStart?.Invoke();
 
-        if (water > lowWaterLevel && waterLastFrame <= lowWaterLevel)
+        if (water.Normalized > lowWaterLevel && waterPercentLastFrame <= lowWaterLevel)
             LowWaterLevelEnd?.Invoke();
 
-        if (faith < lowFaithLevel && faithLastFrame >= lowFaithLevel)
+        if (faith < lowFaithLevel && faithPercentLastFrame >= lowFaithLevel)
             LowFaithLevelStart?.Invoke();
 
-        if (faith > lowFaithLevel && faithLastFrame <= lowFaithLevel)
+        if (faith > lowFaithLevel && faithPercentLastFrame <= lowFaithLevel)
             LowFaithLevelEnd?.Invoke();
 
-        if (faith > highFaithLevel && faithLastFrame <= highFaithLevel)
+        if (faith > highFaithLevel && faithPercentLastFrame <= highFaithLevel)
             HighFaithLevelStart?.Invoke();
 
-        if (faith < highFaithLevel && faithLastFrame >= highFaithLevel)
+        if (faith < highFaithLevel && faithPercentLastFrame >= highFaithLevel)
             HighFaithLevelEnd?.Invoke();
 
-        if (faith > fanaticFaithLevel && faithLastFrame <= fanaticFaithLevel)
+        if (faith > fanaticFaithLevel && faithPercentLastFrame <= fanaticFaithLevel)
             FanaticStart?.Invoke();
 
-        if (faith < fanaticFaithLevel && faithLastFrame >= fanaticFaithLevel)
+        if (faith < fanaticFaithLevel && faithPercentLastFrame >= fanaticFaithLevel)
             FanaticEnd?.Invoke();
 
-        waterLastFrame = water;
-        faithLastFrame = faith;
+        waterPercentLastFrame = water;
+        faithPercentLastFrame = faith;
     }
 
     #endregion
@@ -160,10 +159,10 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     /// </summary>
     public void ResetResources()
     {
-        water = 1.0f;
-        waterLastFrame = 1.0f;
-        faith = 0.5f;
-        faithLastFrame = 0.5f;
+        water.Set(water.InitialValue);
+        waterPercentLastFrame = 1.0f;
+        faith.Set(faith.InitialValue);
+        faithPercentLastFrame = 0.5f;
         ShrinesVisited.Clear();
         RemoveCultistsFromCrew();
     }

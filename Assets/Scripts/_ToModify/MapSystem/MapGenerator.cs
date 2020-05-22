@@ -150,9 +150,9 @@ public class MapGenerator : MonoBehaviour
                 int randomNumber = Random.Range(0, range);
                 int index = 0;
 
-                Vector3 position = new Vector3(i * cellSize.x, j * cellSize.y, 0);
+                Vector3 position = new Vector3(i * cellSize.x, 0.0f, j * cellSize.y);
                 position.x += Random.Range(-randomOffsetRange.x, randomOffsetRange.x) - halfWidth;
-                position.y += Random.Range(-randomOffsetRange.y, randomOffsetRange.y) - halfHight;
+                position.z += Random.Range(-randomOffsetRange.y, randomOffsetRange.y) - halfHight;
                 unusedPositions.Add(position);
 
                 while (index < locationPrefabs.Count && chances[index] < randomNumber)
@@ -184,7 +184,7 @@ public class MapGenerator : MonoBehaviour
                 while (true)
                 {
                     randomIndex = Random.Range(0, positions.Count);
-                    if ((positions[randomIndex].x > 20 || positions[randomIndex].x < -20) && (positions[randomIndex].y > 20 || positions[randomIndex].y < -20))
+                    if ((positions[randomIndex].x > 20 || positions[randomIndex].x < -20) && (positions[randomIndex].z > 20 || positions[randomIndex].z < -20))
                     {
                         for (int j = 0; j < transform.childCount; ++j)
                         {
@@ -229,12 +229,12 @@ public class MapGenerator : MonoBehaviour
             if (loc.generationID == generationID)
             {
                 Vector2 halfSize = (Vector2)cellSize * 0.5f;
-                Vector2 pos = loc.transform.localPosition;
+                Vector3 pos = loc.transform.localPosition;
 
-                if (pos.x < halfSize.x && pos.x > -halfSize.x && pos.y < halfSize.y && pos.y > -halfSize.y)
+                if (pos.x < halfSize.x && pos.x > -halfSize.x && pos.z < halfSize.y && pos.z > -halfSize.y)
                 {
                     pos.x = pos.x > 0 ? halfSize.x : -halfSize.x;
-                    pos.y = pos.y > 0 ? halfSize.y : -halfSize.y;
+                    pos.z = pos.z > 0 ? halfSize.y : -halfSize.y;
                 }
 
                 loc.transform.localPosition = pos;
