@@ -39,7 +39,7 @@ public class MapGeneratorEditor : Editor
         }
         GUILayout.EndHorizontal();
     
-        if (generator.isValid)
+        if (generator.IsValid)
         {
             validationLog = "Generator state is valid";
             validationLogStyle.normal.textColor = Color.green * Color.gray;
@@ -64,7 +64,7 @@ public class MapGeneratorEditor : Editor
             EditorGUI.indentLevel++;
             {
                 int index = 0;
-                foreach (GameObject prefab in generator.locationPrefabs)
+                foreach (GameObject prefab in generator.Locations)
                 {
                     Location location = prefab.GetComponent<Location>();
                     int value;

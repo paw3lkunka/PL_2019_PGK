@@ -12,8 +12,6 @@ public class Location : MonoBehaviour
     [SerializeField] private float locationResetTime = 120.0f;
 #pragma warning restore
 
-    public int generationID;
-
     private float timeElapsedToEnter = 0.0f;
     private Image enterProgressBar;
 

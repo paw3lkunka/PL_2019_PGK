@@ -38,4 +38,8 @@ public class PrefabDatabase : ScriptableObject
     public GameObject floatingTextEmitter;
     public GameObject floatingTextResourceLost;
     public GameObject floatingTextResourceGained;
+
+    [Header("World space UI")]
+    public List<GameObject> locations;
+    public List<GameObject> enviro;
 }
