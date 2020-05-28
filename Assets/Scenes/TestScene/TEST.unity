@@ -138,6 +138,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 5771701300516187836, guid: 7da5128f9daad514089da38b4d8fd063,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6636756641588606529, guid: 7da5128f9daad514089da38b4d8fd063,
         type: 3}
       propertyPath: m_LocalRotation.y
@@ -193,6 +198,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cultist_WIP
       objectReference: {fileID: 0}
+    - target: {fileID: 7379796028654906305, guid: 7da5128f9daad514089da38b4d8fd063,
+        type: 3}
+      propertyPath: <DetectionRange>k__BackingField
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7425834142536354765, guid: 7da5128f9daad514089da38b4d8fd063,
         type: 3}
       propertyPath: health.current
@@ -205,6 +215,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7da5128f9daad514089da38b4d8fd063, type: 3}
+--- !u!1 &394580945 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6636756642392982897, guid: 7da5128f9daad514089da38b4d8fd063,
+    type: 3}
+  m_PrefabInstance: {fileID: 394580944}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &394580946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394580945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac1da685cd94f14fb62e6a8cfa633bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetChangeInterval: {x: 3, y: 8}
+  maxRange: 10
+  <ChaseTarget>k__BackingField: 0
 --- !u!1001 &460450820
 PrefabInstance:
   m_ObjectHideFlags: 0

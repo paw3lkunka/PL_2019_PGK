@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6636756641588606528}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.70710677}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6636756642392982893}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &6636756641588606531
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 7425834142536354765}
   - component: {fileID: 7526696578712632604}
   - component: {fileID: 7379796028654906305}
+  - component: {fileID: 394580946}
   m_Layer: 8
   m_Name: Cultist_WIP
   m_TagString: Untagged
@@ -208,6 +209,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba300785f517be34bb40d53eac226884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <CanBeFanatic>k__BackingField: 0
+  <IsFanatic>k__BackingField: 0
+  switchFanaticChance: 0.0015
+  normalBehaviour: {fileID: 5771701300516187836}
+  fanaticBehaviour: {fileID: 394580946}
 --- !u!114 &5771701300516187836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,7 +295,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Strategy>k__BackingField: 1
-  <DetectionRange>k__BackingField: 10
+  <DetectionRange>k__BackingField: 30
+--- !u!114 &394580946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6636756642392982897}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac1da685cd94f14fb62e6a8cfa633bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetChangeInterval: {x: 3, y: 8}
+  maxRange: 10
+  <ChaseTarget>k__BackingField: 0
 --- !u!1001 &6636756642359807401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -350,7 +371,7 @@ PrefabInstance:
     - target: {fileID: 8783456592560801953, guid: d28186ea97da95543a83cfbbff84aead,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8783456592560801953, guid: d28186ea97da95543a83cfbbff84aead,
         type: 3}
@@ -586,7 +607,7 @@ PrefabInstance:
     - target: {fileID: 8783456592560801953, guid: d28186ea97da95543a83cfbbff84aead,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8783456592560801953, guid: d28186ea97da95543a83cfbbff84aead,
         type: 3}
