@@ -47,6 +47,7 @@ public class Recruitable : MonoBehaviour
     {
         if (FaithCost < GameplayManager.Instance.Faith && MinimumFaithToRecruit < GameplayManager.Instance.Faith)
         {
+            UIOverlayManager.Instance.ControlsSheet.RemoveSheetElement(ButtonActionType.Walk);
             GameplayManager.Instance.Faith -= FaithCost;
             var cultist = Instantiate(ApplicationManager.Instance.PrefabDatabase.cultists[0], transform.position, transform.rotation);
             GameplayManager.Instance.ourCrew.Add(cultist);
