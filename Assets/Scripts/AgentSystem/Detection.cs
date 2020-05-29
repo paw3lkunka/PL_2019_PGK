@@ -226,4 +226,13 @@ public class Detection : MonoBehaviour
 
     #endregion
 
+    #region In editor
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, DetectionRange);
+    }
+
+    #endregion
+
 }

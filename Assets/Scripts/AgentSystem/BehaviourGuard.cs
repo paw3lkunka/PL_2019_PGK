@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Moveable), typeof(Shooting))]
+[RequireComponent(typeof(Moveable), typeof(IAttack))]
 public class BehaviourGuard : MonoBehaviour, IBehaviour
 {
     public Vector3 post;

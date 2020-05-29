@@ -131,26 +131,26 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         if (water.Normalized > lowWaterLevel && waterPercentLastFrame <= lowWaterLevel)
             LowWaterLevelEnd?.Invoke();
 
-        if (faith < lowFaithLevel && faithPercentLastFrame >= lowFaithLevel)
+        if (faith.Normalized < lowFaithLevel && faithPercentLastFrame >= lowFaithLevel)
             LowFaithLevelStart?.Invoke();
 
-        if (faith > lowFaithLevel && faithPercentLastFrame <= lowFaithLevel)
+        if (faith.Normalized > lowFaithLevel && faithPercentLastFrame <= lowFaithLevel)
             LowFaithLevelEnd?.Invoke();
 
-        if (faith > highFaithLevel && faithPercentLastFrame <= highFaithLevel)
+        if (faith.Normalized > highFaithLevel && faithPercentLastFrame <= highFaithLevel)
             HighFaithLevelStart?.Invoke();
 
-        if (faith < highFaithLevel && faithPercentLastFrame >= highFaithLevel)
+        if (faith.Normalized < highFaithLevel && faithPercentLastFrame >= highFaithLevel)
             HighFaithLevelEnd?.Invoke();
 
-        if (faith > fanaticFaithLevel && faithPercentLastFrame <= fanaticFaithLevel)
+        if (faith.Normalized > fanaticFaithLevel && faithPercentLastFrame <= fanaticFaithLevel)
             FanaticStart?.Invoke();
 
-        if (faith < fanaticFaithLevel && faithPercentLastFrame >= fanaticFaithLevel)
+        if (faith.Normalized < fanaticFaithLevel && faithPercentLastFrame >= fanaticFaithLevel)
             FanaticEnd?.Invoke();
 
-        waterPercentLastFrame = water;
-        faithPercentLastFrame = faith;
+        waterPercentLastFrame = water.Normalized;
+        faithPercentLastFrame = faith.Normalized;
     }
 
     #endregion

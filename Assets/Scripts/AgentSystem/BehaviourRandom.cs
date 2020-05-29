@@ -9,16 +9,16 @@ public class BehaviourRandom : MonoBehaviour, IBehaviour
     [SerializeField] private Vector2 targetChangeInterval;
     [SerializeField] private float maxRange = 10.0f;
 #pragma warning restore
-    private Moveable moveable;
+    protected Moveable moveable;
 
     #region MonoBehaviour
 
-    private void Awake()
+    protected virtual void Awake()
     {
         moveable = GetComponent<Moveable>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         StartCoroutine(ChangeTargetRoutine());
     }
@@ -30,7 +30,7 @@ public class BehaviourRandom : MonoBehaviour, IBehaviour
 
     #endregion
 
-    private IEnumerator ChangeTargetRoutine()
+    protected IEnumerator ChangeTargetRoutine()
     {
         while(true)
         {
