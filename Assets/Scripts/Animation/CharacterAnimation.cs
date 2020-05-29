@@ -16,7 +16,7 @@ public class CharacterAnimation : MonoBehaviour
     [SerializeField] private float threshold = 0.05f;
     [SerializeField] private int frames = 13;
     [SerializeField] private float animationSpeed = 1.0f;
-    [Header("Debug materials")]
+    [Header("Animated materials")]
     [SerializeField] private Material up;
     [SerializeField] private Material down;
     [SerializeField] private bool useNegativeScale = true;
@@ -37,6 +37,13 @@ public class CharacterAnimation : MonoBehaviour
         lastFramePos = transform.position;
         texScale = 1.0f / frames;
         currentFrame = 0;
+        up = new Material(up);
+        down = new Material(down);
+        left = new Material(left);
+        if (right != null)
+        {
+            right = new Material(right);
+        }
     }
 
     private void Update()
