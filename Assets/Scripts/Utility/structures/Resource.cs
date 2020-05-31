@@ -2,13 +2,11 @@
 using System;
 using UnityEngine;
 
-public enum ResourceType { Water, Faith, Health }
-
 /// <summary>
 /// Stores float value clamped to [0, max]
 /// </summary>
 [Serializable]
-public struct Resource
+public class Resource
 {
     /// <summary>
     /// Creates Resource object.

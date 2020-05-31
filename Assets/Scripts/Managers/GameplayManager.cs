@@ -5,6 +5,8 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum ResourceType { Water, Faith, Health }
+
 /// <summary>
 /// Gameplay manager. Should be created at the start of game.
 /// </summary>

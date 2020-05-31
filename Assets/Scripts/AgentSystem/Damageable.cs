@@ -14,6 +14,7 @@ public class Damageable : MonoBehaviour
 
     public Flags flags = Flags.canBeDamaged | Flags.canBeHealed;
 
+
     [field: SerializeField, GUIName("Health")]
     public Resource Health { get; private set; } = new Resource(10, 10);
 
