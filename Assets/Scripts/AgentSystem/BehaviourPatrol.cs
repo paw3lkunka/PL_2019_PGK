@@ -23,9 +23,9 @@ public class BehaviourPatrol : MonoBehaviour, IBehaviour
 
     private void FixedUpdate()
     {
-        float distance = (transform.position - patrolPoints[index].position).magnitude;
-        //TODO ignore y axis
-        if ( distance < PatrolPointMatchDistance)
+        Vector3 difference = transform.position - patrolPoints[index].position;
+        difference.y = 0;
+        if (difference.magnitude < PatrolPointMatchDistance)
         {
             index++;
             if (index >= patrolPoints.Length)
