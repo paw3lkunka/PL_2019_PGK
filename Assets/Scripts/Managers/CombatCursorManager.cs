@@ -32,7 +32,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += SetWalkTargetIndicator;
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Enable();
 
-        if (CombatSceneManager.Instance.sceneMode == CombatSceneMode.Hostile)
+        if (LocationManager.Instance.sceneMode == LocationMode.Hostile)
         {
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Enable();
@@ -46,7 +46,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
             ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed -= SetWalkTargetIndicator;
             ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Disable();
 
-            if (CombatSceneManager.Instance.sceneMode == CombatSceneMode.Hostile)
+            if (LocationManager.Instance.sceneMode == LocationMode.Hostile)
             {
                 ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= SetShootTargetIndicator;
                 ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Disable();
@@ -85,7 +85,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     {
         Cursor.visible = false;
         MainCursor = Instantiate(   ApplicationManager.Instance.PrefabDatabase.cursorPrefab, 
-                                        CombatSceneManager.Instance.startPoint.position, 
+                                        LocationManager.Instance.startPoint.position, 
                                         Quaternion.identity);
 
         cursorRenderer = MainCursor.GetComponent<MeshRenderer>();
@@ -110,7 +110,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     private void MoveCursorGamepad()
     {
         var joystickAxis = Gamepad.current.leftStick.ReadValue();
-        var nextCursorPosition = CombatSceneManager.Instance.cultLeader.transform.position
+        var nextCursorPosition = LocationManager.Instance.cultLeader.transform.position
                                     + new Vector3(joystickAxis.x, joystickAxis.y) * CursorRange;
         nextCursorPosition.z = 0;
 
@@ -120,7 +120,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     private void MoveCursorJoystick()
     {
         var joystickAxis = Joystick.current.stick.ReadValue();
-        var nextCursorPosition = CombatSceneManager.Instance.cultLeader.transform.position
+        var nextCursorPosition = LocationManager.Instance.cultLeader.transform.position
                                     + new Vector3(joystickAxis.x, joystickAxis.y) * CursorRange;
         nextCursorPosition.z = 0;
         MainCursor.transform.position = nextCursorPosition;

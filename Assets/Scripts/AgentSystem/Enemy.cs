@@ -18,6 +18,18 @@ public class Enemy : MonoBehaviour
         behaviour = GetComponent<IBehaviour>();
     }
 
+    // CAnnot be on on enable / disable
+    private void Start()
+    {
+        AudioTimeline.Instance.OnBeatFail += EnterStun;
+        AudioTimeline.Instance.OnCountupEnd += ExitStun;
+    }
+    private void OnDestroy()
+    {
+        AudioTimeline.Instance.OnBeatFail -= EnterStun;
+        AudioTimeline.Instance.OnCountupEnd -= ExitStun;
+    }
+
     private void FixedUpdate()
     {
         Vector3? target = detection?.Func();
@@ -39,4 +51,19 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion
+
+    public void EnterStun()
+    {
+        Debug.Log("STUN ENTER");
+        enabled = false;
+        attack.HoldFire();
+        behaviour.enabled = false;
+    }
+
+    public void ExitStun()
+    {
+        Debug.Log("STUN EXIT");
+        enabled = true;
+        behaviour.enabled = true;
+    }
 }

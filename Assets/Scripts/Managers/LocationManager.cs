@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CombatSceneMode { Neutral, Hostile, Friendly }
+public enum LocationMode { Neutral, Hostile, Friendly }
 
 /// <summary>
 /// Keeps scene specific configuration
 /// </summary>
-public class CombatSceneManager : Singleton<CombatSceneManager, ForbidLazyInstancing>
+public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 {
     [Header("Base config")]
-    public CombatSceneMode sceneMode;
+    public LocationMode sceneMode;
     public Transform startPoint;
     public List<Damageable> enemies;
     public List<Damageable> ourCrew;
@@ -18,7 +18,6 @@ public class CombatSceneManager : Singleton<CombatSceneManager, ForbidLazyInstan
     public float formationScale = 1;
     [Tooltip("If checked, manager automatically removes null emements from $ourCrew and $enemies")]
     public bool cleanLists = true;
-
 
     public void CalculateOffsets()
     {
@@ -70,6 +69,15 @@ public class CombatSceneManager : Singleton<CombatSceneManager, ForbidLazyInstan
         enemies.Clear();
         ourCrew.Clear();
 
+        Vector3 leaderPosition = FindObjectOfType<CultLeader>().transform.position;
+        int length = GameplayManager.Instance.cultistInfos.Count;
+
+        for (int i = 0; i < length; i++)
+        {
+            Vector3 position = leaderPosition + formation[i];
+            GameplayManager.Instance.cultistInfos[i].Instantiate(position, Quaternion.identity);
+        }
+
         foreach(var d in FindObjectsOfType<Damageable>())
         {
             if (d.gameObject.GetComponent<Cultist>())
@@ -84,7 +92,7 @@ public class CombatSceneManager : Singleton<CombatSceneManager, ForbidLazyInstan
 
         CalculateOffsets();
 
-        if (sceneMode != CombatSceneMode.Hostile)
+        if (sceneMode != LocationMode.Hostile)
         {
             Cursor.visible = true;
         }
@@ -92,7 +100,7 @@ public class CombatSceneManager : Singleton<CombatSceneManager, ForbidLazyInstan
         UIOverlayManager.Instance.ControlsSheet.Clear();
         UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Walk");
 
-        if(sceneMode == CombatSceneMode.Hostile)
+        if(sceneMode == LocationMode.Hostile)
         {
             UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Shoot, "Shoot");
         }

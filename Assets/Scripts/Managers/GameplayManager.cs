@@ -51,10 +51,10 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public float faithBoost = 2.0f;
 
     // * ===== Scene persistent crew ================================
-    /// <summary>
-    /// List of cultists (with leader at [0] )
-    /// </summary>
-    public List<GameObject> ourCrew;
+
+    public List<CultistEntityInfo> cultistInfos;
+
+
     /// <summary>
     /// Saved position from world map scene
     /// </summary>
@@ -113,6 +113,11 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         waterPercentLastFrame = water.Normalized;
         faithPercentLastFrame = faith;
 
+        for (int i = 0; i < initialCultistsNumber; i++)
+        {
+            cultistInfos.Add(new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
+        }
+
         // ? +++++ Initialize shrine list +++++
         ShrinesVisited = new List<Location>();
         mapGenerationSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
@@ -121,7 +126,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     private void Update() 
     {
         // ! ----- Game over condition -----
-        if (ourCrew.Count <= 0)
+        if (false /*TODO add condition*/)
         {
             ApplicationManager.Instance.GameOver(false);
         }
@@ -169,19 +174,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         faith.Set(faith.InitialValue);
         faithPercentLastFrame = 0.5f;
         ShrinesVisited.Clear();
-        RemoveCultistsFromCrew();
-    }
-
-    /// <summary>
-    /// Destroy all cultist instances and clear list
-    /// </summary>
-    public void RemoveCultistsFromCrew()
-    {
-        for(int i = ourCrew.Count - 1; i >= 0; --i)
-        {
-            Destroy(ourCrew[i]);
-        }
-        ourCrew.Clear();
     }
 
     public void EnterLocation(string locationName)
