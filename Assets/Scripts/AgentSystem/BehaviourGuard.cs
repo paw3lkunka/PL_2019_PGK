@@ -23,7 +23,6 @@ public class BehaviourGuard : MonoBehaviour, IBehaviour
         moveable.Go(target ?? post);
     }
 
-
     #region MonoBehaviour
 
     private void Awake()

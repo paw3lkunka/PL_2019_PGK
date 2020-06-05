@@ -32,6 +32,8 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
         }
     }
 
+    public static float offsetInLocation;
+
     /// <summary>
     /// FORMATION LAYOUT: (0 - cult leader) <br/>
     ///
@@ -74,7 +76,7 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
         for (int i = 0; i < length; i++)
         {
-            Vector3 position = leaderPosition + formation[i];
+            Vector3 position = leaderPosition + formation[i] * formationScale;
             GameplayManager.Instance.cultistInfos[i].Instantiate(position, Quaternion.identity);
         }
 

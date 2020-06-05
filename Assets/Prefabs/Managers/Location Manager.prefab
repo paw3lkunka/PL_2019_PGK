@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6563560387556239212}
   - component: {fileID: 5025922775677725557}
   m_Layer: 0
-  m_Name: Combat Scene Manager
+  m_Name: Location Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,5 +49,5 @@ MonoBehaviour:
   enemies: []
   ourCrew: []
   cultLeader: {fileID: 0}
-  formationScale: 1
+  formationScale: 3
   cleanLists: 1

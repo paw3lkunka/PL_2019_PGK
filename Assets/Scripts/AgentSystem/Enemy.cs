@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     private Detection detection;
     private IAttack attack;
     private IBehaviour behaviour;
+    private Moveable moveable;
 
     #region MonoBehaviour
 
@@ -16,6 +17,7 @@ public class Enemy : MonoBehaviour
         detection = GetComponent<Detection>();
         attack = GetComponent<IAttack>();
         behaviour = GetComponent<IBehaviour>();
+        moveable = GetComponent<Moveable>();
     }
 
     // CAnnot be on on enable / disable
@@ -55,14 +57,18 @@ public class Enemy : MonoBehaviour
     public void EnterStun()
     {
         Debug.Log("STUN ENTER");
-        enabled = false;
+
         attack.HoldFire();
+        moveable.Stop();
+
+        enabled = false;
         behaviour.enabled = false;
     }
 
     public void ExitStun()
     {
         Debug.Log("STUN EXIT");
+
         enabled = true;
         behaviour.enabled = true;
     }
