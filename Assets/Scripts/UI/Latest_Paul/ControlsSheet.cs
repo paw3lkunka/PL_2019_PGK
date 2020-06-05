@@ -9,6 +9,7 @@ using TMPro;
 
 public class ControlsSheet : MonoBehaviour
 {
+    [SerializeField]
     public GameObject sheetElement;
     private List<ActionDescription> currentSheetElements = new List<ActionDescription>();
 
