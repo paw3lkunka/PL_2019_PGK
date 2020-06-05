@@ -101,7 +101,6 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
             // TODO: replace tag with layer mask
             if (hit.collider.CompareTag("Ground"))
             {
-                Debug.Log("MainCursor: " + MainCursor.ToString());
                 MainCursor.transform.position = hit.point;
                 continue;
             }
