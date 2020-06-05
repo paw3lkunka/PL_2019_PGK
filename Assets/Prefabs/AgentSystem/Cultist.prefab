@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6636756641588606528}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.09229596, y: 0.7010574, z: -0.09229596, w: 0.7010574}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 6636756641588606530}
-  threshold: 0.001
+  threshold: 0.005
   frames: 13
   animationSpeed: 5
   up: {fileID: 2100000, guid: 4b245544a59c4c940b916664dd42347e, type: 2}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 7379796028654906305}
   - component: {fileID: 394580946}
   m_Layer: 8
-  m_Name: Cultist_WIP
+  m_Name: Cultist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,12 +240,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flags: 1
-  <DamageMultiplier>k__BackingField: 1
-  <RangeMultiplier>k__BackingField: 1
-  <IntervalMultiplier>k__BackingField: 1
-  <DamageBoost>k__BackingField: 2
-  <RangeBoost>k__BackingField: 1
-  <RangeMultiplierBoost>k__BackingField: 2
+  <DamageMultiplier>k__BackingField: 0.25
+  <RangeMultiplier>k__BackingField: 2
+  <IntervalMultiplier>k__BackingField: 0.25
+  <DamageBoost>k__BackingField: 0.75
+  <RangeBoost>k__BackingField: 4
+  <RangeMultiplierBoost>k__BackingField: 0.125
   <IsBoosted>k__BackingField: 0
 --- !u!114 &7425834142536354765
 MonoBehaviour:

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6563560387556239212}
   - component: {fileID: 5025922775677725557}
   m_Layer: 0
-  m_Name: Combat Scene Manager
+  m_Name: Location Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,14 +40,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6873924609274821571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec3019a17d1f3da41a792d340e62149e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a39c24eab7896a4d9e4376b27a049d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _persistent: 0
+  _persistent: 1
   sceneMode: 0
   startPoint: {fileID: 0}
   enemies: []
   ourCrew: []
   cultLeader: {fileID: 0}
-  formationScale: 1
+  formationScale: 3
   cleanLists: 1

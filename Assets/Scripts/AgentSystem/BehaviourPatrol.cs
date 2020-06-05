@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Moveable))]
 public class BehaviourPatrol : MonoBehaviour, IBehaviour
 {
+    [Tooltip("Distance 2D in XZ axes needet tho match patrol point as visited.")]
     public float PatrolPointMatchDistance = 0.5f;
 #pragma warning disable
     [SerializeField] private Transform[] patrolPoints = new Transform[0];
@@ -23,9 +24,9 @@ public class BehaviourPatrol : MonoBehaviour, IBehaviour
 
     private void FixedUpdate()
     {
-        float distance = (transform.position - patrolPoints[index].position).magnitude;
-        //TODO ignore y axis
-        if ( distance < PatrolPointMatchDistance)
+        Vector3 difference = transform.position - patrolPoints[index].position;
+        difference.y = 0;
+        if (difference.magnitude < PatrolPointMatchDistance)
         {
             index++;
             if (index >= patrolPoints.Length)

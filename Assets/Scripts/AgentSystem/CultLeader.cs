@@ -16,16 +16,16 @@ public class CultLeader : MonoBehaviour
 
     private void Update()
     {
-        if (CombatSceneManager.Instance.ourCrew.Count == 0)
+        if (LocationManager.Instance.ourCrew.Count == 0)
         {
-            CombatSceneManager.Instance.ourCrew.Add(damageable);
+            LocationManager.Instance.ourCrew.Add(damageable);
             damageable.flags |= Damageable.Flags.canBeDamaged;
         }
     }
 
     private void OnDisable()
     {
-        CombatSceneManager.Instance.ourCrew.Remove(damageable);
+        LocationManager.Instance.ourCrew.Remove(damageable);
     }
 
     #endregion

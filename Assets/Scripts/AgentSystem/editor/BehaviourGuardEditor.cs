@@ -13,6 +13,7 @@ public class BehaviourGuardEditor : Editor
         if (GUILayout.Button("Set post here"))
         {
             behaviourGuard.SetPostHere();
+            EditorUtility.SetDirty(target);
         }
 
         base.OnInspectorGUI();

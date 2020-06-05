@@ -14,6 +14,7 @@ public class Damageable : MonoBehaviour
 
     public Flags flags = Flags.canBeDamaged | Flags.canBeHealed;
 
+
     [field: SerializeField, GUIName("Health")]
     public Resource Health { get; private set; } = new Resource(10, 10);
 
@@ -21,6 +22,8 @@ public class Damageable : MonoBehaviour
     public float DefenseBase { get; set; } = 0;
 
     public event Action<float> DamageTaken;
+    public event Action Death;
+
 
     /// <summary>
     /// Heal agent with given amount of hp
@@ -32,6 +35,16 @@ public class Damageable : MonoBehaviour
         {
             Health.Set(hp);
         }
+    }
+
+    /// <summary>
+    /// Sets value of Health ignoreing in-game logic.
+    /// Should not be invoked in gameplay.
+    /// </summary>
+    /// <param name="value">value to set.</param>
+    public void SetHealthForce(float value)
+    {
+        Health.Set(value);
     }
 
     /// <summary>
@@ -68,6 +81,7 @@ public class Damageable : MonoBehaviour
         if(Health <= 0)
         {
             Destroy(gameObject);
+            Death?.Invoke();
         }
     }
 
