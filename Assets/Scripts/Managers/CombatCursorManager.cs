@@ -85,7 +85,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     {
         Cursor.visible = false;
         MainCursor = Instantiate(   ApplicationManager.Instance.PrefabDatabase.cursorPrefab, 
-                                        LocationManager.Instance.startPoint.position, 
+                                        new Vector3(0.0f, 0.0f, 0.0f), 
                                         Quaternion.identity);
 
         cursorRenderer = MainCursor.GetComponent<MeshRenderer>();

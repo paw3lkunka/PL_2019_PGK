@@ -45,7 +45,8 @@ public abstract class Singleton<T, K> : Singleton where T : MonoBehaviour where 
 
                 if (typeof(K).Name == "ForbidLazyInstancing")
                 {
-                    Debug.LogError($"An insance of {typeof(T)} was requested, but {typeof(T)} doesn't allow lazy instancing!");
+                    // TODO: Better lazy instancing info because it throws this if we check for null
+                    //Debug.LogError($"An insance of {typeof(T)} was requested, but {typeof(T)} doesn't allow lazy instancing!");
                     return null;
                 }
 
