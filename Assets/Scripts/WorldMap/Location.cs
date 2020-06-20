@@ -10,6 +10,7 @@ public class Location : MonoBehaviour
     [SerializeField] private string locationName;
     [SerializeField] private float enterDelay = 3.0f;
     [SerializeField] private float locationResetTime = 120.0f;
+    [SerializeField] private GameObject locationVisitedIndicator;
 #pragma warning restore
 
     [Header("Saved in prefs")]
@@ -83,6 +84,15 @@ public class Location : MonoBehaviour
         if (timeToRefill > 0)
         {
             timeToRefill -= Time.deltaTime;
+        }
+
+        if (visited)
+        {
+            locationVisitedIndicator.SetActive(true);
+        }
+        else
+        {
+            locationVisitedIndicator.SetActive(false);
         }
     }
 
