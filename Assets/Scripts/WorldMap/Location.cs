@@ -88,11 +88,6 @@ public class Location : MonoBehaviour
 
     private IEnumerator EnterLocationRoutine()
     {
-        visited = true;
-        timeToRefill = locationResetTime;
-
-        generatedBy.SaveState();
-
         while(true)
         {
             timeElapsedToEnter += Time.deltaTime;
@@ -100,6 +95,11 @@ public class Location : MonoBehaviour
             if (timeElapsedToEnter >= enterDelay)
             {
                 GameplayManager.Instance.EnterLocation(locationName);
+
+                visited = true;
+                timeToRefill = locationResetTime;
+
+                generatedBy.SaveState();
             }
 
             yield return new WaitForEndOfFrame();
