@@ -81,6 +81,31 @@ public class MapGenerator : MonoBehaviour
 
     #region Component
 
+    public void SaveState()
+    {
+        foreach (var loc in GetComponentsInChildren<Location>())
+        {
+            loc.SaveState();
+        }
+        PlayerPrefs.Save();
+    }
+
+    public void LoadState()
+    {
+        foreach (var loc in GetComponentsInChildren<Location>())
+        {
+            loc.LoadState();
+        }
+    }
+
+    public void ClearSave()
+    {
+        foreach (var loc in GetComponentsInChildren<Location>())
+        {
+            loc.ClearSave();
+        }
+    }
+
     private void Initialize()
     {
         Locations = new List<GameObject>();
@@ -126,7 +151,6 @@ public class MapGenerator : MonoBehaviour
     [ContextMenu("Generate")]
     public void Generate()
     {
-
         if (!useCustomSeed)
         {
             seed = Random.Range(int.MinValue, int.MaxValue);
@@ -170,7 +194,12 @@ public class MapGenerator : MonoBehaviour
 
                 if (index < Locations.Count)
                 {
-                    Instantiate(Locations[index], position, Quaternion.identity, transform);
+                    var obj = Instantiate(Locations[index], position, Quaternion.identity, transform);
+                    var loc = obj.GetComponent<Location>();
+
+                    loc.id = i * cells.x + j;
+                    loc.generatedBy = this;
+                    
                     unusedPositions.RemoveAt(unusedPositions.Count - 1);
                 }
 
@@ -180,6 +209,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+        LoadState();
     }
 
     [ContextMenu("Clear")]
