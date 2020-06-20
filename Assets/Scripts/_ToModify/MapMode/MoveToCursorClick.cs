@@ -46,7 +46,7 @@ public class MoveToCursorClick : MonoBehaviour
 
     private void LateUpdate()
     {
-        if ((Vector2)transform.position != targetPos && GameplayManager.Instance.ourCrew.Count > 0)
+        if ((Vector2)transform.position != targetPos && GameplayManager.Instance.cultistInfos.Count > 0)
         {
             MapSceneManager.Instance.DrawDottedLine(targetPos, transform.position);
             transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);

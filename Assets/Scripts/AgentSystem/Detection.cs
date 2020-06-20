@@ -212,11 +212,11 @@ public class Detection : MonoBehaviour
     {
         if (gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
         {
-            enemies = CombatSceneManager.Instance.enemies;
+            enemies = LocationManager.Instance.enemies;
         }
         else if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
         {
-            enemies = CombatSceneManager.Instance.ourCrew;
+            enemies = LocationManager.Instance.ourCrew;
         }
         else
         {

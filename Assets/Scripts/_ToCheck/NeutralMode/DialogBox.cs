@@ -26,7 +26,8 @@ public class DialogBox : MonoBehaviour
 
     public void Recruit()
     {
-        GameplayManager.Instance.ourCrew.Add(Instantiate(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
+        Debug.LogError("Old dialog box is deprecated, and have removed functionalities.");
+        //GameplayManager.Instance.cultistInfos.Add(Instantiate(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
         Destroy(caller);
         Destroy(gameObject);
     }

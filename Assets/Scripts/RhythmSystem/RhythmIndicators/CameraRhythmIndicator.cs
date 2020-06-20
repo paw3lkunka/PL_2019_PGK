@@ -58,22 +58,34 @@ public class CameraRhythmIndicator : MonoBehaviour
 
     private void OnEnable()
     {
-        AudioTimeline.Instance.OnBeatHit += VisualizeBeatHit;
+        if (AudioTimeline.Instance)
+        {
+            AudioTimeline.Instance.OnBeatHit += VisualizeBeatHit;
+        }
 
-        RhythmMechanics.Instance.OnComboChange += HandleComboAnimation;
+        if (RhythmMechanics.Instance)
+        {
+            RhythmMechanics.Instance.OnComboChange += HandleComboAnimation;
 
-        RhythmMechanics.Instance.OnRageStart += StartRageAnimation;
-        RhythmMechanics.Instance.OnRageStop += StopRageAnimation;
+            RhythmMechanics.Instance.OnRageStart += StartRageAnimation;
+            RhythmMechanics.Instance.OnRageStop += StopRageAnimation;
+        }
     }
 
     private void OnDisable()
     {
-        AudioTimeline.Instance.OnBeatHit -= VisualizeBeatHit;
+        if (AudioTimeline.Instance)
+        {
+            AudioTimeline.Instance.OnBeatHit -= VisualizeBeatHit;
+        }
 
-        RhythmMechanics.Instance.OnComboChange -= HandleComboAnimation;
+        if (RhythmMechanics.Instance)
+        {
+            RhythmMechanics.Instance.OnComboChange -= HandleComboAnimation;
 
-        RhythmMechanics.Instance.OnRageStart -= StartRageAnimation;
-        RhythmMechanics.Instance.OnRageStop -= StopRageAnimation;
+            RhythmMechanics.Instance.OnRageStart -= StartRageAnimation;
+            RhythmMechanics.Instance.OnRageStop -= StopRageAnimation;
+        }
     }
 
     private void Update()

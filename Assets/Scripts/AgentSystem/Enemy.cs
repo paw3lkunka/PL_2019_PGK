@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     private Detection detection;
     private IAttack attack;
     private IBehaviour behaviour;
+    private Moveable moveable;
 
     #region MonoBehaviour
 
@@ -16,6 +17,19 @@ public class Enemy : MonoBehaviour
         detection = GetComponent<Detection>();
         attack = GetComponent<IAttack>();
         behaviour = GetComponent<IBehaviour>();
+        moveable = GetComponent<Moveable>();
+    }
+
+    // CAnnot be on on enable / disable
+    private void Start()
+    {
+        AudioTimeline.Instance.OnBeatFail += EnterStun;
+        AudioTimeline.Instance.OnCountupEnd += ExitStun;
+    }
+    private void OnDestroy()
+    {
+        AudioTimeline.Instance.OnBeatFail -= EnterStun;
+        AudioTimeline.Instance.OnCountupEnd -= ExitStun;
     }
 
     private void FixedUpdate()
@@ -39,4 +53,23 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion
+
+    public void EnterStun()
+    {
+        Debug.Log("STUN ENTER");
+
+        attack.HoldFire();
+        moveable.Stop();
+
+        enabled = false;
+        behaviour.enabled = false;
+    }
+
+    public void ExitStun()
+    {
+        Debug.Log("STUN EXIT");
+
+        enabled = true;
+        behaviour.enabled = true;
+    }
 }

@@ -26,13 +26,8 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     public bool forceEmptyCentre = false;
 
-    private bool templeGenerated = false;
-
     public int seed;
-
-    [SerializeField] public GameObject shrineLocationPrefab;
-    [SerializeField] public GameObject templeLocationPrefab;
-    
+        
     /// <summary>
     /// Size of grid cells
     /// </summary>
@@ -82,23 +77,40 @@ public class MapGenerator : MonoBehaviour
 
     private void Awake() => Initialize();
 
-    private void LateUpdate()
-    {
-        if( !templeGenerated && GameplayManager.Instance.ShrinesVisited.Count == 3)
-        {
-            int randomPos = Random.Range(0, unusedPositions.Count);
-            GameObject instance = Instantiate(templeLocationPrefab, unusedPositions[randomPos], Quaternion.identity, transform);
-            templeGenerated = true;
-        }
-    }
-
     #endregion
 
     #region Component
 
+    public void SaveState()
+    {
+        foreach (var loc in GetComponentsInChildren<Location>())
+        {
+            loc.SaveState();
+        }
+        PlayerPrefs.Save();
+    }
+
+    public void LoadState()
+    {
+        foreach (var loc in GetComponentsInChildren<Location>())
+        {
+            loc.LoadState();
+        }
+    }
+
+    public void ClearSave()
+    {
+        foreach (var loc in GetComponentsInChildren<Location>())
+        {
+            loc.ClearSave();
+        }
+    }
+
     private void Initialize()
     {
-        Locations = (Resources.Load("PrefabDatabase") as PrefabDatabase).locations;
+        Locations = new List<GameObject>();
+        Locations.AddRange((Resources.Load("PrefabDatabase") as PrefabDatabase).stdLocations);
+        Locations.AddRange((Resources.Load("PrefabDatabase") as PrefabDatabase).shrines);
 
         spawnChances.Resize(Locations.Count, 0);
 
@@ -139,7 +151,6 @@ public class MapGenerator : MonoBehaviour
     [ContextMenu("Generate")]
     public void Generate()
     {
-
         if (!useCustomSeed)
         {
             seed = Random.Range(int.MinValue, int.MaxValue);
@@ -183,7 +194,12 @@ public class MapGenerator : MonoBehaviour
 
                 if (index < Locations.Count)
                 {
-                    Instantiate(Locations[index], position, Quaternion.identity, transform);
+                    var obj = Instantiate(Locations[index], position, Quaternion.identity, transform);
+                    var loc = obj.GetComponent<Location>();
+
+                    loc.id = i * cells.x + j;
+                    loc.generatedBy = this;
+                    
                     unusedPositions.RemoveAt(unusedPositions.Count - 1);
                 }
 
@@ -193,6 +209,8 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+        LoadState();
+        ClearSave();
     }
 
     [ContextMenu("Clear")]

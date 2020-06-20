@@ -91,8 +91,7 @@ public partial class AudioTimeline
         this.keepCombo = keepCombo;
 
         Time.timeScale = 0;
-        // TODO: Interface with UI Overlay manager
-        //Instantiate(ApplicationManager.Instance.pauseScreen);
+        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.pauseGUI, PushBehaviour.Lock);
 
         // Save beat moment variables
         pauseMoment = AudioSettings.dspTime;

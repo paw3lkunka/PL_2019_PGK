@@ -17,7 +17,7 @@ public class ResourceDepleter : MonoBehaviour
         if ((lastFramePos - transform.position).magnitude > veloctyThreshold)
         {
             GameplayManager.Instance.Water -= waterDepletionRate;
-            GameplayManager.Instance.Faith -= faithDepletionRate * GameplayManager.Instance.ourCrew.Count;
+            GameplayManager.Instance.Faith -= faithDepletionRate * GameplayManager.Instance.cultistInfos.Count;
         }
         lastFramePos = transform.position;
     }

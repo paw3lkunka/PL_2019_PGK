@@ -42,7 +42,8 @@ MonoBehaviour:
     type: 3}
   rhythmGUI: {fileID: 3143279563993299375, guid: 4df24f1b20056de40826ff2093d55aca,
     type: 3}
-  pauseGUI: {fileID: 0}
+  pauseGUI: {fileID: 6895275744844789439, guid: 41ceac9deaad59a4fbe29c399a7f173c,
+    type: 3}
   controlsSheet: {fileID: 0}
   controlsSheetElement: {fileID: 0}
   recruitGUI: {fileID: 8470437774358307167, guid: e0321c77013da414b8be364797059f6b,
@@ -57,8 +58,13 @@ MonoBehaviour:
     type: 3}
   floatingTextResourceGained: {fileID: 6671453847892862788, guid: 8c46e1374a32798428e3937c60fe853a,
     type: 3}
-  locations:
-  - {fileID: 6205803352902423027, guid: d8191f6cf49298b41b4c5bdae701cc67, type: 3}
-  - {fileID: 2172749964799134820, guid: 90885e2612ae01b448cef7ce937c4d4b, type: 3}
+  stdLocations:
   - {fileID: 99060680108663743, guid: c31d9c65e3db40544bbdadfc27e9950f, type: 3}
+  - {fileID: 2172749964799134820, guid: 90885e2612ae01b448cef7ce937c4d4b, type: 3}
+  - {fileID: 6205803352902423027, guid: 3078693cb84647a488a39088d526dfdb, type: 3}
+  - {fileID: 6205803352902423027, guid: a2e1b2d6c2660044195617d66e7f1a14, type: 3}
+  shrines:
+  - {fileID: 6205803352902423027, guid: 023d4382f34601c4f91db6e67917e664, type: 3}
+  - {fileID: 6205803352902423027, guid: b786896f3464fc84c850ba9fba997a71, type: 3}
+  - {fileID: 6205803352902423027, guid: bd807b0b509242f49ac2833210606ace, type: 3}
   enviro: []

@@ -188,6 +188,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: CultistLeader_WorldMap
       objectReference: {fileID: 0}
+    - target: {fileID: 5477192852651823502, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: <SpeedBase>k__BackingField
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6715866173278453077, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: faithDepletionRate
+      value: 0.001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 197240aff88368644ab7b10f68c34db0, type: 3}
 --- !u!1 &283120921
@@ -743,7 +753,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1245746755
 RectTransform:
@@ -1755,6 +1765,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Map Generator
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: spawnChances.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: spawnChances.Array.data[3]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: spawnChances.Array.data[4]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: useCustomSeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: spawnChances.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: spawnChances.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: spawnChances.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: spawnChances.Array.data[5]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: spawnChances.Array.data[6]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: emptyChance
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973247, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}

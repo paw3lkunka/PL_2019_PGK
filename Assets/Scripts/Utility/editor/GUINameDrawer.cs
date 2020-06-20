@@ -7,8 +7,18 @@ public class GUINameDrawer : PropertyDrawer
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         GUIName guiName = attribute as GUIName;
-        string name = ObjectNames.NicifyVariableName(guiName.Text);
+        label.text = ObjectNames.NicifyVariableName(guiName.Text);
 
-        EditorGUI.PropertyField(position, property, new GUIContent(name));
+        //HACK
+        if (property.type == "Resource")
+        {
+            new ResourcePropertyDrawer().OnGUI(position, property, label);
+        }
+        else
+        {
+            EditorGUI.PropertyField(position, property, label);
+        }
+
+
     }
 }

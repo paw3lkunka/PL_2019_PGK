@@ -9,6 +9,7 @@ public class Cultist : MonoBehaviour
     private Damageable damageable;
     private Detection detection;
     private IAttack attack;
+    public CultistEntityInfo info;
 
     [field: SerializeField, GUIName("CanBeFanatic"), GUIReadOnly]
     public bool CanBeFanatic { get; protected set; }
@@ -104,6 +105,7 @@ public class Cultist : MonoBehaviour
 
     private void FanatismStart() => CanBeFanatic = true;
     private void FanatismEnd() => CanBeFanatic = false;
+    private void OnDeath() => GameplayManager.Instance.cultistInfos.Remove(info);
 
     #endregion
 
@@ -126,22 +128,35 @@ public class Cultist : MonoBehaviour
 
     private void OnEnable()
     {
-        CombatSceneManager.Instance.ourCrew.Add(damageable);
-        AudioTimeline.Instance.OnBeatFail += FailBit;
+        LocationManager.Instance.ourCrew.Add(damageable);
+        if (AudioTimeline.Instance)
+        {
+            AudioTimeline.Instance.OnBeatFail += FailBit;
+        }
         GameplayManager.Instance.FanaticStart += FanatismStart;
         GameplayManager.Instance.FanaticEnd += FanatismEnd;
+        damageable.Death += OnDeath;
         IsFanatic = true; //HACK to ensure, that SetNormalState will work.
         SetNormalState();
     }
 
     private void OnDisable()
     {
-        CombatSceneManager.Instance.ourCrew.Remove(damageable);
-        AudioTimeline.Instance.OnBeatFail -= FailBit;
+        LocationManager.Instance.ourCrew.Remove(damageable);
+        if (AudioTimeline.Instance)
+        {
+            AudioTimeline.Instance.OnBeatFail -= FailBit;
+        }
         GameplayManager.Instance.FanaticStart -= FanatismStart;
         GameplayManager.Instance.FanaticEnd -= FanatismEnd;
         ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackCursorPosition;
         ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackNearbyEnemy;
+        damageable.Death -= OnDeath;
+    }
+
+    private void OnDestroy()
+    {
+        info?.Save(this);
     }
 
     #endregion

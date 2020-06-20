@@ -46,7 +46,7 @@ public class OurGUI : MonoBehaviour
 
     public void Update()
     {
-        CrewIndicator = GameplayManager.Instance.ourCrew.Count;
+        CrewIndicator = GameplayManager.Instance.cultistInfos.Count;
         WaterIndicator = GameplayManager.Instance.Water;
         FaithIndicator = GameplayManager.Instance.Faith;
 

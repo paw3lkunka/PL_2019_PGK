@@ -41,6 +41,6 @@ public class BehaviourRandom : MonoBehaviour, IBehaviour
 
     public void UpdateTarget(Vector3? target)
     {
-        moveable.Go((Vector3)target);
+        moveable.Go(target ?? transform.position);
     }
 }

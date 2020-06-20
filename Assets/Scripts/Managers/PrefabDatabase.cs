@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "PrefabDatabase", menuName = "Database/PrefabDatabase", order = 0)]
 public class PrefabDatabase : ScriptableObject 
@@ -42,6 +43,7 @@ public class PrefabDatabase : ScriptableObject
     public GameObject floatingTextResourceGained;
     
     [Header("Locations and enviro")]
-    public List<GameObject> locations;
+    public List<GameObject> stdLocations;
+    public List<GameObject> shrines;
     public List<GameObject> enviro;
 }

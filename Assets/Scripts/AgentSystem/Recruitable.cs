@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Recruitable : MonoBehaviour
@@ -49,8 +50,11 @@ public class Recruitable : MonoBehaviour
         {
             UIOverlayManager.Instance.ControlsSheet.RemoveSheetElement(ButtonActionType.Walk);
             GameplayManager.Instance.Faith -= FaithCost;
-            var cultist = Instantiate(ApplicationManager.Instance.PrefabDatabase.cultists[0], transform.position, transform.rotation);
-            GameplayManager.Instance.ourCrew.Add(cultist);
+
+            var newCultist = new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]);
+            newCultist.Instantiate(transform.position, transform.rotation);
+            GameplayManager.Instance.cultistInfos.Add(newCultist);
+
             Destroy(gameObject);
             return true;
         }
