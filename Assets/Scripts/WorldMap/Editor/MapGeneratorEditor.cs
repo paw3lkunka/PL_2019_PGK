@@ -26,10 +26,16 @@ public class MapGeneratorEditor : Editor
         GUILayout.BeginHorizontal(GUILayout.ExpandWidth(false));
         {
             if (GUILayout.Button("Generate"))
+            {
                 generator.Generate();
+                EditorUtility.SetDirty(target);
+            }
 
             if (GUILayout.Button("Clear"))
+            {
                 generator.Clear();
+                EditorUtility.SetDirty(target);
+            }
         }
         GUILayout.EndHorizontal();
     
