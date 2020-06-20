@@ -89,31 +89,158 @@ MonoBehaviour:
   shootMouseKeyboardBinding: 0000000000000000
   interactMouseKeyboardBinding: 0000000000000000
   pauseMouseKeyboardBinding: 0000000000000000
-  uiNavigateMouseKeyboardBinding: {fileID: 0}
-  uiSubmitMouseKeyboardBinding: {fileID: 0}
-  uiCancelMouseKeyboardBinding: {fileID: 0}
+  uiNavigateMouseKeyboardBinding: {fileID: 21300000, guid: cf5620cb2355b2dad920ca5189d35d95,
+    type: 3}
+  uiSubmitMouseKeyboardBinding: {fileID: 21300000, guid: 0ff0e1c53e1217e6d9e00b3f56f8161e,
+    type: 3}
+  uiCancelMouseKeyboardBinding: {fileID: 21300000, guid: 32a281a12cd74b912bdccd0eb2494294,
+    type: 3}
   walkJoystickKeyboardBinding: 0000000000000000
   shootJoystickKeyboardBinding: 0000000000000000
   interactJoystickKeyboardBinding: 0000000000000000
   pauseJoystickKeyboardBinding: 0000000000000000
-  uiNavigateJoystickKeyboardBinding: {fileID: 0}
-  uiSubmitJoystickKeyboardBinding: {fileID: 0}
-  uiCancelJoystickKeyboardBinding: {fileID: 0}
+  uiNavigateJoystickKeyboardBinding: {fileID: 21300000, guid: cf5620cb2355b2dad920ca5189d35d95,
+    type: 3}
+  uiSubmitJoystickKeyboardBinding: {fileID: 21300000, guid: 0ff0e1c53e1217e6d9e00b3f56f8161e,
+    type: 3}
+  uiCancelJoystickKeyboardBinding: {fileID: 21300000, guid: 32a281a12cd74b912bdccd0eb2494294,
+    type: 3}
   walkGamepadBinding: 0000000000000000
   shootGamepadBinding: 0000000000000000
   interactGamepadBinding: 0000000000000000
   pauseGamepadBinding: 0000000000000000
-  uiNavigateGamepadBinding: {fileID: 0}
-  uiSubmitGamepadBinding: {fileID: 0}
-  uiCancelGamepadBinding: {fileID: 0}
-  standardKeyboardSprite: {fileID: 21300000, guid: f0b60f994ac5aa64fa78b69d14cba6b2,
+  uiNavigateGamepadBinding: {fileID: 21300000, guid: 363ba9110ccf9711997183e71cfd6ffe,
+    type: 3}
+  uiSubmitGamepadBinding: {fileID: 21300000, guid: 95107495bdae298d195f7dd12eaa37e4,
+    type: 3}
+  uiCancelGamepadBinding: {fileID: 21300000, guid: cb72f5f2eb4d4d0688ad902c1dc5ef11,
+    type: 3}
+  standardKeyboardSprite: {fileID: 21300000, guid: 8f4c79074028e4c13b025178feed8590,
     type: 3}
   normalKeyboardChanges:
+  - button: 82
+    text: PgDn
+  - button: 83
+    text: PgUp
+  - button: 84
+    text: Del
+  - button: 85
+    text: Pause
+  - button: 86
+    text: NumLk
   - button: 87
-    text: XD
+    text: PrtSc
+  - button: 88
+    text: ScrLk
+  - button: 89
+    text: Num /
+  - button: 90
+    text: Num *
+  - button: 91
+    text: Num +
+  - button: 92
+    text: Num -
+  - button: 93
+    text: Num .
+  - button: 94
+    text: Num =
+  - button: 95
+    text: Num 1
+  - button: 96
+    text: Num 2
+  - button: 97
+    text: Num 3
+  - button: 98
+    text: Num 4
+  - button: 99
+    text: Num 5
+  - button: 100
+    text: Num 6
+  - button: 101
+    text: Num 7
+  - button: 102
+    text: Num 8
+  - button: 103
+    text: Num 9
+  - button: 104
+    text: Num 0
   specialKeyboardSprites:
+  - button: 1
+    image: {fileID: 21300000, guid: d67d29c60d7440e1a9be3178451204ac, type: 3}
+  - button: 2
+    image: {fileID: 21300000, guid: ecea3903bc5559c08b426c4153de74fd, type: 3}
   - button: 3
+    image: {fileID: 21300000, guid: dcdcf027a45f294d48ee251fe1b9c911, type: 3}
+  - button: 4
     image: {fileID: 21300000, guid: a0ec2012a063c87439bc18b0ccbe7a6f, type: 3}
+  - button: 5
+    image: {fileID: 21300000, guid: 32a281a12cd74b912bdccd0eb2494294, type: 3}
+  - button: 6
+    image: {fileID: 21300000, guid: 2bdfd8d2bf6ff6f53ab508e702920ef8, type: 3}
+  - button: 7
+    image: {fileID: 21300000, guid: 0ff0e1c53e1217e6d9e00b3f56f8161e, type: 3}
+  - button: 8
+    image: {fileID: 21300000, guid: 63d7cad4953353aa4a20489d654a3743, type: 3}
+  - button: 9
+    image: {fileID: 21300000, guid: acf0a83cf745858fc8805c7b4692c5a4, type: 3}
+  - button: 10
+    image: {fileID: 21300000, guid: d5ea0cba98164dd12a70239e2024c4b2, type: 3}
+  - button: 11
+    image: {fileID: 21300000, guid: 1be7b8e1d6244fa89bdd113f65bd55e4, type: 3}
+  - button: 12
+    image: {fileID: 21300000, guid: 431204bf3a84cd5b9abb211af189c2e4, type: 3}
+  - button: 13
+    image: {fileID: 21300000, guid: c744424cd3efc36f7940fd071291d449, type: 3}
+  - button: 14
+    image: {fileID: 21300000, guid: bdf30540f8b83803399582dca6bdc5ec, type: 3}
+  - button: 15
+    image: {fileID: 21300000, guid: d9b877b4f8ea4876da189e8e1109640c, type: 3}
+  - button: 16
+    image: {fileID: 21300000, guid: 7e0ca973d40e8257ca1ea61d8c528552, type: 3}
+  - button: 17
+    image: {fileID: 21300000, guid: cab2ca9e61e483cc6a3569a88a84d7d2, type: 3}
+  - button: 18
+    image: {fileID: 21300000, guid: 0e7f405a8a5524ba58a23739b880c845, type: 3}
+  - button: 18
+    image: {fileID: 21300000, guid: e07d8526d8b3b3dee82f4cad07c6410a, type: 3}
+  - button: 18
+    image: {fileID: 21300000, guid: e07d8526d8b3b3dee82f4cad07c6410a, type: 3}
+  - button: 18
+    image: {fileID: 21300000, guid: 816ba9b039096b28dac8bd2e04f72736, type: 3}
+  - button: 19
+    image: {fileID: 21300000, guid: 816ba9b039096b28dac8bd2e04f72736, type: 3}
+  - button: 20
+    image: {fileID: 21300000, guid: 073b0558a72563b39a94442413f415b0, type: 3}
   gamepadSprites:
   - button: 1
-    image: {fileID: 21300000, guid: f8bb5f3dc9799d849b9a1b0679f8fde5, type: 3}
+    image: {fileID: 21300000, guid: cb72f5f2eb4d4d0688ad902c1dc5ef11, type: 3}
+  - button: 2
+    image: {fileID: 21300000, guid: eebbaa946c1adab86aa38b0c0456c000, type: 3}
+  - button: 3
+    image: {fileID: 21300000, guid: 95107495bdae298d195f7dd12eaa37e4, type: 3}
+  - button: 4
+    image: {fileID: 21300000, guid: 33a2d619bce83be518cdcbda2432e61b, type: 3}
+  - button: 5
+    image: {fileID: 21300000, guid: 736e35efd9535f213aead38e9216edf2, type: 3}
+  - button: 6
+    image: {fileID: 21300000, guid: bb85dde4025df35f2973070fcd7db7c2, type: 3}
+  - button: 7
+    image: {fileID: 21300000, guid: 86a47c885881a538b9165e2fc2d82d00, type: 3}
+  - button: 8
+    image: {fileID: 21300000, guid: 45314f2bfbba931eab7e9083a76b62ca, type: 3}
+  - button: 9
+    image: {fileID: 21300000, guid: 91e7a5ebe3e521291bf4155e740ad5c7, type: 3}
+  - button: 10
+    image: {fileID: 21300000, guid: 363ba9110ccf9711997183e71cfd6ffe, type: 3}
+  - button: 11
+    image: {fileID: 21300000, guid: 7f8633b2dae0275f5894a4b4a7f9b121, type: 3}
+  - button: 12
+    image: {fileID: 21300000, guid: a3f54cb40f3b03664be71c9835b920dd, type: 3}
+  - button: 13
+    image: {fileID: 21300000, guid: 6423654bf08ba17568a5ea5d32b9fbc1, type: 3}
+  - button: 14
+    image: {fileID: 21300000, guid: 0fe5e791017462b989649fc37e4af7cd, type: 3}
+  - button: 15
+    image: {fileID: 21300000, guid: e1bb6e99a058b48c68d869e7b950f517, type: 3}
+  - button: 16
+    image: {fileID: 21300000, guid: 55e4c7cb29435432083b474f5d3a21f7, type: 3}
