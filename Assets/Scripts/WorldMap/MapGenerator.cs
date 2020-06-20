@@ -26,13 +26,8 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     public bool forceEmptyCentre = false;
 
-    private bool templeGenerated = false;
-
     public int seed;
-
-    [SerializeField] public GameObject shrineLocationPrefab;
-    [SerializeField] public GameObject templeLocationPrefab;
-    
+        
     /// <summary>
     /// Size of grid cells
     /// </summary>
@@ -82,23 +77,15 @@ public class MapGenerator : MonoBehaviour
 
     private void Awake() => Initialize();
 
-    private void LateUpdate()
-    {
-        if( !templeGenerated && GameplayManager.Instance.ShrinesVisited.Count == 3)
-        {
-            int randomPos = Random.Range(0, unusedPositions.Count);
-            GameObject instance = Instantiate(templeLocationPrefab, unusedPositions[randomPos], Quaternion.identity, transform);
-            templeGenerated = true;
-        }
-    }
-
     #endregion
 
     #region Component
 
     private void Initialize()
     {
-        Locations = (Resources.Load("PrefabDatabase") as PrefabDatabase).locations;
+        Locations = new List<GameObject>();
+        Locations.AddRange((Resources.Load("PrefabDatabase") as PrefabDatabase).stdLocations);
+        Locations.AddRange((Resources.Load("PrefabDatabase") as PrefabDatabase).shrines);
 
         spawnChances.Resize(Locations.Count, 0);
 

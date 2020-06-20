@@ -66,6 +66,11 @@ public class MapGeneratorEditor : Editor
                 int index = 0;
                 foreach (GameObject prefab in generator.Locations)
                 {
+                    if (index == (Resources.Load("PrefabDatabase") as PrefabDatabase).stdLocations.Count)
+                    {
+                        EditorGUILayout.Space();
+                    }
+
                     Location location = prefab.GetComponent<Location>();
                     int value;
                     try
@@ -80,7 +85,8 @@ public class MapGeneratorEditor : Editor
                     generator.spawnChances[index] = newValue > 0 ? newValue : 0;
                     index++;
                 }
-                generator.emptyChance = EditorGUILayout.IntField("empty", generator.emptyChance);
+                EditorGUILayout.Space();
+                generator.emptyChance = EditorGUILayout.IntField("empty cell", generator.emptyChance);
                 EditorUtility.SetDirty(target);
             }
             EditorGUI.indentLevel--;
