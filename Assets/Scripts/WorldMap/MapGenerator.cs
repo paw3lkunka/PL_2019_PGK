@@ -44,6 +44,16 @@ public class MapGenerator : MonoBehaviour
     public Vector2Int randomOffsetRange = new Vector2Int(0, 0);
 
     /// <summary>
+    /// Should be near to locations size;
+    /// </summary>
+    public int aproxLocationsSize;
+
+    /// <summary>
+    /// Amount of enviro objects to place in each cell.
+    /// </summary>
+    public Vector2Int envirobojecttInCell = new Vector2Int(0, 5);
+
+    /// <summary>
     /// Chance of creating empty cell
     /// </summary>
     [HideInInspector] public int emptyChance;
@@ -58,16 +68,13 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     [HideInInspector] public List<int> spawnChances = new List<int>();
 
-
-    /// <summary>
-    /// Coordinates in empty cells, possible locations of temple;
-    /// </summary>
-    private List<Vector3> unusedPositions = new List<Vector3>();
-
     /// <summary>
     /// Gets location prefabs from prefab database without Application Manager
     /// </summary>
     public List<GameObject> Locations { get; private set; }
+
+
+    public List<GameObject> Enviro { get; private set; }
 
     #endregion
 
@@ -104,13 +111,17 @@ public class MapGenerator : MonoBehaviour
         {
             loc.ClearSave();
         }
+        PlayerPrefs.Save();
     }
 
     private void Initialize()
     {
         Locations = new List<GameObject>();
-        Locations.AddRange((Resources.Load("PrefabDatabase") as PrefabDatabase).stdLocations);
-        Locations.AddRange((Resources.Load("PrefabDatabase") as PrefabDatabase).shrines);
+        Locations.AddRange(PrefabDatabase.Load.stdLocations);
+        Locations.AddRange(PrefabDatabase.Load.shrines);
+
+        Enviro = new List<GameObject>();
+        Enviro.AddRange(PrefabDatabase.Load.enviro);
 
         spawnChances.Resize(Locations.Count, 0);
 
@@ -138,6 +149,16 @@ public class MapGenerator : MonoBehaviour
         foreach (GameObject prefab in Locations)
         {
             int scriptsCount = prefab.GetComponentsInChildren<Location>().Length;
+
+            if (scriptsCount != 1)
+            {
+                IsValid = false;
+                throw new LocationValidationException(prefab, scriptsCount);
+            }
+        }
+        foreach (GameObject prefab in Enviro)
+        {
+            int scriptsCount = prefab.GetComponentsInChildren<EnviroObject>().Length;
 
             if (scriptsCount != 1)
             {
@@ -186,21 +207,37 @@ public class MapGenerator : MonoBehaviour
                     randomNumber -= chances[index];
                     index++;
                 }
-                float yCoord = index < Locations.Count ? Locations[index].transform.position.y : 0;
-                Vector3 position = new Vector3(i * cellSize.x, yCoord, j * cellSize.y);
-                position.x += Random.Range(-randomOffsetRange.x, randomOffsetRange.x) - halfWidth;
-                position.z += Random.Range(-randomOffsetRange.y, randomOffsetRange.y) - halfHight;
-                unusedPositions.Add(position);
+
+                var locationPosition = new Vector3
+                (
+                    i * cellSize.x + Random.Range(-randomOffsetRange.x, randomOffsetRange.x) - halfWidth,
+                    index < Locations.Count ? Locations[index].transform.position.y : 0,
+                    j * cellSize.y + Random.Range(-randomOffsetRange.y, randomOffsetRange.y) - halfHight
+                );
 
                 if (index < Locations.Count)
                 {
-                    var obj = Instantiate(Locations[index], position, Quaternion.identity, transform);
+                    var obj = Instantiate(Locations[index], locationPosition, Quaternion.identity, transform);
                     var loc = obj.GetComponent<Location>();
 
                     loc.id = i * cells.x + j;
                     loc.generatedBy = this;
-                    
-                    unusedPositions.RemoveAt(unusedPositions.Count - 1);
+                }
+
+                int envObjects = Random.Range(envirobojecttInCell.x, envirobojecttInCell.y + 1);
+
+                for (int k = 0; k < envObjects; k++)
+                {
+                    GameObject prefab = Enviro[Random.Range(0, Enviro.Count)];
+
+                    var envPosition = new Vector3
+                    (
+                        i * cellSize.x + Random.Range(0, cellSize.x + 1) - halfWidth,
+                        prefab.transform.position.y,
+                        j * cellSize.y + Random.Range(0, cellSize.y + 1) - halfWidth
+                    );
+
+                    Instantiate(prefab, envPosition, Quaternion.identity, transform).GetComponent<EnviroObject>().Randomize();
                 }
 
                 if (forceEmptyCentre)
@@ -217,6 +254,11 @@ public class MapGenerator : MonoBehaviour
     public void Clear()
     {
         foreach (var child in GetComponentsInChildren<Location>())
+        {
+            DestroyImmediate(child.gameObject);
+        }
+
+        foreach (var child in GetComponentsInChildren<EnviroObject>())
         {
             DestroyImmediate(child.gameObject);
         }

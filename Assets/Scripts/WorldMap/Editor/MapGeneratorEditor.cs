@@ -25,12 +25,6 @@ public class MapGeneratorEditor : Editor
 
         GUILayout.BeginHorizontal(GUILayout.ExpandWidth(false));
         {
-            /*
-            if (GUILayout.Button("Validate"))
-                generator.ValidatePrefabs();
-                now invoked automaticly on validate
-            */
-
             if (GUILayout.Button("Generate"))
                 generator.Generate();
 
@@ -66,7 +60,7 @@ public class MapGeneratorEditor : Editor
                 int index = 0;
                 foreach (GameObject prefab in generator.Locations)
                 {
-                    if (index == (Resources.Load("PrefabDatabase") as PrefabDatabase).stdLocations.Count)
+                    if (index == PrefabDatabase.Load.stdLocations.Count)
                     {
                         EditorGUILayout.Space();
                     }
