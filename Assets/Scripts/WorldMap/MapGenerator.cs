@@ -210,6 +210,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
         LoadState();
+        ClearSave();
     }
 
     [ContextMenu("Clear")]
