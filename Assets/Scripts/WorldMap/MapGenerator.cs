@@ -14,6 +14,59 @@ class LocationValidationException : System.Exception
 
 public class MapGenerator : MonoBehaviour
 {
+    private class Cell
+    {
+        public Vector2 position;
+        public Vector2 size;
+
+        public Cell(Vector2 position, Vector2 size)
+        {
+            this.position = position;
+            this.size = size;
+        }
+        public Cell(Vector3 position, Vector2 size)
+        {
+            this.position = new Vector2(position.x, position.z);
+            this.size = size;
+        }
+
+        public Vector3 Position3 
+        { 
+            get => new Vector3(position.x, 0, position.y);
+            set { position.x = value.x; position.y = value.z; }
+        }
+
+        public Vector3 corner(int i)
+        {
+            switch(i % 4)
+            {
+                case 0:
+                    return new Vector3(position.x + size.x / 2, 0, position.y + size.y / 2);
+                case 1:
+                    return new Vector3(position.x + size.x / 2, 0, position.y + size.y / -2);
+                case 2:
+                    return new Vector3(position.x + size.x / -2, 0, position.y + size.y / -2);
+                case 3:
+                    return new Vector3(position.x + size.x / -2, 0, position.y + size.y / 2);
+            }
+
+            throw new System.Exception("This should never happen.");
+        }
+    }
+
+    List<Cell> cells = new List<Cell>();
+
+    private void OnDrawGizmos()
+    {
+        foreach (var item in cells)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Gizmos.DrawLine(item.corner(i), item.corner(i + 1));
+            }
+        }
+    }
+
     #region Variables
 
     /// <summary>
@@ -31,17 +84,14 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Size of grid cells
     /// </summary>
-    public Vector2Int cells = new Vector2Int(5, 5);
+    public Vector2Int cellsNumber = new Vector2Int(5, 5);
 
     /// <summary>
     /// Size of single cell
     /// </summary>
-    public Vector2Int cellSize = new Vector2Int(30, 30);
+    public Vector2 nearCellSize = new Vector2(30, 30);
 
-    /// <summary>
-    /// Range off possible distance from cell centre to generated object
-    /// </summary>
-    public Vector2Int randomOffsetRange = new Vector2Int(0, 0);
+    public Vector2 farCellSize = new Vector2(30, 30);
 
     /// <summary>
     /// Should be near to locations size;
@@ -51,7 +101,7 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Amount of enviro objects to place in each cell.
     /// </summary>
-    public Vector2Int envirobojecttInCell = new Vector2Int(0, 5);
+    public Vector2Int enviroObjectsInCell = new Vector2Int(0, 5);
 
     /// <summary>
     /// Chance of creating empty cell
@@ -127,20 +177,9 @@ public class MapGenerator : MonoBehaviour
 
         ValidatePrefabs();
 
-        if (cells.x < 1)
-            cells.x = 1;
-        if (cells.y < 1)
-            cells.y = 1;
-
-        if (cellSize.x < 1)
-            cellSize.x = 1;
-        if (cellSize.y < 1)
-            cellSize.y = 1;
-
-        if (randomOffsetRange.x < 0)
-            randomOffsetRange.x = 0;
-        if (randomOffsetRange.y < 0)
-            randomOffsetRange.y = 0;
+        cellsNumber = Vector2Int.Max(cellsNumber, Vector2Int.one);
+        nearCellSize = Vector2.Max(nearCellSize, Vector2.zero);
+        farCellSize = Vector2.Max(farCellSize, Vector2.zero);
     }
 
     [ContextMenu("Validate")]
@@ -192,60 +231,84 @@ public class MapGenerator : MonoBehaviour
         range += emptyChance;
         chances.Add(emptyChance);
 
-        int halfWidth = (cells.x - 1) * cellSize.x / 2;
-        int halfHight = (cells.y - 1) * cellSize.y / 2;
+        cells.Clear();
 
-        for (int i = 0; i < cells.x; i++)
+        Vector2 centralIndex = (cellsNumber - Vector2.one) / 2.0f;
+        Vector3 newPos = transform.position;
+        Vector2 cellSize = farCellSize;
+
+        for (int i = 0; i < cellsNumber.x; i++)
         {
-            for (int j = 0; j < cells.y; j++)
+            newPos.z = transform.position.z;
+
+            newPos.x += cellSize.x / 2;
+            cellSize.x = Mathf.Lerp(nearCellSize.x, farCellSize.x, Mathf.Abs(centralIndex.x - i) / centralIndex.x);
+            newPos.x += cellSize.x / 2;
+
+            for (int j = 0; j < cellsNumber.y; j++)
             {
-                int randomNumber = Random.Range(0, range);
-                int index = 0;
+                newPos.z += cellSize.y / 2;                
+                cellSize.y = Mathf.Lerp(nearCellSize.y, farCellSize.y, Mathf.Abs(centralIndex.y - j) / centralIndex.y);
+                newPos.z += cellSize.y / 2;
 
-                while (index < Locations.Count && chances[index] < randomNumber)
-                {
-                    randomNumber -= chances[index];
-                    index++;
-                }
-
-                var locationPosition = new Vector3
-                (
-                    i * cellSize.x + Random.Range(-randomOffsetRange.x, randomOffsetRange.x) - halfWidth,
-                    index < Locations.Count ? Locations[index].transform.position.y : 0,
-                    j * cellSize.y + Random.Range(-randomOffsetRange.y, randomOffsetRange.y) - halfHight
-                );
-
-                if (index < Locations.Count)
-                {
-                    var obj = Instantiate(Locations[index], locationPosition, Quaternion.identity, transform);
-                    var loc = obj.GetComponent<Location>();
-
-                    loc.id = i * cells.x + j;
-                    loc.generatedBy = this;
-                }
-
-                int envObjects = Random.Range(envirobojecttInCell.x, envirobojecttInCell.y + 1);
-
-                for (int k = 0; k < envObjects; k++)
-                {
-                    GameObject prefab = Enviro[Random.Range(0, Enviro.Count)];
-
-                    var envPosition = new Vector3
-                    (
-                        i * cellSize.x + Random.Range(0, cellSize.x + 1) - halfWidth,
-                        prefab.transform.position.y,
-                        j * cellSize.y + Random.Range(0, cellSize.y + 1) - halfWidth
-                    );
-
-                    Instantiate(prefab, envPosition, Quaternion.identity, transform).GetComponent<EnviroObject>().Randomize();
-                }
-
-                if (forceEmptyCentre)
-                {
-                    FreeCentre();
-                }
+                cells.Add(new Cell(newPos, cellSize));
             }
         }
+
+        foreach (var cell in cells)
+        {
+            // Fix position
+            cell.Position3 -= (new Vector3(farCellSize.x, 0, farCellSize.y) + newPos - transform.position) / 2;
+
+            int randomNumber = Random.Range(0, range);
+            int index = 0;
+
+            while (index < Locations.Count && chances[index] < randomNumber)
+            {
+                randomNumber -= chances[index];
+                index++;
+            }
+
+            var maxOffset = (cell.size - Vector2.one * aproxLocationsSize) / 2.0f;
+
+            var locationPosition = new Vector3
+            (
+                cell.position.x + Random.Range(-maxOffset.x, maxOffset.x),
+                index < Locations.Count ? Locations[index].transform.position.y : 0,
+                cell.position.y + Random.Range(-maxOffset.y, maxOffset.y)
+            );
+
+            if (index < Locations.Count)
+            {
+                var obj = Instantiate(Locations[index], locationPosition, Quaternion.identity, transform);
+                var loc = obj.GetComponent<Location>();
+
+                loc.id = loc.transform.position.GetHashCode();
+                loc.generatedBy = this;
+            }
+
+            int envObjects = Random.Range(enviroObjectsInCell.x, enviroObjectsInCell.y + 1);
+
+            for (int k = 0; k < envObjects; k++)
+            {
+                GameObject prefab = Enviro[Random.Range(0, Enviro.Count)];
+
+                var envPosition = new Vector3
+                (
+                    cell.position.x + Random.Range(cell.size.x / -2, cell.size.x / 2),
+                    prefab.transform.position.y,
+                    cell.position.y + Random.Range(cell.size.y / -2, cell.size.y / 2)
+                );
+
+                Instantiate(prefab, envPosition, Quaternion.identity, transform).GetComponent<EnviroObject>().Randomize();
+            }
+
+            if (forceEmptyCentre)
+            {
+                FreeCentre();
+            }
+        }
+
         LoadState();
         ClearSave();
     }
@@ -268,7 +331,7 @@ public class MapGenerator : MonoBehaviour
     {
         foreach (Location loc in transform.GetComponentsInChildren<Location>())
         {
-            Vector2 halfSize = (Vector2)cellSize * 0.5f;
+            Vector2 halfSize = (Vector2)nearCellSize * 0.5f;
             Vector3 pos = loc.transform.localPosition;
 
             if (pos.x < halfSize.x && pos.x > -halfSize.x && pos.z < halfSize.y && pos.z > -halfSize.y)
