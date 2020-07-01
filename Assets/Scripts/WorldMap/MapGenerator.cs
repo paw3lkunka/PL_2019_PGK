@@ -44,8 +44,6 @@ public class MapGenerator : MonoBehaviour
             set { position.x = value.x; position.y = value.z; }
         }
 
-
-
         public Vector3 Corner(int i)
         {
             switch(i % 4)
@@ -105,10 +103,12 @@ public class MapGenerator : MonoBehaviour
 
     public Cut cuttingSettings = 0;
 
+    public float scalingFactor = 1.0f;
+
     /// <summary>
     /// Should be near to locations size;
     /// </summary>
-    public int aproxLocationsSize;
+    public float aproxLocationsSize;
 
     /// <summary>
     /// Amount of enviro objects to place in each cell.
@@ -296,6 +296,7 @@ public class MapGenerator : MonoBehaviour
             if (index < Locations.Count)
             {
                 var obj = Instantiate(Locations[index], locationPosition, Quaternion.identity, transform);
+                obj.transform.localScale *= scalingFactor;
                 var loc = obj.GetComponent<Location>();
 
                 loc.id = loc.transform.position.GetHashCode();
@@ -315,7 +316,9 @@ public class MapGenerator : MonoBehaviour
                     cell.position.y + Random.Range(cell.size.y / -2, cell.size.y / 2)
                 );
 
-                Instantiate(prefab, envPosition, Quaternion.identity, transform).GetComponent<EnviroObject>().Randomize();
+                var envObject = Instantiate(prefab, envPosition, Quaternion.identity, transform);
+                envObject.transform.localScale *= scalingFactor;
+                envObject.GetComponent<EnviroObject>().Randomize();
             }
 
             if (forceEmptyCentre)

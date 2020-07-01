@@ -109,7 +109,7 @@ public class Location : MonoBehaviour
                 visited = true;
                 timeToRefill = locationResetTime;
 
-                generatedBy.SaveState();
+                generatedBy?.SaveState();
             }
 
             yield return new WaitForEndOfFrame();
