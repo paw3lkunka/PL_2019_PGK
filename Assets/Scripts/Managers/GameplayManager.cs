@@ -61,8 +61,9 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public Vector3 lastWorldMapPosition;
 
     // * ===== Gameplay progress statistics =========================
-    
-    public List<Location> ShrinesVisited { get; set; }
+
+    public uint shrinesToVisit = 3;
+    public List<int> visitedShrinesIds = new List<int>();
 
     // * ===== Location variables ==========================================
 
@@ -119,7 +120,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         }
 
         // ? +++++ Initialize shrine list +++++
-        ShrinesVisited = new List<Location>();
         mapGenerationSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
     }
 
@@ -173,7 +173,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         waterPercentLastFrame = 1.0f;
         faith.Set(faith.InitialValue);
         faithPercentLastFrame = 0.5f;
-        ShrinesVisited.Clear();
+        visitedShrinesIds.Clear();
     }
 
     public void EnterLocation(string locationName)

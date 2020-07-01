@@ -86,7 +86,7 @@ public class MapSceneManager : MonoBehaviour, IInfoLogInvoker
 
     public void SetInfoLog()
     {
-        var shrinesVisited = GameplayManager.Instance.ShrinesVisited.Count;
+        var shrinesVisited = GameplayManager.Instance.visitedShrinesIds.Count;
         string mapInfoLogHeader = null;
         string mapInfoLogText = null;
 
