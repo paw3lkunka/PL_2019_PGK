@@ -20,4 +20,9 @@ public class MainMenuController : MonoBehaviour
     {
         UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.optionsMenuGUI, PushBehaviour.Lock);
     }
+
+    public void Exit()
+    {
+        ApplicationManager.Instance.ExitGame();
+    }
 }
