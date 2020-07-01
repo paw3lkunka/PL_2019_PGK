@@ -14,6 +14,14 @@ class LocationValidationException : System.Exception
 
 public class MapGenerator : MonoBehaviour
 {
+    [System.Flags] public enum Cut
+    {
+        XAxisP = 0b0001,
+        XAxisN = 0b0010,
+        ZAxisP = 0b0100,
+        ZAxisN = 0b1000,
+    }
+
     private class Cell
     {
         public Vector2 position;
@@ -36,7 +44,9 @@ public class MapGenerator : MonoBehaviour
             set { position.x = value.x; position.y = value.z; }
         }
 
-        public Vector3 corner(int i)
+
+
+        public Vector3 Corner(int i)
         {
             switch(i % 4)
             {
@@ -62,7 +72,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                Gizmos.DrawLine(item.corner(i), item.corner(i + 1));
+                Gizmos.DrawLine(item.Corner(i), item.Corner(i + 1));
             }
         }
     }
@@ -92,6 +102,8 @@ public class MapGenerator : MonoBehaviour
     public Vector2 nearCellSize = new Vector2(30, 30);
 
     public Vector2 farCellSize = new Vector2(30, 30);
+
+    public Cut cuttingSettings = 0;
 
     /// <summary>
     /// Should be near to locations size;
@@ -251,7 +263,10 @@ public class MapGenerator : MonoBehaviour
                 cellSize.y = Mathf.Lerp(nearCellSize.y, farCellSize.y, Mathf.Abs(centralIndex.y - j) / centralIndex.y);
                 newPos.z += cellSize.y / 2;
 
-                cells.Add(new Cell(newPos, cellSize));
+                if (!ShouldBeCutOff(i,j))
+                {
+                    cells.Add(new Cell(newPos, cellSize));
+                }
             }
         }
 
@@ -342,6 +357,14 @@ public class MapGenerator : MonoBehaviour
 
             loc.transform.localPosition = pos;
         }
+    }
+
+    private bool ShouldBeCutOff(int x, int y)
+    {
+        return x * 2 > cellsNumber.x && (cuttingSettings & Cut.XAxisP) != 0
+            || x * 2 < cellsNumber.x && (cuttingSettings & Cut.XAxisN) != 0
+            || y * 2 > cellsNumber.y && (cuttingSettings & Cut.ZAxisP) != 0
+            || y * 2 < cellsNumber.y && (cuttingSettings & Cut.ZAxisN) != 0;
     }
 
 #endregion

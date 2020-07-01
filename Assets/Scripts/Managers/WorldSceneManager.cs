@@ -13,6 +13,8 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 #pragma warning restore
     public bool CanEnterLocations { get; private set; } = true;
 
+    public GameObject cult;
+
     private MapGenerator mapGenerator;
 
     protected override void Awake()

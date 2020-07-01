@@ -14,7 +14,7 @@ public class BehaviourWorldMapInput : MonoBehaviour
         var inputValue = Mouse.current.position.ReadValue();
         var ray = Camera.main.ScreenPointToRay(inputValue);
 
-        foreach (var hit in Physics.RaycastAll(ray, 100))
+        foreach (var hit in Physics.RaycastAll(ray))
         {
             // TODO: replace tag with layer mask
             if (hit.collider.CompareTag("Ground"))
