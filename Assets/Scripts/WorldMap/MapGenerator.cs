@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -61,6 +62,45 @@ public class MapGenerator : MonoBehaviour
             throw new System.Exception("This should never happen.");
         }
     }
+
+    private class Roulette
+    {
+        public Roulette(IList<GameObject> prefabs, IList<int> spawnChances, int emptyChance = 0)
+        {
+            this.prefabs = prefabs;
+            this.chances = new List<int>();
+            this.range = 0;
+
+            for (int i = 0; i < prefabs.Count; i++)
+            {
+                int chance = spawnChances[i];
+                range += chance;
+                chances.Add(chance);
+            }
+
+            range += emptyChance;
+            chances.Add(emptyChance);
+        }
+
+        public GameObject RandomizePrefab()
+        {
+            int randomNumber = Random.Range(0, range + 1);
+            int index = 0;
+
+            while (index < prefabs.Count && chances[index] < randomNumber)
+            {
+                randomNumber -= chances[index];
+                index++;
+            }
+
+            return index < prefabs.Count ? prefabs[index] : null;
+        }
+
+        private IList<GameObject> prefabs;
+        private List<int> chances;
+        private int range;
+    }
+
 
     List<Cell> cells = new List<Cell>();
 
@@ -128,7 +168,8 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Chances of spawning objecton specific index in prefab array
     /// </summary>
-    [HideInInspector] public List<int> spawnChances = new List<int>();
+    [HideInInspector] public List<int> locationSpawnChances = new List<int>();
+    [HideInInspector] public List<int> enviroSpawnChances = new List<int>();
 
     /// <summary>
     /// Gets location prefabs from prefab database without Application Manager
@@ -185,7 +226,8 @@ public class MapGenerator : MonoBehaviour
         Enviro = new List<GameObject>();
         Enviro.AddRange(PrefabDatabase.Load.enviro);
 
-        spawnChances.Resize(Locations.Count, 0);
+        locationSpawnChances.Resize(Locations.Count, 0);
+        enviroSpawnChances.Resize(Enviro.Count, 0);
 
         ValidatePrefabs();
 
@@ -230,18 +272,8 @@ public class MapGenerator : MonoBehaviour
 
         Random.InitState(seed);
 
-        List<int> chances = new List<int>();
-        int range = 0;
-
-        for (int i = 0; i < Locations.Count; i++)
-        {
-            int chance = spawnChances[i];
-            range += chance;
-            chances.Add(chance);
-        }
-
-        range += emptyChance;
-        chances.Add(emptyChance);
+        var locationRandomizer = new Roulette(Locations, locationSpawnChances, emptyChance);
+        var enviroRandomizer = new Roulette(Enviro, enviroSpawnChances);
 
         cells.Clear();
 
@@ -275,27 +307,21 @@ public class MapGenerator : MonoBehaviour
             // Fix position
             cell.Position3 -= (new Vector3(farCellSize.x, 0, farCellSize.y) + newPos - transform.position) / 2;
 
-            int randomNumber = Random.Range(0, range);
-            int index = 0;
-
-            while (index < Locations.Count && chances[index] < randomNumber)
-            {
-                randomNumber -= chances[index];
-                index++;
-            }
 
             var maxOffset = (cell.size - Vector2.one * aproxLocationsSize) / 2.0f;
 
-            var locationPosition = new Vector3
-            (
-                cell.position.x + Random.Range(-maxOffset.x, maxOffset.x),
-                index < Locations.Count ? Locations[index].transform.position.y : 0,
-                cell.position.y + Random.Range(-maxOffset.y, maxOffset.y)
-            );
+            GameObject locPrefab = locationRandomizer.RandomizePrefab();
 
-            if (index < Locations.Count)
+            if (locPrefab)
             {
-                var obj = Instantiate(Locations[index], locationPosition, Quaternion.identity, transform);
+                var locationPosition = new Vector3
+                (
+                    cell.position.x + Random.Range(-maxOffset.x, maxOffset.x),
+                    locPrefab.transform.position.y,
+                    cell.position.y + Random.Range(-maxOffset.y, maxOffset.y)
+                );
+
+                var obj = Instantiate(locPrefab, locationPosition, Quaternion.identity, transform);
                 obj.transform.localScale *= scalingFactor;
                 var loc = obj.GetComponent<Location>();
 
@@ -307,16 +333,16 @@ public class MapGenerator : MonoBehaviour
 
             for (int k = 0; k < envObjects; k++)
             {
-                GameObject prefab = Enviro[Random.Range(0, Enviro.Count)];
+                GameObject envPrefab = enviroRandomizer.RandomizePrefab();
 
                 var envPosition = new Vector3
                 (
                     cell.position.x + Random.Range(cell.size.x / -2, cell.size.x / 2),
-                    prefab.transform.position.y,
+                    envPrefab.transform.position.y,
                     cell.position.y + Random.Range(cell.size.y / -2, cell.size.y / 2)
                 );
 
-                var envObject = Instantiate(prefab, envPosition, Quaternion.identity, transform);
+                var envObject = Instantiate(envPrefab, envPosition, Quaternion.identity, transform);
                 envObject.transform.localScale *= scalingFactor;
                 envObject.GetComponent<EnviroObject>().Randomize();
             }

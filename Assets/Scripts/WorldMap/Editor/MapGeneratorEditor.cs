@@ -63,6 +63,8 @@ public class MapGeneratorEditor : Editor
         {
             EditorGUI.indentLevel++;
             {
+                GUILayout.Label("Locations:", EditorStyles.boldLabel);
+
                 int index = 0;
                 foreach (GameObject prefab in generator.Locations)
                 {
@@ -71,22 +73,44 @@ public class MapGeneratorEditor : Editor
                         EditorGUILayout.Space();
                     }
 
-                    Location location = prefab.GetComponent<Location>();
+                    var location = prefab.GetComponent<Location>();
                     int value;
                     try
                     {
-                        value = generator.spawnChances[index];
+                        value = generator.locationSpawnChances[index];
                     }
                     catch
                     {
                         value = 0;
                     }
                     int newValue = EditorGUILayout.IntField(prefab.name, value);
-                    generator.spawnChances[index] = newValue > 0 ? newValue : 0;
+                    generator.locationSpawnChances[index] = newValue > 0 ? newValue : 0;
                     index++;
                 }
                 EditorGUILayout.Space();
                 generator.emptyChance = EditorGUILayout.IntField("empty cell", generator.emptyChance);
+
+                EditorGUILayout.Space();
+                GUILayout.Label("Enviro:", EditorStyles.boldLabel);
+
+                index = 0;
+                foreach (GameObject prefab in generator.Enviro)
+                {
+                    var location = prefab.GetComponent<EnviroObject>();
+                    int value;
+                    try
+                    {
+                        value = generator.enviroSpawnChances[index];
+                    }
+                    catch
+                    {
+                        value = 0;
+                    }
+                    int newValue = EditorGUILayout.IntField(prefab.name, value);
+                    generator.enviroSpawnChances[index] = newValue > 0 ? newValue : 0;
+                    index++;
+                }
+
                 EditorUtility.SetDirty(target);
             }
             EditorGUI.indentLevel--;
