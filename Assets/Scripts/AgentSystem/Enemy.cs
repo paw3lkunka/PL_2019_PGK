@@ -10,6 +10,10 @@ public class Enemy : MonoBehaviour
     private IBehaviour behaviour;
     private Moveable moveable;
 
+    public float blindChaseMatchDistance = 0.5f;
+    private bool blindChaseMode;
+    private Vector3 blindChaseTarget;
+
     #region MonoBehaviour
 
     private void Awake()
@@ -36,7 +40,13 @@ public class Enemy : MonoBehaviour
     {
         Vector3? target = detection?.Func();
 
-        behaviour?.UpdateTarget(target);
+
+        if (blindChaseMode && target.HasValue)
+        {
+            ExitBlindChase();
+        }
+
+        behaviour?.UpdateTarget(blindChaseMode ? blindChaseTarget : target);
 
         if(attack != null)
         {
@@ -50,9 +60,25 @@ public class Enemy : MonoBehaviour
             }
         }
 
+        if (Vector3.Distance(transform.position, blindChaseTarget) < blindChaseMatchDistance)
+        {
+            ExitBlindChase();
+        }
+
     }
 
     #endregion
+
+    public void EnterBlindChase(Vector3 target)
+    {
+        blindChaseTarget = target;
+        blindChaseMode = true;
+    }
+
+    public void ExitBlindChase()
+    {
+        blindChaseMode = false;
+    }
 
     public void EnterStun()
     {

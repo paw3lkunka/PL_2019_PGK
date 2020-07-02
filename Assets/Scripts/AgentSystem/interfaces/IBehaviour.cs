@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IBehaviour
+public interface IBehaviour : IMonoBehaviour
 {
     void UpdateTarget(Vector3? target);
-    bool enabled { get; set; }
 }

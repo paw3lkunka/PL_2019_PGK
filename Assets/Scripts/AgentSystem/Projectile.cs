@@ -13,13 +13,15 @@ public class Projectile : MonoBehaviour
     //TODO push force
     //Stun
 
+    private IAttack agressor;
     private Vector3 stepVector;
     private float stepScalar;
     private float distance;
 
     //TODO documentation
-    public void ShootAt(Vector3 target)
+    public void ShootAt(IAttack agressor, Vector3 target)
     {
+        this.agressor = agressor;
         stepVector = (target - transform.position).normalized * speed;
         stepScalar = stepVector.magnitude;
         distance = 0;
@@ -47,7 +49,7 @@ public class Projectile : MonoBehaviour
         if(victim)
         {
             //todo layer mask
-            victim.Damage(Random.Range(damageMin, damageMax));
+            victim.Damage(agressor, Random.Range(damageMin, damageMax));
         }
 
         Destroy(gameObject);

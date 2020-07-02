@@ -21,6 +21,9 @@ public class Damageable : MonoBehaviour
     [field: SerializeField, GUIName("Defence")]
     public float DefenseBase { get; set; } = 0;
 
+    [field: SerializeField, GUIName("ReactToHit")]
+    public bool ReactToHit { get; private set; } = false;
+
     public event Action<float> DamageTaken;
     public event Action Death;
 
@@ -52,8 +55,13 @@ public class Damageable : MonoBehaviour
     /// </summary>
     /// <param name="hitPoints">Force of attack.</param>
     /// <returns>Real damage.</returns>
-    public float Damage(float hitPoints)
+    public float Damage(IAttack agressor, float hitPoints)
     {
+        if (ReactToHit && TryGetComponent<Enemy>(out var enemy))
+        {
+            enemy.EnterBlindChase(agressor.gameObject.transform.position);
+        }
+
         if ((flags & Flags.canBeDamaged) != 0)
         {
             float realDamage = CalculateDamage(hitPoints);

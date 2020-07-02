@@ -75,7 +75,7 @@ public class Shooting : MonoBehaviour, IAttack
         while( (flags & Flags.canShoot) != 0 )
         {
             //TODO sync with rythm
-            CreateProjectile().ShootAt(target);
+            CreateProjectile().ShootAt(this, target);
             yield return new WaitForSecondsRealtime(IntervalMultiplier);
         }
         shootRoutine = null;
