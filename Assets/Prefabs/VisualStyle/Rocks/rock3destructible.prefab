@@ -10,7 +10,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 4.622, y: 1.8700001, z: 2.361}
+  m_Extents: {x: 4.32, y: 1.21, z: 2.361}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -49,6 +49,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: rock3destructible
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937785666837079185, guid: 7a1ce3a2189ea7a45ab66adb92f8d477,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937785666837079185, guid: 7a1ce3a2189ea7a45ab66adb92f8d477,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4201518833779144464, guid: 7a1ce3a2189ea7a45ab66adb92f8d477,
         type: 3}
@@ -129,7 +139,7 @@ PrefabInstance:
     - target: {fileID: 264810977743644533, guid: b89987d8e7548d24d878634c37e49a61,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1277797546667867616, guid: b89987d8e7548d24d878634c37e49a61,
         type: 3}
@@ -234,12 +244,12 @@ PrefabInstance:
     - target: {fileID: 3685369499204346748, guid: b89987d8e7548d24d878634c37e49a61,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5276246932645060688, guid: b89987d8e7548d24d878634c37e49a61,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7389580900753144637, guid: b89987d8e7548d24d878634c37e49a61,
         type: 3}
