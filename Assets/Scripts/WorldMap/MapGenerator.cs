@@ -312,6 +312,8 @@ public class MapGenerator : MonoBehaviour
 
             GameObject locPrefab = locationRandomizer.RandomizePrefab();
 
+            Bounds? locBounds = null; 
+
             if (locPrefab)
             {
                 var locationPosition = new Vector3
@@ -327,6 +329,8 @@ public class MapGenerator : MonoBehaviour
 
                 loc.id = loc.transform.position.GetHashCode();
                 loc.generatedBy = this;
+
+                locBounds = obj.GetComponent<Collider>().bounds;
             }
 
             int envObjects = Random.Range(enviroObjectsInCell.x, enviroObjectsInCell.y + 1);
@@ -343,6 +347,15 @@ public class MapGenerator : MonoBehaviour
                 );
 
                 var envObject = Instantiate(envPrefab, envPosition, Quaternion.identity, transform);
+
+                if (envObject.TryGetComponent<Collider>(out _) && locBounds.HasValue
+                && locBounds.Value.Intersects(envObject.GetComponent<Collider>().bounds))
+                {
+                    Debug.Log("Obstacle removed due to collision with location");
+                    DestroyImmediate(envObject);
+                    continue;
+                }
+
                 envObject.transform.localScale *= scalingFactor;
                 envObject.GetComponent<EnviroObject>().Randomize();
             }

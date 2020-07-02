@@ -21,6 +21,6 @@ public class EnviroObstacle : EnviroObject
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
