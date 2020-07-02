@@ -33,7 +33,7 @@ public class Damageable : MonoBehaviour
     {
         if( (flags & Flags.canBeHealed) != 0 )
         {
-            Health.Set(hp);
+            Health += hp;
         }
     }
 
