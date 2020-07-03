@@ -348,16 +348,35 @@ public class MapGenerator : MonoBehaviour
 
                 var envObject = Instantiate(envPrefab, envPosition, Quaternion.identity, transform);
 
-                if (envObject.TryGetComponent<Collider>(out _) && locBounds.HasValue
-                && locBounds.Value.Intersects(envObject.GetComponent<Collider>().bounds))
+                if (locBounds.HasValue)
                 {
-                    Debug.Log("Obstacle removed due to collision with location");
-                    DestroyImmediate(envObject);
-                    continue;
+                    var colliders = envObject.GetComponentsInChildren<Collider>();
+
+                    foreach (var collider in colliders)
+                    {
+                        if (locBounds.Value.Intersects(collider.bounds))
+                        {
+                            Debug.Log("Obstacle removed due to collision with location");
+#                       if UNITY_EDITOR
+                            if (Application.isEditor)
+                            {
+                                DestroyImmediate(envObject);
+                            }
+                            else
+#                       endif
+                            {
+                                Destroy(envObject);
+                            }
+                            break;
+                        }
+                    }
                 }
 
-                envObject.transform.localScale *= scalingFactor;
-                envObject.GetComponent<EnviroObject>().Randomize();
+                if (envObject)
+                {
+                    envObject.transform.localScale *= scalingFactor;
+                    envObject.GetComponent<EnviroObject>().Randomize();
+                }
             }
 
             if (forceEmptyCentre)
