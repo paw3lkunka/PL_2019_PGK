@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.8352942, g: 0.78823537, b: 0.6784314, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.005
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.4121129, g: 0.42883, b: 0.46226418, a: 1}
@@ -203,10 +203,30 @@ PrefabInstance:
       propertyPath: faithDepletionRate
       value: 0.001
       objectReference: {fileID: 0}
+    - target: {fileID: 8695547830620636961, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: m_RenderingPath
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 8695547830620636962, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695547830620636966, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0000021990477
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695547830620636966, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 39.61479
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695547830620636966, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -65.40328
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 197240aff88368644ab7b10f68c34db0, type: 3}
@@ -1151,6 +1171,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
+      propertyPath: enviroSpawnChances.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
       propertyPath: spawnChances.Array.data[3]
       value: 4
       objectReference: {fileID: 0}
@@ -1222,22 +1247,22 @@ PrefabInstance:
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
       propertyPath: nearCellSize.x
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
       propertyPath: nearCellSize.y
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
       propertyPath: farCellSize.x
-      value: 250
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
       propertyPath: farCellSize.y
-      value: 250
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
@@ -1267,7 +1292,7 @@ PrefabInstance:
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
       propertyPath: scalingFactor
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
@@ -1322,12 +1347,27 @@ PrefabInstance:
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
       propertyPath: enviroSpawnChances.Array.data[1]
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
       propertyPath: enviroSpawnChances.Array.data[0]
-      value: 3
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: enviroSpawnChances.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: enviroSpawnChances.Array.data[4]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: enviroSpawnChances.Array.data[5]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973247, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}

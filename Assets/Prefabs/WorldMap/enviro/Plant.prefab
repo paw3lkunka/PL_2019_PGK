@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4818437978819878514}
   - component: {fileID: 4818437978819878525}
   - component: {fileID: 533184914577204777}
+  - component: {fileID: 117240793230532306}
   m_Layer: 0
   m_Name: Plant
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4818437978819878526}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.41999817, y: 4.16, z: -15.78}
+  m_LocalPosition: {x: 0.41999817, y: 3, z: -15.78}
   m_LocalScale: {x: 8, y: 10, z: 8}
   m_Children: []
   m_Father: {fileID: 0}
@@ -111,3 +112,18 @@ MonoBehaviour:
   - {fileID: 2100000, guid: eae1606d4b0c4ec409c7a867fa9f9807, type: 2}
   - {fileID: 2100000, guid: 2dc537d9bed8fef4eb960bfb422667a1, type: 2}
   - {fileID: 2100000, guid: cac0647ce6f03cd4ca38bcca20df9a69, type: 2}
+--- !u!114 &117240793230532306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4818437978819878526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd76a58e1d89ff9469c412cc83c4baea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  X: 0
+  Y: 1
+  Z: 0
