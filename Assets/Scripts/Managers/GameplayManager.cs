@@ -59,11 +59,12 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     /// Saved position from world map scene
     /// </summary>
     public Vector3 lastLocationPosition;
+    public int lastLocationId;
 
     // * ===== Gameplay progress statistics =========================
 
     public uint shrinesToVisit = 3;
-    public List<int> visitedShrinesIds = new List<int>();
+    public HashSet<int> visitedShrinesIds = new HashSet<int>();
 
     // * ===== Location variables ==========================================
 
@@ -182,6 +183,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         {
             OnLocationEnterInvoke();
             lastLocationPosition = location.transform.position;
+            lastLocationId = location.id;
             SceneManager.LoadScene(location.SceneName);
         }
     }
@@ -207,6 +209,11 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     public void OnLocationExitInvoke() => OnLocationExit?.Invoke();
     public void OnLocationEnterInvoke() => OnLocationEnter?.Invoke();
+
+    public void MarkLastLocationAsVisitedShrine()
+    {
+        visitedShrinesIds.Add(lastLocationId);
+    }
 
     #endregion
 }

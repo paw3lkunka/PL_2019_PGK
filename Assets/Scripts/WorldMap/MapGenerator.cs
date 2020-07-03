@@ -276,6 +276,8 @@ public class MapGenerator : MonoBehaviour
         Vector3 newPos = transform.position;
         Vector2 cellSize = farCellSize;
 
+        var locInstances = new Stack<GameObject>();
+
         for (int i = 0; i < cellsNumber.x; i++)
         {
             newPos.z = transform.position.z;
@@ -302,12 +304,9 @@ public class MapGenerator : MonoBehaviour
             // Fix position
             cell.Position3 -= (new Vector3(farCellSize.x, 0, farCellSize.y) + newPos - transform.position) / 2;
 
-
             var maxOffset = (cell.size - Vector2.one * WorldSceneManager.Instance.locationBorderRadius) / 2.0f;
 
             GameObject locPrefab = locationRandomizer.RandomizePrefab();
-
-            Bounds? locBounds = null; 
 
             if (locPrefab)
             {
@@ -318,16 +317,17 @@ public class MapGenerator : MonoBehaviour
                     cell.position.y + Random.Range(-maxOffset.y, maxOffset.y)
                 );
 
-                var obj = Instantiate(locPrefab, locationPosition, Quaternion.identity, transform);
-                obj.transform.localScale *= scalingFactor;
-                var loc = obj.GetComponent<Location>();
+                locInstances.Push(Instantiate(locPrefab, locationPosition, Quaternion.identity, transform));
+                locInstances.Peek().transform.localScale *= scalingFactor;
+                var loc = locInstances.Peek().GetComponent<Location>();
 
                 loc.id = loc.transform.position.GetHashCode();
                 loc.generatedBy = this;
-
-                locBounds = obj.GetComponent<Collider>().bounds;
             }
+        }
 
+        foreach (var cell in cells)
+        {
             int envObjects = Random.Range(enviroObjectsInCell.x, enviroObjectsInCell.y + 1);
 
             for (int k = 0; k < envObjects; k++)
@@ -343,34 +343,24 @@ public class MapGenerator : MonoBehaviour
 
                 var envObject = Instantiate(envPrefab, envPosition, Quaternion.identity, transform);
 
-                if (locBounds.HasValue)
-                {
-                    var colliders = envObject.GetComponentsInChildren<Collider>();
-
-                    foreach (var collider in colliders)
-                    {
-                        if (locBounds.Value.Intersects(collider.bounds))
-                        {
-                            Debug.Log("Obstacle removed due to collision with location");
-#                       if UNITY_EDITOR
-                            if (Application.isEditor)
-                            {
-                                DestroyImmediate(envObject);
-                            }
-                            else
-#                       endif
-                            {
-                                Destroy(envObject);
-                            }
-                            break;
-                        }
-                    }
-                }
-
-                if (envObject)
+                if (EnvIntersectionTest(envObject, locInstances))
                 {
                     envObject.transform.localScale *= scalingFactor;
                     envObject.GetComponent<EnviroObject>().Randomize();
+                }
+                else
+                {
+                    Debug.Log("Obstacle removed due to collision with location");
+#               if UNITY_EDITOR
+                    if (Application.isEditor)
+                    {
+                        DestroyImmediate(envObject);
+                    }
+                    else
+#               endif
+                    {
+                        Destroy(envObject);
+                    }
                 }
             }
 
@@ -422,8 +412,24 @@ public class MapGenerator : MonoBehaviour
             || y * 2 > cellsNumber.y && (cuttingSettings & Cut.ZAxisP) != 0
             || y * 2 < cellsNumber.y && (cuttingSettings & Cut.ZAxisN) != 0;
     }
+    private bool EnvIntersectionTest(GameObject envObject, IEnumerable<GameObject> locInstances)
+    {
+        foreach (GameObject instance in locInstances)
+        {
+            var colliders = envObject.GetComponentsInChildren<Collider>();
 
-#endregion
+            foreach (var collider in colliders)
+            {
+                if (instance.GetComponent<Collider>().bounds.Intersects(collider.bounds))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    #endregion
 }
 
 public static class ListExtra

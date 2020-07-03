@@ -36,7 +36,6 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 
         Vector3 exitOffset = Vector3.forward * locationBorderRadius;
         exitOffset = Quaternion.AngleAxis(ExitZone.angle, Vector3.up) * exitOffset;
-        Debug.Break();
         leader.GetComponent<NavMeshAgent>().Warp(GameplayManager.Instance.lastLocationPosition + exitOffset);
 
         StartCoroutine(LocationCooldown(locationCooldown));
