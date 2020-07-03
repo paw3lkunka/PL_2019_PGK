@@ -12,7 +12,6 @@ public interface IMonoBehaviour
 
 #pragma warning disable IDE1006 // Naming Styles
     bool useGUILayout { get; set; }
-    bool runInEditMode { get; set; }
     void CancelInvoke(string methodName);
     void CancelInvoke();
     void Invoke(string methodName, float time);
