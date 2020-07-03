@@ -58,7 +58,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     /// <summary>
     /// Saved position from world map scene
     /// </summary>
-    public Vector3 lastWorldMapPosition;
+    public Vector3 lastLocationPosition;
 
     // * ===== Gameplay progress statistics =========================
 
@@ -176,13 +176,13 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         visitedShrinesIds.Clear();
     }
 
-    public void EnterLocation(string locationName)
+    public void EnterLocation(Location location)
     {
-        if (SceneManager.GetSceneByName(locationName) != null)
+        if (SceneManager.GetSceneByName(location.SceneName) != null)
         {
             OnLocationEnterInvoke();
-            lastWorldMapPosition = GameObject.FindGameObjectWithTag("Leader").transform.position;
-            SceneManager.LoadScene(locationName);
+            lastLocationPosition = location.transform.position;
+            SceneManager.LoadScene(location.SceneName);
         }
     }
 

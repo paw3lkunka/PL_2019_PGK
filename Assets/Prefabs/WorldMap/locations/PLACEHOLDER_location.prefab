@@ -59,10 +59,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f3dbae0f3706041ba029b7155e6341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locationName: TEST
+  <SceneName>k__BackingField: TEST
   enterDelay: 1
   locationResetTime: 120
-  generationID: 0
+  locationVisitedIndicator: {fileID: 0}
+  timeToRefill: 0
+  visited: 0
+  generatedBy: {fileID: 0}
+  id: 0
 --- !u!1 &6205803352929219166
 GameObject:
   m_ObjectHideFlags: 0

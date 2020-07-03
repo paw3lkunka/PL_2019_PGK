@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class Location : MonoBehaviour
 {
 #pragma warning disable
-    [Tooltip("Name of location should be equal to location's scene name")]
-    [SerializeField] private string locationName;
+    [field: Tooltip("Name of location should be equal to location's scene name")]
+    [field: GUIName("SceneName"), SerializeField] 
+    public string SceneName { get; private set; }
     [SerializeField] private float enterDelay = 3.0f;
     [SerializeField] private float locationResetTime = 120.0f;
     [SerializeField] private GameObject locationVisitedIndicator;
@@ -104,7 +105,7 @@ public class Location : MonoBehaviour
 
             if (timeElapsedToEnter >= enterDelay)
             {
-                GameplayManager.Instance.EnterLocation(locationName);
+                GameplayManager.Instance.EnterLocation(this);
 
                 visited = true;
                 timeToRefill = locationResetTime;

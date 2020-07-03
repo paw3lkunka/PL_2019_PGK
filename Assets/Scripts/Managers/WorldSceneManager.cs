@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// Keeps scene specific configuration for world map
@@ -13,7 +14,13 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 #pragma warning restore
     public bool CanEnterLocations { get; private set; } = true;
 
-    public GameObject cult;
+    [HideInInspector]
+    public GameObject leader;
+
+    /// <summary>
+    /// Should be near to locations size;
+    /// </summary>
+    public float locationBorderRadius;
 
     private MapGenerator mapGenerator;
 
@@ -25,8 +32,13 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 
     private void Start()
     {
-        var leader = GameObject.FindGameObjectWithTag("Leader");
-        leader.transform.position = GameplayManager.Instance.lastWorldMapPosition;
+        leader = GameObject.FindGameObjectWithTag("Leader");
+
+        Vector3 exitOffset = Vector3.forward * locationBorderRadius;
+        exitOffset = Quaternion.AngleAxis(ExitZone.angle, Vector3.up) * exitOffset;
+        Debug.Break();
+        leader.GetComponent<NavMeshAgent>().Warp(GameplayManager.Instance.lastLocationPosition + exitOffset);
+
         StartCoroutine(LocationCooldown(locationCooldown));
 
         mapGenerator.seed = GameplayManager.Instance.mapGenerationSeed;

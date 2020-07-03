@@ -146,11 +146,6 @@ public class MapGenerator : MonoBehaviour
     public float scalingFactor = 1.0f;
 
     /// <summary>
-    /// Should be near to locations size;
-    /// </summary>
-    public float aproxLocationsSize;
-
-    /// <summary>
     /// Amount of enviro objects to place in each cell.
     /// </summary>
     public Vector2Int enviroObjectsInCell = new Vector2Int(0, 5);
@@ -308,7 +303,7 @@ public class MapGenerator : MonoBehaviour
             cell.Position3 -= (new Vector3(farCellSize.x, 0, farCellSize.y) + newPos - transform.position) / 2;
 
 
-            var maxOffset = (cell.size - Vector2.one * aproxLocationsSize) / 2.0f;
+            var maxOffset = (cell.size - Vector2.one * WorldSceneManager.Instance.locationBorderRadius) / 2.0f;
 
             GameObject locPrefab = locationRandomizer.RandomizePrefab();
 
