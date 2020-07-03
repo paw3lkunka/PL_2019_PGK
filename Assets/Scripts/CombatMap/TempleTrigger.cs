@@ -10,7 +10,7 @@ public class TempleTrigger : MonoBehaviour
         && other.gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
         {
             Debug.Log("Our jourey is finally done!");
-            //TODO do something
+            GameplayManager.Instance.enteredTemple = true;
         }
     }
 }

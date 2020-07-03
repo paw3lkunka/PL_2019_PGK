@@ -55,28 +55,33 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public List<CultistEntityInfo> cultistInfos;
 
 
+    // * ===== Gameplay progress statistics =========================
+
+    public uint shrinesToVisit = 3;
+    public HashSet<int> visitedShrinesIds = new HashSet<int>();
+
+    public bool leaderIsDead = false;
+    public bool enteredTemple = false;
+    private bool finalSceneLoaded = false;
+
+    // * ===== Location variables ==========================================
+
     /// <summary>
     /// Saved position from world map scene
     /// </summary>
     public Vector3 lastLocationPosition;
     public int lastLocationId;
 
-    // * ===== Gameplay progress statistics =========================
 
-    public uint shrinesToVisit = 3;
-    public HashSet<int> visitedShrinesIds = new HashSet<int>();
-
-    // * ===== Location variables ==========================================
-
-    public Location currentLocation;
-    public Dictionary<Location, HashSet<int>> destroyedDynamicObjects = new Dictionary<Location, HashSet<int>>();
+    //TODO reimplement
+    public Dictionary<int, HashSet<int>> destroyedDynamicObjects = new Dictionary<int, HashSet<int>>();
     public HashSet<int> CurrentLocationsDestroyedDynamicObjects
     {
         get
         {
             try
             {
-                return destroyedDynamicObjects[currentLocation];
+                return destroyedDynamicObjects[lastLocationId];
             }
             catch (ArgumentNullException)
             {
@@ -127,9 +132,10 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     private void Update() 
     {
         // ! ----- Game over condition -----
-        if (false /*TODO add condition*/)
+        if (!finalSceneLoaded && (water <= 0 || leaderIsDead || enteredTemple))
         {
-            ApplicationManager.Instance.GameOver(false);
+            finalSceneLoaded = true;
+            ApplicationManager.Instance.GameOver(enteredTemple);
         }
 
         // ! ----- Game events update -----

@@ -88,8 +88,16 @@ public class Damageable : MonoBehaviour
     {
         if(Health <= 0)
         {
-            Destroy(gameObject);
             Death?.Invoke();
+
+            if (gameObject.CompareTag("Leader"))
+            {
+                GameplayManager.Instance.leaderIsDead = true;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

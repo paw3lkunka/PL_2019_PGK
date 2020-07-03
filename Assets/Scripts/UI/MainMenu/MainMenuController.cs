@@ -6,9 +6,9 @@ public class MainMenuController : MonoBehaviour
 {
     public void OnEnable()
     {
-        UIOverlayManager.Instance.ControlsSheet.Clear();
-        UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.UINavigate, "Navigate");
-        UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.UISubmit, "Submit");
+        UIOverlayManager.Instance.ControlsSheet?.Clear();
+        UIOverlayManager.Instance.ControlsSheet?.AddSheetElement(ButtonActionType.UINavigate, "Navigate");
+        UIOverlayManager.Instance.ControlsSheet?.AddSheetElement(ButtonActionType.UISubmit, "Submit");
     }
 
     public void Play()
@@ -19,6 +19,11 @@ public class MainMenuController : MonoBehaviour
     public void Options()
     {
         UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.optionsMenuGUI, PushBehaviour.Lock);
+    }
+
+    public void MainMenu()
+    {
+        ApplicationManager.Instance.MainMenu();
     }
 
     public void Exit()

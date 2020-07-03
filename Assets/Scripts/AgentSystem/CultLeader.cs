@@ -6,7 +6,6 @@ public class CultLeader : MonoBehaviour
 {
     private Damageable damageable;
 
-
     #region MonoBehaviour
     private void Awake()
     {

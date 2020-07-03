@@ -121,6 +121,7 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
 
     public void MainMenu()
     {
+        Destroy(GameplayManager.Instance.gameObject);
         SceneManager.LoadScene(menuScene);
     }
 

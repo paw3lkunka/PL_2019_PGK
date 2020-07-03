@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExitZone : MonoBehaviour
 {
-    static public float angle = 180;
+    static public float angle = 0;
 
     private void OnTriggerEnter(Collider other)
     {

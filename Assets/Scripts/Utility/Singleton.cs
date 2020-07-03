@@ -76,6 +76,11 @@ public abstract class Singleton<T, K> : Singleton where T : MonoBehaviour where 
         {
             DontDestroyOnLoad(gameObject);
         }
+
+        if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 }
 
