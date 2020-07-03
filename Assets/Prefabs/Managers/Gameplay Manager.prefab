@@ -44,21 +44,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 1
-  water: 1
-  faith: 0.5
+  water:
+    current: 100
+    max: 100
+  faith:
+    current: 25
+    max: 35
+  mapGenerationSeed: 0
   initialCultistsNumber: 4
   faithForKilledEnemy: 0.01
   faithForKilledCultist: 0.02
   faithForWoundedCultist: 0.001
-  faithUsageFactor: 0.0002
-  waterUsageFactor: 0.0001
+  faithUsageFactor: 0.0001
+  waterUsageFactor: 0.00005
   lowWaterLevel: 0.2
   lowFaithLevel: 0.2
   highFaithLevel: 0.7
   fanaticFaithLevel: 0.9
   faithBoost: 2
-  ourCrew:
-  - {fileID: 0}
-  lastWorldMapPosition: {x: 0, y: 0, z: 0}
-  mapGenerated: 0
-  currentLocation: {fileID: 0}
+  cultistInfos: []
+  shrinesToVisit: 3
+  leaderIsDead: 0
+  enteredTemple: 0
+  lastLocationPosition: {x: 0, y: 0, z: 0}
+  lastLocationId: 0
