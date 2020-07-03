@@ -1,33 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6495509061319063674
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
-  m_Name: DepthOfField
-  m_EditorClassIdentifier: 
-  active: 0
-  enabled:
-    overrideState: 1
-    value: 1
-  focusDistance:
-    overrideState: 1
-    value: 10
-  aperture:
-    overrideState: 1
-    value: 8.4
-  focalLength:
-    overrideState: 1
-    value: 145
-  kernelSize:
-    overrideState: 1
-    value: 3
 --- !u!114 &-2600105467657550436
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1339,43 +1311,6 @@ MonoBehaviour:
       - 0.5
       - 0.5
       - 0.5
---- !u!114 &-1847212237204306667
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a34fa72bd4185749832024e9c8010bf, type: 3}
-  m_Name: ScreenSpaceReflections
-  m_EditorClassIdentifier: 
-  active: 0
-  enabled:
-    overrideState: 1
-    value: 1
-  preset:
-    overrideState: 1
-    value: 3
-  maximumIterationCount:
-    overrideState: 1
-    value: 104
-  resolution:
-    overrideState: 1
-    value: 2
-  thickness:
-    overrideState: 1
-    value: 21.6
-  maximumMarchDistance:
-    overrideState: 1
-    value: 100
-  distanceFade:
-    overrideState: 1
-    value: 0.5
-  vignette:
-    overrideState: 1
-    value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1392,9 +1327,7 @@ MonoBehaviour:
   - {fileID: 8469040366761947833}
   - {fileID: 9223261736511290911}
   - {fileID: -2600105467657550436}
-  - {fileID: -6495509061319063674}
   - {fileID: 8735293042463150318}
-  - {fileID: -1847212237204306667}
 --- !u!114 &8469040366761947833
 MonoBehaviour:
   m_ObjectHideFlags: 3
