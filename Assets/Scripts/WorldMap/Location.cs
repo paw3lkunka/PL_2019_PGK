@@ -24,6 +24,7 @@ public class Location : MonoBehaviour
 
     private float timeElapsedToEnter = 0.0f;
     private Image enterProgressBar;
+    private GameObject cultistLeader;
 
     private string PrefsKey(string key) => "Loc" + id + key;
 
@@ -66,16 +67,23 @@ public class Location : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (WorldSceneManager.Instance.CanEnterLocations)
+        if (other.CompareTag("Leader"))
         {
-            StartCoroutine(EnterLocationRoutine());
+            if (WorldSceneManager.Instance.CanEnterLocations)
+            {
+                cultistLeader = other.gameObject;
+                StartCoroutine(EnterLocationRoutine());
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        StopAllCoroutines();
-        timeElapsedToEnter = 0.0f;
+        if (other.CompareTag("Leader"))
+        {
+            StopAllCoroutines();
+            timeElapsedToEnter = 0.0f;
+        }
     }
 
     private void Update()
@@ -105,6 +113,9 @@ public class Location : MonoBehaviour
 
             if (timeElapsedToEnter >= enterDelay)
             {
+                Vector3 vec = transform.position - cultistLeader.transform.position;
+                vec.y = 0;
+                LocationCentre.enterDirection = vec.normalized;
                 GameplayManager.Instance.EnterLocation(this);
 
                 visited = true;

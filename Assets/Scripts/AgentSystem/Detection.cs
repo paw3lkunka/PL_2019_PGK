@@ -54,6 +54,10 @@ public class Detection : MonoBehaviour
     [field: SerializeField, GUIName("DetectionRange")]
     public float DetectionRange { get; private set; } = 10;
 
+#if UNITY_EDITOR
+    [Tooltip("Show range sphere gizmo in editor")]
+    public bool showRangeBounds = false;
+#endif
 
     /// <summary>
     /// Detection function depending on strategy.
@@ -228,11 +232,19 @@ public class Detection : MonoBehaviour
 
     #region In editor
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, DetectionRange);
+        if (showRangeBounds)
+        {
+            Gizmos.color = new Color(1.0f, 0.0f, 0.0f, 0.3f);
+            Gizmos.DrawSphere(transform.position, DetectionRange);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, DetectionRange);
+        }
     }
+#endif
 
-    #endregion
+#endregion
 
 }

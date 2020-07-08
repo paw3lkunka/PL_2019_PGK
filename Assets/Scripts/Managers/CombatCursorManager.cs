@@ -19,9 +19,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
     #region MonoBehaviour
 
-    protected override void Awake()
+    protected void Start()
     {
-        base.Awake();
         mainCamera = Camera.main;
     }
 
