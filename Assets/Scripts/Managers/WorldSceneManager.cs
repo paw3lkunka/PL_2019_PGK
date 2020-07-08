@@ -49,6 +49,17 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Pause, "Pause menu");
     }
 
+    private void OnEnable()
+    {
+        ApplicationManager.Instance.Input.CombatMode.Disable();
+    }
+
+    private void OnDisable()
+    {
+
+        ApplicationManager.Instance.Input.CombatMode.Enable();
+    }
+
     private IEnumerator LocationCooldown(float delay)
     {
         CanEnterLocations = false;
