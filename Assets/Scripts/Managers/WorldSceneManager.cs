@@ -17,6 +17,10 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
     [HideInInspector]
     public GameObject leader;
 
+    [HideInInspector]
+    public WorldMapCursor cursor;
+
+
     /// <summary>
     /// Should be near to locations size;
     /// </summary>
@@ -33,6 +37,7 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
     private void Start()
     {
         leader = GameObject.FindGameObjectWithTag("Leader");
+        cursor = FindObjectOfType<WorldMapCursor>();
 
         Vector3 exitOffset = Vector3.forward * locationBorderRadius;
         exitOffset = Quaternion.AngleAxis(ExitZone.angle, Vector3.up) * exitOffset;
@@ -56,7 +61,6 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 
     private void OnDisable()
     {
-
         ApplicationManager.Instance.Input.CombatMode.Enable();
     }
 

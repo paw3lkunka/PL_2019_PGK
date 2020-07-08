@@ -351,23 +351,14 @@ public class MapGenerator : MonoBehaviour
                 else
                 {
                     Debug.Log("Obstacle removed due to collision with location");
-#               if UNITY_EDITOR
-                    if (Application.isEditor)
-                    {
-                        DestroyImmediate(envObject);
-                    }
-                    else
-#               endif
-                    {
-                        Destroy(envObject);
-                    }
+                    SGUtils.SafeDestroy(envObject);
                 }
             }
+        }
 
-            if (forceEmptyCentre)
-            {
-                FreeCentre();
-            }
+        if (forceEmptyCentre)
+        {
+            FreeCentre();
         }
 
         LoadState();
@@ -390,18 +381,23 @@ public class MapGenerator : MonoBehaviour
 
     private void FreeCentre()
     {
-        foreach (Location loc in transform.GetComponentsInChildren<Location>())
+        float radius = Mathf.Sqrt(nearCellSize.x * nearCellSize.x + nearCellSize.y + nearCellSize.y) / 2;
+
+        for (int i = 0; i < transform.childCount; i++)
         {
-            Vector2 halfSize = (Vector2)nearCellSize * 0.5f;
-            Vector3 pos = loc.transform.localPosition;
+            Transform child = transform.GetChild(i);
 
-            if (pos.x < halfSize.x && pos.x > -halfSize.x && pos.z < halfSize.y && pos.z > -halfSize.y)
+            if (Vector3.Distance(transform.position, child.position) < radius)
             {
-                pos.x = pos.x > 0 ? halfSize.x : -halfSize.x;
-                pos.z = pos.z > 0 ? halfSize.y : -halfSize.y;
+                if (child.GetComponent<EnviroObstacle>())
+                {
+                    SGUtils.SafeDestroy(child.gameObject);
+                }
+                else if(child.GetComponent<Location>())
+                {
+                    SGUtils.SafeDestroy(child.gameObject);
+                }
             }
-
-            loc.transform.localPosition = pos;
         }
     }
 
@@ -412,6 +408,7 @@ public class MapGenerator : MonoBehaviour
             || y * 2 > cellsNumber.y && (cuttingSettings & Cut.ZAxisP) != 0
             || y * 2 < cellsNumber.y && (cuttingSettings & Cut.ZAxisN) != 0;
     }
+
     private bool EnvIntersectionTest(GameObject envObject, IEnumerable<GameObject> locInstances)
     {
         foreach (GameObject instance in locInstances)
@@ -432,22 +429,3 @@ public class MapGenerator : MonoBehaviour
     #endregion
 }
 
-public static class ListExtra
-{
-    public static void Resize<T>(this List<T> list, int sz, T c)
-    {
-        int cur = list.Count;
-        if (sz < cur)
-            list.RemoveRange(sz, cur - sz);
-        else if (sz > cur)
-        {
-            if (sz > list.Capacity)//this bit is purely an optimisation, to avoid multiple automatic capacity changes.
-                list.Capacity = sz;
-            list.AddRange(System.Linq.Enumerable.Repeat(c, sz - cur));
-        }
-    }
-    public static void Resize<T>(this List<T> list, int sz) where T : new()
-    {
-        Resize(list, sz, new T());
-    }
-}
