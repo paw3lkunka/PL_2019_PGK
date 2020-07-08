@@ -7,21 +7,18 @@ public class BehaviourWorldMapInput : MonoBehaviour
 {
     private Moveable moveable;
     //todo position in formation
+    private Vector3 target;
+
     public Vector3 formationOffset = Vector3.zero;
+
+    private LineRenderer lineRenderer;
 
     private void GoToCursorPosition(InputAction.CallbackContext ctx)
     {
-        var inputValue = Mouse.current.position.ReadValue();
-        var ray = Camera.main.ScreenPointToRay(inputValue);
-
-        foreach (var hit in Physics.RaycastAll(ray))
+        Vector3 pos = default;
+        if (SGUtils.CameraToGrounRaycast(Camera.main, 1000, ref pos))
         {
-            // TODO: replace tag with layer mask
-            if (hit.collider.CompareTag("Ground"))
-            {
-                moveable.Go(hit.point);
-                continue;
-            }
+            moveable.Go(target = pos);
         }
     }
 
@@ -31,12 +28,18 @@ public class BehaviourWorldMapInput : MonoBehaviour
     private void Awake()
     {
         moveable = GetComponent<Moveable>();
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     private void OnEnable()
     {
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Enable();
+    }
+
+    private void Update()
+    {
+        SGUtils.DrawNavLine(lineRenderer, transform.position, target);
     }
 
     private void OnDisable()

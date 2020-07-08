@@ -93,18 +93,11 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
     private void MoveCursorPointer()
     {
-        var inputValue = Mouse.current.position.ReadValue();
-        var ray = mainCamera.ScreenPointToRay(inputValue);
-
-        foreach( var hit in Physics.RaycastAll(ray, 100) )
+        Vector3 pos = default;
+        if (SGUtils.CameraToGrounRaycast(Camera.main, 1000, ref pos))
         {
-            // TODO: replace tag with layer mask
-            if (hit.collider.CompareTag("Ground"))
-            {
-                MainCursor.transform.position = hit.point;
-                continue;
-            }
-        }        
+            MainCursor.transform.position = pos;
+        }
     }
 
     private void MoveCursorGamepad()
