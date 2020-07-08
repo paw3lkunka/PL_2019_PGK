@@ -950,11 +950,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gameplay Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 5974553869645294482, guid: 45f635e17c2945b41bf516a76336591f,
-        type: 3}
-      propertyPath: cultistInfos.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5974553869645294483, guid: 45f635e17c2945b41bf516a76336591f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1352,6 +1347,16 @@ PrefabInstance:
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
       propertyPath: enviroSpawnChances.Array.data[5]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: seed
+      value: -1158453099
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: forceEmptyCentre
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973247, guid: 06475706884b58947b49e9c2a0fc9e5f,
