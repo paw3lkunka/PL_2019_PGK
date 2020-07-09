@@ -39,7 +39,7 @@ public class BehaviourWorldMapInput : MonoBehaviour
 
     private void Update()
     {
-        SGUtils.DrawNavLine(lineRenderer, transform.position, target);
+        SGUtils.DrawNavLine(lineRenderer, transform.position, target, out _);
     }
 
     private void OnDisable()

@@ -14,12 +14,9 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 #pragma warning restore
     public bool CanEnterLocations { get; private set; } = true;
 
-    [HideInInspector]
-    public GameObject leader;
-
-    [HideInInspector]
-    public WorldMapCursor cursor;
-
+    public GameObject Leader { get; private set; }
+    public WorldMapCursor Cursor { get; private set; }
+    public ResourcesUseIndicator ResUseIndicator { get; private set; }
 
     /// <summary>
     /// Should be near to locations size;
@@ -31,17 +28,18 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
     protected override void Awake()
     {
         base.Awake();
-        mapGenerator = FindObjectOfType<MapGenerator>();
     }
 
     private void Start()
     {
-        leader = GameObject.FindGameObjectWithTag("Leader");
-        cursor = FindObjectOfType<WorldMapCursor>();
+        Leader = GameObject.FindGameObjectWithTag("Leader");
+        Cursor = FindObjectOfType<WorldMapCursor>();
+        mapGenerator = FindObjectOfType<MapGenerator>();
+        ResUseIndicator = FindObjectOfType<ResourcesUseIndicator>();
 
         Vector3 exitOffset = Vector3.forward * locationBorderRadius;
         exitOffset = Quaternion.AngleAxis(ExitZone.angle, Vector3.up) * exitOffset;
-        leader.GetComponent<NavMeshAgent>().Warp(GameplayManager.Instance.lastLocationPosition + exitOffset);
+        Leader.GetComponent<NavMeshAgent>().Warp(GameplayManager.Instance.lastLocationPosition + exitOffset);
 
         StartCoroutine(LocationCooldown(locationCooldown));
 

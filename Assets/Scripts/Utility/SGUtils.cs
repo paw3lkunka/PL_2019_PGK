@@ -36,12 +36,19 @@ public static class SGUtils
         }
         return false;
     }
-    public static void DrawNavLine(LineRenderer lineRenderer, Vector3 from, Vector3 to)
+
+    public static void DrawNavLine(LineRenderer lineRenderer, Vector3 from, Vector3 to, out float length)
     {
         var path = new NavMeshPath();
         NavMesh.CalculatePath(from, to, NavMesh.AllAreas, path);
 
         lineRenderer.positionCount = path.corners.Length;
         lineRenderer.SetPositions(path.corners);
+
+        length = 0;
+        for (int i = 1; i < path.corners.Length; i++)
+        {
+            length += Vector3.Distance(path.corners[i], path.corners[i - 1]);
+        }
     }
 }

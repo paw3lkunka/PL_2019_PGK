@@ -47,7 +47,7 @@ public class RockWallChunk : MonoBehaviour
 
     private void Teleport()
     {
-        Vector3 cultPos = WorldSceneManager.Instance?.leader.transform.position ?? zeroPos;
+        Vector3 cultPos = WorldSceneManager.Instance?.Leader.transform.position ?? zeroPos;
         Vector3 project = Vector3.Project(cultPos, axis);
         Vector3 central = FindNearestTo(project);
         transform.position = central + index * axis * width;

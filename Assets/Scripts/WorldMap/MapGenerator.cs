@@ -144,7 +144,6 @@ public class MapGenerator : MonoBehaviour
     public Cut cuttingSettings = 0;
 
     public float scalingFactor = 1.0f;
-
     /// <summary>
     /// Amount of enviro objects to place in each cell.
     /// </summary>
@@ -303,9 +302,11 @@ public class MapGenerator : MonoBehaviour
         {
             // Fix position
             cell.Position3 -= (new Vector3(farCellSize.x, 0, farCellSize.y) + newPos - transform.position) / 2;
-
-            var maxOffset = (cell.size - Vector2.one * WorldSceneManager.Instance.locationBorderRadius) / 2.0f;
-
+#if UNITY_EDITOR
+            var maxOffset = (cell.size - Vector2.one * FindObjectOfType<WorldSceneManager>().locationBorderRadius) / 2.0f;
+#else
+            var maxOffset = (cell.size - Vector2.one * WorldSceneManager.Instance.locationBorderRadius ) / 2.0f;
+#endif
             GameObject locPrefab = locationRandomizer.RandomizePrefab();
 
             if (locPrefab)
