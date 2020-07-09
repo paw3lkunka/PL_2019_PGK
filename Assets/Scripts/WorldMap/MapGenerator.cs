@@ -122,11 +122,6 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     public bool useCustomSeed = false;
 
-    /// <summary>
-    /// Guarantee, that cente of map will be empty
-    /// </summary>
-    public bool forceEmptyCentre = false;
-
     public int seed;
         
     /// <summary>
@@ -140,6 +135,7 @@ public class MapGenerator : MonoBehaviour
     public Vector2 nearCellSize = new Vector2(30, 30);
 
     public Vector2 farCellSize = new Vector2(30, 30);
+    public Vector2 emptyCentreSize = Vector2.zero;
 
     public Cut cuttingSettings = 0;
 
@@ -351,13 +347,12 @@ public class MapGenerator : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log("Obstacle removed due to collision with location");
                     SGUtils.SafeDestroy(envObject);
                 }
             }
         }
 
-        if (forceEmptyCentre)
+        if (!Mathf.Approximately(emptyCentreSize.magnitude, 0.0f))
         {
             FreeCentre();
         }
@@ -382,13 +377,12 @@ public class MapGenerator : MonoBehaviour
 
     private void FreeCentre()
     {
-        float radius = Mathf.Sqrt(nearCellSize.x * nearCellSize.x + nearCellSize.y + nearCellSize.y) / 2;
-
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
 
-            if (Vector3.Distance(transform.position, child.position) < radius)
+            if (Mathf.Abs(child.position.x - transform.position.x) < emptyCentreSize.x / 2.0f
+             && Mathf.Abs(child.position.z - transform.position.z) < emptyCentreSize.y / 2.0f)
             {
                 if (child.GetComponent<EnviroObstacle>())
                 {
