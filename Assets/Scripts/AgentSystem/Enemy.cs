@@ -82,19 +82,18 @@ public class Enemy : MonoBehaviour
 
     public void EnterStun()
     {
-        Debug.Log("STUN ENTER");
+        if (LocationManager.Instance.CanStun)
+        {
+            attack.HoldFire();
+            moveable.Stop();
 
-        attack.HoldFire();
-        moveable.Stop();
-
-        enabled = false;
-        behaviour.enabled = false;
+            enabled = false;
+            behaviour.enabled = false;
+        }
     }
 
     public void ExitStun()
     {
-        Debug.Log("STUN EXIT");
-
         enabled = true;
         behaviour.enabled = true;
     }

@@ -343,13 +343,10 @@ public class MapGenerator : MonoBehaviour
         GeneralGrid.Generate(transform.position, cuttingSettings);
         ShrinesGrid.Generate(transform.position, cuttingSettings);
 
-
-
         foreach (var cell in ShrinesGrid.Cells)
         {
             GenerateObject(cell, shrineRandomizer, locInstances, true, true);
         }
-
 
         foreach (var cell in GeneralGrid.Cells)
         {
@@ -421,20 +418,19 @@ public class MapGenerator : MonoBehaviour
 
             if (IntersectionTest(instance, instances))
             {
+                instance.transform.localScale *= scalingFactor;
 
                 if (addToInstances)
                 {
                     instances.Push(instance);
                 }
 
-                instance.transform.localScale *= scalingFactor;
-
                 if (instance.TryGetComponent(out Location loc))
                 {
                     loc.id = loc.transform.position.GetHashCode();
                     loc.generatedBy = this;
-
                 }
+
                 if (instance.TryGetComponent(out EnviroObject env))
                 {
                     env.Randomize();

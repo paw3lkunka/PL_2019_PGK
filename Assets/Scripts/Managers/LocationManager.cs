@@ -16,6 +16,10 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
     public List<Damageable> ourCrew;
     public CultLeader cultLeader;
     public float formationScale = 1;
+    public float stunCooldown;
+    public float stunCounter;
+    public bool CanStun { get => stunCounter <= 0; }
+
     [Tooltip("If checked, manager automatically removes null emements from $ourCrew and $enemies")]
     public bool cleanLists = true;
 
@@ -111,6 +115,11 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
         UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Pause, "Pause");
     }
 
+    private void Update()
+    {
+        stunCounter -= Time.deltaTime;
+    }
+
     private void LateUpdate()
     {
         if(cleanLists)
@@ -124,6 +133,27 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
     {
         UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.combatSceneGUI);
         UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.rhythmGUI);
+
+        AudioTimeline.Instance.OnBeatFail += OnBeatFail;
+    }
+
+    private void OnDisable()
+    {
+        AudioTimeline.Instance.OnBeatFail -= OnBeatFail;
+    }
+
+    private void OnBeatFail()
+    {
+        if (CanStun)
+        {
+            IEnumerator Routine()
+            {
+                yield return new WaitForEndOfFrame();
+                stunCounter = stunCooldown;
+            }
+
+            StartCoroutine(Routine());
+        }
     }
 
     private void OnDrawGizmos()
