@@ -28,7 +28,7 @@ public class BehaviourWorldMapInput : MonoBehaviour
     private void Awake()
     {
         moveable = GetComponent<Moveable>();
-        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer = GetComponentInChildren<LineRenderer>();
     }
 
     private void OnEnable()
