@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flags: 1
-  <SpeedBase>k__BackingField: 3
+  <SpeedBase>k__BackingField: 3.5
   <SpeedBoosted>k__BackingField: 5
   <IsBoosted>k__BackingField: 0
 --- !u!114 &7379796028654906305
@@ -297,6 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Strategy>k__BackingField: 1
   <DetectionRange>k__BackingField: 30
+  showRangeBounds: 0
 --- !u!114 &394580946
 MonoBehaviour:
   m_ObjectHideFlags: 0

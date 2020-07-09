@@ -5,17 +5,14 @@ using TMPro;
 
 public class ResourcesUseIndicator : MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshProUGUI waterText;
-    [SerializeField]
-    private TextMeshProUGUI faithText;
+#pragma warning disable
+    [SerializeField] private TextMeshProUGUI waterText;
+    [SerializeField] private TextMeshProUGUI faithText;
 
-    [SerializeField]
-    private Color waterColor;
-    [SerializeField]
-    private Color faithColor;
-    [SerializeField]
-    private Color warningColor;
+    [SerializeField] private Color waterColor;
+    [SerializeField] private Color faithColor;
+    [SerializeField] private Color warningColor;
+#pragma warning restore
 
     private float waterAmmount = 0;
     private float faithAmmount = 0;

@@ -142,7 +142,7 @@ public class Cultist : MonoBehaviour
 
     private void OnDisable()
     {
-        LocationManager.Instance.ourCrew.Remove(damageable);
+        LocationManager.Instance?.ourCrew.Remove(damageable);
         if (AudioTimeline.Instance)
         {
             AudioTimeline.Instance.OnBeatFail -= FailBit;

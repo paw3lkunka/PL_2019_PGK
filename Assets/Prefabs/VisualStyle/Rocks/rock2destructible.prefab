@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &6068302500332996181
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532960705585230335}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 12.858311, y: 5.584215, z: 6.8264523}
+  m_Center: {x: 3.425759, y: -0.76862854, z: -0.7157215}
 --- !u!208 &2886376883979362369
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -33,19 +46,7 @@ MonoBehaviour:
     current: 50
     max: 50
   <DefenseBase>k__BackingField: 0
---- !u!65 &6068302500332996181
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2532960705585230335}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 12.858311, y: 5.584215, z: 6.8264523}
-  m_Center: {x: 3.425759, y: -0.76862854, z: -0.7157215}
+  <ReactToHit>k__BackingField: 0
 --- !u!1001 &5458408540326235924
 PrefabInstance:
   m_ObjectHideFlags: 0
