@@ -34,9 +34,13 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         ResourceDepleter = FindObjectOfType<ResourceDepleter>();
         ResUseIndicator = FindObjectOfType<ResourcesUseIndicator>();
 
-        Vector3 exitOffset = LocationCentre.exitDirection * GameplayManager.Instance.lastLocationRadius;
-        Leader.GetComponent<NavMeshAgent>().Warp(GameplayManager.Instance.lastLocationPosition + exitOffset);
+        if (!GameplayManager.Instance.firstTimeOnMap)
+        {
+            Vector3 exitOffset = LocationCentre.exitDirection * GameplayManager.Instance.lastLocationRadius;
+            Leader.GetComponent<NavMeshAgent>().Warp(GameplayManager.Instance.lastLocationPosition + exitOffset);
+        }
 
+        GameplayManager.Instance.firstTimeOnMap = false;
         StartCoroutine(LocationCooldown(locationCooldown));
 
         mapGenerator.seed = GameplayManager.Instance.mapGenerationSeed;

@@ -64,13 +64,14 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     // * ===== Location variables ==========================================
 
+    [HideInInspector]
+    public bool firstTimeOnMap = true;
     /// <summary>
     /// Saved position from world map scene
     /// </summary>
     public Vector3 lastLocationPosition;
     public float lastLocationRadius;
     public int lastLocationId;
-
 
     //TODO reimplement
     public Dictionary<int, HashSet<int>> destroyedDynamicObjects = new Dictionary<int, HashSet<int>>();
