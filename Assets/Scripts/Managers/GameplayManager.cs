@@ -40,8 +40,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public float faithForKilledEnemy = 0.01f;
     public float faithForKilledCultist = 0.02f;
     public float faithForWoundedCultist = 0.001f;
-    public float faithUsageFactor = 0.0002f;
-    public float waterUsageFactor = 0.0001f;
 
     public float lowWaterLevel = 0.2f;
     public float lowFaithLevel = 0.2f;

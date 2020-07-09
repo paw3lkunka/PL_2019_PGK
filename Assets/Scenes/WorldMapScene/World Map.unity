@@ -258,6 +258,21 @@ PrefabInstance:
       propertyPath: faithDepletionRate
       value: 0.001
       objectReference: {fileID: 0}
+    - target: {fileID: 6715866173278453077, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: <FaithDepletionRate>k__BackingField
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6715866173278453077, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: <WaterDepletionRate>k__BackingField
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6715866173278453077, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: veloctyThreshold
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 7625925514056703846, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
       propertyPath: m_NavMeshLayer

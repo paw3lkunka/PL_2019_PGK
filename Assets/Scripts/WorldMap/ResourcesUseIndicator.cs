@@ -26,20 +26,19 @@ public class ResourcesUseIndicator : MonoBehaviour
         set
         {
             waterAmmount = value;
-            int intValue = Mathf.RoundToInt(waterAmmount);
-            waterText.text = intValue == 0 ? "0" : "-" + intValue;
-            waterText.color = waterAmmount > GameplayManager.Instance.Water ? warningColor : waterColor;
+            waterText.text = Mathf.Approximately(faithAmmount, 0) ? "0" : "-" + System.Math.Round(value, 1).ToString("0.0");
+            waterText.color = value > GameplayManager.Instance.Water ? warningColor : waterColor;
         }
     }
+
     public float Faith
     {
         get => faithAmmount;
         set
         {
             faithAmmount = value;
-            int intValue = Mathf.RoundToInt(faithAmmount);
-            faithText.text = intValue == 0 ? "0" : "-" + intValue;
-            faithText.color = faithAmmount > GameplayManager.Instance.Faith ? warningColor : faithColor;
+            faithText.text = Mathf.Approximately(faithAmmount, 0) ? "0" : "-" + System.Math.Round(value, 1).ToString("0.0");
+            faithText.color = value > GameplayManager.Instance.Faith ? warningColor : faithColor;
         }
     }
 }

@@ -16,6 +16,7 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 
     public GameObject Leader { get; private set; }
     public WorldMapCursor Cursor { get; private set; }
+    public ResourceDepleter ResourceDepleter { get; private set; }
     public ResourcesUseIndicator ResUseIndicator { get; private set; }
 
     /// <summary>
@@ -35,6 +36,7 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         Leader = GameObject.FindGameObjectWithTag("Leader");
         Cursor = FindObjectOfType<WorldMapCursor>();
         mapGenerator = FindObjectOfType<MapGenerator>();
+        ResourceDepleter = FindObjectOfType<ResourceDepleter>();
         ResUseIndicator = FindObjectOfType<ResourcesUseIndicator>();
 
         Vector3 exitOffset = Vector3.forward * locationBorderRadius;

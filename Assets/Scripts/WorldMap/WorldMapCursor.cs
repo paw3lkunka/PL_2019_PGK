@@ -50,8 +50,10 @@ public class WorldMapCursor : MonoBehaviour
             out float pathLength
         );
 
-        WorldSceneManager.Instance.ResUseIndicator.Water = pathLength * GameplayManager.Instance.waterUsageFactor;
-        WorldSceneManager.Instance.ResUseIndicator.Faith = pathLength * GameplayManager.Instance.faithUsageFactor;
+        float speed = WorldSceneManager.Instance.Leader.GetComponent<NavMeshAgent>().speed;
+        WorldSceneManager.Instance.ResUseIndicator.Water = CalculateUsage(speed, pathLength, WorldSceneManager.Instance.ResourceDepleter.WaterDepletionRate);
+
+        WorldSceneManager.Instance.ResUseIndicator.Faith = CalculateUsage(speed, pathLength, WorldSceneManager.Instance.ResourceDepleter.FaithDepletionRate * GameplayManager.Instance.cultistInfos.Count);
         WorldSceneManager.Instance.ResUseIndicator.transform.position = Camera.main.WorldToScreenPoint(transform.position);
     }
 
@@ -59,4 +61,9 @@ public class WorldMapCursor : MonoBehaviour
     {
     }
 
+    private float CalculateUsage(float speed, float route, float usage)
+    {
+        float time = route / speed;
+        return usage * (time / Time.fixedDeltaTime);
+    }
 }
