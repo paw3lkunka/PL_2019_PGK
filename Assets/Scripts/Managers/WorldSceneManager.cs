@@ -19,11 +19,6 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
     public ResourceDepleter ResourceDepleter { get; private set; }
     public ResourcesUseIndicator ResUseIndicator { get; private set; }
 
-    /// <summary>
-    /// Should be near to locations size;
-    /// </summary>
-    public float locationBorderRadius;
-
     private MapGenerator mapGenerator;
 
     protected override void Awake()
@@ -39,8 +34,7 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         ResourceDepleter = FindObjectOfType<ResourceDepleter>();
         ResUseIndicator = FindObjectOfType<ResourcesUseIndicator>();
 
-        Vector3 exitOffset = Vector3.forward * locationBorderRadius;
-        exitOffset = Quaternion.AngleAxis(ExitZone.angle, Vector3.up) * exitOffset;
+        Vector3 exitOffset = LocationCentre.exitDirection * GameplayManager.Instance.lastLocationRadius;
         Leader.GetComponent<NavMeshAgent>().Warp(GameplayManager.Instance.lastLocationPosition + exitOffset);
 
         StartCoroutine(LocationCooldown(locationCooldown));

@@ -303,9 +303,9 @@ public class MapGenerator : MonoBehaviour
             // Fix position
             cell.Position3 -= (new Vector3(farCellSize.x, 0, farCellSize.y) + newPos - transform.position) / 2;
 #if UNITY_EDITOR
-            var maxOffset = (cell.size - Vector2.one * FindObjectOfType<WorldSceneManager>().locationBorderRadius) / 2.0f;
+            var maxOffset = (cell.size - Vector2.one * FindObjectOfType<GameplayManager>().lastLocationRadius) / 2.0f;
 #else
-            var maxOffset = (cell.size - Vector2.one * WorldSceneManager.Instance.locationBorderRadius ) / 2.0f;
+            var maxOffset = (cell.size - Vector2.one * GameplayManager.Instance.lastLocationRadius ) / 2.0f;
 #endif
             GameObject locPrefab = locationRandomizer.RandomizePrefab();
 
@@ -351,7 +351,7 @@ public class MapGenerator : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Obstacle removed due to collision with location");
+                    //Debug.Log("Obstacle removed due to collision with location");
                     SGUtils.SafeDestroy(envObject);
                 }
             }

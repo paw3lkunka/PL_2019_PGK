@@ -22,6 +22,10 @@ public class Location : MonoBehaviour
     public MapGenerator generatedBy;
     public int id;
 
+    [Header("Radius")]
+    public float radius;
+    public bool setFromSphereCollider = true;
+
     private float timeElapsedToEnter = 0.0f;
     private Image enterProgressBar;
     private GameObject cultistLeader;
@@ -63,6 +67,14 @@ public class Location : MonoBehaviour
     private void Awake()
     {
         enterProgressBar = GetComponentInChildren<Image>();
+        if (setFromSphereCollider)
+        {
+            SphereCollider sphereCollider = GetComponent<SphereCollider>();
+            if (sphereCollider)
+            {
+                radius = sphereCollider.radius;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)

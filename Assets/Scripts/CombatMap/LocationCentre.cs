@@ -53,7 +53,7 @@ public class LocationCentre : MonoBehaviour
     {
         if (Vector3.Distance(cultLeader.transform.position, transform.position) > locationRadius)
         {
-            Vector3 vec = transform.position - FindObjectOfType<LocationCentre>().transform.position;
+            Vector3 vec = cultLeader.transform.position - transform.position;
             vec.y = 0;
             exitDirection = vec.normalized;
             GameplayManager.Instance.ExitLocation();

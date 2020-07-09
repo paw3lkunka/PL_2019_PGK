@@ -68,6 +68,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     /// Saved position from world map scene
     /// </summary>
     public Vector3 lastLocationPosition;
+    public float lastLocationRadius;
     public int lastLocationId;
 
 
@@ -187,6 +188,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         {
             OnLocationEnterInvoke();
             lastLocationPosition = location.transform.position;
+            lastLocationRadius = location.radius * Mathf.Max(location.transform.localScale.x, location.transform.localScale.z);
             lastLocationId = location.id;
             SceneManager.LoadScene(location.SceneName);
         }
