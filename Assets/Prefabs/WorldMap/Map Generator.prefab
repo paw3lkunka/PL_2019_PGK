@@ -14,7 +14,7 @@ GameObject:
   m_Name: Map Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8614273931205973247
@@ -43,13 +43,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d193390e48b8e024dac2ec3e7f8069ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useCustomSeed: 0
-  forceEmptyCentre: 0
-  seed: -1301680747
-  shrineLocationPrefab: {fileID: 0}
-  templeLocationPrefab: {fileID: 0}
-  cells: {x: 5, y: 5}
-  cellSize: {x: 60, y: 60}
-  randomOffsetRange: {x: 20, y: 20}
-  emptyChance: 0
-  spawnChances: 05000000080000000a000000
+  <GeneralGrid>k__BackingField:
+    CellsNumber: {x: 20, y: 20}
+    NearCellSize: {x: 100, y: 100}
+    FarCellSize: {x: 150, y: 150}
+  <ShrinesGrid>k__BackingField:
+    CellsNumber: {x: 10, y: 10}
+    NearCellSize: {x: 200, y: 200}
+    FarCellSize: {x: 300, y: 300}
+  useCustomSeed: 1
+  seed: -1158453099
+  gEmptyCentreSize: {x: 150, y: 150}
+  cuttingSettings: 2
+  scalingFactor: 0.75
+  enviroObjectsInCell: {x: 5, y: 15}
+  emptyChance: 15
+  locationSpawnChances: 05000000050000000600000003000000
+  shrinesSpawnChances: 01000000010000000100000000000000
+  enviroSpawnChances: 050000000800000001000000010000000100000001000000

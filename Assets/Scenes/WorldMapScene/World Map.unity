@@ -161,7 +161,7 @@ PrefabInstance:
     - target: {fileID: 3968320175676017217, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.763168
+      value: 35.64
       objectReference: {fileID: 0}
     - target: {fileID: 3968320175676017217, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
@@ -2373,230 +2373,35 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map Generator
       objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973245, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
-      propertyPath: spawnChances.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: spawnChances.Array.data[3]
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: spawnChances.Array.data[4]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: useCustomSeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: spawnChances.Array.data[0]
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: spawnChances.Array.data[1]
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: spawnChances.Array.data[2]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: spawnChances.Array.data[5]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: spawnChances.Array.data[6]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: emptyChance
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: envirobojecttInCell.y
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: envirobojecttInCell.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: cells.x
+      propertyPath: <ShrinesGrid>k__BackingField.CellsNumber.x
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
-      propertyPath: cells.y
+      propertyPath: <ShrinesGrid>k__BackingField.CellsNumber.y
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
-      propertyPath: aproxLocationsSize
-      value: 7.5
+      propertyPath: <ShrinesGrid>k__BackingField.NearCellSize.x
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
-      propertyPath: nearCellSize.x
-      value: 100
+      propertyPath: <ShrinesGrid>k__BackingField.NearCellSize.y
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
-      propertyPath: nearCellSize.y
-      value: 100
+      propertyPath: <ShrinesGrid>k__BackingField.FarCellSize.x
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
-      propertyPath: farCellSize.x
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: farCellSize.y
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: cellsNumber.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: cellsNumber.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: randomOffsetRange.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: randomOffsetRange.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: cuttingSettings
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: scalingFactor
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: enviroObjectsInCell.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: enviroObjectsInCell.y
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: locationSpawnChances.Array.data[0]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: locationSpawnChances.Array.data[1]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: locationSpawnChances.Array.data[2]
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: locationSpawnChances.Array.data[3]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: locationSpawnChances.Array.data[4]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: locationSpawnChances.Array.data[5]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: locationSpawnChances.Array.data[6]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: enviroSpawnChances.Array.data[2]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: enviroSpawnChances.Array.data[1]
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: enviroSpawnChances.Array.data[0]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: enviroSpawnChances.Array.data[3]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: enviroSpawnChances.Array.data[4]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: enviroSpawnChances.Array.data[5]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: seed
-      value: -1158453099
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: forceEmptyCentre
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: emptyCentreSize.x
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
-        type: 3}
-      propertyPath: emptyCentreSize.y
-      value: 120
+      propertyPath: <ShrinesGrid>k__BackingField.FarCellSize.y
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973247, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
