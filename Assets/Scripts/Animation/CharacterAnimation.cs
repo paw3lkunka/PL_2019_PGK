@@ -49,6 +49,7 @@ public class CharacterAnimation : MonoBehaviour
     private void Update()
     {
         Vector3 deltaPos = transform.position - lastFramePos;
+        deltaPos =  Quaternion.AngleAxis(-90, Vector3.up) * Quaternion.Inverse(transform.parent.rotation) * deltaPos;
         float magnitude = deltaPos.magnitude;
         if (magnitude > threshold)
         {
