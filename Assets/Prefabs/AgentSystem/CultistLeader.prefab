@@ -440,6 +440,7 @@ GameObject:
   - component: {fileID: 6692315016006903435}
   - component: {fileID: 7784000477819536368}
   - component: {fileID: 7923775637155685772}
+  - component: {fileID: 7525031864083970326}
   m_Layer: 8
   m_Name: CultistLeader
   m_TagString: Leader
@@ -575,8 +576,24 @@ MonoBehaviour:
     current: 10
     max: 10
   <DefenseBase>k__BackingField: 0
+  <ReactToHit>k__BackingField: 0
   <DefenseBoost>k__BackingField: 3
   <IsBoosted>k__BackingField: 0
+--- !u!114 &7525031864083970326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187142443108444329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 958a970b300a9bd4b979c57b21efcf0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  veloctyThreshold: 0.01
+  <WaterDepletionRate>k__BackingField: 0.001
+  <FaithDepletionRate>k__BackingField: 0.00025
 --- !u!1 &5654800581834907298
 GameObject:
   m_ObjectHideFlags: 0
