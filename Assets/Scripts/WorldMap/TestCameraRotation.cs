@@ -10,6 +10,11 @@ public class TestCameraRotation : MonoBehaviour
     private float angle = 0.0f;
     private bool shouldCameraMove = false;
 
+    void Awake()
+    {
+        angle = GetComponent<Transform>().localRotation.eulerAngles.y;
+    }
+
     void Update()
     {
         if (shouldCameraMove)
