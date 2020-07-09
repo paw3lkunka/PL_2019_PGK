@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 class LocationValidationException : System.Exception
 {
@@ -23,7 +21,7 @@ public class MapGenerator : MonoBehaviour
         ZAxisN = 0b1000,
     }
 
-    private class Cell
+    public class Cell
     {
         public Vector2 position;
         public Vector2 size;
@@ -60,6 +58,76 @@ public class MapGenerator : MonoBehaviour
             }
 
             throw new System.Exception("This should never happen.");
+        }
+    }
+    
+    [System.Serializable]
+    public class Grid
+    {
+        public List<Cell> Cells { get; private set; } = new List<Cell>();
+
+        /// <summary>
+        /// Size of grid cells
+        /// </summary>
+        public Vector2Int CellsNumber = new Vector2Int(20, 20);
+
+        /// <summary>
+        /// Size of single cell
+        /// </summary>
+        public Vector2 NearCellSize = new Vector2(100, 100);
+
+        public Vector2 FarCellSize = new Vector2(150, 150);
+
+        public Vector2 CentralIndex { get => (CellsNumber - Vector2.one) / 2.0f; }
+
+        public void Validate()
+        {
+            CellsNumber = Vector2Int.Max(CellsNumber, Vector2Int.one);
+            NearCellSize = Vector2.Max(NearCellSize, Vector2.zero);
+            FarCellSize = Vector2.Max(FarCellSize, Vector2.zero);
+        }
+
+        public void Generate(Vector3 position, Cut cuttingSettings)
+        {
+            Cells.Clear();
+
+            Vector3 newPos = position;
+            Vector2 cellSize = FarCellSize;
+
+            for (int i = 0; i < CellsNumber.x; i++)
+            {
+                newPos.z = position.z;
+
+                newPos.x += cellSize.x / 2;
+                cellSize.x = Mathf.Lerp(NearCellSize.x, FarCellSize.x, Mathf.Abs(CentralIndex.x - i) / CentralIndex.x);
+                newPos.x += cellSize.x / 2;
+
+                for (int j = 0; j < CellsNumber.y; j++)
+                {
+                    newPos.z += cellSize.y / 2;
+                    cellSize.y = Mathf.Lerp(NearCellSize.y, FarCellSize.y, Mathf.Abs(CentralIndex.y - j) / CentralIndex.y);
+                    newPos.z += cellSize.y / 2;
+
+                    if (!ShouldBeCutOff(cuttingSettings, i, j))
+                    {
+                        Cells.Add(new Cell(newPos, cellSize));
+                    }
+                }
+            }
+
+            // Fix position
+            foreach (var cell in Cells)
+            {
+                cell.Position3 -= (new Vector3(FarCellSize.x, 0, FarCellSize.y) + Cells.Last().Position3 - position) / 2;
+            }
+        }
+
+        private bool ShouldBeCutOff(Cut cuttingSettings, int x, int y)
+        {
+            return x * 2 > CellsNumber.x && (cuttingSettings & Cut.XAxisP) != 0
+                || x * 2 < CellsNumber.x && (cuttingSettings & Cut.XAxisN) != 0
+                || y * 2 > CellsNumber.y && (cuttingSettings & Cut.ZAxisP) != 0
+                || y * 2 < CellsNumber.y && (cuttingSettings & Cut.ZAxisN) != 0;
         }
     }
 
@@ -101,18 +169,30 @@ public class MapGenerator : MonoBehaviour
         private int range;
     }
 
-
-    List<Cell> cells = new List<Cell>();
+    [field: SerializeField] public Grid GeneralGrid { get; private set; }
+    [field: SerializeField] public Grid ShrinesGrid { get; private set; }
 
     private void OnDrawGizmos()
     {
-        foreach (var item in cells)
+        Color saveColor = Gizmos.color;
+        Gizmos.color = Color.black;
+        foreach (var item in ShrinesGrid.Cells)
         {
             for (int i = 0; i < 4; i++)
             {
                 Gizmos.DrawLine(item.Corner(i), item.Corner(i + 1));
             }
         }
+
+        Gizmos.color = Color.white;
+        foreach (var item in GeneralGrid.Cells)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Gizmos.DrawLine(item.Corner(i), item.Corner(i + 1));
+            }
+        }
+        Gizmos.color = saveColor;
     }
 
     #region Variables
@@ -124,19 +204,8 @@ public class MapGenerator : MonoBehaviour
 
     public int seed;
         
-    /// <summary>
-    /// Size of grid cells
-    /// </summary>
-    public Vector2Int cellsNumber = new Vector2Int(5, 5);
 
-    /// <summary>
-    /// Size of single cell
-    /// </summary>
-    public Vector2 nearCellSize = new Vector2(30, 30);
-
-    public Vector2 farCellSize = new Vector2(30, 30);
-    public Vector2 emptyCentreSize = Vector2.zero;
-
+    public Vector2 gEmptyCentreSize = new Vector2(120, 120);
     public Cut cuttingSettings = 0;
 
     public float scalingFactor = 1.0f;
@@ -159,14 +228,14 @@ public class MapGenerator : MonoBehaviour
     /// Chances of spawning objecton specific index in prefab array
     /// </summary>
     [HideInInspector] public List<int> locationSpawnChances = new List<int>();
+    [HideInInspector] public List<int> shrinesSpawnChances = new List<int>();
     [HideInInspector] public List<int> enviroSpawnChances = new List<int>();
 
     /// <summary>
     /// Gets location prefabs from prefab database without Application Manager
     /// </summary>
     public List<GameObject> Locations { get; private set; }
-
-
+    public List<GameObject> Shrines { get; private set; }
     public List<GameObject> Enviro { get; private set; }
 
     #endregion
@@ -211,19 +280,21 @@ public class MapGenerator : MonoBehaviour
     {
         Locations = new List<GameObject>();
         Locations.AddRange(PrefabDatabase.Load.stdLocations);
-        Locations.AddRange(PrefabDatabase.Load.shrines);
+
+        Shrines = new List<GameObject>();
+        Shrines.AddRange(PrefabDatabase.Load.shrines);
 
         Enviro = new List<GameObject>();
         Enviro.AddRange(PrefabDatabase.Load.enviro);
 
         locationSpawnChances.Resize(Locations.Count, 0);
+        shrinesSpawnChances.Resize(Locations.Count, 0);
         enviroSpawnChances.Resize(Enviro.Count, 0);
 
         ValidatePrefabs();
 
-        cellsNumber = Vector2Int.Max(cellsNumber, Vector2Int.one);
-        nearCellSize = Vector2.Max(nearCellSize, Vector2.zero);
-        farCellSize = Vector2.Max(farCellSize, Vector2.zero);
+        GeneralGrid.Validate();
+        ShrinesGrid.Validate();
     }
 
     [ContextMenu("Validate")]
@@ -263,41 +334,24 @@ public class MapGenerator : MonoBehaviour
         Random.InitState(seed);
 
         var locationRandomizer = new Roulette(Locations, locationSpawnChances, emptyChance);
+        var shrineRandomizer = new Roulette(Shrines, shrinesSpawnChances);
         var enviroRandomizer = new Roulette(Enviro, enviroSpawnChances);
-
-        cells.Clear();
-
-        Vector2 centralIndex = (cellsNumber - Vector2.one) / 2.0f;
-        Vector3 newPos = transform.position;
-        Vector2 cellSize = farCellSize;
 
         var locInstances = new Stack<GameObject>();
 
-        for (int i = 0; i < cellsNumber.x; i++)
+        GeneralGrid.Generate(transform.position, cuttingSettings);
+        ShrinesGrid.Generate(transform.position, cuttingSettings);
+
+
+
+        foreach (var cell in ShrinesGrid.Cells)
         {
-            newPos.z = transform.position.z;
 
-            newPos.x += cellSize.x / 2;
-            cellSize.x = Mathf.Lerp(nearCellSize.x, farCellSize.x, Mathf.Abs(centralIndex.x - i) / centralIndex.x);
-            newPos.x += cellSize.x / 2;
-
-            for (int j = 0; j < cellsNumber.y; j++)
-            {
-                newPos.z += cellSize.y / 2;                
-                cellSize.y = Mathf.Lerp(nearCellSize.y, farCellSize.y, Mathf.Abs(centralIndex.y - j) / centralIndex.y);
-                newPos.z += cellSize.y / 2;
-
-                if (!ShouldBeCutOff(i,j))
-                {
-                    cells.Add(new Cell(newPos, cellSize));
-                }
-            }
         }
 
-        foreach (var cell in cells)
+
+        foreach (var cell in GeneralGrid.Cells)
         {
-            // Fix position
-            cell.Position3 -= (new Vector3(farCellSize.x, 0, farCellSize.y) + newPos - transform.position) / 2;
 #if UNITY_EDITOR
             var maxOffset = (cell.size - Vector2.one * FindObjectOfType<GameplayManager>().lastLocationRadius) / 2.0f;
 #else
@@ -323,7 +377,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        foreach (var cell in cells)
+        foreach (var cell in GeneralGrid.Cells)
         {
             int envObjects = Random.Range(enviroObjectsInCell.x, enviroObjectsInCell.y + 1);
 
@@ -352,7 +406,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        if (!Mathf.Approximately(emptyCentreSize.magnitude, 0.0f))
+        if (!Mathf.Approximately(gEmptyCentreSize.magnitude, 0.0f))
         {
             FreeCentre();
         }
@@ -381,8 +435,8 @@ public class MapGenerator : MonoBehaviour
         {
             Transform child = transform.GetChild(i);
 
-            if (Mathf.Abs(child.position.x - transform.position.x) < emptyCentreSize.x / 2.0f
-             && Mathf.Abs(child.position.z - transform.position.z) < emptyCentreSize.y / 2.0f)
+            if (Mathf.Abs(child.position.x - transform.position.x) < gEmptyCentreSize.x / 2.0f
+             && Mathf.Abs(child.position.z - transform.position.z) < gEmptyCentreSize.y / 2.0f)
             {
                 if (child.GetComponent<EnviroObstacle>())
                 {
@@ -394,14 +448,6 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-    }
-
-    private bool ShouldBeCutOff(int x, int y)
-    {
-        return x * 2 > cellsNumber.x && (cuttingSettings & Cut.XAxisP) != 0
-            || x * 2 < cellsNumber.x && (cuttingSettings & Cut.XAxisN) != 0
-            || y * 2 > cellsNumber.y && (cuttingSettings & Cut.ZAxisP) != 0
-            || y * 2 < cellsNumber.y && (cuttingSettings & Cut.ZAxisN) != 0;
     }
 
     private bool EnvIntersectionTest(GameObject envObject, IEnumerable<GameObject> locInstances)

@@ -10,7 +10,6 @@ public class MapGeneratorEditor : Editor
     GUIStyle validationLogStyle = new GUIStyle();
 
     private bool showSpawnChances;
-    private bool showOccurrences;
 
     public override VisualElement CreateInspectorGUI()
     {
@@ -64,56 +63,41 @@ public class MapGeneratorEditor : Editor
             EditorGUI.indentLevel++;
             {
                 GUILayout.Label("Locations:", EditorStyles.boldLabel);
+                    DrawSpawnChances(generator.Locations, generator.locationSpawnChances);
+                    EditorGUILayout.Space();
+                
+                    generator.emptyChance = EditorGUILayout.IntField("empty cell", generator.emptyChance);
 
-                int index = 0;
-                foreach (GameObject prefab in generator.Locations)
-                {
-                    if (index == PrefabDatabase.Load.stdLocations.Count)
-                    {
-                        EditorGUILayout.Space();
-                    }
+                GUILayout.Label("Shrines:", EditorStyles.boldLabel);
+                    DrawSpawnChances(generator.Shrines, generator.shrinesSpawnChances);
 
-                    var location = prefab.GetComponent<Location>();
-                    int value;
-                    try
-                    {
-                        value = generator.locationSpawnChances[index];
-                    }
-                    catch
-                    {
-                        value = 0;
-                    }
-                    int newValue = EditorGUILayout.IntField(prefab.name, value);
-                    generator.locationSpawnChances[index] = newValue > 0 ? newValue : 0;
-                    index++;
-                }
-                EditorGUILayout.Space();
-                generator.emptyChance = EditorGUILayout.IntField("empty cell", generator.emptyChance);
-
-                EditorGUILayout.Space();
                 GUILayout.Label("Enviro:", EditorStyles.boldLabel);
-
-                index = 0;
-                foreach (GameObject prefab in generator.Enviro)
-                {
-                    var location = prefab.GetComponent<EnviroObject>();
-                    int value;
-                    try
-                    {
-                        value = generator.enviroSpawnChances[index];
-                    }
-                    catch
-                    {
-                        value = 0;
-                    }
-                    int newValue = EditorGUILayout.IntField(prefab.name, value);
-                    generator.enviroSpawnChances[index] = newValue > 0 ? newValue : 0;
-                    index++;
-                }
+                    DrawSpawnChances(generator.Enviro, generator.enviroSpawnChances);
 
                 EditorUtility.SetDirty(target);
             }
             EditorGUI.indentLevel--;
+        }
+    }
+
+    private void DrawSpawnChances(IList<GameObject> prefabs, IList<int> chances)
+    {
+        int index = 0;
+        foreach (GameObject prefab in prefabs)
+        {
+            var location = prefab.GetComponent<EnviroObject>();
+            int value;
+            try
+            {
+                value = chances[index];
+            }
+            catch
+            {
+                value = 0;
+            }
+            int newValue = EditorGUILayout.IntField(prefab.name, value);
+            chances[index] = newValue > 0 ? newValue : 0;
+            index++;
         }
     }
 }
