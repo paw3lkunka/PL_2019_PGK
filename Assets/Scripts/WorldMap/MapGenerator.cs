@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using UnityEngine;
 
 class LocationValidationException : System.Exception
@@ -346,35 +347,13 @@ public class MapGenerator : MonoBehaviour
 
         foreach (var cell in ShrinesGrid.Cells)
         {
-
+            GenerateObject(cell, shrineRandomizer, locInstances, true, true);
         }
 
 
         foreach (var cell in GeneralGrid.Cells)
         {
-#if UNITY_EDITOR
-            var maxOffset = (cell.size - Vector2.one * FindObjectOfType<GameplayManager>().lastLocationRadius) / 2.0f;
-#else
-            var maxOffset = (cell.size - Vector2.one * GameplayManager.Instance.lastLocationRadius ) / 2.0f;
-#endif
-            GameObject locPrefab = locationRandomizer.RandomizePrefab();
-
-            if (locPrefab)
-            {
-                var locationPosition = new Vector3
-                (
-                    cell.position.x + Random.Range(-maxOffset.x, maxOffset.x),
-                    locPrefab.transform.position.y,
-                    cell.position.y + Random.Range(-maxOffset.y, maxOffset.y)
-                );
-
-                locInstances.Push(Instantiate(locPrefab, locationPosition, Quaternion.identity, transform));
-                locInstances.Peek().transform.localScale *= scalingFactor;
-                var loc = locInstances.Peek().GetComponent<Location>();
-
-                loc.id = loc.transform.position.GetHashCode();
-                loc.generatedBy = this;
-            }
+            GenerateObject(cell, locationRandomizer, locInstances, true, true);
         }
 
         foreach (var cell in GeneralGrid.Cells)
@@ -383,26 +362,7 @@ public class MapGenerator : MonoBehaviour
 
             for (int k = 0; k < envObjects; k++)
             {
-                GameObject envPrefab = enviroRandomizer.RandomizePrefab();
-
-                var envPosition = new Vector3
-                (
-                    cell.position.x + Random.Range(cell.size.x / -2, cell.size.x / 2),
-                    envPrefab.transform.position.y,
-                    cell.position.y + Random.Range(cell.size.y / -2, cell.size.y / 2)
-                );
-
-                var envObject = Instantiate(envPrefab, envPosition, Quaternion.identity, transform);
-
-                if (EnvIntersectionTest(envObject, locInstances))
-                {
-                    envObject.transform.localScale *= scalingFactor;
-                    envObject.GetComponent<EnviroObject>().Randomize();
-                }
-                else
-                {
-                    SGUtils.SafeDestroy(envObject);
-                }
+                GenerateObject(cell, enviroRandomizer, locInstances, false, false);
             }
         }
 
@@ -429,6 +389,65 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    void GenerateObject(Cell cell, Roulette randomizer, Stack<GameObject> instances, bool limitOffset, bool addToInstances)
+    {
+        Vector2 maxOffset;
+
+        if (limitOffset)
+        {
+#           if UNITY_EDITOR
+                maxOffset = (cell.size - Vector2.one * FindObjectOfType<GameplayManager>().lastLocationRadius) / 2.0f;
+#           else
+                maxOffset = (cell.size - Vector2.one * GameplayManager.Instance.lastLocationRadius ) / 2.0f;
+#           endif
+        }
+        else
+        {
+            maxOffset = cell.size / 2.0f;
+        }
+
+        GameObject prefab = randomizer.RandomizePrefab();
+
+        if (prefab)
+        {
+            var locationPosition = new Vector3
+            (
+                cell.position.x + Random.Range(-maxOffset.x, maxOffset.x),
+                prefab.transform.position.y,
+                cell.position.y + Random.Range(-maxOffset.y, maxOffset.y)
+            );
+
+            var instance = Instantiate(prefab, locationPosition, Quaternion.identity, transform);
+
+            if (IntersectionTest(instance, instances))
+            {
+
+                if (addToInstances)
+                {
+                    instances.Push(instance);
+                }
+
+                instance.transform.localScale *= scalingFactor;
+
+                if (instance.TryGetComponent(out Location loc))
+                {
+                    loc.id = loc.transform.position.GetHashCode();
+                    loc.generatedBy = this;
+
+                }
+                if (instance.TryGetComponent(out EnviroObject env))
+                {
+                    env.Randomize();
+                }
+            }
+            else
+            {
+                SGUtils.SafeDestroy(instance);
+            }
+
+        }
+    }
+
     private void FreeCentre()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -450,7 +469,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private bool EnvIntersectionTest(GameObject envObject, IEnumerable<GameObject> locInstances)
+    private bool IntersectionTest(GameObject envObject, IEnumerable<GameObject> locInstances)
     {
         foreach (GameObject instance in locInstances)
         {
