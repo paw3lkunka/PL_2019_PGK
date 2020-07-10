@@ -55,7 +55,12 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     // * ===== Gameplay progress statistics =========================
 
-    public uint shrinesToVisit = 3;
+    public uint shrinesToVisit = 3u;
+
+    public HashSet<int> visitedObelisksIds = new HashSet<int>();
+    public int markedShrineId = default;
+    public bool obeliskActivated = false;
+
     public HashSet<int> visitedShrinesIds = new HashSet<int>();
 
     public bool leaderIsDead = false;
@@ -181,6 +186,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         faith.Set(faith.InitialValue);
         faithPercentLastFrame = 0.5f;
         visitedShrinesIds.Clear();
+        visitedObelisksIds.Clear();
     }
 
     public void EnterLocation(Location location)
@@ -220,6 +226,16 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public void MarkLastLocationAsVisitedShrine()
     {
         visitedShrinesIds.Add(lastLocationId);
+        if(lastLocationId == markedShrineId)
+        {
+            markedShrineId = default;
+        }
+    }
+
+    public void MarkLastLocationAsVisitedObelisk()
+    {
+        visitedObelisksIds.Add(lastLocationId);
+        obeliskActivated = true;
     }
 
     #endregion
