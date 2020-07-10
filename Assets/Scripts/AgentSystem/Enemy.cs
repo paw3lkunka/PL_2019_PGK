@@ -88,6 +88,9 @@ public class Enemy : MonoBehaviour
             enabled = false;
             behaviour.enabled = false;
 
+            // HACK: Simple way to show that an enemy is stunned
+            GetComponentInChildren<MeshRenderer>().material.SetColor("_Color", Color.green);
+
             IEnumerator Routine()
             {
                 float bps = (float)AudioTimeline.Instance.SongBpm / 60.0f;
@@ -103,6 +106,8 @@ public class Enemy : MonoBehaviour
 
     public void ExitStun()
     {
+        // HACK: Simple way to show that an enemy is stunned
+        GetComponentInChildren<MeshRenderer>().material.SetColor("_Color", Color.white);
         enabled = true;
         behaviour.enabled = true;
     }
