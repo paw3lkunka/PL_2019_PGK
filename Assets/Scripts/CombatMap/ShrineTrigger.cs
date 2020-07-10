@@ -20,6 +20,7 @@ public class ShrineTrigger : MonoBehaviour
         if (other.CompareTag("Leader"))
         {
             GameplayManager.Instance.MarkLastLocationAsVisitedShrine();
+            GameplayManager.Instance.obeliskActivated = false;
             meshRenderer.sharedMaterial = activeMat;
         }
     }

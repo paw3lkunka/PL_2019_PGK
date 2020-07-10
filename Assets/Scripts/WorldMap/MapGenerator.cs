@@ -239,6 +239,8 @@ public class MapGenerator : MonoBehaviour
     public List<GameObject> Shrines { get; private set; }
     public List<GameObject> Enviro { get; private set; }
 
+    private int nextId;
+
     #endregion
 
     #region MonoBehaviour
@@ -327,6 +329,8 @@ public class MapGenerator : MonoBehaviour
     [ContextMenu("Generate")]
     public void Generate()
     {
+        nextId = 1;
+
         if (!useCustomSeed)
         {
             seed = Random.Range(int.MinValue, int.MaxValue);
@@ -427,7 +431,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (instance.TryGetComponent(out Location loc))
                 {
-                    loc.id = loc.transform.position.GetHashCode();
+                    loc.id = nextId++;
                     loc.generatedBy = this;
                 }
 
