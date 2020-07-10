@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 /// <summary>
 /// Keeps scene specific configuration for world map
@@ -47,6 +47,8 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         mapGenerator.useCustomSeed = true;
         mapGenerator.Generate();
 
+        MarkShrine();
+
         UIOverlayManager.Instance?.ControlsSheet.Clear();
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Choose destination");
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Pause, "Pause menu");
@@ -67,5 +69,33 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         CanEnterLocations = false;
         yield return new WaitForSeconds(delay);
         CanEnterLocations = true;
+    }
+
+    private void MarkShrine()
+    {
+        if(GameplayManager.Instance.obeliskActivated && GameplayManager.Instance.markedShrineId == default)
+        {
+            var shrines = GameObject.FindGameObjectsWithTag("Shrine").Where((obj) => !GameplayManager.Instance.visitedShrinesIds.Contains(obj.GetComponent<Location>().id));
+
+            float nearestDistance = float.PositiveInfinity;
+            GameObject nearestLocation = null;
+
+            foreach(var shrine in shrines)
+            {
+                var dist = Vector3.Distance(shrine.transform.position, GameplayManager.Instance.lastLocationPosition);
+                if( dist < nearestDistance)
+                {
+                    nearestDistance = dist;
+                    nearestLocation = shrine;
+                }
+            }
+            GameplayManager.Instance.markedShrineId = nearestLocation.GetComponent<Location>().id;
+        }
+
+        if(GameplayManager.Instance.markedShrineId != default)
+        {
+            var shrine = GameObject.FindGameObjectsWithTag("Shrine").Where((obj) => obj.GetComponent<Location>().id == GameplayManager.Instance.markedShrineId).First();
+            Instantiate(ApplicationManager.Instance.PrefabDatabase.shrineMarker, shrine.transform.position, Quaternion.identity);
+        }
     }
 }

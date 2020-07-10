@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 5765202025432478942}
   - component: {fileID: 5765202025432478929}
   - component: {fileID: 5765202025432478928}
+  - component: {fileID: 8866179339023502363}
   m_Layer: 14
   m_Name: Faith Source
   m_TagString: Untagged
@@ -263,3 +264,15 @@ MonoBehaviour:
   resourceAmount: 10
   emissionAmount: 1
   frequency: 0.5
+--- !u!114 &8866179339023502363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5765202025432478931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d0a4cf5be19924fa5d9cf3e5507fb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

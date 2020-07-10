@@ -46,6 +46,7 @@ public class PrefabDatabase : ScriptableObject
     public List<GameObject> stdLocations;
     public List<GameObject> shrines;
     public List<GameObject> enviro;
+    public GameObject shrineMarker;
 
     public static PrefabDatabase Load {get => Resources.Load("PrefabDatabase") as PrefabDatabase;}
 }

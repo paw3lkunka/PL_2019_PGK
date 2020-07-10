@@ -26,6 +26,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     [SerializeField] private int failedBeatResetOffset = 4;
     public double SongBpm => songBpm;
     public int BeatsPerBar => beatsPerBar;
+    public int FailedBeatResetOffset => failedBeatResetOffset;
 #pragma warning restore
 
     public TimelineState TimelineState { get; private set; } = TimelineState.None;

@@ -28,12 +28,10 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         AudioTimeline.Instance.OnBeatFail += EnterStun;
-        AudioTimeline.Instance.OnCountupEnd += ExitStun;
     }
     private void OnDestroy()
     {
         AudioTimeline.Instance.OnBeatFail -= EnterStun;
-        AudioTimeline.Instance.OnCountupEnd -= ExitStun;
     }
 
     private void FixedUpdate()
@@ -89,6 +87,17 @@ public class Enemy : MonoBehaviour
 
             enabled = false;
             behaviour.enabled = false;
+
+            IEnumerator Routine()
+            {
+                float bps = (float)AudioTimeline.Instance.SongBpm / 60.0f;
+                int beats = AudioTimeline.Instance.FailedBeatResetOffset + AudioTimeline.Instance.BeatsPerBar;
+
+                yield return new WaitForSeconds(beats / bps);
+                ExitStun();
+            }
+
+            StartCoroutine(Routine());
         }
     }
 
