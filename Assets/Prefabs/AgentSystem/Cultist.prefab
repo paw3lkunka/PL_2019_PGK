@@ -96,6 +96,7 @@ MonoBehaviour:
   threshold: 0.005
   frames: 13
   animationSpeed: 5
+  rotationOffset: 0
   up: {fileID: 2100000, guid: 4b245544a59c4c940b916664dd42347e, type: 2}
   down: {fileID: 2100000, guid: d23ab81fd5e52a14d80edbc3b5353f32, type: 2}
   useNegativeScale: 0
@@ -241,10 +242,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flags: 1
   <DamageMultiplier>k__BackingField: 0.25
-  <RangeMultiplier>k__BackingField: 2
+  <RangeMultiplier>k__BackingField: 1.5
   <IntervalMultiplier>k__BackingField: 0.25
   <DamageBoost>k__BackingField: 0.75
-  <RangeBoost>k__BackingField: 4
+  <RangeBoost>k__BackingField: 2
   <RangeMultiplierBoost>k__BackingField: 0.125
   <IsBoosted>k__BackingField: 0
 --- !u!114 &7425834142536354765
