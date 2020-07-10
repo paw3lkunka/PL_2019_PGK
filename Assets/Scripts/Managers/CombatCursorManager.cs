@@ -82,7 +82,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 #region PrivateManagerMethods
     private void InitializeCursor()
     {
-        Cursor.visible = false;
+        //Cursor.visible = false;
         MainCursor = Instantiate(   ApplicationManager.Instance.PrefabDatabase.cursorPrefab, 
                                         new Vector3(0.0f, 0.0f, 0.0f), 
                                         Quaternion.identity);

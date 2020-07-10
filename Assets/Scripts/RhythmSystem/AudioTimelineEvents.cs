@@ -90,18 +90,17 @@ public partial class AudioTimeline
         TimelineState = TimelineState.Paused;
         this.keepCombo = keepCombo;
 
-        Time.timeScale = 0;
-        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.pauseGUI, PushBehaviour.Lock);
-
         // Save beat moment variables
         pauseMoment = AudioSettings.dspTime;
         OnSequencePause?.Invoke(keepCombo);
+
+        GameplayManager.Instance.PauseGame();
     }
 
     private void SequenceResumeHandler()
     {
+        GameplayManager.Instance.ResumeGame();
         pauseCounter = 0;
-        Time.timeScale = 1;
         
         for (int i = 0; i < barBeatStates.Length; i++)
         {

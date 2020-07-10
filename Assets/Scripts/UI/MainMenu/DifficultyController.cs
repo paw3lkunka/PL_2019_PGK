@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DifficultyController : MonoBehaviour
 {
-    public bool SkipTutorial { get; set; }
-    public bool EnableCheats { get; set; }
-    public bool DebugScene { get; set; }
+    public bool SkipTutorial { get; set; } = true;
+    public bool EnableCheats { get; set; } = false;
+    public bool DebugScene { get; set; } = false;
 
     public void Easy()
     {

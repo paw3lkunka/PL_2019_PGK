@@ -127,8 +127,6 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
 
     public void StartGame(GameMode mode, Difficulty difficulty)
     {
-        
-
         SetDifficulty(difficulty);
         switch(mode)
         {

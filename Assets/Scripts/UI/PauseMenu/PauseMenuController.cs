@@ -6,9 +6,14 @@ public class PauseMenuController : MonoBehaviour
 {
     public void Continue()
     {
-        Time.timeScale = 1.0f;
-        AudioTimeline.Instance.Resume();
-        UIOverlayManager.Instance.PopFromCanvas();
+        if (AudioTimeline.Instance)
+        {
+            AudioTimeline.Instance.Resume();
+        }
+        else
+        {
+            GameplayManager.Instance.ResumeGame();
+        }
     }
 
     public void Options()

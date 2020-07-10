@@ -48,10 +48,13 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     public float faithBoost = 2.0f;
 
+    // * ===== Pause handling =======================================
+
+    public bool IsPaused { get; private set; }
+
     // * ===== Scene persistent crew ================================
 
     public List<CultistEntityInfo> cultistInfos;
-
 
     // * ===== Gameplay progress statistics =========================
 
@@ -205,7 +208,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         OnLocationExitInvoke();
         SceneManager.LoadScene(ApplicationManager.Instance.worldMapScene);
-        Cursor.visible = true;
     }
 
     public void FaithBoostOn()
@@ -236,6 +238,32 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         visitedObelisksIds.Add(lastLocationId);
         obeliskActivated = true;
+    }
+
+    public void PauseGame()
+    {
+        UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.pauseGUI, PushBehaviour.Lock);
+        IsPaused = true;
+        Time.timeScale = 0.0f;
+    }
+
+    public void ResumeGame()
+    {
+        UIOverlayManager.Instance.PopFromCanvas();
+        IsPaused = false;
+        Time.timeScale = 1.0f;
+    }
+
+    public void TogglePause()
+    {
+        if (IsPaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
+        }
     }
 
     #endregion
