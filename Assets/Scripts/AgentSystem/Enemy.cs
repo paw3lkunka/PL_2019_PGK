@@ -90,7 +90,10 @@ public class Enemy : MonoBehaviour
 
             IEnumerator Routine()
             {
-                yield return new WaitForSeconds(1);
+                float bps = (float)AudioTimeline.Instance.SongBpm / 60.0f;
+                int beats = AudioTimeline.Instance.FailedBeatResetOffset + AudioTimeline.Instance.BeatsPerBar;
+
+                yield return new WaitForSeconds(beats / bps);
                 ExitStun();
             }
 
