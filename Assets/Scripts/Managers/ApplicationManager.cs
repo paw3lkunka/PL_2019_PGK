@@ -26,6 +26,7 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
 
     [Header("Scene configuration")] // * =====================================
     public string menuScene;
+    public string introScene;
     public string worldMapScene;
     public string tutorialScene;
     public string endScene;
@@ -137,7 +138,8 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
 
             case GameMode.Normal:
                 // Load appropriate scene
-                SceneManager.LoadScene(skipTutorial ? worldMapScene : tutorialScene);
+                SceneManager.LoadScene(introScene);
+                //SceneManager.LoadScene(skipTutorial ? worldMapScene : tutorialScene);
                 break;
         }
     }
