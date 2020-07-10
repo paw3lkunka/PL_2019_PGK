@@ -36,7 +36,7 @@ public class WorldMapCursor : MonoBehaviour
         if (ApplicationManager.Instance.CurrentInputScheme == InputSchemeEnum.MouseKeyboard)
         {
             Vector3 pos = default; 
-            if (SGUtils.CameraToGrounRaycast(Camera.main, 1000, ref pos))
+            if (SGUtils.CameraToGroundRaycast(Camera.main, 1000, ref pos))
             {
                 WorldSceneManager.Instance.Cursor.transform.position = pos;
             }

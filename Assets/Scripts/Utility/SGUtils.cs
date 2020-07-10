@@ -20,7 +20,7 @@ public static class SGUtils
             }
     }
 
-    public static bool CameraToGrounRaycast(Camera camera, float distance, ref Vector3 vec)
+    public static bool CameraToGroundRaycast(Camera camera, float distance, ref Vector3 vec)
     {
         var inputValue = Mouse.current.position.ReadValue();
         var ray = camera.ScreenPointToRay(inputValue);
@@ -35,6 +35,29 @@ public static class SGUtils
             }
         }
         return false;
+    }
+
+    public static bool CameraToGroundNearestRaycast(Camera camera, float distance, ref Vector3 vec)
+    {
+        var inputValue = Mouse.current.position.ReadValue();
+        var ray = camera.ScreenPointToRay(inputValue);
+
+        float nearestDistance = float.MaxValue;
+        bool wasHit = false;
+        foreach (var hit in Physics.RaycastAll(ray, distance))
+        {
+            // TODO: replace tag with layer mask
+            if (hit.collider.CompareTag("Ground"))
+            {
+                if (hit.distance < nearestDistance)
+                {
+                    nearestDistance = hit.distance;
+                    vec = hit.point;
+                    wasHit = true;
+                }
+            }
+        }
+        return wasHit;
     }
 
     public static void DrawNavLine(LineRenderer lineRenderer, Vector3 from, Vector3 to, out float length)

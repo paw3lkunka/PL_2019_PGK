@@ -93,7 +93,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     private void MoveCursorPointer()
     {
         Vector3 pos = default;
-        if (SGUtils.CameraToGrounRaycast(Camera.main, 1000, ref pos))
+        if (SGUtils.CameraToGroundNearestRaycast(Camera.main, 1000, ref pos))
         {
             MainCursor.transform.position = pos;
         }

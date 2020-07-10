@@ -11,7 +11,6 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 {
     [Header("Base config")]
     public LocationMode sceneMode;
-    public Transform startPoint;
     public List<Damageable> enemies;
     public List<Damageable> ourCrew;
     public CultLeader cultLeader;
@@ -153,15 +152,6 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
             }
 
             StartCoroutine(Routine());
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        if (startPoint)
-        {
-            Gizmos.DrawSphere(startPoint.position, .2f);
         }
     }
 
