@@ -543,6 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1185bc272891042b8a30d12edb70e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _persistent: 1
   songBpm: 90
   beatsPerBar: 4
   failedBeatResetOffset: 4
@@ -558,6 +559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1215e3610c0437a45a432452fef71902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _persistent: 1
   countBeats: 1
   rhythmMechanicsUI: {fileID: 1838188561580660766, guid: f75feb32107d83245857d49b7b1d816f,
     type: 3}
@@ -735,7 +737,7 @@ MonoBehaviour:
   goodBeatHitSound: {fileID: 8300000, guid: 54838bd010c23834586adde8665091c7, type: 3}
   greatBeatHitSound: {fileID: 8300000, guid: 54838bd010c23834586adde8665091c7, type: 3}
   badBeatHitSound: {fileID: 0}
-  failSound: {fileID: 8300000, guid: e38151e5a8450a845b97b9259e6a5ac3, type: 3}
+  failSound: {fileID: 8300000, guid: ee299a129fd7bd34299d40e345c51c27, type: 3}
 --- !u!82 &4482779335140122505
 AudioSource:
   m_ObjectHideFlags: 0
