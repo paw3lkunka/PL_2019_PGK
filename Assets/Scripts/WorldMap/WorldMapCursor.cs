@@ -33,28 +33,31 @@ public class WorldMapCursor : MonoBehaviour
 
     private void Update()
     {
-        if (ApplicationManager.Instance.CurrentInputScheme == InputSchemeEnum.MouseKeyboard)
+        if(!GameplayManager.Instance.IsPaused)
         {
-            Vector3 pos = default; 
-            if (SGUtils.CameraToGroundRaycast(Camera.main, 1000, ref pos))
+            if (ApplicationManager.Instance.CurrentInputScheme == InputSchemeEnum.MouseKeyboard)
             {
-                WorldSceneManager.Instance.Cursor.transform.position = pos;
+                Vector3 pos = default; 
+                if (SGUtils.CameraToGroundRaycast(Camera.main, 1000, ref pos))
+                {
+                    WorldSceneManager.Instance.Cursor.transform.position = pos;
+                }
             }
+
+            SGUtils.DrawNavLine
+            (
+                lineRenderer,
+                WorldSceneManager.Instance.Leader.transform.position,
+                WorldSceneManager.Instance.Cursor.transform.position,
+                out float pathLength
+            );
+
+            float speed = WorldSceneManager.Instance.Leader.GetComponent<NavMeshAgent>().speed;
+            WorldSceneManager.Instance.ResUseIndicator.Water = CalculateUsage(speed, pathLength, WorldSceneManager.Instance.ResourceDepleter.WaterDepletionRate);
+
+            WorldSceneManager.Instance.ResUseIndicator.Faith = CalculateUsage(speed, pathLength, WorldSceneManager.Instance.ResourceDepleter.FaithDepletionRate * GameplayManager.Instance.cultistInfos.Count);
+            WorldSceneManager.Instance.ResUseIndicator.transform.position = Camera.main.WorldToScreenPoint(transform.position);
         }
-
-        SGUtils.DrawNavLine
-        (
-            lineRenderer,
-            WorldSceneManager.Instance.Leader.transform.position,
-            WorldSceneManager.Instance.Cursor.transform.position,
-            out float pathLength
-        );
-
-        float speed = WorldSceneManager.Instance.Leader.GetComponent<NavMeshAgent>().speed;
-        WorldSceneManager.Instance.ResUseIndicator.Water = CalculateUsage(speed, pathLength, WorldSceneManager.Instance.ResourceDepleter.WaterDepletionRate);
-
-        WorldSceneManager.Instance.ResUseIndicator.Faith = CalculateUsage(speed, pathLength, WorldSceneManager.Instance.ResourceDepleter.FaithDepletionRate * GameplayManager.Instance.cultistInfos.Count);
-        WorldSceneManager.Instance.ResUseIndicator.transform.position = Camera.main.WorldToScreenPoint(transform.position);
     }
 
     void CursorPositionChanged(InputAction.CallbackContext context)
