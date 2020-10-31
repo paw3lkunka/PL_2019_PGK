@@ -555,8 +555,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690717982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1000, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 300, z: 450}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 500, y: 1, z: 500}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 14
@@ -925,6 +925,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5494237823252177189, guid: 6a44ec3e6a974f242aecd0a50374a97d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384036241320810873, guid: 6a44ec3e6a974f242aecd0a50374a97d,
         type: 3}
@@ -1329,6 +1334,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5494237823252177189, guid: 6a44ec3e6a974f242aecd0a50374a97d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384036241320810873, guid: 6a44ec3e6a974f242aecd0a50374a97d,
         type: 3}
@@ -1746,7 +1756,7 @@ PrefabInstance:
     - target: {fileID: 6205803352902423027, guid: e1e31e6be9ba28f498b22b7d15d08b17,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6205803352902423027, guid: e1e31e6be9ba28f498b22b7d15d08b17,
         type: 3}
@@ -2237,6 +2247,11 @@ PrefabInstance:
       propertyPath: gEmptyCentreSize.y
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 8614273931205973246, guid: 06475706884b58947b49e9c2a0fc9e5f,
+        type: 3}
+      propertyPath: cuttingSettings
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8614273931205973247, guid: 06475706884b58947b49e9c2a0fc9e5f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2405,6 +2420,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5494237823252177189, guid: 6a44ec3e6a974f242aecd0a50374a97d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384036241320810873, guid: 6a44ec3e6a974f242aecd0a50374a97d,
         type: 3}
