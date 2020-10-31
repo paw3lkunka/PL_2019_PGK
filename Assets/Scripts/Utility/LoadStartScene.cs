@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadMainScene : MonoBehaviour
+public class LoadStartScene : MonoBehaviour
 {
-    public void MainScene()
+    public void StartScene()
     {
-        SceneManager.LoadScene(ApplicationManager.Instance.worldMapScene);
+        SceneManager.LoadScene(ApplicationManager.Instance.tutorialScene);
     }
 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            MainScene();
+            StartScene();
         }
     }
 }
