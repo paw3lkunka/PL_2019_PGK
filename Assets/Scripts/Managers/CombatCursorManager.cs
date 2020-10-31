@@ -55,25 +55,28 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
     private void Update() 
     {
-        switch (ApplicationManager.Instance.CurrentInputScheme)
+        if(!GameplayManager.Instance.IsPaused)
         {
-            case InputSchemeEnum.MouseKeyboard:
-                MoveCursorPointer();
-                break;
+            switch (ApplicationManager.Instance.CurrentInputScheme)
+            {
+                case InputSchemeEnum.MouseKeyboard:
+                    MoveCursorPointer();
+                    break;
 
-            case InputSchemeEnum.Gamepad:
-                MoveCursorGamepad();
-                break;
+                case InputSchemeEnum.Gamepad:
+                    MoveCursorGamepad();
+                    break;
 
-            case InputSchemeEnum.JoystickKeyboard:
-                MoveCursorJoystick();
-                break;
+                case InputSchemeEnum.JoystickKeyboard:
+                    MoveCursorJoystick();
+                    break;
 
-            case InputSchemeEnum.Touchscreen:
-                break;
+                case InputSchemeEnum.Touchscreen:
+                    break;
+            }
+
+            // TODO: Cursor fade on distance to cult leader
         }
-
-        // TODO: Cursor fade on distance to cult leader
     }
 
 #endregion
