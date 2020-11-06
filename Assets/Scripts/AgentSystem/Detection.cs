@@ -58,7 +58,9 @@ public class Detection : MonoBehaviour
 
     public float detectionHalfAngle = 181.0f;
 
-    public bool includeRaycastTest = false; 
+    public bool includeRaycastTest = false;
+
+    private int raycastLayerMask;
 
 #if UNITY_EDITOR
     [Tooltip("Show range sphere gizmo in editor")]
@@ -221,7 +223,7 @@ public class Detection : MonoBehaviour
         {
             if (includeRaycastTest)
             {
-                Physics.Raycast(transform.position, vectorToEnemy, out RaycastHit hitInfo);
+                Physics.Raycast(transform.position, vectorToEnemy, out RaycastHit hitInfo, distance + 1.0f, raycastLayerMask);
 
                 return hitInfo.collider.gameObject == enemy.gameObject;
             }
@@ -240,10 +242,12 @@ public class Detection : MonoBehaviour
         if (gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
         {
             enemies = LocationManager.Instance.enemies;
+            raycastLayerMask = LayerMask.GetMask("Obstacles", "Enemies");
         }
         else if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
         {
             enemies = LocationManager.Instance.ourCrew;
+            raycastLayerMask = LayerMask.GetMask("Obstacles", "PlayerCrew");
         }
         else
         {
