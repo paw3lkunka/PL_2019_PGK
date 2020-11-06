@@ -26,7 +26,7 @@ public class Detection : MonoBehaviour
         /// <summary>
         /// Returns random target from detection range.
         /// </summary>
-        random, // TODO not implemented
+        random,
         /// <summary>
         /// Returns nearest target in detection range.
         /// </summary>
@@ -57,6 +57,8 @@ public class Detection : MonoBehaviour
     public Vector3 detectionDirection = Vector3.right;
 
     public float detectionHalfAngle = 181.0f;
+
+    public bool includeRaycastTest = false; 
 
 #if UNITY_EDITOR
     [Tooltip("Show range sphere gizmo in editor")]
@@ -107,11 +109,7 @@ public class Detection : MonoBehaviour
     {
         foreach (var enemy in enemies)
         {
-            var enemyVec = VectorTo(enemy);
-            float currDistance = enemyVec.magnitude;
-            float currAngle = AngleTo(enemyVec);
-
-            if (currDistance < DetectionRange)
+            if (IsDetected(enemy, out _))
             {
                 return enemy.transform.position;
             }
@@ -137,11 +135,7 @@ public class Detection : MonoBehaviour
 
         foreach (int i in order)
         {
-            var enemyVec = VectorTo(enemies[i]);
-            float currDistance = enemyVec.magnitude;
-            float currAngle = AngleTo(enemyVec);
-
-            if (IsInRange(currDistance, currAngle))
+            if (IsDetected(enemies[i], out _))
             {
                 return enemies[i].transform.position;
             }
@@ -155,11 +149,7 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            var enemyVec = VectorTo(enemy);
-            float currDistance = enemyVec.magnitude;
-            float currAngle = AngleTo(enemyVec);
-
-            if (currDistance < distance && currAngle < detectionHalfAngle)
+            if (IsDetected(enemy, out float currDistance))
             {
                 distance = currDistance;
                 target = enemy.transform.position;
@@ -174,11 +164,7 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            var enemyVec = VectorTo(enemy);
-            float currDistance = enemyVec.magnitude;
-            float currAngle = AngleTo(enemyVec);
-
-            if (IsInRange(currDistance, currAngle))
+            if (IsDetected(enemy, out _))
             {
                 target = enemy.transform.position;
             }
@@ -192,11 +178,7 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            var enemyVec = VectorTo(enemy);
-            float currDistance = enemyVec.magnitude;
-            float currAngle = AngleTo(enemyVec);
-
-            if (IsInRange(currDistance, currAngle) && enemy.Health > hp)
+            if (IsDetected(enemy, out _) && enemy.Health > hp)
             {
                 hp = enemy.Health;
                 target = enemy.transform.position;
@@ -211,11 +193,7 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            var enemyVec = VectorTo(enemy);
-            float currDistance = enemyVec.magnitude;
-            float currAngle = AngleTo(enemyVec);
-
-            if (IsInRange(currDistance, currAngle) && enemy.Health < hp)
+            if (IsDetected(enemy, out _) && enemy.Health < hp)
             {
                 hp = enemy.Health;
                 target = enemy.transform.position;
@@ -231,11 +209,30 @@ public class Detection : MonoBehaviour
     }
     #endregion
 
-    private Vector3 VectorTo(Component enemy) => enemy.transform.position - transform.position;
 
-    private float AngleTo(Vector3 vectorToEnemy) => Mathf.Abs(Vector3.Angle(vectorToEnemy, detectionDirection));
+    private bool IsDetected(Component enemy, out float distance)
+    {
+        var vectorToEnemy = enemy.transform.position - transform.position;
+        var angleToEnemy = Mathf.Abs(Vector3.Angle(vectorToEnemy, detectionDirection));
 
-    private bool IsInRange(float distanceToEnemy, float angleToEnemy) => distanceToEnemy < DetectionRange && angleToEnemy < detectionHalfAngle;
+        distance = vectorToEnemy.magnitude;
+
+        if (distance < DetectionRange && angleToEnemy < detectionHalfAngle)
+        {
+            if (includeRaycastTest)
+            {
+                Physics.Raycast(transform.position, vectorToEnemy, out RaycastHit hitInfo);
+
+                return hitInfo.collider.gameObject == enemy.gameObject;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     #region MonoBehaviour
     private void Start()

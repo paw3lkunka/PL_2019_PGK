@@ -25,6 +25,8 @@ public class Cultist : MonoBehaviour
 
     private void AttackInDirection(InputAction.CallbackContext ctx)
     {
+        detection.detectionDirection = CombatCursorManager.Instance.shootDirection;
+
         if (RhythmMechanics.Instance.Combo > 0)
         {
             Vector3? detected = detection.Func();
@@ -32,9 +34,11 @@ public class Cultist : MonoBehaviour
             if (detected.HasValue)
             {
                 attack?.Attack(detected.Value);
+                Debug.Log("Shoot");
             }
             else
             {
+                Debug.Log("Dont shoot");
                 attack?.HoldFire();
             }
         }

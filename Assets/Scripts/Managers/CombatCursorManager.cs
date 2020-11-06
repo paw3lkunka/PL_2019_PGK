@@ -24,6 +24,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
     protected void Start()
     {
+        InitShootTargetIndicator();
         mainCamera = Camera.main;
     }
 
@@ -36,8 +37,6 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
         if (LocationManager.Instance.sceneMode == LocationMode.Hostile)
         {
-            InitShootTargetIndicator();
-
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Enable();
         }
@@ -128,7 +127,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
     private void InitShootTargetIndicator()
     {
-        shootTargetIndicator.transform.SetParent(FindObjectOfType<CultLeader>().transform, false);
+        shootTargetIndicator.transform.SetParent(LocationManager.Instance.cultLeader.transform, false);
     }
 
     private void SetWalkTargetIndicator(InputAction.CallbackContext ctx)
