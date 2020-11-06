@@ -15,6 +15,9 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     public GameObject walkTargetIndicator;
     public GameObject shootTargetIndicator;
 
+    public Vector3 shootDirection;
+    public float shootHalfAngle;
+
     private Camera mainCamera;
 
     #region MonoBehaviour
@@ -33,6 +36,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
         if (LocationManager.Instance.sceneMode == LocationMode.Hostile)
         {
+            InitShootTargetIndicator();
+
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Enable();
         }
@@ -121,6 +126,11 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
         MainCursor.transform.position = nextCursorPosition;
     }
 
+    private void InitShootTargetIndicator()
+    {
+        shootTargetIndicator.transform.SetParent(FindObjectOfType<CultLeader>().transform, false);
+    }
+
     private void SetWalkTargetIndicator(InputAction.CallbackContext ctx)
     {
         // TODO: Check mouse over gui
@@ -129,7 +139,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
     private void SetShootTargetIndicator(InputAction.CallbackContext ctx)
     {
-        shootTargetIndicator.transform.position = MainCursor.transform.position;
+        shootDirection = (MainCursor.transform.position - LocationManager.Instance.cultLeader.transform.position).normalized;
+        shootTargetIndicator.transform.rotation = Quaternion.LookRotation(shootDirection, Vector3.up);
     }
     
 #endregion
