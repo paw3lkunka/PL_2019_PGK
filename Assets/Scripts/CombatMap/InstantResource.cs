@@ -10,20 +10,62 @@ public class InstantResource : MonoBehaviour
     [SerializeField] private float amount;
 #pragma warning restore
 
+    public ResourceType Type { get => type; }
+
+    //for barrels - but cam be used in other way
+    public bool dissappearOnCollect = true;
+    [HideInInspector] public Material onEmptyMaterial;
+    [HideInInspector] public Material onFullMaterial;
+    [HideInInspector] public GameObject indicator;
+    private bool full = true;
+
+    // for wineskins - water pickups
+    [HideInInspector] public float appendMaxValue;
+
     private TextEmitter textEmitter;
 
     private void Awake()
     {
         textEmitter = GetComponent<TextEmitter>();
+        if (!dissappearOnCollect)
+        {
+            indicator.GetComponent<MeshRenderer>().material = onFullMaterial;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
+        {
+            if (dissappearOnCollect)
+            {
+                addResource(other);
+                Destroy(gameObject);
+            }
+            else if (full)
+            {
+                indicator.GetComponent<MeshRenderer>().material = onEmptyMaterial;
+                addResource(other);
+                full = false;
+            }
+            else
+            {
+                // DO NOTHING!
+            }
+        }
+    }
+
+    private void addResource(Collider other)
     {
         switch (type)
         {
             case ResourceType.Water:
                 GameplayManager.Instance.Water += amount;
                 textEmitter.Emit(ApplicationManager.Instance.PrefabDatabase.floatingTextResourceGained, amount.ToString("0.0"), Color.cyan);
+                if(dissappearOnCollect && appendMaxValue > 0.0001f)
+                {
+                    GameplayManager.Instance.Water.Max += appendMaxValue;
+                }
                 break;
             case ResourceType.Faith:
                 GameplayManager.Instance.Faith += amount;
@@ -38,6 +80,5 @@ public class InstantResource : MonoBehaviour
                 }
                 break;
         }
-        Destroy(gameObject);
     }
 }
