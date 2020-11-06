@@ -39,13 +39,13 @@ public class InstantResource : MonoBehaviour
         {
             if (dissappearOnCollect)
             {
-                addResource(other);
+                AddResource(other);
                 Destroy(gameObject);
             }
             else if (full)
             {
                 indicator.GetComponent<MeshRenderer>().material = onEmptyMaterial;
-                addResource(other);
+                AddResource(other);
                 full = false;
             }
             else
@@ -55,7 +55,7 @@ public class InstantResource : MonoBehaviour
         }
     }
 
-    private void addResource(Collider other)
+    private void AddResource(Collider other)
     {
         switch (type)
         {

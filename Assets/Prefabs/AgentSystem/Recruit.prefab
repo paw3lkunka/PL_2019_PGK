@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6973377715876538307}
   - component: {fileID: 6973377715876538304}
   - component: {fileID: 6973377715876538305}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Recruit
   m_TagString: Recruit
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 6973377716003413630}
   - component: {fileID: 6973377716003413631}
   - component: {fileID: 6973377716003413628}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,6 +243,7 @@ MonoBehaviour:
   threshold: 0.001
   frames: 13
   animationSpeed: 5
+  rotationOffset: 0
   up: {fileID: 2100000, guid: 4b245544a59c4c940b916664dd42347e, type: 2}
   down: {fileID: 2100000, guid: d23ab81fd5e52a14d80edbc3b5353f32, type: 2}
   useNegativeScale: 0
