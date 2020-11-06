@@ -54,6 +54,8 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         UIOverlayManager.Instance?.ControlsSheet.Clear();
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Choose destination");
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Pause, "Pause menu");
+        UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.CameraMove, "Move camera");
+        UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.CameraZoom, "Zoom camera");
     }
 
     private void OnEnable()

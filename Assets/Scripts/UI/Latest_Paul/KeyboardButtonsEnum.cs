@@ -25,18 +25,20 @@ public enum KeyboardButtons
     rightArrow,
 
     leftShift,
-    rightShift,
     shift = leftShift,
+    rightShift,
 
     leftAlt,
-    rightAlt,
     alt = leftAlt,
+    rightAlt,
 
     leftCtrl,
-    rightCtrl,
     ctrl = leftCtrl,
+    rightCtrl,
 
     contextMenu,
+
+    scroll,
 
 #endregion
 
@@ -137,9 +139,9 @@ public enum KeyboardButtons
     numpad9,
     numpad0,
 
-#endregion
+    #endregion
 
-#region Unrecognized
+    #region Unrecognized
 
     leftMeta, // wtf is this?
     rightMeta = leftMeta,
@@ -153,7 +155,7 @@ public enum KeyboardButtons
 #endregion
 
     first_special = leftButton,
-    last_special = contextMenu,
+    last_special = scroll,
 
     first_standard_noChange = backquote,
     last_standard_noChange = f12,

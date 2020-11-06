@@ -131,6 +131,22 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""RotateCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""befd65e9-f414-4a8b-9814-315bf3caf744"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ZoomCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""0768cf95-9114-4fa9-b457-18381cbe498f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -296,6 +312,28 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""MouseKeyboard;JoystickKeyboard"",
                     ""action"": ""ShowHideInfoLog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb7ca7a8-1ca3-46f2-8b92-4724862de4c1"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard"",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""afd68388-46ed-4110-a348-058ed0e70686"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard"",
+                    ""action"": ""ZoomCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -757,6 +795,8 @@ public class @NewInput : IInputActionCollection, IDisposable
         m_Gameplay_SetWalkTarget = m_Gameplay.FindAction("SetWalkTarget", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_ShowHideInfoLog = m_Gameplay.FindAction("ShowHideInfoLog", throwIfNotFound: true);
+        m_Gameplay_RotateCamera = m_Gameplay.FindAction("RotateCamera", throwIfNotFound: true);
+        m_Gameplay_ZoomCamera = m_Gameplay.FindAction("ZoomCamera", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -850,6 +890,8 @@ public class @NewInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_SetWalkTarget;
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_ShowHideInfoLog;
+    private readonly InputAction m_Gameplay_RotateCamera;
+    private readonly InputAction m_Gameplay_ZoomCamera;
     public struct GameplayActions
     {
         private @NewInput m_Wrapper;
@@ -858,6 +900,8 @@ public class @NewInput : IInputActionCollection, IDisposable
         public InputAction @SetWalkTarget => m_Wrapper.m_Gameplay_SetWalkTarget;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @ShowHideInfoLog => m_Wrapper.m_Gameplay_ShowHideInfoLog;
+        public InputAction @RotateCamera => m_Wrapper.m_Gameplay_RotateCamera;
+        public InputAction @ZoomCamera => m_Wrapper.m_Gameplay_ZoomCamera;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -879,6 +923,12 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @ShowHideInfoLog.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShowHideInfoLog;
                 @ShowHideInfoLog.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShowHideInfoLog;
                 @ShowHideInfoLog.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShowHideInfoLog;
+                @RotateCamera.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotateCamera;
+                @RotateCamera.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotateCamera;
+                @RotateCamera.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotateCamera;
+                @ZoomCamera.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZoomCamera;
+                @ZoomCamera.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZoomCamera;
+                @ZoomCamera.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnZoomCamera;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -895,6 +945,12 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @ShowHideInfoLog.started += instance.OnShowHideInfoLog;
                 @ShowHideInfoLog.performed += instance.OnShowHideInfoLog;
                 @ShowHideInfoLog.canceled += instance.OnShowHideInfoLog;
+                @RotateCamera.started += instance.OnRotateCamera;
+                @RotateCamera.performed += instance.OnRotateCamera;
+                @RotateCamera.canceled += instance.OnRotateCamera;
+                @ZoomCamera.started += instance.OnZoomCamera;
+                @ZoomCamera.performed += instance.OnZoomCamera;
+                @ZoomCamera.canceled += instance.OnZoomCamera;
             }
         }
     }
@@ -1010,6 +1066,8 @@ public class @NewInput : IInputActionCollection, IDisposable
         void OnSetWalkTarget(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnShowHideInfoLog(InputAction.CallbackContext context);
+        void OnRotateCamera(InputAction.CallbackContext context);
+        void OnZoomCamera(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
