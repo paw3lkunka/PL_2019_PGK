@@ -27,19 +27,19 @@ public class Resource
     public static implicit operator float(Resource val) => val.current;
 
     /// <summary>
-    /// Sets value, autamaticlly clamps it to [0,max]
+    /// Sets value, automatically clamps it to [0,max]
     /// </summary>
     /// <param name="value">value to set</param>
     /// <returns>real value (after clamp)</returns>
     public float Set(float value) => current = Mathf.Clamp(value, 0, max);
 
     /// <summary>
-    /// Max value, allways is bigger or equal maximum.
+    /// Max value, always is bigger or equal maximum.
     /// </summary>
     public float Max { get => max; set => max = Mathf.Max(value, 0); }
 
     /// <summary>
-    /// Resturns value divided by maximum.
+    /// Returns value divided by maximum.
     /// </summary>
     public float Normalized { get => current / max; }
 

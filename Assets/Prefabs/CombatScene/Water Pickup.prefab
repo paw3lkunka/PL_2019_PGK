@@ -73,7 +73,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  amount: 10
+  amount: 0
+  dissappearOnCollect: 1
+  onEmptyMaterial: {fileID: 0}
+  onFullMaterial: {fileID: 0}
+  indicator: {fileID: 0}
+  appendMaxValue: 3
 --- !u!1 &3110199702449497634
 GameObject:
   m_ObjectHideFlags: 0
