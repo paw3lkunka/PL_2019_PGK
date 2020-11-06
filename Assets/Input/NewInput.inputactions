@@ -118,6 +118,22 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "RotateCamera",
+                    "type": "Value",
+                    "id": "befd65e9-f414-4a8b-9814-315bf3caf744",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ZoomCamera",
+                    "type": "Value",
+                    "id": "0768cf95-9114-4fa9-b457-18381cbe498f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -283,6 +299,28 @@
                     "processors": "",
                     "groups": "MouseKeyboard;JoystickKeyboard",
                     "action": "ShowHideInfoLog",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb7ca7a8-1ca3-46f2-8b92-4724862de4c1",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "RotateCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afd68388-46ed-4110-a348-058ed0e70686",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "ZoomCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
