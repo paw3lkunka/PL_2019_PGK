@@ -54,6 +54,10 @@ public class Detection : MonoBehaviour
     [field: SerializeField, GUIName("DetectionRange")]
     public float DetectionRange { get; private set; } = 10;
 
+    public Vector3 detectionDirection = Vector3.right;
+
+    public float detectionHalfAngle = 181.0f;
+
 #if UNITY_EDITOR
     [Tooltip("Show range sphere gizmo in editor")]
     public bool showRangeBounds = false;
@@ -103,7 +107,11 @@ public class Detection : MonoBehaviour
     {
         foreach (var enemy in enemies)
         {
-            if ((enemy.transform.position - transform.transform.position).magnitude < DetectionRange)
+            var enemyVec = VectorTo(enemy);
+            float currDistance = enemyVec.magnitude;
+            float currAngle = AngleTo(enemyVec);
+
+            if (currDistance < DetectionRange)
             {
                 return enemy.transform.position;
             }
@@ -129,7 +137,11 @@ public class Detection : MonoBehaviour
 
         foreach (int i in order)
         {
-            if ((enemies[i].transform.position - transform.transform.position).magnitude < DetectionRange)
+            var enemyVec = VectorTo(enemies[i]);
+            float currDistance = enemyVec.magnitude;
+            float currAngle = AngleTo(enemyVec);
+
+            if (IsInRange(currDistance, currAngle))
             {
                 return enemies[i].transform.position;
             }
@@ -143,9 +155,11 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            float currDistance = (enemy.transform.position - transform.position).magnitude;
+            var enemyVec = VectorTo(enemy);
+            float currDistance = enemyVec.magnitude;
+            float currAngle = AngleTo(enemyVec);
 
-            if (currDistance < distance)
+            if (currDistance < distance && currAngle < detectionHalfAngle)
             {
                 distance = currDistance;
                 target = enemy.transform.position;
@@ -160,9 +174,11 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            float currDistance = (enemy.transform.position - transform.position).magnitude;
+            var enemyVec = VectorTo(enemy);
+            float currDistance = enemyVec.magnitude;
+            float currAngle = AngleTo(enemyVec);
 
-            if (currDistance > distance && currDistance < DetectionRange)
+            if (IsInRange(currDistance, currAngle))
             {
                 target = enemy.transform.position;
             }
@@ -176,9 +192,11 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            float currDistance = (enemy.transform.position - transform.position).magnitude;
+            var enemyVec = VectorTo(enemy);
+            float currDistance = enemyVec.magnitude;
+            float currAngle = AngleTo(enemyVec);
 
-            if (currDistance < DetectionRange && enemy.Health > hp)
+            if (IsInRange(currDistance, currAngle) && enemy.Health > hp)
             {
                 hp = enemy.Health;
                 target = enemy.transform.position;
@@ -193,9 +211,11 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            float currDistance = (enemy.transform.position - transform.position).magnitude;
+            var enemyVec = VectorTo(enemy);
+            float currDistance = enemyVec.magnitude;
+            float currAngle = AngleTo(enemyVec);
 
-            if (currDistance < DetectionRange && enemy.Health < hp)
+            if (IsInRange(currDistance, currAngle) && enemy.Health < hp)
             {
                 hp = enemy.Health;
                 target = enemy.transform.position;
@@ -210,6 +230,12 @@ public class Detection : MonoBehaviour
         return null;
     }
     #endregion
+
+    private Vector3 VectorTo(Component enemy) => enemy.transform.position - transform.position;
+
+    private float AngleTo(Vector3 vectorToEnemy) => Mathf.Abs(Vector3.Angle(vectorToEnemy, detectionDirection));
+
+    private bool IsInRange(float distanceToEnemy, float angleToEnemy) => distanceToEnemy < DetectionRange && angleToEnemy < detectionHalfAngle;
 
     #region MonoBehaviour
     private void Start()
