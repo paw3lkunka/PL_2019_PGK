@@ -89,6 +89,8 @@ MonoBehaviour:
   shootMouseKeyboardBinding: 0000000000000000
   interactMouseKeyboardBinding: 0000000000000000
   pauseMouseKeyboardBinding: 0000000000000000
+  cameraMoveMouseKeyboardBinding: 0000000000000000
+  cameraZoomMouseKeyboardBinding: 0000000000000000
   uiNavigateMouseKeyboardBinding: {fileID: 21300000, guid: cf5620cb2355b2dad920ca5189d35d95,
     type: 3}
   uiSubmitMouseKeyboardBinding: {fileID: 21300000, guid: 0ff0e1c53e1217e6d9e00b3f56f8161e,
@@ -99,6 +101,8 @@ MonoBehaviour:
   shootJoystickKeyboardBinding: 0000000000000000
   interactJoystickKeyboardBinding: 0000000000000000
   pauseJoystickKeyboardBinding: 0000000000000000
+  cameraMoveJoystickKeyboardBinding: 0000000000000000
+  cameraZoomJoystickKeyboardBinding: 0000000000000000
   uiNavigateJoystickKeyboardBinding: {fileID: 21300000, guid: cf5620cb2355b2dad920ca5189d35d95,
     type: 3}
   uiSubmitJoystickKeyboardBinding: {fileID: 21300000, guid: 0ff0e1c53e1217e6d9e00b3f56f8161e,
@@ -109,6 +113,8 @@ MonoBehaviour:
   shootGamepadBinding: 0000000000000000
   interactGamepadBinding: 0000000000000000
   pauseGamepadBinding: 0000000000000000
+  cameraMoveGamepadBinding: 0000000000000000
+  cameraZoomGamepadBinding: 0000000000000000
   uiNavigateGamepadBinding: {fileID: 21300000, guid: 363ba9110ccf9711997183e71cfd6ffe,
     type: 3}
   uiSubmitGamepadBinding: {fileID: 21300000, guid: 95107495bdae298d195f7dd12eaa37e4,
@@ -209,8 +215,8 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 816ba9b039096b28dac8bd2e04f72736, type: 3}
   - button: 19
     image: {fileID: 21300000, guid: 816ba9b039096b28dac8bd2e04f72736, type: 3}
-  - button: 20
-    image: {fileID: 21300000, guid: 073b0558a72563b39a94442413f415b0, type: 3}
+  - button: 24
+    image: {fileID: 21300000, guid: e01354d9573cd8e4f86d66035402b80d, type: 3}
   gamepadSprites:
   - button: 1
     image: {fileID: 21300000, guid: cb72f5f2eb4d4d0688ad902c1dc5ef11, type: 3}

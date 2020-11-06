@@ -26,7 +26,7 @@ public class Detection : MonoBehaviour
         /// <summary>
         /// Returns random target from detection range.
         /// </summary>
-        random, // TODO not implemented
+        random,
         /// <summary>
         /// Returns nearest target in detection range.
         /// </summary>
@@ -53,6 +53,14 @@ public class Detection : MonoBehaviour
 
     [field: SerializeField, GUIName("DetectionRange")]
     public float DetectionRange { get; private set; } = 10;
+
+    public Vector3 detectionDirection = Vector3.right;
+
+    public float detectionHalfAngle = 181.0f;
+
+    public bool includeRaycastTest = false;
+
+    private int raycastLayerMask;
 
 #if UNITY_EDITOR
     [Tooltip("Show range sphere gizmo in editor")]
@@ -103,7 +111,7 @@ public class Detection : MonoBehaviour
     {
         foreach (var enemy in enemies)
         {
-            if ((enemy.transform.position - transform.transform.position).magnitude < DetectionRange)
+            if (IsDetected(enemy, out _))
             {
                 return enemy.transform.position;
             }
@@ -129,7 +137,7 @@ public class Detection : MonoBehaviour
 
         foreach (int i in order)
         {
-            if ((enemies[i].transform.position - transform.transform.position).magnitude < DetectionRange)
+            if (IsDetected(enemies[i], out _))
             {
                 return enemies[i].transform.position;
             }
@@ -143,9 +151,7 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            float currDistance = (enemy.transform.position - transform.position).magnitude;
-
-            if (currDistance < distance)
+            if (IsDetected(enemy, out float currDistance))
             {
                 distance = currDistance;
                 target = enemy.transform.position;
@@ -160,9 +166,7 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            float currDistance = (enemy.transform.position - transform.position).magnitude;
-
-            if (currDistance > distance && currDistance < DetectionRange)
+            if (IsDetected(enemy, out _))
             {
                 target = enemy.transform.position;
             }
@@ -176,9 +180,7 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            float currDistance = (enemy.transform.position - transform.position).magnitude;
-
-            if (currDistance < DetectionRange && enemy.Health > hp)
+            if (IsDetected(enemy, out _) && enemy.Health > hp)
             {
                 hp = enemy.Health;
                 target = enemy.transform.position;
@@ -193,9 +195,7 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            float currDistance = (enemy.transform.position - transform.position).magnitude;
-
-            if (currDistance < DetectionRange && enemy.Health < hp)
+            if (IsDetected(enemy, out _) && enemy.Health < hp)
             {
                 hp = enemy.Health;
                 target = enemy.transform.position;
@@ -211,16 +211,43 @@ public class Detection : MonoBehaviour
     }
     #endregion
 
+
+    private bool IsDetected(Component enemy, out float distance)
+    {
+        var vectorToEnemy = enemy.transform.position - transform.position;
+        var angleToEnemy = Mathf.Abs(Vector3.Angle(vectorToEnemy, detectionDirection));
+
+        distance = vectorToEnemy.magnitude;
+
+        if (distance < DetectionRange && angleToEnemy < detectionHalfAngle)
+        {
+            if (includeRaycastTest)
+            {
+                Physics.Raycast(transform.position, vectorToEnemy, out RaycastHit hitInfo, distance + 1.0f, raycastLayerMask);
+
+                return hitInfo.collider.gameObject == enemy.gameObject;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     #region MonoBehaviour
     private void Start()
     {
         if (gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
         {
             enemies = LocationManager.Instance.enemies;
+            raycastLayerMask = LayerMask.GetMask("Obstacles", "Enemies");
         }
         else if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
         {
             enemies = LocationManager.Instance.ourCrew;
+            raycastLayerMask = LayerMask.GetMask("Obstacles", "PlayerCrew");
         }
         else
         {

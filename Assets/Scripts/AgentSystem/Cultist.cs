@@ -23,16 +23,22 @@ public class Cultist : MonoBehaviour
     public MonoBehaviour normalBehaviour;
     public MonoBehaviour fanaticBehaviour;
 
-    private void AttackCursorPosition(InputAction.CallbackContext ctx)
+    private void AttackInDirection(InputAction.CallbackContext ctx)
     {
-        Vector3 target = CombatCursorManager.Instance.MainCursor.transform.position;
-        target.y = transform.position.y;
+        detection.detectionDirection = CombatCursorManager.Instance.shootDirection;
 
         if (RhythmMechanics.Instance.Combo > 0)
         {
-            attack?.Attack(target);
-            if (detection.Func() == null)
+            Vector3? detected = detection.Func();
+
+            if (detected.HasValue)
             {
+                attack?.Attack(detected.Value);
+                Debug.Log("Shoot");
+            }
+            else
+            {
+                Debug.Log("Dont shoot");
                 attack?.HoldFire();
             }
         }
@@ -76,8 +82,9 @@ public class Cultist : MonoBehaviour
             IsFanatic = true;
             normalBehaviour.enabled = false;
             fanaticBehaviour.enabled = true;
+            DetectInFullCircle = true;
 
-            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackCursorPosition;
+            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackInDirection;
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += AttackNearbyEnemy;
         }
     }
@@ -89,10 +96,17 @@ public class Cultist : MonoBehaviour
             IsFanatic = false;
             normalBehaviour.enabled = true;
             fanaticBehaviour.enabled = false;
+            DetectInFullCircle = false;
 
-            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += AttackCursorPosition;
+            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += AttackInDirection;
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackNearbyEnemy;
         }
+    }
+
+    private bool DetectInFullCircle
+    {
+        get => detection.detectionHalfAngle >= 180.0f;
+        set => detection.detectionHalfAngle = value ? 181.0f : CombatCursorManager.Instance.shootHalfAngle;
     }
 
     #region Event handlers
@@ -149,7 +163,7 @@ public class Cultist : MonoBehaviour
         }
         GameplayManager.Instance.FanaticStart -= FanatismStart;
         GameplayManager.Instance.FanaticEnd -= FanatismEnd;
-        ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackCursorPosition;
+        ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackInDirection;
         ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackNearbyEnemy;
         damageable.Death -= OnDeath;
     }
