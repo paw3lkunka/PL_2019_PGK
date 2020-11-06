@@ -23,7 +23,7 @@ public class Cultist : MonoBehaviour
     public MonoBehaviour normalBehaviour;
     public MonoBehaviour fanaticBehaviour;
 
-    private void AttackInDirection(InputAction.CallbackContext ctx)
+    private void AttackInDirection(bool _)
     {
         detection.detectionDirection = CombatCursorManager.Instance.shootDirection;
 
@@ -34,17 +34,15 @@ public class Cultist : MonoBehaviour
             if (detected.HasValue)
             {
                 attack?.Attack(detected.Value);
-                Debug.Log("Shoot");
             }
             else
             {
-                Debug.Log("Dont shoot");
                 attack?.HoldFire();
             }
         }
     }
 
-    private void AttackNearbyEnemy(InputAction.CallbackContext ctx)
+    private void AttackNearbyEnemy(bool _)
     {
         Vector3? detected = detection.Func();
         if (detected.HasValue)
@@ -84,8 +82,8 @@ public class Cultist : MonoBehaviour
             fanaticBehaviour.enabled = true;
             DetectInFullCircle = true;
 
-            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackInDirection;
-            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += AttackNearbyEnemy;
+            AudioTimeline.Instance.OnBeat -= AttackInDirection;
+            AudioTimeline.Instance.OnBeat += AttackNearbyEnemy;
         }
     }
 
@@ -98,8 +96,8 @@ public class Cultist : MonoBehaviour
             fanaticBehaviour.enabled = false;
             DetectInFullCircle = false;
 
-            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += AttackInDirection;
-            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackNearbyEnemy;
+            AudioTimeline.Instance.OnBeat += AttackInDirection;
+            AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
         }
     }
 
@@ -113,6 +111,7 @@ public class Cultist : MonoBehaviour
 
     private void FailBit()
     {
+        Debug.Log("FailBit");
         attack?.HoldFire();
         SetNormalState();
     }
@@ -147,8 +146,13 @@ public class Cultist : MonoBehaviour
         {
             AudioTimeline.Instance.OnBeatFail += FailBit;
         }
+        else
+        {
+            Debug.LogWarning("No audioTimeline!");
+        }
         GameplayManager.Instance.FanaticStart += FanatismStart;
         GameplayManager.Instance.FanaticEnd += FanatismEnd;
+
         damageable.Death += OnDeath;
         IsFanatic = true; //HACK to ensure, that SetNormalState will work.
         SetNormalState();
@@ -163,8 +167,8 @@ public class Cultist : MonoBehaviour
         }
         GameplayManager.Instance.FanaticStart -= FanatismStart;
         GameplayManager.Instance.FanaticEnd -= FanatismEnd;
-        ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackInDirection;
-        ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= AttackNearbyEnemy;
+        AudioTimeline.Instance.OnBeat -= AttackInDirection;
+        AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
         damageable.Death -= OnDeath;
     }
 
