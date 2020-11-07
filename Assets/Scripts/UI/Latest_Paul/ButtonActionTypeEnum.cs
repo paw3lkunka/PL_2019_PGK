@@ -4,6 +4,8 @@ public enum ButtonActionType
     Shoot,
     Interact,
     Pause,
+    CameraMove,
+    CameraZoom,
     UINavigate,
     UISubmit,
     UICancel

@@ -9,6 +9,7 @@ public class CultLeader : MonoBehaviour
     #region MonoBehaviour
     private void Awake()
     {
+        LocationManager.Instance.cultLeader = this;
         damageable = GetComponent<Damageable>();
         damageable.flags &= ~Damageable.Flags.canBeDamaged;
     }

@@ -296,8 +296,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c47db17fe0320f4ab6bbd223fc0a5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Strategy>k__BackingField: 1
+  <Strategy>k__BackingField: 3
   <DetectionRange>k__BackingField: 30
+  detectionDirection: {x: 1, y: 0, z: 0}
+  detectionHalfAngle: 181
+  includeRaycastTest: 0
   showRangeBounds: 0
 --- !u!114 &394580946
 MonoBehaviour:

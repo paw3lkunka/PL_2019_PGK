@@ -18,6 +18,8 @@ public class ControlsSheet : MonoBehaviour
     public KeyboardButtons[] shootMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] interactMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] pauseMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
+    public KeyboardButtons[] cameraMoveMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
+    public KeyboardButtons[] cameraZoomMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public Sprite uiNavigateMouseKeyboardBinding;
     public Sprite uiSubmitMouseKeyboardBinding;
     public Sprite uiCancelMouseKeyboardBinding;
@@ -27,6 +29,8 @@ public class ControlsSheet : MonoBehaviour
     public KeyboardButtons[] shootJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] interactJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] pauseJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
+    public KeyboardButtons[] cameraMoveJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
+    public KeyboardButtons[] cameraZoomJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public Sprite uiNavigateJoystickKeyboardBinding;
     public Sprite uiSubmitJoystickKeyboardBinding;
     public Sprite uiCancelJoystickKeyboardBinding;
@@ -36,6 +40,8 @@ public class ControlsSheet : MonoBehaviour
     public GamepadButtons[] shootGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
     public GamepadButtons[] interactGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
     public GamepadButtons[] pauseGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
+    public GamepadButtons[] cameraMoveGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
+    public GamepadButtons[] cameraZoomGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
     public Sprite uiNavigateGamepadBinding;
     public Sprite uiSubmitGamepadBinding;
     public Sprite uiCancelGamepadBinding;
@@ -72,6 +78,14 @@ public class ControlsSheet : MonoBehaviour
         pauseMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Pause, "Mouse");
         pauseJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Pause, "Joystick");
         pauseGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.Pause, "Gamepad");
+
+        cameraMoveMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.RotateCamera, "Mouse");
+        cameraMoveJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.RotateCamera, "Joystick");
+        cameraMoveGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.RotateCamera, "Gamepad");
+
+        cameraZoomMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.ZoomCamera, "Mouse");
+        cameraZoomJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.ZoomCamera, "Joystick");
+        cameraZoomGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.ZoomCamera, "Gamepad");
     }
 
     private void OnEnable()
@@ -152,6 +166,14 @@ public class ControlsSheet : MonoBehaviour
                     
                     case ButtonActionType.Pause:
                         keyboardButton = pauseMouseKeyboardBinding[prior];
+                        break;
+
+                    case ButtonActionType.CameraMove:
+                        keyboardButton = cameraMoveMouseKeyboardBinding[prior];
+                        break;
+
+                    case ButtonActionType.CameraZoom:
+                        keyboardButton = cameraZoomMouseKeyboardBinding[prior];
                         break;
 
                     case ButtonActionType.UINavigate:
