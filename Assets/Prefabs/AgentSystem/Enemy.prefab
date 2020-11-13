@@ -119,6 +119,8 @@ GameObject:
   - component: {fileID: 1472921029724115161}
   - component: {fileID: 6789429542048054954}
   - component: {fileID: 4143242920035437993}
+  - component: {fileID: 6931916091876863972}
+  - component: {fileID: 294166087334768783}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -275,6 +277,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blindChaseMatchDistance: 0.5
+--- !u!114 &6931916091876863972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709671222968350148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abbab15e1917be4c88c87e50dcd8d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropChance: 10
+  spawnedPrefab: {fileID: 1505111545305697796, guid: 4e6b888ef1d4b4245806aab1bb0b28b7,
+    type: 3}
+  dropAmountRange: {x: 1, y: 1}
+  dropPositionRange: {x: 0, y: 0}
+--- !u!114 &294166087334768783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709671222968350148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abbab15e1917be4c88c87e50dcd8d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropChance: 100
+  spawnedPrefab: {fileID: 4170851184570851789, guid: 7eeb848f627d2a94691dbeb1b836b507,
+    type: 3}
+  dropAmountRange: {x: 2, y: 6}
+  dropPositionRange: {x: -2.5, y: 2.5}
 --- !u!1001 &1709671222920149005
 PrefabInstance:
   m_ObjectHideFlags: 0

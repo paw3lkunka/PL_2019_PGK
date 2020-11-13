@@ -39,7 +39,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4170851183321058274}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &4170851183321058272
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 4170851184570851378}
   - component: {fileID: 4170851184570851379}
   - component: {fileID: 4170851184570851788}
+  - component: {fileID: 3866179134998035369}
   m_Layer: 14
   m_Name: Faith Pickup
   m_TagString: Untagged
@@ -153,3 +154,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   amount: 5
+  dissappearOnCollect: 1
+  onEmptyMaterial: {fileID: 0}
+  onFullMaterial: {fileID: 0}
+  indicator: {fileID: 0}
+  appendMaxValue: 0
+--- !u!111 &3866179134998035369
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4170851184570851789}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
