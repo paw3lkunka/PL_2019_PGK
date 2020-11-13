@@ -31,6 +31,13 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         get => faith;
         set => faith.Set(value);
     }
+    [SerializeField] private Resource health;
+    private float healthPercentLastFrame;
+    public Resource Health
+    {
+        get => health;
+        set => health.Set(value);
+    }
 #pragma warning restore
 
     [Header("Gameplay Config")] // * ===================================
@@ -120,7 +127,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public event System.Action FanaticEnd;
 
     #region MonoBehaviour
-
+    
     protected override void Awake()
     {
         base.Awake();
@@ -133,6 +140,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
             cultistInfos.Add(new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
         }
 
+        Health = new Resource(10.0f * initialCultistsNumber, 10.0f * initialCultistsNumber);
+        
         // ? +++++ Initialize shrine list +++++
         mapGenerationSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
     }

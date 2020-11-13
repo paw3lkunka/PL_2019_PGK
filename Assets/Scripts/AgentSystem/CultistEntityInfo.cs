@@ -31,6 +31,6 @@ public class CultistEntityInfo
 
     // -- [ Saved props ] ----------------------
 
-    private float hp;
+    public float hp { get; private set; } 
 
 }

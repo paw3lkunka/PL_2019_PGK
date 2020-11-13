@@ -13,6 +13,9 @@ public class ResourcesUIController : MonoBehaviour
     [Header("Faith")]
     [SerializeField] private Image faithBar;
     [SerializeField] private TextMeshProUGUI faithAmount;
+    [Header("Health")]
+    [SerializeField] private Image healthBar;
+    [SerializeField] private TextMeshProUGUI healthAmount;
     [Header("Cultists")]
     [SerializeField] private TextMeshProUGUI cultistsAmount;
 #pragma warning restore
@@ -25,6 +28,9 @@ public class ResourcesUIController : MonoBehaviour
         // TODO: Add support for unnormalized faith amount
         faithBar.fillAmount = GameplayManager.Instance.Faith.Normalized;
         faithAmount.text = System.Math.Round(GameplayManager.Instance.Faith, 1).ToString("0.0");
+            
+        // healthBar.fillAmount = GameplayManager.Instance.Health.Normalized;
+        // healthAmount.text = System.Math.Round(GameplayManager.Instance.Health, 1).ToString("0.0");
 
         cultistsAmount.text = GameplayManager.Instance.cultistInfos.Count.ToString("00");
     }
