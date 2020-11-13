@@ -80,6 +80,21 @@ public class Damageable : MonoBehaviour
         }
     }
 
+    public float DamageIgnoreDefense(float hitPoints)
+    {
+        if ((flags & Flags.canBeDamaged) != 0)
+        {
+            Health -= hitPoints;
+            DamageTaken?.Invoke(hitPoints);
+
+            return hitPoints;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     protected virtual float CalculateDamage(float hitPoints) => Mathf.Clamp(hitPoints - DefenseBase, 0, Health);
 
     #region Mono Behaviour

@@ -17,7 +17,6 @@ public class ResourceDepleter : MonoBehaviour
     }
 
     [SerializeField] private float _faithDepletionRate;
-    [field: SerializeField, GUIName("FaithDepletionRate")]
     public float FaithDepletionRate
     {
         get => _faithDepletionRate;

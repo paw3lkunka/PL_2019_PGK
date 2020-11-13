@@ -71,6 +71,8 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
     private void Start()
     {
+        QualitySettings.shadowDistance = 100.0f;
+
         enemies.Clear();
         ourCrew.Clear();
 
