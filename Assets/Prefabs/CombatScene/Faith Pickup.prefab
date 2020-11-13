@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4170851183321058274}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6586914, y: 0.6586914, z: 0.6586914}
   m_Children: []
   m_Father: {fileID: 4170851184570851377}
   m_RootOrder: 0
@@ -88,10 +88,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4170851184570851377}
-  - component: {fileID: 4170851184570851378}
   - component: {fileID: 4170851184570851379}
   - component: {fileID: 4170851184570851788}
-  - component: {fileID: 3866179134998035369}
+  - component: {fileID: 9002134089016262378}
   m_Layer: 14
   m_Name: Faith Pickup
   m_TagString: Untagged
@@ -107,26 +106,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4170851184570851789}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.17988, y: 0.2792778, z: -20.832533}
+  m_LocalPosition: {x: -24.17988, y: 0, z: -20.832533}
   m_LocalScale: {x: 0.6087759, y: 0.6087759, z: 0.6087759}
   m_Children:
   - {fileID: 4170851183321058273}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4170851184570851378
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4170851184570851789}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4170851184570851379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,24 +139,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  amount: 5
+  amount: 0.2
   dissappearOnCollect: 1
   onEmptyMaterial: {fileID: 0}
   onFullMaterial: {fileID: 0}
   indicator: {fileID: 0}
   appendMaxValue: 0
---- !u!111 &3866179134998035369
-Animation:
+--- !u!135 &9002134089016262378
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4170851184570851789}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  serializedVersion: 2
+  m_Radius: 1.2782583
+  m_Center: {x: 0, y: 0, z: 0}

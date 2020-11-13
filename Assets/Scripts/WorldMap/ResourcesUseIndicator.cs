@@ -14,27 +14,27 @@ public class ResourcesUseIndicator : MonoBehaviour
     [SerializeField] private Color warningColor;
 #pragma warning restore
 
-    private float waterAmmount = 0;
-    private float faithAmmount = 0;
+    private float waterAmount = 0;
+    private float faithAmount = 0;
 
     public float Water
     {
-        get => waterAmmount;
+        get => waterAmount;
         set
         {
-            waterAmmount = value;
-            waterText.text = Mathf.Approximately(faithAmmount, 0) ? "0" : "-" + System.Math.Round(value, 1).ToString("0.0");
+            waterAmount = value;
+            waterText.text = Mathf.Approximately(faithAmount, 0) ? "0" : "-" + System.Math.Round(value, 1).ToString("0.0");
             waterText.color = value > GameplayManager.Instance.Water ? warningColor : waterColor;
         }
     }
 
     public float Faith
     {
-        get => faithAmmount;
+        get => faithAmount;
         set
         {
-            faithAmmount = value;
-            faithText.text = Mathf.Approximately(faithAmmount, 0) ? "0" : "-" + System.Math.Round(value, 1).ToString("0.0");
+            faithAmount = value;
+            faithText.text = Mathf.Approximately(faithAmount, 0) ? "0" : "-" + System.Math.Round(value, 1).ToString("0.0");
             faithText.color = value > GameplayManager.Instance.Faith ? warningColor : faithColor;
         }
     }

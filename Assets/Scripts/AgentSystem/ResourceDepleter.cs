@@ -5,21 +5,34 @@ using UnityEngine;
 public class ResourceDepleter : MonoBehaviour
 {
 #pragma warning disable
+    [SerializeField] private bool isTimeBased = false;
     [SerializeField] private float veloctyThreshold = 0.01f;
-    [field: SerializeField, GUIName("WaterDepletionRate")]
-    public float WaterDepletionRate { get; private set; } = 0.1f;
-    [field: SerializeField, GUIName("FaithDepletionRate")] 
-    public float FaithDepletionRate { get; private set; } = 0.05f;
+
+    // These properties are left as not-auto to allow for easy modification for getters
+    [SerializeField] private float _waterDepletionRate;
+    public float WaterDepletionRate
+    {
+        get => _waterDepletionRate * GameplayManager.Instance.cultistInfos.Count;
+        private set => _waterDepletionRate = value;
+    }
+
+    [SerializeField] private float _faithDepletionRate;
+    [field: SerializeField, GUIName("FaithDepletionRate")]
+    public float FaithDepletionRate
+    {
+        get => _faithDepletionRate;
+        private set => _faithDepletionRate = value;
+    }
 #pragma warning restore
 
     private Vector3 lastFramePos;
 
     private void FixedUpdate()
     {
-        if ((lastFramePos - transform.position).magnitude > veloctyThreshold)
+        if (isTimeBased || (lastFramePos - transform.position).magnitude > veloctyThreshold)
         {
             GameplayManager.Instance.Water -= WaterDepletionRate;
-            GameplayManager.Instance.Faith -= FaithDepletionRate * GameplayManager.Instance.cultistInfos.Count;
+            GameplayManager.Instance.Faith -= FaithDepletionRate;
         }
         lastFramePos = transform.position;
     }
