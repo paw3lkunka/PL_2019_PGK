@@ -26,6 +26,7 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
     protected override void Awake()
     {
         base.Awake();
+        QualitySettings.shadowDistance = 300.0f;
     }
 
     private void Start()

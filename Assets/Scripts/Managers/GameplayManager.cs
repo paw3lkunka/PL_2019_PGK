@@ -150,7 +150,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     private void Update() 
     {
         // ! ----- Game over condition -----
-        if (!finalSceneLoaded && (water <= 0 || leaderIsDead || enteredTemple))
+        if (!finalSceneLoaded && (leaderIsDead || enteredTemple))
         {
             finalSceneLoaded = true;
             ApplicationManager.Instance.GameOver(enteredTemple);

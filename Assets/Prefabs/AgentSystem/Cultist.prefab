@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 7526696578712632604}
   - component: {fileID: 7379796028654906305}
   - component: {fileID: 394580946}
+  - component: {fileID: 7139795363046201972}
   m_Layer: 8
   m_Name: Cultist
   m_TagString: Untagged
@@ -211,7 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CanBeFanatic>k__BackingField: 0
   <IsFanatic>k__BackingField: 0
-  switchFanaticChance: 0.0015
+  switchFanaticChance: 0
   normalBehaviour: {fileID: 5771701300516187836}
   fanaticBehaviour: {fileID: 394580946}
 --- !u!114 &5771701300516187836
@@ -316,6 +317,23 @@ MonoBehaviour:
   targetChangeInterval: {x: 3, y: 8}
   maxRange: 10
   <ChaseTarget>k__BackingField: 0
+--- !u!114 &7139795363046201972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6636756642392982897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02cc560d6daf6d488f5fbf6bfc0b9ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterLevelTrigger: 0
+  isTimeBased: 1
+  veloctyThreshold: 0.01
+  damageChance: 0.3
+  _healthDepletionRate: 0.25
 --- !u!1001 &6636756642359807401
 PrefabInstance:
   m_ObjectHideFlags: 0
