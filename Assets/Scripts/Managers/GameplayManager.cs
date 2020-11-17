@@ -140,9 +140,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
             cultistInfos.Add(new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
         }
 
-        Health.Max = 10.0f * initialCultistsNumber;
-        Health.Set(10.0f * initialCultistsNumber);
-        
         // ? +++++ Initialize shrine list +++++
         mapGenerationSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
     }

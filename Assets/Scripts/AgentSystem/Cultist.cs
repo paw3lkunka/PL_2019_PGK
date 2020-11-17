@@ -121,7 +121,6 @@ public class Cultist : MonoBehaviour
     private void OnDeath()
     {
         GameplayManager.Instance.cultistInfos.Remove(info);
-        GameplayManager.Instance.Health.Max -= damageable.Health.Max;
     }
 
     #endregion
@@ -158,6 +157,8 @@ public class Cultist : MonoBehaviour
         GameplayManager.Instance.FanaticEnd += FanatismEnd;
 
         damageable.Death += OnDeath;
+        GameplayManager.Instance.Health.Max += damageable.Health.Max;
+        GameplayManager.Instance.Health += damageable.Health;
         IsFanatic = true; //HACK to ensure, that SetNormalState will work.
         SetNormalState();
     }
@@ -174,6 +175,8 @@ public class Cultist : MonoBehaviour
         AudioTimeline.Instance.OnBeat -= AttackInDirection;
         AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
         damageable.Death -= OnDeath;
+        GameplayManager.Instance.Health.Max -= damageable.Health.Max;
+        GameplayManager.Instance.Health -= damageable.Health;
     }
 
     private void OnDestroy()
