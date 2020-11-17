@@ -118,7 +118,11 @@ public class Cultist : MonoBehaviour
 
     private void FanatismStart() => CanBeFanatic = true;
     private void FanatismEnd() => CanBeFanatic = false;
-    private void OnDeath() => GameplayManager.Instance.cultistInfos.Remove(info);
+    private void OnDeath()
+    {
+        GameplayManager.Instance.cultistInfos.Remove(info);
+        GameplayManager.Instance.Health.Max -= damageable.Health.Max;
+    }
 
     #endregion
 

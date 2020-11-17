@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6671453847892862790}
   - component: {fileID: 6671453847892862791}
   m_Layer: 5
-  m_Name: LifeFloatingText
+  m_Name: ResourceLostFloatingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397f73ba39e50cb448caa42d4da631d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 2
-  fadeOutTime: 1
+  lifeTime: 0.5
+  fadeOutTime: 0.25
   speed: 0.02
   entropy: 2
   amplitude: 0.03
@@ -144,8 +144,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 7
+  m_fontSizeBase: 7
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

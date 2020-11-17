@@ -6,6 +6,7 @@ public class SustainedResource : MonoBehaviour
 {
 #pragma warning disable
     [SerializeField] private ResourceType resourceType;
+    [SerializeField] private bool isInfinite = false;
     [SerializeField] private float resourceAmount;
     [SerializeField] private float emissionAmount;
     [SerializeField] private float frequency;
@@ -36,7 +37,11 @@ public class SustainedResource : MonoBehaviour
         while (resourceAmount > 0.0f)
         {
             float emitted = Mathf.Min(emissionAmount, resourceAmount);
-            resourceAmount -= emitted;
+            if (!isInfinite)
+            {
+                resourceAmount -= emitted;
+            }
+            
             switch (resourceType)
             {
                 case ResourceType.Water:

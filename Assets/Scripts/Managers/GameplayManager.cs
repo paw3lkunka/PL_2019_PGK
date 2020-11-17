@@ -31,7 +31,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         get => faith;
         set => faith.Set(value);
     }
-    [SerializeField] private Resource health;
+    [SerializeField] private Resource health = new Resource(0.0f, 0.0f);
     private float healthPercentLastFrame;
     public Resource Health
     {
@@ -140,7 +140,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
             cultistInfos.Add(new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
         }
 
-        Health = new Resource(10.0f * initialCultistsNumber, 10.0f * initialCultistsNumber);
+        Health.Max = 10.0f * initialCultistsNumber;
+        Health.Set(10.0f * initialCultistsNumber);
         
         // ? +++++ Initialize shrine list +++++
         mapGenerationSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
