@@ -67,7 +67,7 @@ public class Damageable : MonoBehaviour
             float realDamage = CalculateDamage(hitPoints);
             Health -= realDamage;
 
-            if(TryGetComponent<Cultist>(out var cultist))
+            if(TryGetComponent<Cultist>(out var cultist) || TryGetComponent<CultLeader>(out var cultLeader))
             {
                 GameplayManager.Instance.Health -= realDamage;
             }
