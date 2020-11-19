@@ -135,9 +135,15 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         waterPercentLastFrame = water.Normalized;
         faithPercentLastFrame = faith;
 
+        Health.Max += ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health.Max;
+        Health += ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health;
+        
         for (int i = 0; i < initialCultistsNumber; i++)
         {
             cultistInfos.Add(new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
+
+            Health.Max  += cultistInfos[i].hp;
+            Health += cultistInfos[i].hp;
         }
 
         // ? +++++ Initialize shrine list +++++

@@ -12,8 +12,6 @@ public class CultLeader : MonoBehaviour
         LocationManager.Instance.cultLeader = this;
         damageable = GetComponent<Damageable>();
         damageable.flags &= ~Damageable.Flags.canBeDamaged;
-        GameplayManager.Instance.Health.Max += damageable.Health.Max;
-        GameplayManager.Instance.Health += damageable.Health;
     }
 
     private void Update()
@@ -28,10 +26,7 @@ public class CultLeader : MonoBehaviour
     private void OnDisable()
     {
         LocationManager.Instance.ourCrew.Remove(damageable);
-        GameplayManager.Instance.Health.Max -= damageable.Health.Max;
-        GameplayManager.Instance.Health -= damageable.Health;
     }
 
     #endregion
-
 }
