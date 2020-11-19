@@ -118,6 +118,13 @@ public class Cultist : MonoBehaviour
 
     private void FanatismStart() => CanBeFanatic = true;
     private void FanatismEnd() => CanBeFanatic = false;
+
+    private void OnDamage(float damage)
+    {
+        GameplayManager.Instance.DecreseFaithByCultistWounded();
+        //TODO - some indication?
+    }
+
     private void OnDeath()
     {
         GameplayManager.Instance.cultistInfos.Remove(info);
@@ -157,6 +164,7 @@ public class Cultist : MonoBehaviour
         GameplayManager.Instance.FanaticStart += FanatismStart;
         GameplayManager.Instance.FanaticEnd += FanatismEnd;
 
+        damageable.DamageTaken += OnDamage;
         damageable.Death += OnDeath;
         IsFanatic = true; //HACK to ensure, that SetNormalState will work.
         SetNormalState();
@@ -173,6 +181,7 @@ public class Cultist : MonoBehaviour
         GameplayManager.Instance.FanaticEnd -= FanatismEnd;
         AudioTimeline.Instance.OnBeat -= AttackInDirection;
         AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
+        damageable.DamageTaken -= OnDamage;
         damageable.Death -= OnDeath;
     }
 

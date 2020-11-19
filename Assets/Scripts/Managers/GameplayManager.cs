@@ -44,9 +44,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     [ReadOnly]
     public int mapGenerationSeed; 
     public int initialCultistsNumber = 4;
-    public float faithForKilledEnemy = 0.01f;
-    public float faithForKilledCultist = 0.02f;
-    public float faithForWoundedCultist = 0.001f;
+    public float faithLimtPerCultist = 20;
+    public float cultistWoundedFaith = 0.1f;
 
     public float lowWaterLevel = 0.2f;
     public float lowFaithLevel = 0.2f;
@@ -223,18 +222,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         SceneManager.LoadScene(ApplicationManager.Instance.worldMapScene);
     }
 
-    public void FaithBoostOn()
-    {
-        faithForKilledEnemy *= faithBoost;
-        faithForKilledCultist *= faithBoost; // <-- Yes, that's intentional
-    }
-
-    public void FaithBoostOff()
-    {
-        faithForKilledEnemy /= faithBoost;
-        faithForKilledCultist /= faithBoost;
-    }
-
     public void OnLocationExitInvoke() => OnLocationExit?.Invoke();
     public void OnLocationEnterInvoke() => OnLocationEnter?.Invoke();
 
@@ -278,6 +265,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
             PauseGame();
         }
     }
+
+    public void DecreseFaithByCultistWounded() => faith -= cultistWoundedFaith;
 
     #endregion
 }
