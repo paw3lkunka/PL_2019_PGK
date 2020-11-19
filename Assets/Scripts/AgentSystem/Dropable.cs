@@ -34,11 +34,20 @@ public class Dropable : MonoBehaviour
         {
             for(int i = 0; i < UnityEngine.Random.Range(dropAmountRange.x, dropAmountRange.y); ++i)
             {
-                Vector3 posMod = new Vector3(UnityEngine.Random.Range(dropPositionRange.x, dropPositionRange.y), 
-                                            0.0f, 
+                Vector3 posMod = new Vector3(UnityEngine.Random.Range(dropPositionRange.x, dropPositionRange.y),
+                                            0.0f,
                                             UnityEngine.Random.Range(dropPositionRange.x, dropPositionRange.y));
-
-                Instantiate(spawnedPrefab, pos + posMod, Quaternion.identity);
+                if (spawnedPrefab.GetComponent<DropAnimation>() != null)
+                {
+                    GameObject obj = Instantiate(spawnedPrefab, pos, Quaternion.identity);
+                    obj.SetActive(false);
+                    obj.GetComponent<DropAnimation>().endPosition = posMod;
+                    obj.SetActive(true);
+                }
+                else
+                {
+                    Instantiate(spawnedPrefab, pos + posMod, Quaternion.identity);
+                }
             }
         }
     }
