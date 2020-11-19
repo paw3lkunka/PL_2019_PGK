@@ -2,7 +2,7 @@
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+/*
 [CustomPropertyDrawer(typeof(Resource))]
 public class ResourcePropertyDrawer : PropertyDrawer
 {
@@ -13,15 +13,17 @@ public class ResourcePropertyDrawer : PropertyDrawer
 
         SerializedProperty currentProp = property.FindPropertyRelative("current");
         SerializedProperty maxProp = property.FindPropertyRelative("max");
+        SerializedProperty overflowable = property.FindPropertyRelative("overflowable");
 
-        GUIContent currentLabel = new GUIContent(label.text + " (value,max)");
+        GUIContent currentLabel = new GUIContent(label.text + $" (value,max,ov)");
         GUIContent maxLabel = new GUIContent();
 
 
         currentProp.floatValue = EditorGUI.FloatField(currentRect, currentLabel, currentProp.floatValue);
         maxProp.floatValue = EditorGUI.FloatField(maxRect, maxLabel, maxProp.floatValue);
+        overflowable.boolValue = EditorGUI.Fiel
 
-        if(currentProp.floatValue > maxProp.floatValue)
+        if (currentProp.floatValue > maxProp.floatValue)
         {
             currentProp.floatValue = maxProp.floatValue;
         }
@@ -32,3 +34,4 @@ public class ResourcePropertyDrawer : PropertyDrawer
         }
     }
 }
+*/

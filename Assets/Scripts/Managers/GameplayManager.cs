@@ -17,21 +17,21 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 {
 #pragma warning disable
     [Header("Basic resources")]
-    [SerializeField] private Resource water = new Resource(100.0f, 100.0f);
+    [SerializeField] private Resource water = new Resource(100.0f, 100.0f, false);
     private float waterPercentLastFrame;
     public Resource Water 
     { 
         get => water;
         set => water.Set(value);
     }
-    [SerializeField] private Resource faith = new Resource(25.0f, 35.0f);
+    [SerializeField] private Resource faith = new Resource(25.0f, 35.0f, true);
     private float faithPercentLastFrame;
     public Resource Faith
     {
         get => faith;
         set => faith.Set(value);
     }
-    [SerializeField] private Resource health = new Resource(0.0f, 0.0f);
+    [SerializeField] private Resource health = new Resource(0.0f, 0.0f, false);
     private float healthPercentLastFrame;
     public Resource Health
     {

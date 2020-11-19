@@ -47,16 +47,19 @@ MonoBehaviour:
   water:
     current: 100
     max: 100
+    overflowable: 0
   faith:
     current: 25
     max: 35
+    overflowable: 1
+  health:
+    current: 0
+    max: 0
+    overflowable: 0
   mapGenerationSeed: 0
   initialCultistsNumber: 4
-  faithForKilledEnemy: 0.01
-  faithForKilledCultist: 0.02
-  faithForWoundedCultist: 0.001
-  faithUsageFactor: 0.0001
-  waterUsageFactor: 0.00005
+  faithLimtPerCultist: 20
+  cultistWoundedFaith: 0.1
   lowWaterLevel: 0.2
   lowFaithLevel: 0.2
   highFaithLevel: 0.7
@@ -64,7 +67,11 @@ MonoBehaviour:
   faithBoost: 2
   cultistInfos: []
   shrinesToVisit: 3
+  markedShrineId: 0
+  obeliskActivated: 0
   leaderIsDead: 0
   enteredTemple: 0
+  firstTimeOnMap: 1
   lastLocationPosition: {x: 0, y: 0, z: 0}
+  lastLocationRadius: 0
   lastLocationId: 0

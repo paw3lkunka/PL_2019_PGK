@@ -13,11 +13,12 @@ public class Resource
     /// </summary>
     /// <param name="current">Current value.</param>
     /// <param name="max">Maximum allowed value.</param>
-    public Resource(float current, float max)
+    public Resource(float current, float max, bool overflowable)
     {
         this.max = max;
-        this.current = Mathf.Clamp(current, 0, max);
-        InitialValue = current;
+        Overflowable = overflowable;
+        Set(current);
+        InitialValue = this.current;
     }
 
     /// <summary>
@@ -31,7 +32,7 @@ public class Resource
     /// </summary>
     /// <param name="value">value to set</param>
     /// <returns>real value (after clamp)</returns>
-    public float Set(float value) => current = Mathf.Clamp(value, 0, max);
+    public virtual float Set(float value) => current = Overflowable ? value : Mathf.Clamp(value, 0, max);
 
     /// <summary>
     /// Max value, always is bigger or equal maximum.
@@ -51,14 +52,21 @@ public class Resource
     [SerializeField]
     private float max;
 
+    [SerializeField]
+    private bool overflowable;
+
+    public bool Overflowable { get => overflowable; private set => overflowable = value; }
+
+    public bool IsOverflowed { get => current > max; }
+
     #region Operators
-    public static Resource operator + (Resource res, float f) => new Resource(f + res, res.Max);
-    public static Resource operator - (Resource res, float f) => new Resource(res.current - f, res.Max);
-    public static Resource operator * (Resource res, float f) => new Resource(f * res, res.Max);
-    public static Resource operator / (Resource res, float f) => new Resource(res.current / f, res.Max);
-    public static Resource operator % (Resource res, float f) => new Resource(res.current % f, res.Max);
-    public static Resource operator ++ (Resource res) => new Resource(res.current + 1, res.Max);
-    public static Resource operator -- (Resource res) => new Resource(res.current - 1, res.Max);
+    public static Resource operator + (Resource res, float f) => new Resource(f + res, res.Max, res.Overflowable);
+    public static Resource operator - (Resource res, float f) => new Resource(res.current - f, res.Max, res.Overflowable);
+    public static Resource operator * (Resource res, float f) => new Resource(f * res, res.Max, res.Overflowable);
+    public static Resource operator / (Resource res, float f) => new Resource(res.current / f, res.Max, res.Overflowable);
+    public static Resource operator % (Resource res, float f) => new Resource(res.current % f, res.Max, res.Overflowable);
+    public static Resource operator ++ (Resource res) => new Resource(res.current + 1, res.Max, res.Overflowable);
+    public static Resource operator -- (Resource res) => new Resource(res.current - 1, res.Max, res.Overflowable);
     public static bool operator == (Resource res, float f) => f == res;
     public static bool operator != (Resource res, float f) => f != res;
     public static bool operator == (Resource res1, Resource res2) => res1.current == res2.current;
@@ -91,6 +99,7 @@ public class Resource
         int result = 2137;
         result = 997 * result + current.GetHashCode();
         result = 997 * result + max.GetHashCode();
+        result = 997 * result + (Overflowable ? 0 : 1);
         return result;
     }
 
