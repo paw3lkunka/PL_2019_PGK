@@ -12,13 +12,13 @@ public class CultistEntityInfo
     }
     public void Save(Cultist cultist)
     {
-        hp = cultist.GetComponent<Damageable>().Health;
+        HP = cultist.GetComponent<Damageable>().Health;
     }
 
     public void Apply(Cultist cultist)
     {
         cultist.info = this;
-        cultist.GetComponent<Damageable>().SetHealthForce(hp);
+        cultist.GetComponent<Damageable>().SetHealthForce(HP);
     }
 
     public void Instantiate() => Apply(Object.Instantiate(Prefab).GetComponent<Cultist>());
@@ -31,6 +31,6 @@ public class CultistEntityInfo
 
     // -- [ Saved props ] ----------------------
 
-    public float hp { get; private set; } 
+    public Resource HP;
 
 }

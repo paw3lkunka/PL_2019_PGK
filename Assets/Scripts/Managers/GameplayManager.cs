@@ -31,13 +31,33 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         get => faith;
         set => faith.Set(value);
     }
-    [SerializeField] private Resource health = new Resource(0.0f, 0.0f, false);
-    private float healthPercentLastFrame;
-    public Resource Health
+    
+    public float Health
     {
-        get => health;
-        set => health.Set(value);
+        get
+        {
+            float allHealth = ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health;
+            foreach (var cultist in cultistInfos)
+            {
+                allHealth += cultist.HP;
+            }
+            return allHealth;
+        }
     }
+
+    public float MaxHealth
+    {
+        get
+        {
+            float allHealth = ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health.Max;
+            foreach (var cultist in cultistInfos)
+            {
+                allHealth += cultist.HP.Max;
+            }
+            return allHealth;
+        }
+    }
+
 #pragma warning restore
 
     [Header("Gameplay Config")] // * ===================================
@@ -134,15 +154,9 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         waterPercentLastFrame = water.Normalized;
         faithPercentLastFrame = faith;
 
-        Health.Max += ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health.Max;
-        Health += ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health;
-        
         for (int i = 0; i < initialCultistsNumber; i++)
         {
             cultistInfos.Add(new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
-
-            Health.Max  += cultistInfos[i].hp;
-            Health += cultistInfos[i].hp;
         }
 
         // ? +++++ Initialize shrine list +++++

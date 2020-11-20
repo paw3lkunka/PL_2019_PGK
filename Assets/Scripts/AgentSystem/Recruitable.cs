@@ -54,8 +54,6 @@ public class Recruitable : MonoBehaviour
             var newCultist = new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]);
             newCultist.Instantiate(transform.position, transform.rotation);
             GameplayManager.Instance.cultistInfos.Add(newCultist);
-            GameplayManager.Instance.Health.Max += newCultist.hp;
-            GameplayManager.Instance.Health += newCultist.hp;
 
             Destroy(gameObject);
             return true;

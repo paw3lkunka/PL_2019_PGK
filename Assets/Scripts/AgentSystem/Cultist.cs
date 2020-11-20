@@ -128,7 +128,6 @@ public class Cultist : MonoBehaviour
     private void OnDeath()
     {
         GameplayManager.Instance.cultistInfos.Remove(info);
-        GameplayManager.Instance.Health.Max -= damageable.Health.Max;
     }
 
     #endregion
