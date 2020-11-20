@@ -32,7 +32,7 @@ public class Resource
     /// </summary>
     /// <param name="value">value to set</param>
     /// <returns>real value (after clamp)</returns>
-    public virtual float Set(float value) => current = Overflowable ? value : Mathf.Clamp(value, 0, max);
+    public virtual float Set(float value) => current = Mathf.Clamp(value, 0, Overflowable ? float.PositiveInfinity : max);
 
     /// <summary>
     /// Max value, always is bigger or equal maximum.
