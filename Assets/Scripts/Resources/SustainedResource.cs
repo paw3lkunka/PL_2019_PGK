@@ -12,7 +12,15 @@ public class SustainedResource : MonoBehaviour
     [SerializeField] private float frequency;
 #pragma warning restore
 
+    public float StartResourceAmount { get; private set; }
+    public float ResourceAmount { get => resourceAmount; }
+
     private TextEmitter textEmitter;
+
+    private void Awake()
+    {
+        StartResourceAmount = resourceAmount;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
