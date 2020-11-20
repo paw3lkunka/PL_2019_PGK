@@ -24,6 +24,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         get => water;
         set => water.Set(value);
     }
+    [Header("Read only - controlled by start amount of cultists and faith percent")]
     [SerializeField] private Resource faith = new Resource(25.0f, 35.0f, true);
     private float faithPercentLastFrame;
     public Resource Faith
@@ -31,20 +32,41 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         get => faith;
         set => faith.Set(value);
     }
-    [SerializeField] private Resource health = new Resource(0.0f, 0.0f, false);
-    private float healthPercentLastFrame;
-    public Resource Health
+    [SerializeField] private float startFaithPercent = 0.75f;
+
+    public float Health
     {
-        get => health;
-        set => health.Set(value);
+        get
+        {
+            float allHealth = ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health;
+            foreach (var cultist in cultistInfos)
+            {
+                allHealth += cultist.HP;
+            }
+            return allHealth;
+        }
     }
+
+    public float MaxHealth
+    {
+        get
+        {
+            float allHealth = ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health.Max;
+            foreach (var cultist in cultistInfos)
+            {
+                allHealth += cultist.HP.Max;
+            }
+            return allHealth;
+        }
+    }
+
 #pragma warning restore
 
     [Header("Gameplay Config")] // * ===================================
     [ReadOnly]
     public int mapGenerationSeed; 
     public int initialCultistsNumber = 4;
-    public float faithLimtPerCultist = 20;
+    public float faithPerCultist = 20.0f;
     public float cultistWoundedFaith = 0.1f;
 
     public float lowWaterLevel = 0.2f;
@@ -130,20 +152,18 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     protected override void Awake()
     {
         base.Awake();
-        // ? +++++ Init double buffered variables +++++
-        waterPercentLastFrame = water.Normalized;
-        faithPercentLastFrame = faith;
 
-        Health.Max += ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health.Max;
-        Health += ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health;
-        
+        // ? +++++ Faith init +++++
+        faith.Max = new Resource(cultistInfos.Count * faithPerCultist * startFaithPercent, cultistInfos.Count * faithPerCultist, true);
+
         for (int i = 0; i < initialCultistsNumber; i++)
         {
             cultistInfos.Add(new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
-
-            Health.Max  += cultistInfos[i].hp;
-            Health += cultistInfos[i].hp;
         }
+
+        // ? +++++ Init double buffered variables +++++
+        waterPercentLastFrame = water.Normalized;
+        faithPercentLastFrame = faith.Normalized;
 
         // ? +++++ Initialize shrine list +++++
         mapGenerationSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
@@ -151,6 +171,9 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     private void Update() 
     {
+        // ! ----- Max faith amount -----
+        faith.Max = cultistInfos.Count * faithPerCultist;
+
         // ! ----- Game over condition -----
         if (!finalSceneLoaded && (leaderIsDead || enteredTemple))
         {

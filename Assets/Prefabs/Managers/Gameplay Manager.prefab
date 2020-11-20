@@ -52,14 +52,11 @@ MonoBehaviour:
     current: 25
     max: 35
     overflowable: 1
-  health:
-    current: 0
-    max: 0
-    overflowable: 0
+  startFaithPercent: 0.75
   mapGenerationSeed: 0
   initialCultistsNumber: 4
-  faithLimtPerCultist: 20
-  cultistWoundedFaith: 0.1
+  faithPerCultist: 10
+  cultistWoundedFaith: 0.75
   lowWaterLevel: 0.2
   lowFaithLevel: 0.2
   highFaithLevel: 0.7
