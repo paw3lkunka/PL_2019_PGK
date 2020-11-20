@@ -24,6 +24,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         get => water;
         set => water.Set(value);
     }
+    [Header("Read only - controlled by start amount of cultists and faith percent")]
     [SerializeField] private Resource faith = new Resource(25.0f, 35.0f, true);
     private float faithPercentLastFrame;
     public Resource Faith
@@ -31,7 +32,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         get => faith;
         set => faith.Set(value);
     }
-    
+    [SerializeField] private float startFaithPercent = 0.75f;
+
     public float Health
     {
         get
@@ -64,7 +66,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     [ReadOnly]
     public int mapGenerationSeed; 
     public int initialCultistsNumber = 4;
-    public float faithLimtPerCultist = 20;
+    public float faithPerCultist = 20.0f;
     public float cultistWoundedFaith = 0.1f;
 
     public float lowWaterLevel = 0.2f;
@@ -150,14 +152,18 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     protected override void Awake()
     {
         base.Awake();
-        // ? +++++ Init double buffered variables +++++
-        waterPercentLastFrame = water.Normalized;
-        faithPercentLastFrame = faith;
+
+        // ? +++++ Faith init +++++
+        faith.Max = new Resource(cultistInfos.Count * faithPerCultist * startFaithPercent, cultistInfos.Count * faithPerCultist, true);
 
         for (int i = 0; i < initialCultistsNumber; i++)
         {
             cultistInfos.Add(new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
         }
+
+        // ? +++++ Init double buffered variables +++++
+        waterPercentLastFrame = water.Normalized;
+        faithPercentLastFrame = faith.Normalized;
 
         // ? +++++ Initialize shrine list +++++
         mapGenerationSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
@@ -165,6 +171,9 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     private void Update() 
     {
+        // ! ----- Max faith amount -----
+        faith.Max = cultistInfos.Count * faithPerCultist;
+
         // ! ----- Game over condition -----
         if (!finalSceneLoaded && (leaderIsDead || enteredTemple))
         {
