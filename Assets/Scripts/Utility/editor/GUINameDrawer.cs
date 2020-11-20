@@ -12,7 +12,7 @@ public class GUINameDrawer : PropertyDrawer
         //HACK
         if (property.type == "Resource")
         {
-            //new ResourcePropertyDrawer().OnGUI(position, property, label);
+            new ResourcePropertyDrawer().OnGUI(position, property, label);
         }
         else
         {
