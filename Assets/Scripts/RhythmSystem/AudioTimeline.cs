@@ -19,6 +19,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
 #pragma warning disable
     [Header("Timeline setup")]
+    [SerializeField] private bool canFail = true;
     [SerializeField] private double songBpm = 80;
     [SerializeField] private int beatsPerBar = 4;
     [Header("Timing and delays")]
@@ -215,7 +216,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
         else if (hasEncounteredPerfect == true)
         {
             // The reset state when the beat evaluation should take place
-            if (!wasCurrentBeatHit)
+            if (canFail && !wasCurrentBeatHit)
             {
                 barBeatStates[currentBeatNumber] = BeatState.None;
                 if (hittingStarted)
@@ -418,7 +419,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
     private void BeatHitInputHandler(InputAction.CallbackContext ctx)
     {
-        AudioTimeline.Instance.BeatHit();
+        BeatHit();
     }
 
     private void PauseResumeInputHandler(InputAction.CallbackContext ctx)

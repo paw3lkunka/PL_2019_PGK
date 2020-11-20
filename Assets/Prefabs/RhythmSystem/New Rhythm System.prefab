@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52c51c4f8a729174ea1e3109ae78b1c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playRhythm: 1
   playOffbeat: 0
   countupHiHat: {fileID: 8300000, guid: 7d84d50c81a98f543a233295144696bc, type: 3}
   countupKick: {fileID: 8300000, guid: bd15706ea6b4af341a1bd80e6396df4d, type: 3}
@@ -546,7 +547,7 @@ MonoBehaviour:
   _persistent: 1
   songBpm: 90
   beatsPerBar: 4
-  failedBeatResetOffset: 4
+  failedBeatResetOffset: 0
 --- !u!114 &4482779334685485249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,9 +735,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b70c909ba156544195df246486cfa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goodBeatHitSound: {fileID: 8300000, guid: 54838bd010c23834586adde8665091c7, type: 3}
-  greatBeatHitSound: {fileID: 8300000, guid: 54838bd010c23834586adde8665091c7, type: 3}
-  badBeatHitSound: {fileID: 0}
+  goodBeatHitSound: {fileID: 8300000, guid: 48eabc641327bde43adce37a7a6382ff, type: 3}
+  greatBeatHitSound: {fileID: 8300000, guid: ad816e6824891bf4fbb4f9d46b9e897c, type: 3}
+  badBeatHitSound: {fileID: 8300000, guid: d7277d5750376c546824005a4bd93c9e, type: 3}
   failSound: {fileID: 8300000, guid: ee299a129fd7bd34299d40e345c51c27, type: 3}
 --- !u!82 &4482779335140122505
 AudioSource:

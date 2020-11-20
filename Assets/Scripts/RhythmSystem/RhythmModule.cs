@@ -8,6 +8,7 @@ public class RhythmModule : MonoBehaviour
     #region Variables
 
 #pragma warning disable
+    [SerializeField] private bool playRhythm = true;
     [SerializeField] private bool playOffbeat = false;
     [SerializeField] private AudioClip countupHiHat;
     [SerializeField] private AudioClip countupKick;
@@ -40,7 +41,8 @@ public class RhythmModule : MonoBehaviour
 
     public void PlayCount(bool isMain)
     {
-        rhythmSource.PlayOneShot(countupKick);
+        if (playRhythm)
+            rhythmSource.PlayOneShot(countupKick);
 
         if (playOffbeat && isMain)
         {
