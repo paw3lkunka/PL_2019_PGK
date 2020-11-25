@@ -6,14 +6,7 @@ public class PauseMenuController : MonoBehaviour
 {
     public void Continue()
     {
-        if (AudioTimeline.Instance)
-        {
-            AudioTimeline.Instance.Resume();
-        }
-        else
-        {
-            GameplayManager.Instance.ResumeGame();
-        }
+        GameplayManager.Instance.ResumeGame();
     }
 
     public void Options()

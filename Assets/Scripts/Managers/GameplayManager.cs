@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public enum ResourceType { Water, Faith, Health }
@@ -148,7 +149,19 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public event System.Action FanaticEnd;
 
     #region MonoBehaviour
-    
+
+    private void OnEnable()
+    {
+        ApplicationManager.Instance.Input.Gameplay.Pause.performed += TogglePause;
+        ApplicationManager.Instance.Input.Gameplay.Pause.Enable();
+    }
+
+    private void OnDisable()
+    {
+        ApplicationManager.Instance.Input.Gameplay.Pause.performed -= TogglePause;
+        ApplicationManager.Instance.Input.Gameplay.Pause.Disable();
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -267,6 +280,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.pauseGUI, PushBehaviour.Lock);
         IsPaused = true;
+        AudioTimeline.Instance?.Pause();
         Time.timeScale = 0.0f;
     }
 
@@ -274,10 +288,11 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         UIOverlayManager.Instance.PopFromCanvas();
         IsPaused = false;
+        AudioTimeline.Instance?.Resume();
         Time.timeScale = 1.0f;
     }
 
-    public void TogglePause()
+    public void TogglePause(InputAction.CallbackContext ctx)
     {
         if (IsPaused)
         {

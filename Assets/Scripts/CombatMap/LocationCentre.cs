@@ -25,14 +25,12 @@ public class LocationCentre : MonoBehaviour
     {
         EnterZone[] enterZones = FindObjectsOfType<EnterZone>();
         float[] angles = new float[enterZones.Length];
-        Debug.Log("Enter direction: " + enterDirection);
         Vector3 direction;
         for (int i = 0; i < enterZones.Length; i++)
         {
             direction = transform.position - enterZones[i].transform.position;
             direction.y = 0.0f;
             direction = direction.normalized;
-            Debug.Log("Direction " + i + ": " + direction);
             angles[i] = Vector3.Angle(enterDirection, direction);
         }
 

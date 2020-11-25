@@ -111,7 +111,6 @@ public class Cultist : MonoBehaviour
 
     private void FailBit()
     {
-        Debug.Log("FailBit");
         attack?.HoldFire();
         SetNormalState();
     }

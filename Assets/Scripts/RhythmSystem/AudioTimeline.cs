@@ -262,39 +262,40 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     /// </summary>
     public void Pause()
     {
-        if (TimelineState == TimelineState.Playing)
-        {
-            hittingStarted = true;
+        SequencePauseHandler(true);
+        //if (TimelineState == TimelineState.Playing)
+        //{
+        //    hittingStarted = true;
 
-            if (wasCurrentBeatHit == false)
-            {
-                wasCurrentBeatHit = true;
+        //    if (wasCurrentBeatHit == false)
+        //    {
+        //        wasCurrentBeatHit = true;
 
-                if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
-                {
-                    SequencePauseHandler(false);
-                }
-                else
-                {
-                    if (pauseCounter >= beatsPerBar - 1)
-                    {
-                        SequencePauseHandler(true);
-                    }
-                    else
-                    {
-                        // And send the event with current beat state attached to
-                        BeatHitHandler(currentBeatState, currentBeatNumber);
-                        pauseCounter++;
-                    }
-                }
-                // Record the beat state for bar evaluation
-                barBeatStates[currentBeatNumber] = currentBeatState;
-            }
-            else
-            {
-                SequencePauseHandler(false);
-            }
-        }
+        //        if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
+        //        {
+        //            SequencePauseHandler(false);
+        //        }
+        //        else
+        //        {
+        //            if (pauseCounter >= beatsPerBar - 1)
+        //            {
+        //                SequencePauseHandler(true);
+        //            }
+        //            else
+        //            {
+        //                // And send the event with current beat state attached to
+        //                BeatHitHandler(currentBeatState, currentBeatNumber);
+        //                pauseCounter++;
+        //            }
+        //        }
+        //        // Record the beat state for bar evaluation
+        //        barBeatStates[currentBeatNumber] = currentBeatState;
+        //    }
+        //    else
+        //    {
+        //        SequencePauseHandler(false);
+        //    }
+        //}
     }
 
     /// <summary>
@@ -302,10 +303,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     /// </summary>
     public void Resume()
     {
-        if (TimelineState == TimelineState.Paused)
-        {
-            SequenceResumeHandler();
-        }
+        SequenceResumeHandler();
     }
 
     /// <summary>
@@ -424,16 +422,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
     private void PauseResumeInputHandler(InputAction.CallbackContext ctx)
     {
-        switch(TimelineState)
-        {
-            case TimelineState.Playing:
-                Pause();
-                break;
-
-            case TimelineState.Paused:
-                Resume();
-                break;
-        }
+        Pause();
     }
 
     #endregion

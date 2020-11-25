@@ -61,21 +61,12 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 
     private void OnEnable()
     {
-        ApplicationManager.Instance.Input.Gameplay.Pause.performed += WorldMapPause;
-        ApplicationManager.Instance.Input.Gameplay.Pause.Enable();
         ApplicationManager.Instance.Input.CombatMode.Disable();
     }
 
     private void OnDisable()
     {
-        ApplicationManager.Instance.Input.Gameplay.Pause.performed -= WorldMapPause;
-        ApplicationManager.Instance.Input.Gameplay.Pause.Disable();
         ApplicationManager.Instance.Input.CombatMode.Enable();
-    }
-
-    private void WorldMapPause(InputAction.CallbackContext ctx)
-    {
-        GameplayManager.Instance.TogglePause();
     }
 
     private IEnumerator LocationCooldown(float delay)
