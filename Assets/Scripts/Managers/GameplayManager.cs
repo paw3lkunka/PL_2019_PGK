@@ -61,6 +61,16 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         }
     }
 
+    public bool IsAvoidingFight
+    {
+        get
+        {
+            return avoidingFightTimer > maxAvoidingFightTime;
+        }
+    }
+
+    [HideInInspector]public float avoidingFightTimer = 0.0f;
+
 #pragma warning restore
 
     [Header("Gameplay Config")] // * ===================================
@@ -76,6 +86,9 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public float fanaticFaithLevel = 0.9f;
 
     public float faithBoost = 2.0f;
+
+    public float maxAvoidingFightTime = 240.0f;
+    public float avoidingFightsFaithDebuf = 0.6f;
 
     // * ===== Pause handling =======================================
 
@@ -221,6 +234,11 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
         waterPercentLastFrame = water.Normalized;
         faithPercentLastFrame = faith.Normalized;
+
+        if(!IsPaused)
+        {
+            avoidingFightTimer += Time.deltaTime;
+        }
     }
 
     #endregion

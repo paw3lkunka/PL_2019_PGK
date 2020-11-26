@@ -21,7 +21,15 @@ public class ResourceDepleter : MonoBehaviour
     [SerializeField] private float _faithDepletionRate;
     public float FaithDepletionRate
     {
-        get => _faithDepletionRate;
+        get  
+        {
+            float finalValue =_faithDepletionRate;
+            if(GameplayManager.Instance.IsAvoidingFight)
+            {
+                finalValue *= 1.0f + GameplayManager.Instance.avoidingFightsFaithDebuf;
+            }
+            return finalValue;
+        }
         private set => _faithDepletionRate = value;
     }
 
