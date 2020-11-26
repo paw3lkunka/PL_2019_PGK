@@ -71,9 +71,9 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public float cultistWoundedFaith = 0.1f;
 
     public float lowWaterLevel = 0.2f;
-    public float lowFaithLevel = 0.2f;
+    public float lowFaithLevel = 0.1f;
     public float highFaithLevel = 0.7f;
-    public float fanaticFaithLevel = 0.9f;
+    public float fanaticFaithLevel = 1.0f;
 
     public float faithBoost = 2.0f;
 

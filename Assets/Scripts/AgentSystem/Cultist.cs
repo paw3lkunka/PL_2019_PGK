@@ -27,7 +27,7 @@ public class Cultist : MonoBehaviour
     {
         detection.detectionDirection = CombatCursorManager.Instance.shootDirection;
 
-        if (RhythmMechanics.Instance.Combo > 0)
+        if (RhythmMechanics.Instance.Combo > 0 && CombatCursorManager.Instance.CanShoot)
         {
             Vector3? detected = detection.Func();
 
@@ -39,6 +39,10 @@ public class Cultist : MonoBehaviour
             {
                 attack?.HoldFire();
             }
+        }
+        else
+        {
+            attack?.HoldFire();
         }
     }
 

@@ -36,7 +36,6 @@ public class BehaviourWorldMapInput : MonoBehaviour
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Enable();
         target = transform.position;
-        Debug.Log("Target: " + target.ToString());
     }
 
     private void Update()
