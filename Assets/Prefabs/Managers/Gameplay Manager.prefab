@@ -53,6 +53,7 @@ MonoBehaviour:
     max: 35
     overflowable: 1
   startFaithPercent: 0.75
+  avoidingFightTimer: 0
   mapGenerationSeed: 0
   initialCultistsNumber: 4
   faithPerCultist: 10
@@ -62,6 +63,8 @@ MonoBehaviour:
   highFaithLevel: 0.7
   fanaticFaithLevel: 0.9
   faithBoost: 2
+  maxAvoidingFightTime: 240
+  avoidingFightsFaithDebuf: 0.6
   cultistInfos: []
   shrinesToVisit: 3
   markedShrineId: 0
