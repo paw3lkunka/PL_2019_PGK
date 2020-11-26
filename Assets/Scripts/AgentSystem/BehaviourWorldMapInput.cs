@@ -31,15 +31,20 @@ public class BehaviourWorldMapInput : MonoBehaviour
         lineRenderer = GetComponentInChildren<LineRenderer>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Enable();
+        target = transform.position;
+        Debug.Log("Target: " + target.ToString());
     }
 
     private void Update()
     {
-        SGUtils.DrawNavLine(lineRenderer, transform.position, target, out _);
+        if(target != transform.position)
+        {
+            SGUtils.DrawNavLine(lineRenderer, transform.position, target, out _);
+        }
     }
 
     private void OnDisable()
