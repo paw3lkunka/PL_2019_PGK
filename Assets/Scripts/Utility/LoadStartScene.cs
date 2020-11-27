@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class LoadStartScene : MonoBehaviour
 {
@@ -12,7 +13,12 @@ public class LoadStartScene : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Keyboard.current[Key.Space].wasPressedThisFrame)
+        {
+            StartScene();
+        }
+
+        if (Gamepad.current.buttonSouth.wasPressedThisFrame)
         {
             StartScene();
         }

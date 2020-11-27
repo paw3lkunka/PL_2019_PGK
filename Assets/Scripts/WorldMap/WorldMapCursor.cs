@@ -12,6 +12,8 @@ public class WorldMapCursor : MonoBehaviour
     public TextMeshProUGUI waterUsage;
     public TextMeshProUGUI faithUsage;
 
+    public float cursorRange = 20.0f;
+
     private LineRenderer lineRenderer;
 
     private void Awake()
@@ -35,13 +37,22 @@ public class WorldMapCursor : MonoBehaviour
     {
         if(!GameplayManager.Instance.IsPaused)
         {
-            if (ApplicationManager.Instance.CurrentInputScheme == InputSchemeEnum.MouseKeyboard)
+            switch (ApplicationManager.Instance.CurrentInputScheme)
             {
-                Vector3 pos = default; 
-                if (SGUtils.CameraToGroundRaycast(Camera.main, 1000, ref pos))
-                {
-                    WorldSceneManager.Instance.Cursor.transform.position = pos;
-                }
+                case InputSchemeEnum.MouseKeyboard:
+                    MoveCursorPointer();
+                    break;
+
+                case InputSchemeEnum.Gamepad:
+                    MoveCursorGamepad();
+                    break;
+
+                case InputSchemeEnum.JoystickKeyboard:
+                    MoveCursorJoystick();
+                    break;
+
+                case InputSchemeEnum.Touchscreen:
+                    break;
             }
 
             SGUtils.DrawNavLine
@@ -68,5 +79,43 @@ public class WorldMapCursor : MonoBehaviour
     {
         float time = route / speed;
         return usage * (time / Time.fixedDeltaTime);
+    }
+
+    private void MoveCursorPointer()
+    {
+        Vector3 pos = default;
+        if (SGUtils.CameraToGroundNearestRaycast(Camera.main, 1000, ref pos))
+        {
+            WorldSceneManager.Instance.Cursor.transform.position = pos;
+        }
+    }
+
+    private void MoveCursorGamepad()
+    {
+        var joystickAxis = Gamepad.current.leftStick.ReadValue();
+        SetCursorForJoyAxis(joystickAxis);
+    }
+
+    private void MoveCursorJoystick()
+    {
+        var joystickAxis = Joystick.current.stick.ReadValue();
+        SetCursorForJoyAxis(joystickAxis);
+    }
+
+    private void SetCursorForJoyAxis(Vector2 joystickAxis)
+    {
+        var nextCursorPosition = WorldSceneManager.Instance.Leader.transform.position;
+        var cursorOffset = new Vector3(-joystickAxis.y, 0.0f, joystickAxis.x) * cursorRange;
+
+        if(cursorOffset.magnitude > 1.0f)
+        {
+            nextCursorPosition += cursorOffset;
+        
+            // RaycastHit rayHit;
+            // Physics.Raycast(new Vector3(nextCursorPosition.x, 1000.0f, nextCursorPosition.z), Vector3.down, out rayHit);
+            // nextCursorPosition = rayHit.point;
+        }
+
+        WorldSceneManager.Instance.Cursor.transform.position = nextCursorPosition;
     }
 }

@@ -15,11 +15,7 @@ public class BehaviourWorldMapInput : MonoBehaviour
 
     private void GoToCursorPosition(InputAction.CallbackContext ctx)
     {
-        Vector3 pos = default;
-        if (SGUtils.CameraToGroundRaycast(Camera.main, 1000, ref pos))
-        {
-            moveable.Go(target = pos);
-        }
+        moveable.Go(target = WorldSceneManager.Instance.Cursor.transform.position);
     }
 
 

@@ -63,6 +63,7 @@ public class WorldMapCamera : MonoBehaviour
     {
         Vector3 targetPosition;
         Quaternion targetRotation;
+
         if (zoom < 0.5f)
         {
             targetPosition = Vector3.Lerp(closestPoint.position, middlePoint.position, zoom * 2.0f);

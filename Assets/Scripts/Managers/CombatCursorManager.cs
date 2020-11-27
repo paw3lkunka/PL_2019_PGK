@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInstancing>
 {
     [field: SerializeField, GUIName("CursorRange")]
-    public float CursorRange { get; private set; } = 5.0f;
+    public float CursorRange { get; private set; } = 20.0f;
 
     [field: SerializeField, GUIName("ShootingCancelRange")]
     public float ShootingCancelRange { get; private set; } = 5.0f;
@@ -124,19 +124,29 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     private void MoveCursorGamepad()
     {
         var joystickAxis = Gamepad.current.leftStick.ReadValue();
-        var nextCursorPosition = LocationManager.Instance.cultLeader.transform.position
-                                    + new Vector3(joystickAxis.x, joystickAxis.y) * CursorRange;
-        nextCursorPosition.z = 0;
-
-        MainCursor.transform.position = nextCursorPosition;
+        SetCursorForJoyAxis(joystickAxis);
     }
 
     private void MoveCursorJoystick()
     {
         var joystickAxis = Joystick.current.stick.ReadValue();
-        var nextCursorPosition = LocationManager.Instance.cultLeader.transform.position
-                                    + new Vector3(joystickAxis.x, joystickAxis.y) * CursorRange;
-        nextCursorPosition.z = 0;
+        SetCursorForJoyAxis(joystickAxis);
+    }
+
+    private void SetCursorForJoyAxis(Vector2 joystickAxis)
+    {
+        var nextCursorPosition = LocationManager.Instance.cultLeader.transform.position;
+        var cursorOffset = new Vector3(-joystickAxis.y, 0.0f, joystickAxis.x) * CursorRange;
+
+        if(cursorOffset.magnitude > ShootingCancelRange)
+        {
+            nextCursorPosition += cursorOffset;
+            
+            RaycastHit rayHit;
+            Physics.Raycast(new Vector3(nextCursorPosition.x, 1000.0f, nextCursorPosition.z), Vector3.down, out rayHit);
+            nextCursorPosition = rayHit.point;
+        }
+
         MainCursor.transform.position = nextCursorPosition;
     }
 
