@@ -9,6 +9,7 @@ public class Cultist : MonoBehaviour
     private Damageable damageable;
     private Detection detection;
     private IAttack attack;
+    private IBoostable[] boostables;
     public CultistEntityInfo info;
 
     public MonoBehaviour normalBehaviour;
@@ -70,6 +71,25 @@ public class Cultist : MonoBehaviour
         attack?.HoldFire();
     }
 
+    private void OnLowFaithStart()
+    {
+        foreach (var item in boostables)
+        {
+            item.BState = BoostableState.decresed;
+        }
+    }
+
+    private void OnLowFaithEnd()
+    {
+        foreach (var item in boostables)
+        {
+            if (item.IsDecresed)
+            {
+                item.BState = BoostableState.normal;
+            }
+        }
+    }
+
     private void OnOverfaithStart()
     {
         //normalBehaviour.enabled = false;
@@ -79,10 +99,11 @@ public class Cultist : MonoBehaviour
         //AudioTimeline.Instance.OnBeat -= AttackInDirection;
         //AudioTimeline.Instance.OnBeat += AttackNearbyEnemy;
 
-
-
+        foreach (var item in boostables)
+        {
+            item.BState = BoostableState.boosted;
+        }
     }
-
 
     private void OnOverfaithEnd()
     {
@@ -92,6 +113,14 @@ public class Cultist : MonoBehaviour
 
         //AudioTimeline.Instance.OnBeat += AttackInDirection;
         //AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
+
+        foreach (var item in boostables)
+        {
+            if (item.IsBoosted)
+            {
+                item.BState = BoostableState.normal;
+            }
+        }
     }
 
     private void OnDamage(float damage)
@@ -114,6 +143,7 @@ public class Cultist : MonoBehaviour
         damageable = GetComponent<Damageable>();
         detection = GetComponent<Detection>();
         attack = GetComponent<IAttack>();
+        boostables = GetComponentsInChildren<IBoostable>();
     }
 
     private void Update()
@@ -132,6 +162,9 @@ public class Cultist : MonoBehaviour
         {
             Debug.LogWarning("No audioTimeline!");
         }
+
+        GameplayManager.Instance.LowFaithLevelStart += OnLowFaithStart;
+        GameplayManager.Instance.LowFaithLevelEnd += OnLowFaithEnd;
         GameplayManager.Instance.OverfaithStart += OnOverfaithStart;
         GameplayManager.Instance.OverfaithEnd += OnOverfaithEnd;
 
@@ -146,8 +179,12 @@ public class Cultist : MonoBehaviour
         {
             AudioTimeline.Instance.OnBeatFail -= FailBit;
         }
+
+        GameplayManager.Instance.LowFaithLevelStart -= OnLowFaithStart;
+        GameplayManager.Instance.LowFaithLevelEnd -= OnLowFaithEnd;
         GameplayManager.Instance.OverfaithStart -= OnOverfaithStart;
         GameplayManager.Instance.OverfaithEnd -= OnOverfaithEnd;
+
         AudioTimeline.Instance.OnBeat -= AttackInDirection;
         AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
         damageable.DamageTaken -= OnDamage;
