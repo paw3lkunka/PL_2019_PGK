@@ -26,7 +26,7 @@ public class WorldMapRhythmMechanics : MonoBehaviour
             if (!primaryInteraction)
             {
                 moveable.Stop();
-                moveable.IsBoosted = false;
+                moveable.BState = BoostableState.normal;
 
                 foreach (var cultist in GameplayManager.Instance.cultistInfos)
                 {
@@ -40,12 +40,12 @@ public class WorldMapRhythmMechanics : MonoBehaviour
             }
             else
             {
-                moveable.IsBoosted = true;
+                moveable.BState = BoostableState.boosted;
             }
         }
         else
         {
-            moveable.IsBoosted = false;
+            moveable.BState = BoostableState.normal;
         }
     }
 }

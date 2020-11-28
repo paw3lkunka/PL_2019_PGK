@@ -252,9 +252,13 @@ MonoBehaviour:
   <RangeMultiplier>k__BackingField: 1.5
   <IntervalMultiplier>k__BackingField: 0.25
   <DamageBoost>k__BackingField: 0.75
+  <DamageDecrese>k__BackingField: 1
   <RangeBoost>k__BackingField: 2
   <RangeMultiplierBoost>k__BackingField: 0.125
-  <IsBoosted>k__BackingField: 0
+  <RangeMultiplierDecrese>k__BackingField: 1
+  bState: 0
+  <CanBeBoosted>k__BackingField: 1
+  <CanBeDecresed>k__BackingField: 0
 --- !u!114 &7425834142536354765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,7 +279,10 @@ MonoBehaviour:
   <DefenseBase>k__BackingField: 0
   <ReactToHit>k__BackingField: 0
   <DefenseBoost>k__BackingField: 1
-  <IsBoosted>k__BackingField: 0
+  <DefenseDecrese>k__BackingField: 0
+  bState: 0
+  <CanBeBoosted>k__BackingField: 1
+  <CanBeDecresed>k__BackingField: 0
 --- !u!114 &7526696578712632604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +298,10 @@ MonoBehaviour:
   flags: 1
   <SpeedBase>k__BackingField: 3.5
   <SpeedBoosted>k__BackingField: 5
-  <IsBoosted>k__BackingField: 0
+  <SpeedDecresed>k__BackingField: 0
+  bState: 0
+  <CanBeBoosted>k__BackingField: 1
+  <CanBeDecresed>k__BackingField: 0
 --- !u!114 &7379796028654906305
 MonoBehaviour:
   m_ObjectHideFlags: 0
