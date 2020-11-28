@@ -46,10 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 0.5
   fadeOutTime: 0.25
-  speed: 0.01
+  speed: 0.035
   entropy: 1
-  amplitude: 0.01
-  speedAcc: 0.01
+  amplitude: 0.015
+  speedAcc: 0.015
   entropyAcc: 0.01
   amplitudeAcc: 0.01
 --- !u!1 &6671453848841189809
@@ -119,9 +119,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0acc820450c1f1343b905b09e2cd9cc5, type: 2}
-  m_sharedMaterial: {fileID: -1753381669728134186, guid: 0acc820450c1f1343b905b09e2cd9cc5,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc37cead9bc1bf74099731ee96dcb1e7, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 4f951e3a8d03d054ca192afd92d53a75, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -145,8 +144,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -155,7 +154,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 3
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
