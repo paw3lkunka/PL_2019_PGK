@@ -15,11 +15,7 @@ public class BehaviourWorldMapInput : MonoBehaviour
 
     private void GoToCursorPosition(InputAction.CallbackContext ctx)
     {
-        Vector3 pos = default;
-        if (SGUtils.CameraToGroundRaycast(Camera.main, 1000, ref pos))
-        {
-            moveable.Go(target = pos);
-        }
+        moveable.Go(target = WorldSceneManager.Instance.Cursor.transform.position);
     }
 
 
@@ -31,15 +27,19 @@ public class BehaviourWorldMapInput : MonoBehaviour
         lineRenderer = GetComponentInChildren<LineRenderer>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Enable();
+        target = transform.position;
     }
 
     private void Update()
     {
-        SGUtils.DrawNavLine(lineRenderer, transform.position, target, out _);
+        if(target != transform.position)
+        {
+            SGUtils.DrawNavLine(lineRenderer, transform.position, target, out _);
+        }
     }
 
     private void OnDisable()

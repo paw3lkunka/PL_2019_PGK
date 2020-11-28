@@ -19,6 +19,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
 #pragma warning disable
     [Header("Timeline setup")]
+    [SerializeField] private bool canFail = true;
     [SerializeField] private double songBpm = 80;
     [SerializeField] private int beatsPerBar = 4;
     [Header("Timing and delays")]
@@ -34,7 +35,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     // Rhythm window tolerance values
     private double goodTolerance = 0.20f;
     private double greatTolerance = 0.08f;
-    private double toleranceBias = 0.0f; // Use with caution as I don't have the patience to check if this value is correct
+    private readonly double toleranceBias = 0.0f; // Use with caution as I don't have the patience to check if this value is correct
 
     // Audio timing control variables
     // Beat tracking
@@ -85,7 +86,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     #region Events
 
     public delegate void BeatEvent(bool isMain);
-    public delegate void BeatHitEvent(BeatState beatState, int beatNumber);
+    public delegate void BeatHitEvent(BeatState beatState, int beatNumber, bool primaryInteraction);
     public delegate void BarEndEvent(BarState barState);
     public event BeatEvent OnBeat;
     public event BeatHitEvent OnBeatHit;
@@ -118,9 +119,10 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
     private void OnEnable()
     {
-        input.Gameplay.SetWalkTarget.performed += BeatHitInputHandler;
-        input.CombatMode.SetShootTarget.performed += BeatHitInputHandler;
-        input.Gameplay.ShowHideInfoLog.performed += BeatHitInputHandler;
+        input.Gameplay.SetWalkTarget.performed += PrimaryBeatHitInputHandler;
+        input.Gameplay.SetWalkTarget.Enable();
+        input.CombatMode.SetShootTarget.performed += SecondaryBeatHitInputHandler;
+        input.CombatMode.SetShootTarget.Enable();
 
         input.Gameplay.Pause.performed += PauseResumeInputHandler;
         input.Gameplay.Pause.Enable();
@@ -128,9 +130,10 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
     private void OnDisable()
     {
-        input.Gameplay.SetWalkTarget.performed -= BeatHitInputHandler;
-        input.CombatMode.SetShootTarget.performed -= BeatHitInputHandler;
-        input.Gameplay.ShowHideInfoLog.performed -= BeatHitInputHandler;
+        input.Gameplay.SetWalkTarget.performed -= PrimaryBeatHitInputHandler;
+        input.Gameplay.SetWalkTarget.Disable();
+        input.CombatMode.SetShootTarget.performed -= SecondaryBeatHitInputHandler;
+        input.CombatMode.SetShootTarget.Disable();
 
         input.Gameplay.Pause.performed -= PauseResumeInputHandler;
         input.Gameplay.Pause.Disable();
@@ -145,7 +148,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
             case TimelineState.None:
             case TimelineState.Paused:
             case TimelineState.Interrupted:
-                return; // The rhythm is not playing so return and do nothing
+               return; // The rhythm is not playing so return and do nothing
                         // TODO: Important part, should verify its validity
 
             case TimelineState.Countup:
@@ -222,7 +225,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
                 {
                     if (TimelineState != TimelineState.Countup)
                     {
-                        BeatHitHandler(BeatState.None, currentBeatNumber);
+                        BeatHitHandler(BeatState.None, currentBeatNumber, true);
                     }
                 }
             }
@@ -261,39 +264,40 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     /// </summary>
     public void Pause()
     {
-        if (TimelineState == TimelineState.Playing)
-        {
-            hittingStarted = true;
+        SequencePauseHandler(true);
+        //if (TimelineState == TimelineState.Playing)
+        //{
+        //    hittingStarted = true;
 
-            if (wasCurrentBeatHit == false)
-            {
-                wasCurrentBeatHit = true;
+        //    if (wasCurrentBeatHit == false)
+        //    {
+        //        wasCurrentBeatHit = true;
 
-                if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
-                {
-                    SequencePauseHandler(false);
-                }
-                else
-                {
-                    if (pauseCounter >= beatsPerBar - 1)
-                    {
-                        SequencePauseHandler(true);
-                    }
-                    else
-                    {
-                        // And send the event with current beat state attached to
-                        BeatHitHandler(currentBeatState, currentBeatNumber);
-                        pauseCounter++;
-                    }
-                }
-                // Record the beat state for bar evaluation
-                barBeatStates[currentBeatNumber] = currentBeatState;
-            }
-            else
-            {
-                SequencePauseHandler(false);
-            }
-        }
+        //        if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
+        //        {
+        //            SequencePauseHandler(false);
+        //        }
+        //        else
+        //        {
+        //            if (pauseCounter >= beatsPerBar - 1)
+        //            {
+        //                SequencePauseHandler(true);
+        //            }
+        //            else
+        //            {
+        //                // And send the event with current beat state attached to
+        //                BeatHitHandler(currentBeatState, currentBeatNumber);
+        //                pauseCounter++;
+        //            }
+        //        }
+        //        // Record the beat state for bar evaluation
+        //        barBeatStates[currentBeatNumber] = currentBeatState;
+        //    }
+        //    else
+        //    {
+        //        SequencePauseHandler(false);
+        //    }
+        //}
     }
 
     /// <summary>
@@ -301,17 +305,14 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     /// </summary>
     public void Resume()
     {
-        if (TimelineState == TimelineState.Paused)
-        {
-            SequenceResumeHandler();
-        }
+        SequenceResumeHandler();
     }
 
     /// <summary>
     /// The most important method, should be invoked by input mechanisms that handle rhythm
     /// Is responsible for determining at which state the beat was hit and invokes actions accordingly
     /// </summary>
-    public void BeatHit()
+    public void BeatHit(bool primary)
     {
         if (TimelineState == TimelineState.Countup || TimelineState == TimelineState.Playing)
         {
@@ -322,11 +323,11 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
                 if (currentBeatState == BeatState.Bad || currentBeatState == BeatState.None)
                 {
-                    BeatHitHandler(BeatState.Bad, currentBeatNumber);
+                    BeatHitHandler(BeatState.Bad, currentBeatNumber, primary);
                 }
                 else
                 {
-                    BeatHitHandler(currentBeatState, currentBeatNumber);
+                    BeatHitHandler(currentBeatState, currentBeatNumber, primary);
                 }
                 wasCurrentBeatHit = true;
                 // Always record the beat state for bar evaluation
@@ -334,7 +335,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
             }
             else
             {
-                BeatHitHandler(BeatState.Bad, currentBeatNumber);
+                BeatHitHandler(BeatState.Bad, currentBeatNumber, primary);
             }
         }
     }
@@ -416,23 +417,19 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
     #region Input
 
-    private void BeatHitInputHandler(InputAction.CallbackContext ctx)
+    private void PrimaryBeatHitInputHandler(InputAction.CallbackContext ctx)
     {
-        AudioTimeline.Instance.BeatHit();
+        BeatHit(true);
+    }
+
+    private void SecondaryBeatHitInputHandler(InputAction.CallbackContext ctx)
+    {
+        BeatHit(false);
     }
 
     private void PauseResumeInputHandler(InputAction.CallbackContext ctx)
     {
-        switch(TimelineState)
-        {
-            case TimelineState.Playing:
-                Pause();
-                break;
-
-            case TimelineState.Paused:
-                Resume();
-                break;
-        }
+        Pause();
     }
 
     #endregion

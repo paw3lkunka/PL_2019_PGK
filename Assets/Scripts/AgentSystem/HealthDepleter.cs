@@ -7,20 +7,13 @@ public class HealthDepleter : MonoBehaviour
 {
 #pragma warning disable
     [SerializeField] private float waterLevelTrigger = 0.0f; // TODO: Should probably be set in the manager
-    [SerializeField] private bool isTimeBased = false;
-    [SerializeField] private float veloctyThreshold = 0.01f;
+    [SerializeField] private float damageInterval = 1.0f;
+    [SerializeField] private Vector2 damageRange;
     [SerializeField] private float damageChance = 0.3f;
-
-    [SerializeField] private float _healthDepletionRate;
-    public float HealthDepletionRate
-    {
-        get => _healthDepletionRate;
-        private set => _healthDepletionRate = value;
-    }
 #pragma warning restore
 
-    private Vector3 lastFramePos;
     private Damageable damageable;
+    private bool isGettingDamaged = false;
 
     private void Awake()
     {
@@ -29,17 +22,27 @@ public class HealthDepleter : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameplayManager.Instance.Water <= waterLevelTrigger)
+        if (!isGettingDamaged && GameplayManager.Instance.Water <= waterLevelTrigger)
         {
-            if (isTimeBased || (lastFramePos - transform.position).magnitude > veloctyThreshold)
-            {
-                if (Random.Range(0.0f, 1.0f) < damageChance)
-                {
-                    damageable.DamageIgnoreDefense(HealthDepletionRate);
-                }
-            }
+            isGettingDamaged = true;
+            StartCoroutine(HealthDepletion());
         }
-        lastFramePos = transform.position;
+        else if (isGettingDamaged && GameplayManager.Instance.Water > waterLevelTrigger)
+        {
+            isGettingDamaged = false;
+            StopAllCoroutines();
+        }
     }
 
+    private IEnumerator HealthDepletion()
+    {
+        while (isGettingDamaged)
+        {
+            if (Random.Range(0.0f, 1.0f) < damageChance)
+            {
+                damageable.DamageIgnoreDefense(Random.Range(damageRange.x, damageRange.y));
+            }
+            yield return new WaitForSeconds(damageInterval);
+        }
+    }
 }

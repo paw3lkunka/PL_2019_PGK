@@ -54,6 +54,7 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 
         UIOverlayManager.Instance?.ControlsSheet.Clear();
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Choose destination");
+        UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Shoot, "Replenish health");
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Pause, "Pause menu");
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.CameraMove, "Move camera");
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.CameraZoom, "Zoom camera");
@@ -61,21 +62,12 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 
     private void OnEnable()
     {
-        ApplicationManager.Instance.Input.Gameplay.Pause.performed += WorldMapPause;
-        ApplicationManager.Instance.Input.Gameplay.Pause.Enable();
         ApplicationManager.Instance.Input.CombatMode.Disable();
     }
 
     private void OnDisable()
     {
-        ApplicationManager.Instance.Input.Gameplay.Pause.performed -= WorldMapPause;
-        ApplicationManager.Instance.Input.Gameplay.Pause.Disable();
         ApplicationManager.Instance.Input.CombatMode.Enable();
-    }
-
-    private void WorldMapPause(InputAction.CallbackContext ctx)
-    {
-        GameplayManager.Instance.TogglePause();
     }
 
     private IEnumerator LocationCooldown(float delay)

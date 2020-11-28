@@ -69,7 +69,10 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
         var selectable = guiObjects.Peek().Item1.GetComponentInChildren<Selectable>();
         if (selectable)
         {
-            EventSystem.current.SetSelectedGameObject(selectable.gameObject);
+            if (EventSystem.current)
+            {
+                EventSystem.current.SetSelectedGameObject(selectable.gameObject);
+            }
         }
 
         return instantiated;
@@ -95,7 +98,10 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
         var selectable = guiObjects.Peek().Item1.GetComponentInChildren<Selectable>();
         if (selectable)
         {
-            EventSystem.current.SetSelectedGameObject(selectable.gameObject);
+            if (EventSystem.current)
+            {
+                EventSystem.current.SetSelectedGameObject(selectable.gameObject);
+            }
         }
     }
 

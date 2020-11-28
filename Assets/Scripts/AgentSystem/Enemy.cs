@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour
     {
         blindChaseTarget = target;
         blindChaseMode = true;
+        GameplayManager.Instance.avoidingFightTimer = 0.0f;
     }
 
     public void ExitBlindChase()

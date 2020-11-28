@@ -27,7 +27,7 @@ public class Cultist : MonoBehaviour
     {
         detection.detectionDirection = CombatCursorManager.Instance.shootDirection;
 
-        if (RhythmMechanics.Instance.Combo > 0)
+        if (RhythmMechanics.Instance.Combo > 0 && CombatCursorManager.Instance.CanShoot)
         {
             Vector3? detected = detection.Func();
 
@@ -39,6 +39,10 @@ public class Cultist : MonoBehaviour
             {
                 attack?.HoldFire();
             }
+        }
+        else
+        {
+            attack?.HoldFire();
         }
     }
 
@@ -111,14 +115,23 @@ public class Cultist : MonoBehaviour
 
     private void FailBit()
     {
-        Debug.Log("FailBit");
         attack?.HoldFire();
         SetNormalState();
     }
 
     private void FanatismStart() => CanBeFanatic = true;
     private void FanatismEnd() => CanBeFanatic = false;
-    private void OnDeath() => GameplayManager.Instance.cultistInfos.Remove(info);
+
+    private void OnDamage(float damage)
+    {
+        GameplayManager.Instance.DecreseFaithByCultistWounded();
+        //TODO - some indication?
+    }
+
+    private void OnDeath()
+    {
+        GameplayManager.Instance.cultistInfos.Remove(info);
+    }
 
     #endregion
 
@@ -150,9 +163,10 @@ public class Cultist : MonoBehaviour
         {
             Debug.LogWarning("No audioTimeline!");
         }
-        GameplayManager.Instance.FanaticStart += FanatismStart;
-        GameplayManager.Instance.FanaticEnd += FanatismEnd;
+        GameplayManager.Instance.OverfaithStart += FanatismStart;
+        GameplayManager.Instance.OverfaithEnd += FanatismEnd;
 
+        damageable.DamageTaken += OnDamage;
         damageable.Death += OnDeath;
         IsFanatic = true; //HACK to ensure, that SetNormalState will work.
         SetNormalState();
@@ -165,10 +179,11 @@ public class Cultist : MonoBehaviour
         {
             AudioTimeline.Instance.OnBeatFail -= FailBit;
         }
-        GameplayManager.Instance.FanaticStart -= FanatismStart;
-        GameplayManager.Instance.FanaticEnd -= FanatismEnd;
+        GameplayManager.Instance.OverfaithStart -= FanatismStart;
+        GameplayManager.Instance.OverfaithEnd -= FanatismEnd;
         AudioTimeline.Instance.OnBeat -= AttackInDirection;
         AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
+        damageable.DamageTaken -= OnDamage;
         damageable.Death -= OnDeath;
     }
 

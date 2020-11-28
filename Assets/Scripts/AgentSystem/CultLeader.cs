@@ -29,5 +29,4 @@ public class CultLeader : MonoBehaviour
     }
 
     #endregion
-
 }

@@ -215,7 +215,7 @@ public class Detection : MonoBehaviour
     private bool IsDetected(Component enemy, out float distance)
     {
         var vectorToEnemy = enemy.transform.position - transform.position;
-        var angleToEnemy = Mathf.Abs(Vector3.Angle(vectorToEnemy, detectionDirection));
+        var angleToEnemy = Vector3.Angle(vectorToEnemy, detectionDirection);
 
         distance = vectorToEnemy.magnitude;
 

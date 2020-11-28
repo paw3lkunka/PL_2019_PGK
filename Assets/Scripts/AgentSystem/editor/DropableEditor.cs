@@ -53,7 +53,7 @@ public class DropableEditor : Editor
             script.dropAmountRange.y = Mathf.RoundToInt(amountRangeTo);
 
 
-            // round to 2 decimal places
+            // round to 1 decimal place
             positionRangeFrom = (float)System.Math.Round((double)positionRangeFrom, 1);
             positionRangeTo = (float)System.Math.Round((double)positionRangeTo, 1);
             script.dropPositionRange.x = positionRangeFrom;

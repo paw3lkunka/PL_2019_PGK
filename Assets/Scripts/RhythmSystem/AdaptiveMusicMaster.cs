@@ -58,8 +58,11 @@ public class AdaptiveMusicMaster : MonoBehaviour
         drumPacksChances = new float[drumPacks.Length];
         musicPacksChances = new float[musicPacks.Length];
 
-        currentDrumPack = drumPacks[0];
-        currentMusicPack = musicPacks[0];
+        if (drumPacks.Length > 0)
+            currentDrumPack = drumPacks[0];
+        
+        if (musicPacks.Length > 0)
+            currentMusicPack = musicPacks[0];
 
         for (int i = 0; i < drumPacksChances.Length; ++i)
         {
@@ -172,7 +175,7 @@ public class AdaptiveMusicMaster : MonoBehaviour
     {
         // ----- PACK RANDOMIZATION -----------------------------------------------------
         // Randomize if the next DRUMS bar should use next internal variation of the pack
-        if (Random.Range(0.0f, 1.0f) < nextRhythmPackChance)
+        if (drumPacks.Length > 0 && Random.Range(0.0f, 1.0f) < nextRhythmPackChance)
         {
             switch (packRandomizer)
             {
@@ -187,7 +190,7 @@ public class AdaptiveMusicMaster : MonoBehaviour
             }
         }
         // Randomize if the next MUSIC bar should use next internal variation of the pack
-        if (Random.Range(0.0f, 1.0f) < nextMusicPackChance)
+        if (musicPacks.Length > 0 && Random.Range(0.0f, 1.0f) < nextMusicPackChance)
         {
             switch (packRandomizer)
             {
@@ -201,7 +204,7 @@ public class AdaptiveMusicMaster : MonoBehaviour
         }
 
         // ----- CLIP RANDOMIZATION -----------------------------------------------------
-        if (Random.Range(0.0f, 1.0f) < internalRhythmClipVariation)
+        if (currentDrumPack.secondaryClips.Length > 0 && Random.Range(0.0f, 1.0f) < internalRhythmClipVariation)
         {
             switch (clipRandomizer)
             {

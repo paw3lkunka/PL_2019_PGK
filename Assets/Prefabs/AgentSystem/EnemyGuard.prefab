@@ -70,6 +70,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -94,6 +95,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!135 &3433721845625449723
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -114,10 +116,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 936707471328107962, guid: 5f6b2bfb9a1d03348827a8a4a5c22b5a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1709671222968350148, guid: 5f6b2bfb9a1d03348827a8a4a5c22b5a,
         type: 3}
       propertyPath: m_Name
       value: EnemyGuard
+      objectReference: {fileID: 0}
+    - target: {fileID: 1709671222968350168, guid: 5f6b2bfb9a1d03348827a8a4a5c22b5a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1709671222968350168, guid: 5f6b2bfb9a1d03348827a8a4a5c22b5a,
         type: 3}
@@ -136,6 +148,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1709671222968350168, guid: 5f6b2bfb9a1d03348827a8a4a5c22b5a,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1709671222968350168, guid: 5f6b2bfb9a1d03348827a8a4a5c22b5a,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -147,16 +164,6 @@ PrefabInstance:
     - target: {fileID: 1709671222968350168, guid: 5f6b2bfb9a1d03348827a8a4a5c22b5a,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1709671222968350168, guid: 5f6b2bfb9a1d03348827a8a4a5c22b5a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1709671222968350168, guid: 5f6b2bfb9a1d03348827a8a4a5c22b5a,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1709671222968350168, guid: 5f6b2bfb9a1d03348827a8a4a5c22b5a,

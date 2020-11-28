@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public enum ResourceType { Water, Faith, Health }
@@ -17,36 +18,81 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 {
 #pragma warning disable
     [Header("Basic resources")]
-    [SerializeField] private Resource water = new Resource(100.0f, 100.0f);
+    [SerializeField]
+    private Resource water = new Resource(100.0f, 100.0f, false);
     private float waterPercentLastFrame;
     public Resource Water 
     { 
         get => water;
         set => water.Set(value);
     }
-    [SerializeField] private Resource faith = new Resource(25.0f, 35.0f);
+
+    [Header("Read only - controlled by start amount of cultists and faith percent")]
+    [SerializeField]
+    private Resource faith = new Resource(25.0f, 35.0f, true);
     private float faithPercentLastFrame;
     public Resource Faith
     {
         get => faith;
         set => faith.Set(value);
     }
+    [SerializeField]
+    private float startFaithPercent = 0.75f;
+
+    public float Health
+    {
+        get
+        {
+            float allHealth = ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health;
+            foreach (var cultist in cultistInfos)
+            {
+                allHealth += cultist.HP;
+            }
+            return allHealth;
+        }
+    }
+
+    public float MaxHealth
+    {
+        get
+        {
+            float allHealth = ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health.Max;
+            foreach (var cultist in cultistInfos)
+            {
+                allHealth += cultist.HP.Max;
+            }
+            return allHealth;
+        }
+    }
+
+    public bool IsAvoidingFight
+    {
+        get
+        {
+            return avoidingFightTimer > maxAvoidingFightTime;
+        }
+    }
+
+    [HideInInspector]
+    public float avoidingFightTimer = 0.0f;
+
 #pragma warning restore
 
     [Header("Gameplay Config")] // * ===================================
     [ReadOnly]
     public int mapGenerationSeed; 
     public int initialCultistsNumber = 4;
-    public float faithForKilledEnemy = 0.01f;
-    public float faithForKilledCultist = 0.02f;
-    public float faithForWoundedCultist = 0.001f;
+    public float faithPerCultist = 20.0f;
+    public float cultistWoundedFaith = 0.1f;
+    public float overfaithDeplitionMultiplier = 2.0f;
+
+    public float CurrentFaithMultiplier => faith.Normalized > 1.0f ? overfaithDeplitionMultiplier : 1.0f;
 
     public float lowWaterLevel = 0.2f;
-    public float lowFaithLevel = 0.2f;
-    public float highFaithLevel = 0.7f;
-    public float fanaticFaithLevel = 0.9f;
+    public float lowFaithLevel = 0.1f;
 
-    public float faithBoost = 2.0f;
+    public float maxAvoidingFightTime = 240.0f;
+    public float avoidingFightsFaithDebuf = 0.6f;
 
     // * ===== Pause handling =======================================
 
@@ -113,25 +159,38 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public event System.Action LowFaithLevelStart;
     public event System.Action LowFaithLevelEnd;
 
-    public event System.Action HighFaithLevelStart;
-    public event System.Action HighFaithLevelEnd;
-
-    public event System.Action FanaticStart;
-    public event System.Action FanaticEnd;
+    public event System.Action OverfaithStart;
+    public event System.Action OverfaithEnd;
 
     #region MonoBehaviour
+
+    private void OnEnable()
+    {
+        ApplicationManager.Instance.Input.Gameplay.Pause.performed += TogglePause;
+        ApplicationManager.Instance.Input.Gameplay.Pause.Enable();
+    }
+
+    private void OnDisable()
+    {
+        ApplicationManager.Instance.Input.Gameplay.Pause.performed -= TogglePause;
+        ApplicationManager.Instance.Input.Gameplay.Pause.Disable();
+    }
 
     protected override void Awake()
     {
         base.Awake();
-        // ? +++++ Init double buffered variables +++++
-        waterPercentLastFrame = water.Normalized;
-        faithPercentLastFrame = faith;
+
+        // ? +++++ Faith init +++++
+        faith.Max = new Resource(cultistInfos.Count * faithPerCultist * startFaithPercent, cultistInfos.Count * faithPerCultist, true);
 
         for (int i = 0; i < initialCultistsNumber; i++)
         {
             cultistInfos.Add(new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
         }
+
+        // ? +++++ Init double buffered variables +++++
+        waterPercentLastFrame = water.Normalized;
+        faithPercentLastFrame = faith.Normalized;
 
         // ? +++++ Initialize shrine list +++++
         mapGenerationSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
@@ -139,6 +198,9 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     private void Update() 
     {
+        // ! ----- Max faith amount -----
+        faith.Max = cultistInfos.Count * faithPerCultist;
+
         // ! ----- Game over condition -----
         if (!finalSceneLoaded && (leaderIsDead || enteredTemple))
         {
@@ -159,20 +221,19 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         if (faith.Normalized > lowFaithLevel && faithPercentLastFrame <= lowFaithLevel)
             LowFaithLevelEnd?.Invoke();
 
-        if (faith.Normalized > highFaithLevel && faithPercentLastFrame <= highFaithLevel)
-            HighFaithLevelStart?.Invoke();
+        if (faith.Normalized > 1.0f && faithPercentLastFrame <= 1.0f)
+            OverfaithStart?.Invoke();
 
-        if (faith.Normalized < highFaithLevel && faithPercentLastFrame >= highFaithLevel)
-            HighFaithLevelEnd?.Invoke();
-
-        if (faith.Normalized > fanaticFaithLevel && faithPercentLastFrame <= fanaticFaithLevel)
-            FanaticStart?.Invoke();
-
-        if (faith.Normalized < fanaticFaithLevel && faithPercentLastFrame >= fanaticFaithLevel)
-            FanaticEnd?.Invoke();
+        if (faith.Normalized < 1.0f && faithPercentLastFrame >= 1.0f)
+            OverfaithEnd?.Invoke();
 
         waterPercentLastFrame = water.Normalized;
         faithPercentLastFrame = faith.Normalized;
+
+        if(!IsPaused)
+        {
+            avoidingFightTimer += Time.deltaTime;
+        }
     }
 
     #endregion
@@ -210,18 +271,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         SceneManager.LoadScene(ApplicationManager.Instance.worldMapScene);
     }
 
-    public void FaithBoostOn()
-    {
-        faithForKilledEnemy *= faithBoost;
-        faithForKilledCultist *= faithBoost; // <-- Yes, that's intentional
-    }
-
-    public void FaithBoostOff()
-    {
-        faithForKilledEnemy /= faithBoost;
-        faithForKilledCultist /= faithBoost;
-    }
-
     public void OnLocationExitInvoke() => OnLocationExit?.Invoke();
     public void OnLocationEnterInvoke() => OnLocationEnter?.Invoke();
 
@@ -244,6 +293,10 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.pauseGUI, PushBehaviour.Lock);
         IsPaused = true;
+        if (AudioTimeline.Instance)
+        {
+            AudioTimeline.Instance.Pause();
+        }
         Time.timeScale = 0.0f;
     }
 
@@ -251,10 +304,14 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         UIOverlayManager.Instance.PopFromCanvas();
         IsPaused = false;
+        if (AudioTimeline.Instance)
+        {
+            AudioTimeline.Instance.Resume();
+        }
         Time.timeScale = 1.0f;
     }
 
-    public void TogglePause()
+    public void TogglePause(InputAction.CallbackContext ctx)
     {
         if (IsPaused)
         {
@@ -265,6 +322,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
             PauseGame();
         }
     }
+
+    public void DecreseFaithByCultistWounded() => faith -= cultistWoundedFaith;
 
     #endregion
 }

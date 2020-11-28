@@ -6,7 +6,9 @@ public class ResourceDepleter : MonoBehaviour
 {
 #pragma warning disable
     [SerializeField] private bool isTimeBased = false;
+    [SerializeField] private bool shouldDepleteHealth = false;
     [SerializeField] private float veloctyThreshold = 0.01f;
+    [SerializeField] private float waterHealthLosingThreshold = 0.01f;
 
     // These properties are left as not-auto to allow for easy modification for getters
     [SerializeField] private float _waterDepletionRate;
@@ -19,8 +21,23 @@ public class ResourceDepleter : MonoBehaviour
     [SerializeField] private float _faithDepletionRate;
     public float FaithDepletionRate
     {
-        get => _faithDepletionRate;
+        get  
+        {
+            float finalValue =_faithDepletionRate * GameplayManager.Instance.CurrentFaithMultiplier;
+            if(GameplayManager.Instance.IsAvoidingFight)
+            {
+                finalValue *= 1.0f + GameplayManager.Instance.avoidingFightsFaithDebuf;
+            }
+            return finalValue;
+        }
         private set => _faithDepletionRate = value;
+    }
+
+    [SerializeField] private float _healthDepletionRate;
+    public float HealthDepletionRate
+    {
+        get => _healthDepletionRate;
+        private set => _healthDepletionRate = value;
     }
 #pragma warning restore
 
@@ -32,6 +49,14 @@ public class ResourceDepleter : MonoBehaviour
         {
             GameplayManager.Instance.Water -= WaterDepletionRate;
             GameplayManager.Instance.Faith -= FaithDepletionRate;
+
+            if (shouldDepleteHealth && GameplayManager.Instance.Water <= waterHealthLosingThreshold)
+            {
+                foreach (var cultistInfo in GameplayManager.Instance.cultistInfos)
+                {
+                    cultistInfo.HP -= HealthDepletionRate;
+                }
+            }
         }
         lastFramePos = transform.position;
     }

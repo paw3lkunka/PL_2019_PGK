@@ -153,7 +153,7 @@ public class RhythmMechanics : Singleton<RhythmMechanics, ForbidLazyInstancing>
     }
 
 
-    private void UpdateCounters(BeatState beatState, int beatNumber)
+    private void UpdateCounters(BeatState beatState, int beatNumber, bool primaryInteraction)
     {
         switch (beatState)
         {

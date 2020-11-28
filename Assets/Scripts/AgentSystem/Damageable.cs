@@ -16,7 +16,7 @@ public class Damageable : MonoBehaviour
 
 
     [field: SerializeField, GUIName("Health")]
-    public Resource Health { get; private set; } = new Resource(10, 10);
+    public Resource Health { get; private set; } = new Resource(10, 10, false);
 
     [field: SerializeField, GUIName("Defence")]
     public float DefenseBase { get; set; } = 0;
