@@ -144,6 +144,8 @@ public class Cultist : MonoBehaviour
         detection = GetComponent<Detection>();
         attack = GetComponent<IAttack>();
         boostables = GetComponentsInChildren<IBoostable>();
+
+        AudioTimeline.Instance.OnBeat += AttackInDirection;
     }
 
     private void Update()
@@ -186,7 +188,7 @@ public class Cultist : MonoBehaviour
         GameplayManager.Instance.OverfaithEnd -= OnOverfaithEnd;
 
         AudioTimeline.Instance.OnBeat -= AttackInDirection;
-        AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
+        //AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
         damageable.DamageTaken -= OnDamage;
         damageable.Death -= OnDeath;
     }
