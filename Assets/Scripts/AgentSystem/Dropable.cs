@@ -5,10 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(Damageable))]
 public class Dropable : MonoBehaviour
 {
-    [SerializeField]
-    private float dropChance = 0.0f;
-    [SerializeField]
-    private GameObject spawnedPrefab = null;
+#pragma warning disable
+    [SerializeField] private Transform dropSpawnPoint;
+    [SerializeField] private float dropChance = 0.0f;
+    [SerializeField] private GameObject spawnedPrefab = null;
+#pragma warning restore
 
     /// <summary>
     /// How many [prefabs] will drop?
@@ -30,6 +31,11 @@ public class Dropable : MonoBehaviour
     {
         float random = UnityEngine.Random.Range(0.0f, 100.0f);
         Vector3 pos = transform.position;
+        if (dropSpawnPoint)
+        {
+            pos = dropSpawnPoint.position;
+        }
+
         if (random < dropChance || random.Equals(dropChance))
         {
             for(int i = 0; i < UnityEngine.Random.Range(dropAmountRange.x, dropAmountRange.y); ++i)
