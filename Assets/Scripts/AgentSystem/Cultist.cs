@@ -163,8 +163,8 @@ public class Cultist : MonoBehaviour
         {
             Debug.LogWarning("No audioTimeline!");
         }
-        GameplayManager.Instance.FanaticStart += FanatismStart;
-        GameplayManager.Instance.FanaticEnd += FanatismEnd;
+        GameplayManager.Instance.OverfaithStart += FanatismStart;
+        GameplayManager.Instance.OverfaithEnd += FanatismEnd;
 
         damageable.DamageTaken += OnDamage;
         damageable.Death += OnDeath;
@@ -179,8 +179,8 @@ public class Cultist : MonoBehaviour
         {
             AudioTimeline.Instance.OnBeatFail -= FailBit;
         }
-        GameplayManager.Instance.FanaticStart -= FanatismStart;
-        GameplayManager.Instance.FanaticEnd -= FanatismEnd;
+        GameplayManager.Instance.OverfaithStart -= FanatismStart;
+        GameplayManager.Instance.OverfaithEnd -= FanatismEnd;
         AudioTimeline.Instance.OnBeat -= AttackInDirection;
         AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
         damageable.DamageTaken -= OnDamage;

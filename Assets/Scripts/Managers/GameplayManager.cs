@@ -18,22 +18,26 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 {
 #pragma warning disable
     [Header("Basic resources")]
-    [SerializeField] private Resource water = new Resource(100.0f, 100.0f, false);
+    [SerializeField]
+    private Resource water = new Resource(100.0f, 100.0f, false);
     private float waterPercentLastFrame;
     public Resource Water 
     { 
         get => water;
         set => water.Set(value);
     }
+
     [Header("Read only - controlled by start amount of cultists and faith percent")]
-    [SerializeField] private Resource faith = new Resource(25.0f, 35.0f, true);
+    [SerializeField]
+    private Resource faith = new Resource(25.0f, 35.0f, true);
     private float faithPercentLastFrame;
     public Resource Faith
     {
         get => faith;
         set => faith.Set(value);
     }
-    [SerializeField] private float startFaithPercent = 0.75f;
+    [SerializeField]
+    private float startFaithPercent = 0.75f;
 
     public float Health
     {
@@ -69,7 +73,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         }
     }
 
-    [HideInInspector]public float avoidingFightTimer = 0.0f;
+    [HideInInspector]
+    public float avoidingFightTimer = 0.0f;
 
 #pragma warning restore
 
@@ -82,10 +87,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     public float lowWaterLevel = 0.2f;
     public float lowFaithLevel = 0.1f;
-    public float highFaithLevel = 0.7f;
-    public float fanaticFaithLevel = 1.0f;
-
-    public float faithBoost = 2.0f;
 
     public float maxAvoidingFightTime = 240.0f;
     public float avoidingFightsFaithDebuf = 0.6f;
@@ -155,11 +156,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public event System.Action LowFaithLevelStart;
     public event System.Action LowFaithLevelEnd;
 
-    public event System.Action HighFaithLevelStart;
-    public event System.Action HighFaithLevelEnd;
-
-    public event System.Action FanaticStart;
-    public event System.Action FanaticEnd;
+    public event System.Action OverfaithStart;
+    public event System.Action OverfaithEnd;
 
     #region MonoBehaviour
 
@@ -220,17 +218,11 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         if (faith.Normalized > lowFaithLevel && faithPercentLastFrame <= lowFaithLevel)
             LowFaithLevelEnd?.Invoke();
 
-        if (faith.Normalized > highFaithLevel && faithPercentLastFrame <= highFaithLevel)
-            HighFaithLevelStart?.Invoke();
+        if (faith.Normalized > 1.0f && faithPercentLastFrame <= 1.0f)
+            OverfaithStart?.Invoke();
 
-        if (faith.Normalized < highFaithLevel && faithPercentLastFrame >= highFaithLevel)
-            HighFaithLevelEnd?.Invoke();
-
-        if (faith.Normalized > fanaticFaithLevel && faithPercentLastFrame <= fanaticFaithLevel)
-            FanaticStart?.Invoke();
-
-        if (faith.Normalized < fanaticFaithLevel && faithPercentLastFrame >= fanaticFaithLevel)
-            FanaticEnd?.Invoke();
+        if (faith.Normalized < 1.0f && faithPercentLastFrame >= 1.0f)
+            OverfaithEnd?.Invoke();
 
         waterPercentLastFrame = water.Normalized;
         faithPercentLastFrame = faith.Normalized;
