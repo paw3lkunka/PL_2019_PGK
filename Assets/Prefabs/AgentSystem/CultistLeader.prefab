@@ -541,7 +541,10 @@ MonoBehaviour:
   flags: 1
   <SpeedBase>k__BackingField: 3.5
   <SpeedBoosted>k__BackingField: 5
-  <IsBoosted>k__BackingField: 0
+  <SpeedDecresed>k__BackingField: 0
+  bState: 0
+  <CanBeBoosted>k__BackingField: 1
+  <CanBeDecresed>k__BackingField: 0
 --- !u!114 &6692315016006903435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,7 +590,10 @@ MonoBehaviour:
   <DefenseBase>k__BackingField: 0
   <ReactToHit>k__BackingField: 0
   <DefenseBoost>k__BackingField: 3
-  <IsBoosted>k__BackingField: 0
+  <DefenseDecrese>k__BackingField: 0
+  bState: 0
+  <CanBeBoosted>k__BackingField: 1
+  <CanBeDecresed>k__BackingField: 0
 --- !u!114 &7525031864083970326
 MonoBehaviour:
   m_ObjectHideFlags: 0

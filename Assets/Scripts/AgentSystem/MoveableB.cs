@@ -10,8 +10,44 @@ public class MoveableB : Moveable, IBoostable
     [field: SerializeField, GUIName("SpeedBoosted")]
     public float SpeedBoosted { get; set; }
 
-    [field: SerializeField, GUIName("IsBoosted")]
-    public bool IsBoosted { get; set; }
+    [field: SerializeField, GUIName("SpeedDecresed")]
+    public float SpeedDecresed { get; set; }
+
+    [SerializeField]
+    private BoostableState bState;
+    public BoostableState BState
+    {
+        get => bState;
+        set
+        {
+            switch (value)
+            {
+                case BoostableState.normal:
+                    bState = value;
+                    break;
+
+                case BoostableState.boosted:
+                    if (CanBeBoosted)
+                        bState = value;
+                    break;
+
+                case BoostableState.decresed:
+                    if (CanBeDecresed)
+                        bState = value;
+                    break;
+            }
+        }
+    }
+
+    [field: SerializeField, InspectorName("CanBeBoosted")]
+    public bool CanBeBoosted { get; set; }
+
+    [field: SerializeField, InspectorName("CanBeDecresed")]
+    public bool CanBeDecresed { get; set; }
+
+    public bool IsBoosted => bState == BoostableState.boosted;
+
+    public bool IsDecresed => bState == BoostableState.decresed;
 
     #region MonoBehaviour
     private new void OnValidate()
@@ -23,9 +59,23 @@ public class MoveableB : Moveable, IBoostable
     {
         base.Awake();
     }
+
     protected new void Update()
     {
-        navMeshAgent.speed = IsBoosted ? SpeedBoosted : SpeedBase;
+        switch (bState)
+        {
+            case BoostableState.normal:
+                navMeshAgent.speed = SpeedBase;
+                break;
+
+            case BoostableState.boosted:
+                navMeshAgent.speed = SpeedBoosted;
+                break;
+
+            case BoostableState.decresed:
+                navMeshAgent.speed = SpeedDecresed;
+                break;
+        }
     }
 
     #endregion
