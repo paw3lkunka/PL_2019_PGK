@@ -224,7 +224,6 @@ public class Detection : MonoBehaviour
             if (includeRaycastTest)
             {
                 Physics.Raycast(transform.position, vectorToEnemy, out RaycastHit hitInfo, distance + 1.0f, raycastLayerMask);
-
                 return hitInfo.collider.gameObject == enemy.gameObject;
             }
             else
