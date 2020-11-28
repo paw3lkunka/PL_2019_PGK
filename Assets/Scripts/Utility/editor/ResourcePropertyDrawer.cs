@@ -33,7 +33,7 @@ public class ResourcePropertyDrawer : PropertyDrawer
         EditorGUI.LabelField(boollabelrect, "overfw");
         overflowable.boolValue = EditorGUI.Toggle(boolrect, overflowable.boolValue);
 
-        if (currentProp.floatValue > maxProp.floatValue)
+        if (!overflowable.boolValue && currentProp.floatValue > maxProp.floatValue)
         {
             currentProp.floatValue = maxProp.floatValue;
         }
