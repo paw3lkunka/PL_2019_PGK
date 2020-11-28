@@ -158,8 +158,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
     private void MoveShootTargetPositionIndicator()
     {
-        shootDirection = (MainCursor.transform.position - LocationManager.Instance.cultLeader.transform.position).normalized;
-        shootTargetPositionIndicator.transform.rotation = Quaternion.LookRotation(shootDirection, Vector3.up);
+        var direction = (MainCursor.transform.position - LocationManager.Instance.cultLeader.transform.position).normalized;
+        shootTargetPositionIndicator.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
     }
 
     private void SetWalkTargetIndicator(InputAction.CallbackContext ctx)
