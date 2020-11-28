@@ -42,7 +42,7 @@ public class SoundEffectsModule : MonoBehaviour
 
     #region Component
 
-    private void PlayBeatHitSound(BeatState beatState, int beatNumber)
+    private void PlayBeatHitSound(BeatState beatState, int beatNumber, bool primaryInteraction)
     {
         switch (beatState)
         {
