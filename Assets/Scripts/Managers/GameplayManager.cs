@@ -84,6 +84,9 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public int initialCultistsNumber = 4;
     public float faithPerCultist = 20.0f;
     public float cultistWoundedFaith = 0.1f;
+    public float overfaithDeplitionMultiplier = 2.0f;
+
+    public float CurrentFaithMultiplier => faith.Normalized > 1.0f ? overfaithDeplitionMultiplier : 1.0f;
 
     public float lowWaterLevel = 0.2f;
     public float lowFaithLevel = 0.1f;

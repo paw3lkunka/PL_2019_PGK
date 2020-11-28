@@ -23,7 +23,7 @@ public class ResourceDepleter : MonoBehaviour
     {
         get  
         {
-            float finalValue =_faithDepletionRate;
+            float finalValue =_faithDepletionRate * GameplayManager.Instance.CurrentFaithMultiplier;
             if(GameplayManager.Instance.IsAvoidingFight)
             {
                 finalValue *= 1.0f + GameplayManager.Instance.avoidingFightsFaithDebuf;
