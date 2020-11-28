@@ -36,7 +36,7 @@ public class CursorRhythmIndicator : MonoBehaviour
 
     private void Awake()
     {
-        hitIndicator.sharedMaterial.color = noneHitColor;
+        hitIndicator.material.color = noneHitColor;
     }
 
     private void OnEnable()
@@ -64,14 +64,14 @@ public class CursorRhythmIndicator : MonoBehaviour
             var rhythmSize = rhytmIndicatorMaxSize - ((rhytmIndicatorMaxSize - 1) * (1.0f - indicatorFactor));
             rhythmIndicator.transform.localScale = new Vector3(rhythmSize, 1.0f, rhythmSize);
 
-            rhythmIndicator.sharedMaterial.color = new Color(1.0f, 1.0f, 1.0f, rhythmCurve.Evaluate(indicatorFactor));
+            rhythmIndicator.material.color = new Color(1.0f, 1.0f, 1.0f, rhythmCurve.Evaluate(indicatorFactor));
 
             var hitSize = hitIndicatorMaxSize - ((hitIndicatorMaxSize - 1) * indicatorFactor);
             hitIndicator.transform.localScale = new Vector3(hitSize, 1.0f, hitSize);
 
-            var newHitColor = hitIndicator.sharedMaterial.color;
+            var newHitColor = hitIndicator.material.color;
             newHitColor.a = hitCurve.Evaluate(1.0f - indicatorFactor);
-            hitIndicator.sharedMaterial.color = newHitColor;
+            hitIndicator.material.color = newHitColor;
         }
     }
 
@@ -84,33 +84,33 @@ public class CursorRhythmIndicator : MonoBehaviour
         switch (state)
         {
             case BeatState.None:
-                hitIndicator.sharedMaterial.color = noneHitColor;
+                hitIndicator.material.color = noneHitColor;
                 break;
 
             case BeatState.Bad:
-                hitIndicator.sharedMaterial.color = badHitColor;
+                hitIndicator.material.color = badHitColor;
                 break;
 
             case BeatState.Good:
-                hitIndicator.sharedMaterial.color = goodHitColor;
+                hitIndicator.material.color = goodHitColor;
                 break;
 
             case BeatState.Great:
-                hitIndicator.sharedMaterial.color = greatHitColor;
+                hitIndicator.material.color = greatHitColor;
                 break;
 
             case BeatState.Perfect:
-                hitIndicator.sharedMaterial.color = perfectHitColor;
+                hitIndicator.material.color = perfectHitColor;
                 break;
 
             default:
-                hitIndicator.sharedMaterial.color = noneHitColor;
+                hitIndicator.material.color = noneHitColor;
                 break;
         }
 
         if (beatNumber <= 3 && state != BeatState.Bad)
         {
-            beatHitSigns[beatNumber].material.color = hitIndicator.sharedMaterial.color;
+            beatHitSigns[beatNumber].material.color = hitIndicator.material.color;
         }
         else
         {
