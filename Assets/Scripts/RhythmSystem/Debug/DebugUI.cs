@@ -82,7 +82,7 @@ public class DebugUI : MonoBehaviour
         this.barState = barState;
     }
 
-    private void BeatDebug(BeatState beatState, int beatNumber)
+    private void BeatDebug(BeatState beatState, int beatNumber, bool primaryInteraction)
     {
         this.beatState = beatState;
         this.beatNumber = beatNumber;

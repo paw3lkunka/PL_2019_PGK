@@ -15,20 +15,23 @@ public partial class AudioTimeline
         OnBeat?.Invoke(isMain);
     }
 
-    private void BeatHitHandler(BeatState beatState, int beatNumber)
+    private void BeatHitHandler(BeatState beatState, int beatNumber, bool primaryInteraction)
     {
         switch (beatState)
         {
             case BeatState.None:
             case BeatState.Bad:
-                BeatFailHandler();
+                if (canFail)
+                {
+                    BeatFailHandler();
+                }
                 break;
             case BeatState.Good:
             case BeatState.Great:
             case BeatState.Perfect:
                 break;
         }
-        OnBeatHit?.Invoke(beatState, beatNumber);
+        OnBeatHit?.Invoke(beatState, beatNumber, primaryInteraction);
     }
 
     private void BeatFailHandler()

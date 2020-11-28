@@ -48,9 +48,10 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += SetWalkTargetIndicator;
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Enable();
 
+        ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
+        
         if (LocationManager.Instance.sceneMode == LocationMode.Hostile)
         {
-            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Enable();
         }
     }
@@ -62,11 +63,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
             ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed -= SetWalkTargetIndicator;
             ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Disable();
 
-            if (LocationManager.Instance.sceneMode == LocationMode.Hostile)
-            {
-                ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= SetShootTargetIndicator;
-                ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Disable();
-            }
+            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= SetShootTargetIndicator;
+            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Disable();
         }
     }
 

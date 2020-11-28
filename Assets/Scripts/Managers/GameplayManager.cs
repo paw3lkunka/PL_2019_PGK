@@ -290,7 +290,10 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         UIOverlayManager.Instance.PushToCanvas(ApplicationManager.Instance.PrefabDatabase.pauseGUI, PushBehaviour.Lock);
         IsPaused = true;
-        AudioTimeline.Instance?.Pause();
+        if (AudioTimeline.Instance)
+        {
+            AudioTimeline.Instance.Pause();
+        }
         Time.timeScale = 0.0f;
     }
 
@@ -298,7 +301,10 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         UIOverlayManager.Instance.PopFromCanvas();
         IsPaused = false;
-        AudioTimeline.Instance?.Resume();
+        if (AudioTimeline.Instance)
+        {
+            AudioTimeline.Instance.Resume();
+        }
         Time.timeScale = 1.0f;
     }
 

@@ -39,7 +39,7 @@ public class RhythmTest : MonoBehaviour
 
     #region Component
 
-    private void VisualizeBeatHit(BeatState state, int beatNumber)
+    private void VisualizeBeatHit(BeatState state, int beatNumber, bool primaryInteraction)
     {
         switch (state)
         {
