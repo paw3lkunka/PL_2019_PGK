@@ -55,7 +55,21 @@ public class WorldMapCamera : MonoBehaviour
 
     private void CameraZoom(InputAction.CallbackContext obj)
     {
-        zoom -= zoomSpeed * obj.ReadValue<Vector2>().y * 0.1f;
+        switch (ApplicationManager.Instance.CurrentInputScheme)
+        {
+            case InputSchemeEnum.MouseKeyboard:
+            case InputSchemeEnum.Gamepad:
+                Debug.Log(obj.ReadValue<float>());
+                zoom -= zoomSpeed * obj.ReadValue<float>() * 0.1f;
+                break;
+
+            case InputSchemeEnum.JoystickKeyboard:
+                break;
+
+            case InputSchemeEnum.Touchscreen:
+                break;
+        }
+
         zoom = Mathf.Clamp01(zoom);
     }
 
@@ -77,11 +91,23 @@ public class WorldMapCamera : MonoBehaviour
 
         if (shouldCameraMove)
         {
-            float mouseXdelta = lastCursorLocationX - (Input.mousePosition.x + Screen.width / 2.0f) / Screen.width;
+            switch (ApplicationManager.Instance.CurrentInputScheme)
+            {
+                case InputSchemeEnum.MouseKeyboard:
+                    float mouseXdelta = lastCursorLocationX - (Input.mousePosition.x + Screen.width / 2.0f) / Screen.width;
+                    angle = Mathf.LerpUnclamped(angle, angle * rotationSpeed, mouseXdelta);
+                    transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+                    break;
 
-            angle = Mathf.LerpUnclamped(angle, angle * rotationSpeed, mouseXdelta);
+                case InputSchemeEnum.Gamepad:
+                    break;
 
-            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+                case InputSchemeEnum.JoystickKeyboard:
+                    break;
+
+                case InputSchemeEnum.Touchscreen:
+                    break;
+            }
         }
 
         camera.transform.position = Vector3.Lerp(camera.transform.position, targetPosition, zoomSmoothing);
