@@ -12,13 +12,19 @@ public class WorldMapCamera : MonoBehaviour
     public Transform furthestPoint;
 
     public float rotationSpeed = 1.0f;
-    public float zoomSmoothing = 0.1f;
-    public float zoomSpeed = 0.1f;
+    public float smoothing = 0.1f;
 
-    private float lastCursorLocationX;
+    public float mousePointerSensitivity = 5.0f;
+    public float mouseScrollSensitivity = 3.0f;
+    public float joystickSensivity = 20.0f;
+    public float bumpersSensitivity = 0.4f;
+
     private float angle = 0.0f;
-    private bool shouldCameraMove = false;
+    private bool isRotating = false;
+
     private float zoom = 0.5f;
+    private bool isZooming = false;
+    private float zoomHold = 0.0f;
 
     void Awake()
     {
@@ -27,56 +33,84 @@ public class WorldMapCamera : MonoBehaviour
 
     private void OnEnable()
     {
-        ApplicationManager.Instance.Input.Gameplay.RotateCamera.performed += CameraRotationStart;
-        ApplicationManager.Instance.Input.Gameplay.RotateCamera.canceled += CameraRotationCancel;
-        ApplicationManager.Instance.Input.Gameplay.ZoomCamera.performed += CameraZoom;
+        ApplicationManager.Instance.Input.Gameplay.RotateCamera.performed += RotationPerformed;
+        ApplicationManager.Instance.Input.Gameplay.RotateCamera.canceled += RotationCanceled;
+        ApplicationManager.Instance.Input.Gameplay.ZoomCamera.performed += ZoomPerformed;
+        ApplicationManager.Instance.Input.Gameplay.ZoomCamera.canceled += ZoomCanceled;
         ApplicationManager.Instance.Input.Gameplay.ZoomCamera.Enable();
         ApplicationManager.Instance.Input.Gameplay.RotateCamera.Enable();
     }
 
     private void OnDisable()
     {
-        ApplicationManager.Instance.Input.Gameplay.RotateCamera.performed -= CameraRotationStart;
-        ApplicationManager.Instance.Input.Gameplay.RotateCamera.canceled -= CameraRotationCancel;
-        ApplicationManager.Instance.Input.Gameplay.ZoomCamera.performed -= CameraZoom;
+        ApplicationManager.Instance.Input.Gameplay.RotateCamera.performed -= RotationPerformed;
+        ApplicationManager.Instance.Input.Gameplay.RotateCamera.canceled -= RotationCanceled;
+        ApplicationManager.Instance.Input.Gameplay.ZoomCamera.performed -= ZoomPerformed;
+        ApplicationManager.Instance.Input.Gameplay.ZoomCamera.canceled -= ZoomCanceled;
         ApplicationManager.Instance.Input.Gameplay.ZoomCamera.Disable();
         ApplicationManager.Instance.Input.Gameplay.RotateCamera.Disable();
     }
 
-    private void CameraRotationCancel(InputAction.CallbackContext obj)
+    private void RotationPerformed(InputAction.CallbackContext obj)
     {
-        shouldCameraMove = false;
+        isRotating = true;
     }
 
-    private void CameraRotationStart(InputAction.CallbackContext obj)
+    private void RotationCanceled(InputAction.CallbackContext obj)
     {
-        shouldCameraMove = true;
+        isRotating = false;
     }
 
-    private void CameraZoom(InputAction.CallbackContext obj)
+    private void ZoomPerformed(InputAction.CallbackContext obj)
     {
+        isZooming = true;
         switch (ApplicationManager.Instance.CurrentInputScheme)
         {
-            case InputSchemeEnum.MouseKeyboard:
             case InputSchemeEnum.Gamepad:
-                Debug.Log(obj.ReadValue<float>());
-                zoom -= zoomSpeed * obj.ReadValue<float>() * 0.1f;
+                zoomHold = obj.ReadValue<float>();
                 break;
-
+            
             case InputSchemeEnum.JoystickKeyboard:
                 break;
 
             case InputSchemeEnum.Touchscreen:
                 break;
         }
+    }
 
-        zoom = Mathf.Clamp01(zoom);
+    private void ZoomCanceled(InputAction.CallbackContext obj)
+    {
+        isZooming = false;
+        zoomHold = 0.0f;
     }
 
     void Update()
     {
-        Vector3 targetPosition;
-        Quaternion targetRotation;
+        Vector3 targetPosition; Quaternion targetRotation;
+
+        if(isZooming)
+        {
+            float zoomDelta = Time.deltaTime;
+
+            switch (ApplicationManager.Instance.CurrentInputScheme)
+            {
+                case InputSchemeEnum.MouseKeyboard:
+                    zoomDelta *= Mouse.current.scroll.ReadValue().y * mouseScrollSensitivity;
+                    break;
+
+                case InputSchemeEnum.Gamepad:
+                    zoomDelta *= zoomHold * bumpersSensitivity;
+                    break;
+                
+                case InputSchemeEnum.JoystickKeyboard:
+                    break;
+
+                case InputSchemeEnum.Touchscreen:
+                    break;
+            }
+            
+            zoom = Mathf.Clamp01(zoom - zoomDelta);
+        }
 
         if (zoom < 0.5f)
         {
@@ -89,17 +123,18 @@ public class WorldMapCamera : MonoBehaviour
             targetRotation = Quaternion.Slerp(middlePoint.rotation, furthestPoint.rotation, (zoom - 0.5f) * 2.0f);
         }
 
-        if (shouldCameraMove)
+        if (isRotating)
         {
+            float rotationDelta = Time.deltaTime;
+
             switch (ApplicationManager.Instance.CurrentInputScheme)
             {
                 case InputSchemeEnum.MouseKeyboard:
-                    float mouseXdelta = lastCursorLocationX - (Input.mousePosition.x + Screen.width / 2.0f) / Screen.width;
-                    angle = Mathf.LerpUnclamped(angle, angle * rotationSpeed, mouseXdelta);
-                    transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+                    rotationDelta *= Mouse.current.delta.ReadValue().x * mousePointerSensitivity;
                     break;
 
                 case InputSchemeEnum.Gamepad:
+                    rotationDelta *= Gamepad.current.rightStick.ReadValue().x * joystickSensivity;
                     break;
 
                 case InputSchemeEnum.JoystickKeyboard:
@@ -108,11 +143,12 @@ public class WorldMapCamera : MonoBehaviour
                 case InputSchemeEnum.Touchscreen:
                     break;
             }
+
+            angle = Mathf.LerpUnclamped(angle, angle + rotationDelta, rotationSpeed);
+            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
         }
 
-        camera.transform.position = Vector3.Lerp(camera.transform.position, targetPosition, zoomSmoothing);
-        camera.transform.rotation = Quaternion.Slerp(camera.transform.rotation, targetRotation, zoomSmoothing);
-
-        lastCursorLocationX = (Input.mousePosition.x + Screen.width / 2.0f) / Screen.width;
+        camera.transform.position = Vector3.Lerp(camera.transform.position, targetPosition, smoothing);
+        camera.transform.rotation = Quaternion.Slerp(camera.transform.rotation, targetRotation, smoothing);
     }
 }

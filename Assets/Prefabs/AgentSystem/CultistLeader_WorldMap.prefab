@@ -321,8 +321,11 @@ MonoBehaviour:
   middlePoint: {fileID: 612310319641057915}
   furthestPoint: {fileID: 9020436243410463687}
   rotationSpeed: 2
-  zoomSmoothing: 0.1
-  zoomSpeed: 0.7
+  smoothing: 0.1
+  mousePointerSensitivity: 5
+  mouseScrollSensitivity: 3
+  joystickSensivity: 20
+  bumpersSensitivity: 0.4
 --- !u!1 &4226876222137742032
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,7 +1009,7 @@ PrefabInstance:
     - target: {fileID: 4278167844994060426, guid: 4c5622ccf73091341ab49c8be7f87851,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4278167844994060429, guid: 4c5622ccf73091341ab49c8be7f87851,
         type: 3}
@@ -1126,7 +1129,7 @@ PrefabInstance:
     - target: {fileID: 7816272703630665255, guid: 4c5622ccf73091341ab49c8be7f87851,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7923775637155685772, guid: 4c5622ccf73091341ab49c8be7f87851,
         type: 3}
