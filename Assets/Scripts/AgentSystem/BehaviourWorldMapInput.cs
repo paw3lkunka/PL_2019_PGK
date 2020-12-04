@@ -37,6 +37,14 @@ public class BehaviourWorldMapInput : MonoBehaviour
         target = transform.position;
     }
 
+    private void Update()
+    {
+        if(target != transform.position)
+        {
+            SGUtils.DrawNavLine(lineRenderer, transform.position, target, out _);
+        }
+    }
+
     private void OnDisable()
     {
         if (ApplicationManager.Instance)
