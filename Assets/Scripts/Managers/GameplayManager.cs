@@ -16,6 +16,9 @@ public enum ResourceType { Water, Faith, Health }
 //      - OnCultistAdd
 public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 {
+
+    public float escapeDistance = 1200;
+
     [Header("Basic resources")]
     [SerializeField]
     private Resource water = new Resource(100.0f, 100.0f, false);
