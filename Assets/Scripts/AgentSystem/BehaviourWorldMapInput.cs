@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Script in CultistLeader_WorldMap
+/// </summary>
 public class BehaviourWorldMapInput : MonoBehaviour
 {
     private Moveable moveable;
