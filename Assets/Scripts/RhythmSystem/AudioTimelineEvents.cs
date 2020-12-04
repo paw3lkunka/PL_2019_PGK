@@ -51,6 +51,22 @@ public partial class AudioTimeline
         OnBarEnd?.Invoke(barState);
     }
 
+    private void BarSubdivHandler()
+    {
+        int noteMod = maxBarSubdivision;
+        int noteSubdiv = 1;
+        while (noteMod > 0)
+        {
+            if (currentSubdivNumber % noteMod == 0)
+            {
+                break;
+            }
+            noteMod /= 2;
+            noteSubdiv *= 2;
+        }
+        OnSubdiv?.Invoke(noteSubdiv);
+    }
+
     private void SequenceStartHandler()
     {
         // ### TIMELINE STATE CHANGE ###
@@ -62,6 +78,7 @@ public partial class AudioTimeline
         // Reset sequence start moment and set next beat moment
         sequenceStartMoment = AudioSettings.dspTime;
         NextBeatMoment = beatDuration;
+        NextBarSubdivMoment = maxBarSubdivDuration;
         OnSequenceStart?.Invoke();
     }
 
