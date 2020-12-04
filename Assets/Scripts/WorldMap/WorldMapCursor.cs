@@ -13,6 +13,7 @@ public class WorldMapCursor : MonoBehaviour
     public TextMeshProUGUI faithUsage;
 
     public float cursorRange = 20.0f;
+    public Transform cultLeaderCamera;
 
     private LineRenderer lineRenderer;
 
@@ -109,6 +110,11 @@ public class WorldMapCursor : MonoBehaviour
 
         if(cursorOffset.magnitude > 1.0f)
         {
+            if(cultLeaderCamera)
+            {
+                cursorOffset = Quaternion.Euler(0.0f, cultLeaderCamera.localEulerAngles.y + 90.0f, 0.0f) * cursorOffset;
+            }
+
             nextCursorPosition += cursorOffset;
         
             // RaycastHit rayHit;
