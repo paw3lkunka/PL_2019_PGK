@@ -10,14 +10,13 @@ public class CursorRhythmIndicator : MonoBehaviour
     [Header("Rhythm pulse indicator")]
     [SerializeField] private MeshRenderer rhythmIndicator;
     [SerializeField] private AnimationCurve rhythmCurve;
-    [SerializeField] private float rhytmIndicatorMaxSize = 5.0f;
+    [SerializeField] private AnimationCurve alphaCurve;
+    [SerializeField] private float rhytmIndicatorMaxSize = 3.0f;
 
     [Space]
     
     [Header("Hit indicator")]
     [SerializeField] private MeshRenderer hitIndicator;
-    [SerializeField] private AnimationCurve hitCurve;
-    [SerializeField] private float hitIndicatorMaxSize = 3.0f;
     [SerializeField] private List<MeshRenderer> beatHitSigns = new List<MeshRenderer>(4);
     
     [Space]
@@ -28,7 +27,12 @@ public class CursorRhythmIndicator : MonoBehaviour
     [SerializeField] private Color goodHitColor = Color.cyan;
     [SerializeField] private Color greatHitColor = Color.green;
     [SerializeField] private Color perfectHitColor = Color.magenta;
+    [Space]
+    [SerializeField] private Color rhythmIndicatorColor = Color.white;
 #pragma warning restore
+
+    private float rhythmIndicatorMinSize;
+    private float hitIndicatorMinSize;
 
     #endregion
 
@@ -37,6 +41,8 @@ public class CursorRhythmIndicator : MonoBehaviour
     private void Awake()
     {
         hitIndicator.material.color = noneHitColor;
+        rhythmIndicatorMinSize = rhythmIndicator.transform.localScale.x;
+        hitIndicatorMinSize = hitIndicator.transform.localScale.x;
     }
 
     private void OnEnable()
@@ -61,16 +67,12 @@ public class CursorRhythmIndicator : MonoBehaviour
         {
             var indicatorFactor = AudioTimeline.Instance.NormalizedTimeUntilNextBeat;
 
-            var rhythmSize = rhytmIndicatorMaxSize - ((rhytmIndicatorMaxSize - 1) * (1.0f - indicatorFactor));
+            var rhythmSize = Mathf.Lerp(rhythmIndicatorMinSize, rhythmIndicatorMinSize + rhytmIndicatorMaxSize, -rhythmCurve.Evaluate(indicatorFactor) + 1.0f);
             rhythmIndicator.transform.localScale = new Vector3(rhythmSize, 1.0f, rhythmSize);
 
-            rhythmIndicator.material.color = new Color(1.0f, 1.0f, 1.0f, rhythmCurve.Evaluate(indicatorFactor));
-
-            var hitSize = hitIndicatorMaxSize - ((hitIndicatorMaxSize - 1) * indicatorFactor);
-            hitIndicator.transform.localScale = new Vector3(hitSize, 1.0f, hitSize);
+            rhythmIndicator.material.color = new Color(rhythmIndicatorColor.r, rhythmIndicatorColor.g, rhythmIndicatorColor.b, alphaCurve.Evaluate(indicatorFactor));
 
             var newHitColor = hitIndicator.material.color;
-            newHitColor.a = hitCurve.Evaluate(1.0f - indicatorFactor);
             hitIndicator.material.color = newHitColor;
         }
     }

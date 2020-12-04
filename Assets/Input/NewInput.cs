@@ -340,7 +340,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""afd68388-46ed-4110-a348-058ed0e70686"",
-                    ""path"": ""<Mouse>/scroll/y"",
+                    ""path"": ""<Mouse>/scroll"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MouseKeyboard"",

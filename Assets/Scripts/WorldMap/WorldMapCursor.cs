@@ -116,10 +116,6 @@ public class WorldMapCursor : MonoBehaviour
             }
 
             nextCursorPosition += cursorOffset;
-        
-            // RaycastHit rayHit;
-            // Physics.Raycast(new Vector3(nextCursorPosition.x, 1000.0f, nextCursorPosition.z), Vector3.down, out rayHit);
-            // nextCursorPosition = rayHit.point;
         }
 
         WorldSceneManager.Instance.Cursor.transform.position = nextCursorPosition;
