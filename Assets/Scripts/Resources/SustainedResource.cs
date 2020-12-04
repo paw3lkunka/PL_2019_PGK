@@ -53,7 +53,7 @@ public class SustainedResource : MonoBehaviour
             switch (resourceType)
             {
                 case ResourceType.Water:
-                    if((GameplayManager.Instance.Water.Max - (float)GameplayManager.Instance.Water) > 0.05) 
+                    if (GameplayManager.Instance.Water < GameplayManager.Instance.Water.Max)
                     {
                         GameplayManager.Instance.Water += emitted;
                         textEmitter.Emit(ApplicationManager.Instance.PrefabDatabase.floatingTextResourceGained, emitted.ToString("0.0"), Color.cyan);
