@@ -14,6 +14,7 @@ public class Moveable : MonoBehaviour
 
     public Flags flags = Flags.canMove;
 
+    [field: Header("Speed")]
 
     [field: SerializeField, GUIName("SpeedBase")]
     public float SpeedBase { get; set; }

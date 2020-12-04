@@ -12,6 +12,8 @@ public class DamageableB : Damageable, IBoostable
     [field: SerializeField, GUIName("DefenseDecrese")]
     public float DefenseDecrese { get; set; }
 
+    [Header("B State")]
+
     [SerializeField]
     private BoostableState bState;
     public BoostableState BState

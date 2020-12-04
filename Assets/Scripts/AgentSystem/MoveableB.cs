@@ -13,6 +13,8 @@ public class MoveableB : Moveable, IBoostable
     [field: SerializeField, GUIName("SpeedDecresed")]
     public float SpeedDecresed { get; set; }
 
+    [field: Header("B State")]
+
     [SerializeField]
     private BoostableState bState;
     public BoostableState BState

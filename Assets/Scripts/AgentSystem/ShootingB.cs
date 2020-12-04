@@ -4,25 +4,39 @@ using UnityEngine;
 
 public class ShootingB : Shooting, IBoostable
 {
+    [field: Header("B State")]
+
+    [SerializeField]
+    private BoostableState bState;
+
+    [field: SerializeField, GUIName("CanBeBoosted")]
+    public bool CanBeBoosted { get; set; }
+
+    [field: SerializeField, GUIName("CanBeDecresed")]
+    public bool CanBeDecresed { get; set; }
+
+
     [field: Header("Boosted")]
 
     [field: SerializeField, GUIName("DamageBoost")]
     public float DamageBoost { get; set; } = 1;
 
-    [field: SerializeField, GUIName("DamageDecrese")]
-    public float DamageDecrese { get; set; } = 1;
-
-    [field: SerializeField, GUIName("RangeBoost")]
-    public float RangeBoost { get; set; } = 1;
-
     [field: SerializeField, GUIName("IntervalMultiplierBoost")]
     public float RangeMultiplierBoost { get; set; } = 1;
+
+    [field: Header("Decresed")]
+
+    [field: SerializeField, GUIName("DamageDecrese")]
+    public float DamageDecrese { get; set; } = 1;
 
     [field: SerializeField, GUIName("RangeMultiplierDecrese")]
     public float RangeMultiplierDecrese { get; set; } = 1;
 
-    [SerializeField]
-    private BoostableState bState;
+
+    public bool IsDecresed => BState == BoostableState.boosted;
+
+    public bool IsBoosted => BState == BoostableState.decresed;
+
     public BoostableState BState
     {
         get => bState;
@@ -47,15 +61,6 @@ public class ShootingB : Shooting, IBoostable
         }
     }
 
-    [field: SerializeField, GUIName("CanBeBoosted")]
-    public bool CanBeBoosted { get; set; }
-
-    [field: SerializeField, GUIName("CanBeDecresed")]
-    public bool CanBeDecresed { get; set; }
-
-    public bool IsDecresed => BState == BoostableState.boosted;
-
-    public bool IsBoosted => BState == BoostableState.decresed;
 
     protected override Projectile CreateProjectile()
     {
