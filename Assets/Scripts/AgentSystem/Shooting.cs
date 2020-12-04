@@ -12,8 +12,8 @@ public class Shooting : MonoBehaviour, IAttack
 
     public Flags flags = Flags.canShoot;
 
-    public AudioClip gunshootSound;
     public AudioSource audioSource;
+    public AudioClip shootingSound;
 
 //TODO: do it better
     [field: Header("If synchronived with rythm, interval value means")]
@@ -131,7 +131,7 @@ public class Shooting : MonoBehaviour, IAttack
     {
         if (subdiv <= IntervalInt)
         {
-        Debug.Log($"O: {name} - shoot on subdiv = {subdiv}");
+        //Debug.Log($"O: {name} - shoot on subdiv = {subdiv}");
             Shoot();
         }
     }
@@ -140,7 +140,7 @@ public class Shooting : MonoBehaviour, IAttack
     {
         while( (flags & Flags.canShoot) != 0 )
         {
-            Debug.Log($"O: {name} - out of rhythm");
+            //Debug.Log($"O: {name} - out of rhythm");
             Shoot();
             yield return new WaitForSecondsRealtime(Interval);
         }
@@ -149,7 +149,8 @@ public class Shooting : MonoBehaviour, IAttack
 
     void Shoot()
     {
-        audioSource.PlayOneShot(gunshootSound);
+        if (audioSource && shootingSound)
+            audioSource.PlayOneShot(shootingSound);
         CreateProjectile().ShootAt(this, shootTarget);
     }
 
@@ -182,6 +183,12 @@ public class Shooting : MonoBehaviour, IAttack
         {
             HoldFire();
         }
+    }
+
+    private void OnDisable()
+    {
+        AudioTimeline.Instance.OnSubdiv -= ShootInRythm;
+        StopAllCoroutines();
     }
 
     #endregion

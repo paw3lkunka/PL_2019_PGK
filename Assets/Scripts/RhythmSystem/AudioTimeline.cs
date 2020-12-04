@@ -261,6 +261,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
             }
         }
 
+        //Debug.Log($"<color=green>Next beat: {NextBeatMoment}; Next subdiv: {NextBarSubdivMoment}</color>");
     }
 
     #endregion
@@ -363,7 +364,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     private void TimelineInit()
     {
         beatDuration = 60.0d / songBpm;
-        maxBarSubdivDuration = beatDuration / maxBarSubdivision;
+        maxBarSubdivDuration = (beatDuration * beatsPerBar) / maxBarSubdivision;
         goodTolerance = ApplicationManager.Instance.GoodTolerance;
         greatTolerance = ApplicationManager.Instance.GreatTolerance;
         SequenceStartHandler();
