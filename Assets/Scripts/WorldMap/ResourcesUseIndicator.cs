@@ -23,7 +23,7 @@ public class ResourcesUseIndicator : MonoBehaviour
         set
         {
             waterAmount = value;
-            waterText.text = Mathf.Approximately(faithAmount, 0) ? "0" : "-" + System.Math.Round(value, 1).ToString("0.0");
+            waterText.text = Mathf.Approximately(waterAmount, 0) ? "0" : "-" + System.Math.Round(value, 1).ToString("0.0");
             waterText.color = value > GameplayManager.Instance.Water ? warningColor : waterColor;
         }
     }

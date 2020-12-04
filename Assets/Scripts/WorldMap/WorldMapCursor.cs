@@ -34,7 +34,7 @@ public class WorldMapCursor : MonoBehaviour
         ApplicationManager.Instance.Input.Gameplay.MoveCursor.Disable();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(!GameplayManager.Instance.IsPaused)
         {
@@ -79,7 +79,7 @@ public class WorldMapCursor : MonoBehaviour
     private float CalculateUsage(float speed, float route, float usage)
     {
         float time = route / speed;
-        return usage * (time / Time.fixedDeltaTime);
+        return usage * (time / (Time.fixedDeltaTime * 2.0f));
     }
 
     private void MoveCursorPointer()
