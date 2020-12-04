@@ -55,6 +55,10 @@ public class ResourceDepleter : MonoBehaviour
                 foreach (var cultistInfo in GameplayManager.Instance.cultistInfos)
                 {
                     cultistInfo.HP -= HealthDepletionRate;
+                    if(cultistInfo.HP < 0.01f)
+                    {
+                        GameplayManager.Instance.cultistInfos.Remove(cultistInfo);
+                    }
                 }
             }
         }

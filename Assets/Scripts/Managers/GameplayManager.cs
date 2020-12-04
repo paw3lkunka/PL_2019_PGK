@@ -42,7 +42,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         get
         {
-            float allHealth = ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health;
+            float allHealth = 0.0f;
             foreach (var cultist in cultistInfos)
             {
                 allHealth += cultist.HP;
@@ -55,7 +55,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         get
         {
-            float allHealth = ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health.Max;
+            float allHealth = 0.0f;
             foreach (var cultist in cultistInfos)
             {
                 allHealth += cultist.HP.Max;
@@ -230,6 +230,11 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         if(!IsPaused)
         {
             avoidingFightTimer += Time.deltaTime;
+        }
+
+        if(cultistInfos.Count == 0)
+        {
+            ApplicationManager.Instance.GameOver();
         }
     }
 
