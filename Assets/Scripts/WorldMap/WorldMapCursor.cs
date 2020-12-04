@@ -12,6 +12,9 @@ public class WorldMapCursor : MonoBehaviour
     public TextMeshProUGUI waterUsage;
     public TextMeshProUGUI faithUsage;
 
+    public float minIndicatorDistance;
+    public float maxIndicatorDistance;
+
     public float cursorRange = 20.0f;
     public Transform cultLeaderCamera;
 
@@ -56,19 +59,30 @@ public class WorldMapCursor : MonoBehaviour
                     break;
             }
 
-            SGUtils.DrawNavLine
-            (
-                lineRenderer,
-                WorldSceneManager.Instance.Leader.transform.position,
-                WorldSceneManager.Instance.Cursor.transform.position,
-                out float pathLength
-            );
+            var leader = WorldSceneManager.Instance.Leader.transform.position;
+            var coursor = WorldSceneManager.Instance.Cursor.transform.position;
 
-            float speed = WorldSceneManager.Instance.Leader.GetComponent<NavMeshAgent>().speed;
-            WorldSceneManager.Instance.ResUseIndicator.Water = CalculateUsage(speed, pathLength, WorldSceneManager.Instance.ResourceDepleter.WaterDepletionRate);
+            float straightDistance = (coursor - leader).magnitude;
 
-            WorldSceneManager.Instance.ResUseIndicator.Faith = CalculateUsage(speed, pathLength, WorldSceneManager.Instance.ResourceDepleter.FaithDepletionRate);
-            WorldSceneManager.Instance.ResUseIndicator.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+            if (straightDistance < maxIndicatorDistance)
+            {
+                SGUtils.DrawNavLine(lineRenderer, leader, coursor, out float pathLength);
+
+                if (straightDistance > minIndicatorDistance)
+                {
+                    float speed = WorldSceneManager.Instance.Leader.GetComponent<NavMeshAgent>().speed;
+                    WorldSceneManager.Instance.ResUseIndicator.Water = CalculateUsage(speed, pathLength, WorldSceneManager.Instance.ResourceDepleter.WaterDepletionRate);
+
+                    WorldSceneManager.Instance.ResUseIndicator.Faith = CalculateUsage(speed, pathLength, WorldSceneManager.Instance.ResourceDepleter.FaithDepletionRate);
+                    
+                }
+                else
+                {
+                    WorldSceneManager.Instance.ResUseIndicator.Hide();
+                }
+
+                WorldSceneManager.Instance.ResUseIndicator.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+            }            
         }
     }
 

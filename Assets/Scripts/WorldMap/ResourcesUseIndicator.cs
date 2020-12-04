@@ -17,6 +17,12 @@ public class ResourcesUseIndicator : MonoBehaviour
     private float waterAmount = 0;
     private float faithAmount = 0;
 
+    public void Hide()
+    {
+        waterText.text = "";
+        faithText.text = "";
+    }
+
     public float Water
     {
         get => waterAmount;
