@@ -16,7 +16,6 @@ public enum ResourceType { Water, Faith, Health }
 //      - OnCultistAdd
 public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 {
-#pragma warning disable
     [Header("Basic resources")]
     [SerializeField]
     private Resource water = new Resource(100.0f, 100.0f, false);
@@ -75,8 +74,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     [HideInInspector]
     public float avoidingFightTimer = 0.0f;
-
-#pragma warning restore
 
     [Header("Gameplay Config")] // * ===================================
     [ReadOnly]

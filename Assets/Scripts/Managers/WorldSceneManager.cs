@@ -37,6 +37,8 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         ResourceDepleter = FindObjectOfType<ResourceDepleter>();
         ResUseIndicator = FindObjectOfType<ResourcesUseIndicator>();
 
+        GameplayManager.Instance.Faith.Overflowable = false;
+
         if (!GameplayManager.Instance.firstTimeOnMap)
         {
             Vector3 exitOffset = LocationCentre.exitDirection * GameplayManager.Instance.lastLocationRadius;

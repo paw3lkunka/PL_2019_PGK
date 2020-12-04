@@ -72,6 +72,7 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
     private void Start()
     {
         QualitySettings.shadowDistance = 100.0f;
+        GameplayManager.Instance.Faith.Overflowable = true;
 
         enemies.Clear();
         ourCrew.Clear();
