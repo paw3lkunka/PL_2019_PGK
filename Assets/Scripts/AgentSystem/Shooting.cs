@@ -12,6 +12,19 @@ public class Shooting : MonoBehaviour, IAttack
 
     public Flags flags = Flags.canShoot;
 
+    public AudioClip gunshootSound;
+    public AudioSource audioSource;
+
+//TODO: do it better
+    [field: Header("If synchronived with rythm, interval value means")]
+    [field: Header("amount of shoots per tact, and should be power of 2.")]
+    [field: Header("Otherwise interval value means time in seconds.")]
+    [field: Header("== Dont change SyncWithRhythm in play mode! ==")]
+    [field: Space]
+
+    [field: SerializeField, GUIName("SyncWithRhythm")]
+    public bool SyncWithRhythm { get; private set; }
+
     [field: Header("Normal")]
 
     [field: SerializeField, GUIName("DamageMultiplier")]
@@ -20,25 +33,46 @@ public class Shooting : MonoBehaviour, IAttack
     [field: SerializeField, GUIName("RangeMultiplier")]
     public float RangeMultiplier { get; set; } = 1;
 
-    [field: SerializeField, GUIName("IntervalMultiplier")]
-    public float IntervalMultiplier { get; set; } = 1;
+    [field: SerializeField, GUIName("IntervalBase")]
+    public float IntervalBase { get; set; } = 1;
+
+
+    public virtual float Interval { get => IntervalBase; }
+
+    public int IntervalInt { get => Mathf.RoundToInt(Interval); }
+
+    private Vector3 shootTarget;
+    private bool AttackingInRythm { get; set; }
+    private bool AttackingOutRythm { get => attackingOutOfRythmCoroutine != null; }
+    private Coroutine attackingOutOfRythmCoroutine = null;
+
 
     public void Attack(Vector3 target)
     {
-        this.target = target;
+        shootTarget = target;
 
-        if( (flags & Flags.canShoot) != 0 && shootRoutine == null )
+        if ((flags & Flags.canShoot) != 0)
         {
-            shootRoutine = StartCoroutine(ShootRoutine());
+            if (SyncWithRhythm && !AttackingInRythm)
+            {
+                StartShootingInRhythm();
+            }
+            else if (!AttackingOutRythm)
+            {
+                StartShootingOutOfRhythm();
+            }
         }
     }
 
     public void HoldFire()
     {
-        if(shootRoutine != null)
+        if (AttackingInRythm)
         {
-            StopCoroutine(shootRoutine);
-            shootRoutine = null;
+            StopShootingInRhythm();
+        }
+        else if(AttackingOutRythm)
+        {
+            StopShootingOutOfRhythm();
         }        
     }
 
@@ -70,29 +104,76 @@ public class Shooting : MonoBehaviour, IAttack
         }
     }
 
-    private IEnumerator ShootRoutine()
+    private void StartShootingInRhythm()
+    {
+        AttackingInRythm = true;
+        AudioTimeline.Instance.OnSubdiv += ShootInRythm;
+    }
+
+    private void StopShootingInRhythm()
+    {
+        AttackingInRythm = false;
+        AudioTimeline.Instance.OnSubdiv -= ShootInRythm;
+    }
+
+    private void StartShootingOutOfRhythm()
+    {
+        attackingOutOfRythmCoroutine = StartCoroutine(ShootOutOfRhythmRoutine());
+    }
+
+    private void StopShootingOutOfRhythm()
+    {
+        StopCoroutine(attackingOutOfRythmCoroutine);
+        attackingOutOfRythmCoroutine = null;
+    }
+
+    private  void ShootInRythm(int subdiv)
+    {
+        if (subdiv <= IntervalInt)
+        {
+        Debug.Log($"O: {name} - shoot on subdiv = {subdiv}");
+            Shoot();
+        }
+    }
+
+    private IEnumerator ShootOutOfRhythmRoutine()
     {
         while( (flags & Flags.canShoot) != 0 )
         {
-            //TODO sync with rythm
-            CreateProjectile().ShootAt(this, target);
-            yield return new WaitForSecondsRealtime(IntervalMultiplier);
+            Debug.Log($"O: {name} - out of rhythm");
+            Shoot();
+            yield return new WaitForSecondsRealtime(Interval);
         }
-        shootRoutine = null;
+        attackingOutOfRythmCoroutine = null;
     }
 
-    private Vector3 target;
-    private Coroutine shootRoutine = null;
+    void Shoot()
+    {
+        audioSource.PlayOneShot(gunshootSound);
+        CreateProjectile().ShootAt(this, shootTarget);
+    }
+
 
     #region MonoBehaviour
 
     private void OnValidate()
     {
-        if(gameObject.layer != LayerMask.NameToLayer("PlayerCrew")
-            && gameObject.layer != LayerMask.NameToLayer("Enemies"))
+        if (gameObject.layer != LayerMask.NameToLayer("PlayerCrew")
+         && gameObject.layer != LayerMask.NameToLayer("Enemies"))
         {
             Debug.LogError("GameObject has invalid layer!");
         }
+
+        if (SyncWithRhythm && !Mathf.IsPowerOfTwo(IntervalInt))
+        {
+            Debug.LogError("If SyncWithRhythm Interval mus be power of 2!");
+        }
+    }
+
+    private void Awake()
+    {
+        AttackingInRythm = false;
+        attackingOutOfRythmCoroutine = null;
     }
 
     private void FixedUpdate()

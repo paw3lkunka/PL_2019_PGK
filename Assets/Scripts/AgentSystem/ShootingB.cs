@@ -21,8 +21,11 @@ public class ShootingB : Shooting, IBoostable
     [field: SerializeField, GUIName("DamageBoost")]
     public float DamageBoost { get; set; } = 1;
 
-    [field: SerializeField, GUIName("IntervalMultiplierBoost")]
+    [field: SerializeField, GUIName("RangeMultiplierBoost")]
     public float RangeMultiplierBoost { get; set; } = 1;
+
+    [field: SerializeField, GUIName("IntervalBoost")]
+    public float IntervalBoost { get; set; } = 1;
 
     [field: Header("Decresed")]
 
@@ -31,6 +34,28 @@ public class ShootingB : Shooting, IBoostable
 
     [field: SerializeField, GUIName("RangeMultiplierDecrese")]
     public float RangeMultiplierDecrese { get; set; } = 1;
+
+    [field: SerializeField, GUIName("IntervalDecrese")]
+    public float IntervalDecrese { get; set; } = 1;
+
+
+    public override float Interval 
+    {
+        get
+        {
+            switch (bState)
+            {
+                case BoostableState.normal:
+                    return IntervalBase;
+                case BoostableState.boosted:
+                    return IntervalBoost;
+                case BoostableState.decresed:
+                    return IntervalDecrese;
+                default:
+                    throw new System.NotImplementedException();
+            }
+        }
+    }
 
 
     public bool IsDecresed => BState == BoostableState.boosted;
