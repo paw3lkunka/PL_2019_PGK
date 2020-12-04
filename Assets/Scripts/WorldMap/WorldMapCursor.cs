@@ -79,7 +79,7 @@ public class WorldMapCursor : MonoBehaviour
     private float CalculateUsage(float speed, float route, float usage)
     {
         float time = route / speed;
-        return usage * (time / (Time.fixedDeltaTime * 2.0f));
+        return usage * (time / Time.fixedDeltaTime);
     }
 
     private void MoveCursorPointer()
