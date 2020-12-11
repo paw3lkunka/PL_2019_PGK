@@ -187,7 +187,10 @@ public class Shooting : MonoBehaviour, IAttack
 
     private void OnDisable()
     {
-        AudioTimeline.Instance.OnSubdiv -= ShootInRythm;
+        if(AudioTimeline.Instance != null)
+        {
+            AudioTimeline.Instance.OnSubdiv -= ShootInRythm;
+        }
         StopAllCoroutines();
     }
 

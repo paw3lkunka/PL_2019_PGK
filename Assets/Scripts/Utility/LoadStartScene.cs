@@ -18,7 +18,7 @@ public class LoadStartScene : MonoBehaviour
             StartScene();
         }
 
-        if (Gamepad.current.buttonSouth.wasPressedThisFrame)
+        if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)
         {
             StartScene();
         }

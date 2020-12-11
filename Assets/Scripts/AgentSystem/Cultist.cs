@@ -145,7 +145,7 @@ public class Cultist : MonoBehaviour
         attack = GetComponent<IAttack>();
         boostables = GetComponentsInChildren<IBoostable>();
 
-        AudioTimeline.Instance.OnBeat += AttackInDirection;
+        //AudioTimeline.Instance.OnBeat += AttackInDirection;
     }
 
     private void Update()
@@ -159,6 +159,7 @@ public class Cultist : MonoBehaviour
         if (AudioTimeline.Instance)
         {
             AudioTimeline.Instance.OnBeatFail += FailBit;
+            AudioTimeline.Instance.OnBeat += AttackInDirection;
         }
         else
         {
@@ -180,6 +181,8 @@ public class Cultist : MonoBehaviour
         if (AudioTimeline.Instance)
         {
             AudioTimeline.Instance.OnBeatFail -= FailBit;
+            AudioTimeline.Instance.OnBeat -= AttackInDirection;
+            //AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
         }
 
         GameplayManager.Instance.LowFaithLevelStart -= OnLowFaithStart;
@@ -187,8 +190,6 @@ public class Cultist : MonoBehaviour
         GameplayManager.Instance.OverfaithStart -= OnOverfaithStart;
         GameplayManager.Instance.OverfaithEnd -= OnOverfaithEnd;
 
-        AudioTimeline.Instance.OnBeat -= AttackInDirection;
-        //AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
         damageable.DamageTaken -= OnDamage;
         damageable.Death -= OnDeath;
     }

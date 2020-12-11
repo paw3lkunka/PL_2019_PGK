@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class WorldMapCamera : MonoBehaviour
 {
-    public new Camera camera;
+    public Camera mapCamera;
     public Transform closestPoint;
     public Transform middlePoint;
     public Transform furthestPoint;
@@ -148,7 +148,7 @@ public class WorldMapCamera : MonoBehaviour
             transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
         }
 
-        camera.transform.position = Vector3.Lerp(camera.transform.position, targetPosition, smoothing);
-        camera.transform.rotation = Quaternion.Slerp(camera.transform.rotation, targetRotation, smoothing);
+        mapCamera.transform.position = Vector3.Lerp(mapCamera.transform.position, targetPosition, smoothing);
+        mapCamera.transform.rotation = Quaternion.Slerp(mapCamera.transform.rotation, targetRotation, smoothing);
     }
 }

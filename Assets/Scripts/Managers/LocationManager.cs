@@ -141,7 +141,10 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
     private void OnDisable()
     {
-        AudioTimeline.Instance.OnBeatFail -= OnBeatFail;
+        if(AudioTimeline.Instance != null)
+        {
+            AudioTimeline.Instance.OnBeatFail -= OnBeatFail;
+        }
     }
 
     private void OnBeatFail()
