@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class MyWindow : EditorWindow
+public class ReferencesCounter : EditorWindow
 {
     DirEntry rootDir;
     int filesCount;
@@ -25,12 +25,12 @@ public class MyWindow : EditorWindow
     private const string _space = "    ";
 
     // Add menu named "My Window" to the Window menu
-    [MenuItem("Window/Reference Couner")]
+    [MenuItem("Window/References Couner")]
     static void Init()
     {
         InitStyles();
         // Get existing open window or if none, make a new one:
-        MyWindow window = (MyWindow)EditorWindow.GetWindow(typeof(MyWindow));
+        ReferencesCounter window = (ReferencesCounter)EditorWindow.GetWindow(typeof(ReferencesCounter));
         window.Show();
     }
 
