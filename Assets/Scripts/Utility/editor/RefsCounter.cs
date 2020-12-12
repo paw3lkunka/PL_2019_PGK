@@ -19,15 +19,16 @@ public class MyWindow : EditorWindow
     static GUIStyle directstyle = new GUIStyle();
     static GUIStyle noRefsStyle = new GUIStyle();
 
-    private const string _cross = " ├─";
-    private const string _corner = " └─";
-    private const string _vertical = " │ ";
-    private const string _space = "   ";
+    private const string _cross = " ├─ ";
+    private const string _corner = " └─ ";
+    private const string _vertical = " │  ";
+    private const string _space = "    ";
 
     // Add menu named "My Window" to the Window menu
     [MenuItem("Window/Reference Couner")]
     static void Init()
     {
+        InitStyles();
         // Get existing open window or if none, make a new one:
         MyWindow window = (MyWindow)EditorWindow.GetWindow(typeof(MyWindow));
         window.Show();
@@ -35,18 +36,7 @@ public class MyWindow : EditorWindow
 
     void OnGUI()
     {
-        noRefsStyle.normal.textColor = new Color(0.7f, 0.1f, 0.1f);
-        noRefsStyle.richText = true;
-        noRefsStyle.fixedWidth = 0.9f;
-
-        normalstyle.normal.textColor = new Color(0.7f, 0.7f, 0.7f);
-        normalstyle.richText = true;
-        normalstyle.fixedWidth = 0.9f;
-
-        directstyle.normal.textColor = new Color(0.6f, 0.6f, 0.6f);
-        directstyle.richText = true;
-        directstyle.fixedWidth = 0.9f;
-
+        InitStyles();
         if (GUILayout.Button("Refresh"))
         {
             if ((readDirSemaphore & countRefsSemaphore) == 0)
@@ -183,34 +173,77 @@ public class MyWindow : EditorWindow
         else
         {
             scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
-            PrintDir(rootDir, 0);
+            PrintDir(rootDir, " ", true);
             EditorGUILayout.EndScrollView();
         }
     }
 
-    void PrintDir(DirEntry dir, int level)
+    void PrintDir(DirEntry dir, string indent, bool last)
     {
         var name = Path.GetFileName(dir.path);
-        var offset = new string('│', level);
+        var currIndent = indent + (last ? _corner : _cross);
+        var nextIndent = indent + (last ? _space : _vertical);
 
-        GUILayout.Label($"<color=#b3b3b3ff> {offset}</color> {name}:", directstyle);
+        GUILayout.Label($"<color=#b3b3b3ff>{currIndent}</color>{name}:", directstyle);
 
-        foreach (var file in dir.files)
+        if (dir.files.Count > 0)
         {
-            var block = true ? '├' : '└';
-            var style = file.RefsCount != 0 ? normalstyle : noRefsStyle;
-            GUILayout.Label($"<color=#b3b3b3ff> {offset}{block}</color> {file.Name}  {file.RefsCount}", style);
+            for (int i = 0; i < dir.dirs.Count; i++)
+            {
+                PrintDir(dir.dirs[i], nextIndent, false);
+            }
+
+            GUIStyle style;
+            if (dir.files.Count > 1)
+            {
+                var lastIndex = dir.files.Count - 1;
+                for (int i = 0; i < lastIndex; i++)
+                {
+                    style = dir.files[i].RefsCount != 0 ? normalstyle : noRefsStyle;
+                    GUILayout.Label($"<color=#b3b3b3ff>{nextIndent + _cross}</color>{dir.files[i].Name} {dir.files[i].RefsCount}", style);
+
+                }
+
+                style = dir.files[0].RefsCount != 0 ? normalstyle : noRefsStyle;
+                GUILayout.Label($"<color=#b3b3b3ff>{nextIndent + _corner}</color>{dir.files[0].Name} {dir.files[0].RefsCount}", style);
+            }
+            else
+            {
+                style = dir.files[0].RefsCount != 0 ? normalstyle : noRefsStyle;
+                GUILayout.Label($"<color=#b3b3b3ff>{nextIndent + _corner}</color>{dir.files[0].Name} {dir.files[0].RefsCount}", style);
+            }
+
+
         }
-
-        foreach (var subdir in dir.dirs)
+        else if (dir.dirs.Count > 1)
         {
-            PrintDir(subdir, level + 1);
+            var lastIndex = dir.dirs.Count - 1;
+            for (int i = 0; i < lastIndex; i++)
+            {
+                PrintDir(dir.dirs[i], nextIndent, false);
+            }
+
+            PrintDir(dir.dirs[lastIndex], nextIndent, true);
+        }
+        else
+        {
+            PrintDir(dir.dirs[0], nextIndent, true);
         }
     }
 
-    void printNode(string Label, string indent, bool last)
+    static void InitStyles()
     {
+        noRefsStyle.normal.textColor = new Color(0.7f, 0.1f, 0.1f);
+        noRefsStyle.richText = true;
+        noRefsStyle.fixedWidth = 1.5f;
 
+        normalstyle.normal.textColor = new Color(0.7f, 0.7f, 0.7f);
+        normalstyle.richText = true;
+        normalstyle.fixedWidth = 1.5f;
+
+        directstyle.normal.textColor = new Color(0.6f, 0.6f, 0.6f);
+        directstyle.richText = true;
+        directstyle.fixedWidth = 1.5f;
     }
 }
 
