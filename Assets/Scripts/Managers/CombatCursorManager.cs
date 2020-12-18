@@ -188,8 +188,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
                     if(isJoystickLeanOut)
                     {
                         var cursorPos = MainCursor.transform.position;
-                        cultLeaderPosition.y += 3.0f;
-                        cursorPos.y += 3.0f;
+                        cultLeaderPosition.y += 2.0f;
+                        cursorPos.y += 2.0f;
 
                         RaycastHit rayHit;
                         int layerMask = LayerMask.GetMask("Default");
