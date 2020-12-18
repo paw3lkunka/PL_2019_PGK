@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public enum BeatState { None, Bad, Good, Great, Perfect };
 
@@ -121,7 +122,8 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
         input = ApplicationManager.Instance.Input;
     }
 
-    private void Start() => TimelineInit();
+    // Replaced by on scene loaded
+    //private void Start() => TimelineInit();
 
     private void OnEnable()
     {
@@ -132,6 +134,8 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
         input.Gameplay.Pause.performed += PauseResumeInputHandler;
         input.Gameplay.Pause.Enable();
+
+        SceneManager.sceneLoaded += TimelineInit;
     }
 
     private void OnDisable()
@@ -143,6 +147,8 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
         input.Gameplay.Pause.performed -= PauseResumeInputHandler;
         input.Gameplay.Pause.Disable();
+
+        SceneManager.sceneLoaded -= TimelineInit;
     }
 
     private void Update()
@@ -361,7 +367,24 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     // ---- Timeline control methods ----------------------
     #region TimelineControl
 
-    private void TimelineInit()
+#if UNITY_EDITOR
+    // HACK: Loading the scene takes too much time for first beat to sync in editor, so i hacked it ~fmazurek
+    private void TimelineInit(Scene arg0, LoadSceneMode loadSceneMode)
+    {
+        StartCoroutine(InitDelay());
+    }
+
+    private IEnumerator InitDelay()
+    {
+        yield return new WaitForSeconds(1.0f);
+        beatDuration = 60.0d / songBpm;
+        maxBarSubdivDuration = (beatDuration * beatsPerBar) / maxBarSubdivision;
+        goodTolerance = ApplicationManager.Instance.GoodTolerance;
+        greatTolerance = ApplicationManager.Instance.GreatTolerance;
+        SequenceStartHandler();
+    }
+#else
+    private void TimelineInit(Scene arg0, LoadSceneMode loadSceneMode)
     {
         beatDuration = 60.0d / songBpm;
         maxBarSubdivDuration = (beatDuration * beatsPerBar) / maxBarSubdivision;
@@ -369,7 +392,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
         greatTolerance = ApplicationManager.Instance.GreatTolerance;
         SequenceStartHandler();
     }
-
+#endif
     private void EvaluateBar()
     {
         int good = 0, great = 0, perfect = 0, bad = 0, none = 0;
@@ -427,11 +450,11 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
         }
     }
 
-    #endregion
+#endregion
 
-    #endregion
+#endregion
 
-    #region Input
+#region Input
 
     private void PrimaryBeatHitInputHandler(InputAction.CallbackContext ctx)
     {
@@ -448,5 +471,5 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
         Pause();
     }
 
-    #endregion
+#endregion
 }
