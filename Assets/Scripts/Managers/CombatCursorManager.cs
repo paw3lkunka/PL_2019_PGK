@@ -178,16 +178,25 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
                 case InputSchemeEnum.Gamepad:
                 case InputSchemeEnum.JoystickKeyboard:
                     var cultLeaderPosition = LocationManager.Instance.cultLeader.transform.position;
-                    cultLeaderPosition.y += 1.0f;
                     var cursorPos = MainCursor.transform.position;
+                    cultLeaderPosition.y += 1.0f;
                     cursorPos.y += 1.0f;
+
                     RaycastHit rayHit;
-                    Physics.Raycast(cultLeaderPosition, cursorPos - cultLeaderPosition , out rayHit);
-                    cursorPos = Vector3.MoveTowards(rayHit.point, cultLeaderPosition, 0.5f);
-                    //cursorPos = rayHit.point;
-                    cursorPos.y = 1000.0f;
-                    Physics.Raycast(cursorPos, Vector3.down, out rayHit);
-                    walkTargetIndicator.transform.position = rayHit.point;
+                    int layerMask = LayerMask.GetMask("Default");
+                    if(Physics.Raycast(cultLeaderPosition, cursorPos - cultLeaderPosition , out rayHit, Mathf.Infinity, layerMask))
+                    {
+                        cursorPos = Vector3.MoveTowards(rayHit.point, cultLeaderPosition, 0.5f);
+                        cursorPos.y = 1000.0f;
+                        Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, layerMask);
+                        cursorPos = rayHit.point;
+                    }
+                    else
+                    {
+                        cursorPos = (cursorPos - cultLeaderPosition) * 1000.0f;
+                    }
+
+                    walkTargetIndicator.transform.position = cursorPos;
                     break;
 
                 case InputSchemeEnum.Touchscreen:
