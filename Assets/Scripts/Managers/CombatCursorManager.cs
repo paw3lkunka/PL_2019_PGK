@@ -6,7 +6,10 @@ using UnityEngine.InputSystem;
 public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInstancing>
 {
     [field: SerializeField, GUIName("CursorRange")]
-    public float CursorRange { get; private set; } = 20.0f;
+    public float cursorDeadzone { get; private set; } = 0.7f;
+
+    [field: SerializeField, GUIName("CursorRange")]
+    public float CursorRange { get; private set; } = 12.0f;
 
     [field: SerializeField, GUIName("ShootingCancelRange")]
     public float ShootingCancelRange { get; private set; } = 5.0f;
@@ -134,10 +137,10 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     private void SetCursorForJoyAxis(Vector2 joystickAxis)
     {
         var nextCursorPosition = LocationManager.Instance.cultLeader.transform.position;
-        var cursorOffset = new Vector3(-joystickAxis.y, 0.0f, joystickAxis.x) * CursorRange;
 
-        if(cursorOffset.magnitude > ShootingCancelRange)
+        if(joystickAxis.magnitude > cursorDeadzone)
         {
+            var cursorOffset = new Vector3(-joystickAxis.y, 0.0f, joystickAxis.x) / joystickAxis.magnitude * CursorRange;
             nextCursorPosition += cursorOffset;
             
             RaycastHit rayHit;
@@ -166,7 +169,30 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     private void SetWalkTargetIndicator(InputAction.CallbackContext ctx)
     {
         // TODO: Check mouse over gui
-        walkTargetIndicator.transform.position = MainCursor.transform.position;
+        switch (ApplicationManager.Instance.CurrentInputScheme)
+            {
+                case InputSchemeEnum.MouseKeyboard:
+                    walkTargetIndicator.transform.position = MainCursor.transform.position;
+                    break;
+
+                case InputSchemeEnum.Gamepad:
+                case InputSchemeEnum.JoystickKeyboard:
+                    var cultLeaderPosition = LocationManager.Instance.cultLeader.transform.position;
+                    cultLeaderPosition.y += 1.0f;
+                    var cursorPos = MainCursor.transform.position;
+                    cursorPos.y += 1.0f;
+                    RaycastHit rayHit;
+                    Physics.Raycast(cultLeaderPosition, cursorPos - cultLeaderPosition , out rayHit);
+                    cursorPos = Vector3.MoveTowards(rayHit.point, cultLeaderPosition, 0.5f);
+                    //cursorPos = rayHit.point;
+                    cursorPos.y = 1000.0f;
+                    Physics.Raycast(cursorPos, Vector3.down, out rayHit);
+                    walkTargetIndicator.transform.position = rayHit.point;
+                    break;
+
+                case InputSchemeEnum.Touchscreen:
+                    break;
+            }
     }
 
     private void SetShootTargetIndicator(InputAction.CallbackContext ctx)
