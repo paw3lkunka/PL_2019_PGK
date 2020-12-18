@@ -11,12 +11,14 @@ GameObject:
   - component: {fileID: 694502297753820073}
   - component: {fileID: 694502297753820069}
   - component: {fileID: 694502297753820070}
-  m_Layer: 0
+  - component: {fileID: 7037183194661120548}
+  - component: {fileID: 2120468740336568898}
+  m_Layer: 14
   m_Name: BarrelFullIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &694502297753820073
 Transform:
@@ -55,6 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,6 +82,36 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7037183194661120548
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694502297753820074}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.184182, y: 1.4508373, z: 1.1841818}
+  m_Center: {x: -0.48999995, y: 0.7748054, z: 0}
+--- !u!208 &2120468740336568898
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694502297753820074}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.592, y: 0.73, z: 0.592}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.49, y: 0.77500004, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &694502298476782172
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,13 +125,13 @@ GameObject:
   - component: {fileID: 694502298476782169}
   - component: {fileID: 3008890918174870437}
   - component: {fileID: 4669710808748671328}
-  - component: {fileID: 3126219585114615708}
-  m_Layer: 0
+  - component: {fileID: 167988137714370453}
+  m_Layer: 14
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &694502298476782167
 Transform:
@@ -138,6 +171,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -162,6 +196,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3008890918174870437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,8 +229,8 @@ MonoBehaviour:
   onFullMaterial: {fileID: 2100000, guid: e438755c664bbc9458b8d3b69bf6f7d6, type: 2}
   indicator: {fileID: 694502297753820074}
   appendMaxValue: 0
---- !u!65 &3126219585114615708
-BoxCollider:
+--- !u!135 &167988137714370453
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -205,5 +240,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.1992884, y: 1.5020158, z: 1.1992874}
-  m_Center: {x: -0.49000025, y: 0.7510079, z: 0}
+  m_Radius: 2
+  m_Center: {x: -0.49000004, y: 0.751008, z: 0}

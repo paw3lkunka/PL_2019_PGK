@@ -11,12 +11,14 @@ GameObject:
   - component: {fileID: 7387238672807283157}
   - component: {fileID: 1597688529417807076}
   - component: {fileID: 7682719268563125919}
+  - component: {fileID: 4926306697513928389}
+  - component: {fileID: 4235233937219550191}
   m_Layer: 0
   m_Name: BucketFullIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &7387238672807283157
 Transform:
@@ -55,6 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,6 +82,36 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4926306697513928389
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2243168127196841567}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9280138, y: 0.682779, z: 0.9280139}
+  m_Center: {x: -0.3499999, y: 0.46699357, z: -0.0000003427267}
+--- !u!208 &4235233937219550191
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2243168127196841567}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.46400002, y: 0.35, z: 0.46400002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.35000002, y: 0.467, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7579049027923726539
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,13 +125,13 @@ GameObject:
   - component: {fileID: 8305018069012810540}
   - component: {fileID: 7273240104713331527}
   - component: {fileID: 9108394397660580985}
-  - component: {fileID: 6569490155418619460}
+  - component: {fileID: 708185133228435294}
   m_Layer: 0
   m_Name: Bucket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2598021175507207009
 Transform:
@@ -138,6 +171,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -162,6 +196,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7273240104713331527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,8 +229,8 @@ MonoBehaviour:
   onFullMaterial: {fileID: 2100000, guid: e438755c664bbc9458b8d3b69bf6f7d6, type: 2}
   indicator: {fileID: 2243168127196841567}
   appendMaxValue: 0
---- !u!65 &6569490155418619460
-BoxCollider:
+--- !u!135 &708185133228435294
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -205,5 +240,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9471693, y: 0.75008893, z: 0.9471693}
-  m_Center: {x: -0.3499999, y: 0.37504447, z: -0.00000047683716}
+  m_Radius: 1.6
+  m_Center: {x: -0.34999996, y: 0.37504444, z: -0.00000044703484}
