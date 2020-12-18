@@ -21,7 +21,7 @@ public class BehaviourUserInput : MonoBehaviour, IBehaviour
     {
         if (controlEnabled)
         {
-            cursor = CombatCursorManager.Instance.MainCursor.transform.position + formationOffset;
+            cursor = CombatCursorManager.Instance.walkTargetIndicator.transform.position + formationOffset;
             UpdateTarget(cursor);
         }
     }

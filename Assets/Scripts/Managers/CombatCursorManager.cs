@@ -6,7 +6,10 @@ using UnityEngine.InputSystem;
 public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInstancing>
 {
     [field: SerializeField, GUIName("CursorRange")]
-    public float CursorRange { get; private set; } = 20.0f;
+    public float cursorDeadzone { get; private set; } = 0.7f;
+
+    [field: SerializeField, GUIName("CursorRange")]
+    public float CursorRange { get; private set; } = 12.0f;
 
     [field: SerializeField, GUIName("ShootingCancelRange")]
     public float ShootingCancelRange { get; private set; } = 5.0f;
@@ -31,6 +34,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     public bool CanShoot => canShoot;
 
     private Camera mainCamera;
+
+    private bool isJoystickLeanOut = false;
 
     #region MonoBehaviour
 
@@ -134,15 +139,20 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     private void SetCursorForJoyAxis(Vector2 joystickAxis)
     {
         var nextCursorPosition = LocationManager.Instance.cultLeader.transform.position;
-        var cursorOffset = new Vector3(-joystickAxis.y, 0.0f, joystickAxis.x) * CursorRange;
 
-        if(cursorOffset.magnitude > ShootingCancelRange)
+        if(joystickAxis.magnitude > cursorDeadzone)
         {
+            isJoystickLeanOut = true;
+            var cursorOffset = new Vector3(-joystickAxis.y, 0.0f, joystickAxis.x) / joystickAxis.magnitude * CursorRange;
             nextCursorPosition += cursorOffset;
             
             RaycastHit rayHit;
             Physics.Raycast(new Vector3(nextCursorPosition.x, 1000.0f, nextCursorPosition.z), Vector3.down, out rayHit);
             nextCursorPosition = rayHit.point;
+        }
+        else
+        {
+            isJoystickLeanOut = false;
         }
 
         MainCursor.transform.position = nextCursorPosition;
@@ -166,7 +176,46 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     private void SetWalkTargetIndicator(InputAction.CallbackContext ctx)
     {
         // TODO: Check mouse over gui
-        walkTargetIndicator.transform.position = MainCursor.transform.position;
+        switch (ApplicationManager.Instance.CurrentInputScheme)
+            {
+                case InputSchemeEnum.MouseKeyboard:
+                    walkTargetIndicator.transform.position = MainCursor.transform.position;
+                    break;
+
+                case InputSchemeEnum.Gamepad:
+                case InputSchemeEnum.JoystickKeyboard:
+                    var cultLeaderPosition = LocationManager.Instance.cultLeader.transform.position;
+                    if(isJoystickLeanOut)
+                    {
+                        var cursorPos = MainCursor.transform.position;
+                        cultLeaderPosition.y += 1.0f;
+                        cursorPos.y += 1.0f;
+
+                        RaycastHit rayHit;
+                        int layerMask = LayerMask.GetMask("Default");
+                        if(Physics.Raycast(cultLeaderPosition, cursorPos - cultLeaderPosition , out rayHit, Mathf.Infinity, layerMask))
+                        {
+                            cursorPos = Vector3.MoveTowards(rayHit.point, cultLeaderPosition, 0.5f);
+                            cursorPos.y = 1000.0f;
+                            Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, layerMask);
+                            cursorPos = rayHit.point;
+                        }
+                        else
+                        {
+                            cursorPos = (cursorPos - cultLeaderPosition) * 1000.0f;
+                        }
+
+                        walkTargetIndicator.transform.position = cursorPos;
+                    }
+                    else
+                    {
+                        walkTargetIndicator.transform.position = cultLeaderPosition;
+                    }
+                    break;
+
+                case InputSchemeEnum.Touchscreen:
+                    break;
+            }
     }
 
     private void SetShootTargetIndicator(InputAction.CallbackContext ctx)
