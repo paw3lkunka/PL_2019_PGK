@@ -16,10 +16,11 @@ public class Shooting : MonoBehaviour, IAttack
     public AudioClip shootingSound;
 
 //TODO: do it better
-    [field: Header("If synchronived with rythm, interval value means")]
-    [field: Header("amount of shoots per tact, and should be power of 2.")]
-    [field: Header("Otherwise interval value means time in seconds.")]
     [field: Header("== Dont change SyncWithRhythm in play mode! ==")]
+    [field: Header("Otherwise interval value means time in seconds.")]
+    [field: Header("amount of shoots per tact, and should be power of 2.")]
+    [field: Header("If synchronived with rythm, interval value means")]
+ // it prints down to up!
     [field: Space]
 
     [field: SerializeField, GUIName("SyncWithRhythm")]
