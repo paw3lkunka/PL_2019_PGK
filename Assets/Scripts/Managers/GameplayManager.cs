@@ -180,13 +180,13 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         base.Awake();
 
-        // ? +++++ Faith init +++++
-        faith.Max = new Resource(cultistInfos.Count * faithPerCultist * startFaithPercent, cultistInfos.Count * faithPerCultist, true);
-
         for (int i = 0; i < initialCultistsNumber; i++)
         {
             cultistInfos.Add(new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]));
         }
+
+        // ? +++++ Faith init +++++
+        faith = new Resource(cultistInfos.Count * faithPerCultist * startFaithPercent, cultistInfos.Count * faithPerCultist, true);
 
         // ? +++++ Init double buffered variables +++++
         waterPercentLastFrame = water.Normalized;
