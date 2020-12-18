@@ -65,6 +65,7 @@ public class Detection : MonoBehaviour
 #if UNITY_EDITOR
     [Tooltip("Show range sphere gizmo in editor")]
     public bool showRangeBounds = false;
+    public bool showAngleBounds = false;
 #endif
 
     /// <summary>
@@ -151,7 +152,7 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            if (IsDetected(enemy, out float currDistance))
+            if (IsDetected(enemy, out float currDistance) && distance > currDistance)
             {
                 distance = currDistance;
                 target = enemy.transform.position;
@@ -166,8 +167,9 @@ public class Detection : MonoBehaviour
         Vector3? target = null;
         foreach (var enemy in enemies)
         {
-            if (IsDetected(enemy, out _))
+            if (IsDetected(enemy, out float currDistance) && distance < currDistance)
             {
+                distance = currDistance;
                 target = enemy.transform.position;
             }
         }
@@ -216,7 +218,7 @@ public class Detection : MonoBehaviour
     {
         if(enemy != null)
         {
-            var vectorToEnemy = enemy.transform.position - transform.position;
+            var vectorToEnemy = (enemy.transform.position - transform.position).normalized;
             var angleToEnemy = Vector3.Angle(vectorToEnemy, detectionDirection);
 
             distance = vectorToEnemy.magnitude;
@@ -270,6 +272,44 @@ public class Detection : MonoBehaviour
             Gizmos.DrawSphere(transform.position, DetectionRange);
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, DetectionRange);
+        }
+        if (showAngleBounds)
+        {
+            Vector3 center = transform.position;
+            Vector3 shootDirection = CombatCursorManager.Instance.shootDirection;
+            Vector3 forward = transform.position + shootDirection * DetectionRange;
+            Vector3 corner1 = transform.position + Quaternion.Euler(0, detectionHalfAngle, 0) * shootDirection * DetectionRange;
+            Vector3 corner2 = transform.position + Quaternion.Euler(0, -detectionHalfAngle, 0) * shootDirection * DetectionRange;
+
+            Vector3 mid11 = transform.position + Quaternion.Euler(0, detectionHalfAngle * 1.0f / 5.0f, 0) * shootDirection * DetectionRange;
+            Vector3 mid12 = transform.position + Quaternion.Euler(0, detectionHalfAngle * 2.0f / 5.0f, 0) * shootDirection * DetectionRange;
+            Vector3 mid13 = transform.position + Quaternion.Euler(0, detectionHalfAngle * 3.0f / 5.0f, 0) * shootDirection * DetectionRange;
+            Vector3 mid14 = transform.position + Quaternion.Euler(0, detectionHalfAngle * 4.0f / 5.0f, 0) * shootDirection * DetectionRange;
+
+            Vector3 mid21 = transform.position + Quaternion.Euler(0, -detectionHalfAngle * 1.0f / 5.0f, 0) * shootDirection * DetectionRange;
+            Vector3 mid22 = transform.position + Quaternion.Euler(0, -detectionHalfAngle * 2.0f / 5.0f, 0) * shootDirection * DetectionRange;
+            Vector3 mid23 = transform.position + Quaternion.Euler(0, -detectionHalfAngle * 3.0f / 5.0f, 0) * shootDirection * DetectionRange;
+            Vector3 mid24 = transform.position + Quaternion.Euler(0, -detectionHalfAngle * 4.0f / 5.0f, 0) * shootDirection * DetectionRange;
+
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawLine(center, forward);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(center, corner1);
+            Gizmos.DrawLine(center, corner2);
+
+            Gizmos.DrawLine(forward, mid11);
+            Gizmos.DrawLine(mid11, mid12);
+            Gizmos.DrawLine(mid12, mid13);
+            Gizmos.DrawLine(mid13, mid14);
+            Gizmos.DrawLine(mid14, corner1);
+
+            Gizmos.DrawLine(forward, mid21);
+            Gizmos.DrawLine(mid21, mid22);
+            Gizmos.DrawLine(mid22, mid23);
+            Gizmos.DrawLine(mid23, mid24);
+            Gizmos.DrawLine(mid24, corner2);
+
         }
     }
 #endif
