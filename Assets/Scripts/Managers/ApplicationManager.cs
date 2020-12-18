@@ -103,6 +103,7 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
     public void GameOver(bool won = false)
     {
         GameOverEvent?.Invoke();
+        Destroy(GameplayManager.Instance.gameObject);
 
         if (won)
         {
