@@ -16,6 +16,8 @@ public class ResourcesUIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI waterMax;
     [Header("Faith")]
     [SerializeField] private Image faithBar;
+    [SerializeField] private Color faithBarNormColor;
+    [SerializeField] private Color faithBarOvrfColor;
     [SerializeField] private TextMeshProUGUI faithAmount;
     [Header("Health")]
     [SerializeField] private Image healthBar;
@@ -49,7 +51,9 @@ public class ResourcesUIController : MonoBehaviour
         waterAmount.text = System.Math.Round(GameplayManager.Instance.Water, 1).ToString("000.0").Remove(3, 1).Insert(3, "<color=black>").Insert(0, "<mspace=8.0>");
         waterMax.text = System.Math.Round(GameplayManager.Instance.Water.Max, 1).ToString("000.0").Remove(3, 1).Insert(3, "<color=black>").Insert(0, "<mspace=8.0>");
 
-        faithBar.fillAmount = GameplayManager.Instance.Faith.Normalized;
+        var faith = GameplayManager.Instance.Faith.Normalized;
+        faithBar.fillAmount = faith;
+        faithBar.color = faith > 1 ? faithBarOvrfColor : faithBarNormColor;
         faithAmount.text = System.Math.Round(GameplayManager.Instance.Faith, 1).ToString("0.0");
         
         healthBar.fillAmount = GameplayManager.Instance.Health / GameplayManager.Instance.MaxHealth;
