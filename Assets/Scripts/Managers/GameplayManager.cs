@@ -16,7 +16,9 @@ public enum ResourceType { Water, Faith, Health }
 //      - OnCultistAdd
 public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 {
-#pragma warning disable
+
+    public float escapeDistance = 1200;
+
     [Header("Basic resources")]
     [SerializeField]
     private Resource water = new Resource(100.0f, 100.0f, false);
@@ -43,7 +45,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         get
         {
-            float allHealth = ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health;
+            float allHealth = 0.0f;
             foreach (var cultist in cultistInfos)
             {
                 allHealth += cultist.HP;
@@ -56,7 +58,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     {
         get
         {
-            float allHealth = ApplicationManager.Instance.PrefabDatabase.cultLeader.GetComponent<Damageable>().Health.Max;
+            float allHealth = 0.0f;
             foreach (var cultist in cultistInfos)
             {
                 allHealth += cultist.HP.Max;
@@ -75,8 +77,6 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     [HideInInspector]
     public float avoidingFightTimer = 0.0f;
-
-#pragma warning restore
 
     [Header("Gameplay Config")] // * ===================================
     [ReadOnly]
@@ -233,6 +233,11 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         if(!IsPaused)
         {
             avoidingFightTimer += Time.deltaTime;
+        }
+
+        if(cultistInfos.Count == 0)
+        {
+            ApplicationManager.Instance.GameOver();
         }
     }
 

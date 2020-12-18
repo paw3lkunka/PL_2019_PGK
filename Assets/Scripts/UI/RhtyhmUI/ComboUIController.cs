@@ -33,9 +33,12 @@ public class ComboUIController : MonoBehaviour
 
     private void OnDisable() 
     {
-        RhythmMechanics.Instance.OnComboChange -= UpdateCombo;
-        RhythmMechanics.Instance.OnRageStart -= RageStart;
-        RhythmMechanics.Instance.OnRageStop -= RageStop;
+        if(RhythmMechanics.Instance != null)
+        {
+            RhythmMechanics.Instance.OnComboChange -= UpdateCombo;
+            RhythmMechanics.Instance.OnRageStart -= RageStart;
+            RhythmMechanics.Instance.OnRageStop -= RageStop;
+        }
     }
 
     private void UpdateCombo(int value)

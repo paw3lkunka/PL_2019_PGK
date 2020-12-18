@@ -17,13 +17,19 @@ public class ResourcesUseIndicator : MonoBehaviour
     private float waterAmount = 0;
     private float faithAmount = 0;
 
+    public void Hide()
+    {
+        waterText.text = "";
+        faithText.text = "";
+    }
+
     public float Water
     {
         get => waterAmount;
         set
         {
             waterAmount = value;
-            waterText.text = Mathf.Approximately(faithAmount, 0) ? "0" : "-" + System.Math.Round(value, 1).ToString("0.0");
+            waterText.text = Mathf.Approximately(waterAmount, 0) ? "0" : "-" + System.Math.Round(value, 1).ToString("0.0");
             waterText.color = value > GameplayManager.Instance.Water ? warningColor : waterColor;
         }
     }

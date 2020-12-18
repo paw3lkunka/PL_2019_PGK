@@ -22,6 +22,8 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     [SerializeField] private bool canFail = true;
     [SerializeField] private double songBpm = 80;
     [SerializeField] private int beatsPerBar = 4;
+    [Header("Must be a power of two")]
+    [SerializeField] private int maxBarSubdivision = 32;
     [Header("Timing and delays")]
     [Tooltip("Beats time after failed beat for timeline to resume playing")]
     [SerializeField] private int failedBeatResetOffset = 4;
@@ -41,7 +43,10 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     // Beat tracking
     private BeatState currentBeatState = BeatState.None;
     private double beatDuration;
+    private double maxBarSubdivDuration;
+    private int currentSubdivNumber = 0;
     public double NextBeatMoment { get; private set; }
+    public double NextBarSubdivMoment { get; private set; }
     private int currentBeatNumber = 0;
     public int CountupCounter { get; private set; } = 0;
     private int pauseCounter = 0;
@@ -97,6 +102,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     public event Action OnSequenceReset;
     public event Action<bool> OnSequencePause;
     public event Action OnSequenceResume;
+    public event Action<int> OnSubdiv;
 
     #endregion
 
@@ -159,6 +165,14 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
                 break;
         }
 
+        // ---- Shooting rhythm check ----
+        // This part fires the rhythm events with bar subdivision parameter
+        if (TimeSinceSequenceStart >= NextBarSubdivMoment)
+        {
+            BarSubdivHandler();
+            currentSubdivNumber = ++currentSubdivNumber % maxBarSubdivision;
+            NextBarSubdivMoment += maxBarSubdivDuration;
+        }
 
         // ---- Main rhythm check ----
         // The Good rhythm hit window condition is checked here
@@ -247,6 +261,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
             }
         }
 
+        //Debug.Log($"<color=green>Next beat: {NextBeatMoment}; Next subdiv: {NextBarSubdivMoment}</color>");
     }
 
     #endregion
@@ -349,6 +364,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     private void TimelineInit()
     {
         beatDuration = 60.0d / songBpm;
+        maxBarSubdivDuration = (beatDuration * beatsPerBar) / maxBarSubdivision;
         goodTolerance = ApplicationManager.Instance.GoodTolerance;
         greatTolerance = ApplicationManager.Instance.GreatTolerance;
         SequenceStartHandler();

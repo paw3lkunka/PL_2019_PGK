@@ -55,7 +55,11 @@ public class Resource
     [SerializeField]
     private bool overflowable;
 
-    public bool Overflowable { get => overflowable; private set => overflowable = value; }
+    public bool Overflowable 
+    { 
+        get => overflowable;
+        set { overflowable = value; Set(current); }
+    }
 
     public bool IsOverflowed { get => current > max; }
 

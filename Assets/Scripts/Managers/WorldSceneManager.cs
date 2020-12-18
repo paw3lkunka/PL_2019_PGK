@@ -37,6 +37,8 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         ResourceDepleter = FindObjectOfType<ResourceDepleter>();
         ResUseIndicator = FindObjectOfType<ResourcesUseIndicator>();
 
+        GameplayManager.Instance.Faith.Overflowable = false;
+
         if (!GameplayManager.Instance.firstTimeOnMap)
         {
             Vector3 exitOffset = LocationCentre.exitDirection * GameplayManager.Instance.lastLocationRadius;
@@ -68,6 +70,14 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
     private void OnDisable()
     {
         ApplicationManager.Instance.Input.CombatMode.Enable();
+    }
+
+    private void Update()
+    {
+        if (Leader.transform.position.magnitude >= GameplayManager.Instance.escapeDistance)
+        {
+            ApplicationManager.Instance.GameOver(true);
+        }
     }
 
     private IEnumerator LocationCooldown(float delay)

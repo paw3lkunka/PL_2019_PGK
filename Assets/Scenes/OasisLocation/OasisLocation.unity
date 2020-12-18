@@ -13798,7 +13798,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9193935884362992865, guid: ef60aef35370b7d449f2103266e641f7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9193935884362992865, guid: ef60aef35370b7d449f2103266e641f7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ef60aef35370b7d449f2103266e641f7, type: 3}
 --- !u!43 &1408264649
 Mesh:
@@ -21208,6 +21214,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _persistent
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482779334685485251, guid: 2c7217f1c5abb954fae106c34383e101,
+        type: 3}
+      propertyPath: maxBarSubdivision
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c7217f1c5abb954fae106c34383e101, type: 3}

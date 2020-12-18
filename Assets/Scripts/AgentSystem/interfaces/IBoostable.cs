@@ -2,7 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BoostableState
+{
+    normal,
+    boosted,
+    decresed,
+}
+
 public interface IBoostable
 {
-    bool IsBoosted { get; set; }
+    BoostableState BState { get; set; }
+    bool CanBeBoosted { get; set; }
+    bool CanBeDecresed { get; set; }
+
+    bool IsBoosted { get; }
+    bool IsDecresed { get; }
 }

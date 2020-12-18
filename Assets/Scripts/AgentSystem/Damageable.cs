@@ -14,19 +14,22 @@ public class Damageable : MonoBehaviour
 
     public Flags flags = Flags.canBeDamaged | Flags.canBeHealed;
 
+    [field: Space]
 
     [field: SerializeField, GUIName("Health")]
     public Resource Health { get; private set; } = new Resource(10, 10, false);
 
-    [field: SerializeField, GUIName("Defence")]
-    public float DefenseBase { get; set; } = 0;
-
     [field: SerializeField, GUIName("ReactToHit")]
+    [field: Tooltip("Enter blind chase on hit, works only for enemies")]
     public bool ReactToHit { get; private set; } = false;
 
     public event Action<float> DamageTaken;
     public event Action Death;
 
+    [field: Header("Defence")]
+
+    [field: SerializeField, GUIName("Defence")]
+    public float DefenseBase { get; set; } = 0;
 
     /// <summary>
     /// Heal agent with given amount of hp

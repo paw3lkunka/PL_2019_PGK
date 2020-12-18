@@ -31,7 +31,10 @@ public class Enemy : MonoBehaviour
     }
     private void OnDestroy()
     {
-        AudioTimeline.Instance.OnBeatFail -= EnterStun;
+        if(AudioTimeline.Instance)
+        {
+            AudioTimeline.Instance.OnBeatFail -= EnterStun;
+        }
     }
 
     private void FixedUpdate()

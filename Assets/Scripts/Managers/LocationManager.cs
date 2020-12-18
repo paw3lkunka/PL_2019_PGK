@@ -72,6 +72,7 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
     private void Start()
     {
         QualitySettings.shadowDistance = 100.0f;
+        GameplayManager.Instance.Faith.Overflowable = true;
 
         enemies.Clear();
         ourCrew.Clear();
@@ -140,7 +141,10 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
     private void OnDisable()
     {
-        AudioTimeline.Instance.OnBeatFail -= OnBeatFail;
+        if(AudioTimeline.Instance != null)
+        {
+            AudioTimeline.Instance.OnBeatFail -= OnBeatFail;
+        }
     }
 
     private void OnBeatFail()

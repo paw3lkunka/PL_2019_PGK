@@ -37,20 +37,19 @@ public class InstantResource : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
         {
-            if (dissappearOnCollect)
+            if ((type == ResourceType.Water && GameplayManager.Instance.Water < GameplayManager.Instance.Water.Max) || type == ResourceType.Faith)
             {
-                AddResource(other);
-                Destroy(gameObject);
-            }
-            else if (full)
-            {
-                indicator.GetComponent<MeshRenderer>().material = onEmptyMaterial;
-                AddResource(other);
-                full = false;
-            }
-            else
-            {
-                // DO NOTHING!
+                if (dissappearOnCollect)
+                {
+                    AddResource(other);
+                    Destroy(gameObject);
+                }
+                else if (full)
+                {
+                    indicator.GetComponent<MeshRenderer>().material = onEmptyMaterial;
+                    AddResource(other);
+                    full = false;
+                }
             }
         }
     }

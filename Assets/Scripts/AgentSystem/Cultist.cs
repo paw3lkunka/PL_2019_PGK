@@ -9,19 +9,12 @@ public class Cultist : MonoBehaviour
     private Damageable damageable;
     private Detection detection;
     private IAttack attack;
+    private IBoostable[] boostables;
     public CultistEntityInfo info;
 
-    [field: SerializeField, GUIName("CanBeFanatic"), GUIReadOnly]
-    public bool CanBeFanatic { get; protected set; }
-
-    [field: SerializeField, GUIName("IsFanatic"), GUIReadOnly]
-    public bool IsFanatic { get; protected set; }
-
-    [Range(0.0f, 0.01f)]
-    public float switchFanaticChance = 0.0015f;
-
     public MonoBehaviour normalBehaviour;
-    public MonoBehaviour fanaticBehaviour;
+    [UnityEngine.Serialization.FormerlySerializedAs("fanaticBehaviour")]
+    public MonoBehaviour overfaithBehaviour;
 
     private void AttackInDirection(bool _)
     {
@@ -65,46 +58,6 @@ public class Cultist : MonoBehaviour
         }
     }
 
-    private void ToggleState()
-    {
-        if (IsFanatic)
-        {
-            SetNormalState();
-        }
-        else
-        {
-            SetFanaticState();
-        }
-    }
-
-    private void SetFanaticState()
-    {
-        if (!IsFanatic)
-        {
-            IsFanatic = true;
-            normalBehaviour.enabled = false;
-            fanaticBehaviour.enabled = true;
-            DetectInFullCircle = true;
-
-            AudioTimeline.Instance.OnBeat -= AttackInDirection;
-            AudioTimeline.Instance.OnBeat += AttackNearbyEnemy;
-        }
-    }
-
-    private void SetNormalState()
-    {
-        if (IsFanatic)
-        {
-            IsFanatic = false;
-            normalBehaviour.enabled = true;
-            fanaticBehaviour.enabled = false;
-            DetectInFullCircle = false;
-
-            AudioTimeline.Instance.OnBeat += AttackInDirection;
-            AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
-        }
-    }
-
     private bool DetectInFullCircle
     {
         get => detection.detectionHalfAngle >= 180.0f;
@@ -116,11 +69,59 @@ public class Cultist : MonoBehaviour
     private void FailBit()
     {
         attack?.HoldFire();
-        SetNormalState();
     }
 
-    private void FanatismStart() => CanBeFanatic = true;
-    private void FanatismEnd() => CanBeFanatic = false;
+    private void OnLowFaithStart()
+    {
+        foreach (var item in boostables)
+        {
+            item.BState = BoostableState.decresed;
+        }
+    }
+
+    private void OnLowFaithEnd()
+    {
+        foreach (var item in boostables)
+        {
+            if (item.IsDecresed)
+            {
+                item.BState = BoostableState.normal;
+            }
+        }
+    }
+
+    private void OnOverfaithStart()
+    {
+        //normalBehaviour.enabled = false;
+        //overfaithBehaviour.enabled = true;
+        //DetectInFullCircle = true;
+
+        //AudioTimeline.Instance.OnBeat -= AttackInDirection;
+        //AudioTimeline.Instance.OnBeat += AttackNearbyEnemy;
+
+        foreach (var item in boostables)
+        {
+            item.BState = BoostableState.boosted;
+        }
+    }
+
+    private void OnOverfaithEnd()
+    {
+        //normalBehaviour.enabled = true;
+        //overfaithBehaviour.enabled = false;
+        //DetectInFullCircle = false;
+
+        //AudioTimeline.Instance.OnBeat += AttackInDirection;
+        //AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
+
+        foreach (var item in boostables)
+        {
+            if (item.IsBoosted)
+            {
+                item.BState = BoostableState.normal;
+            }
+        }
+    }
 
     private void OnDamage(float damage)
     {
@@ -142,14 +143,14 @@ public class Cultist : MonoBehaviour
         damageable = GetComponent<Damageable>();
         detection = GetComponent<Detection>();
         attack = GetComponent<IAttack>();
+        boostables = GetComponentsInChildren<IBoostable>();
+
+        //AudioTimeline.Instance.OnBeat += AttackInDirection;
     }
 
     private void Update()
     {
-        if (CanBeFanatic && Random.Range(0.0f, 1.0f) < switchFanaticChance)
-        {
-            ToggleState();
-        }
+
     }
 
     private void OnEnable()
@@ -158,18 +159,20 @@ public class Cultist : MonoBehaviour
         if (AudioTimeline.Instance)
         {
             AudioTimeline.Instance.OnBeatFail += FailBit;
+            AudioTimeline.Instance.OnBeat += AttackInDirection;
         }
         else
         {
             Debug.LogWarning("No audioTimeline!");
         }
-        GameplayManager.Instance.OverfaithStart += FanatismStart;
-        GameplayManager.Instance.OverfaithEnd += FanatismEnd;
+
+        GameplayManager.Instance.LowFaithLevelStart += OnLowFaithStart;
+        GameplayManager.Instance.LowFaithLevelEnd += OnLowFaithEnd;
+        GameplayManager.Instance.OverfaithStart += OnOverfaithStart;
+        GameplayManager.Instance.OverfaithEnd += OnOverfaithEnd;
 
         damageable.DamageTaken += OnDamage;
         damageable.Death += OnDeath;
-        IsFanatic = true; //HACK to ensure, that SetNormalState will work.
-        SetNormalState();
     }
 
     private void OnDisable()
@@ -178,11 +181,15 @@ public class Cultist : MonoBehaviour
         if (AudioTimeline.Instance)
         {
             AudioTimeline.Instance.OnBeatFail -= FailBit;
+            AudioTimeline.Instance.OnBeat -= AttackInDirection;
+            //AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
         }
-        GameplayManager.Instance.OverfaithStart -= FanatismStart;
-        GameplayManager.Instance.OverfaithEnd -= FanatismEnd;
-        AudioTimeline.Instance.OnBeat -= AttackInDirection;
-        AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
+
+        GameplayManager.Instance.LowFaithLevelStart -= OnLowFaithStart;
+        GameplayManager.Instance.LowFaithLevelEnd -= OnLowFaithEnd;
+        GameplayManager.Instance.OverfaithStart -= OnOverfaithStart;
+        GameplayManager.Instance.OverfaithEnd -= OnOverfaithEnd;
+
         damageable.DamageTaken -= OnDamage;
         damageable.Death -= OnDeath;
     }

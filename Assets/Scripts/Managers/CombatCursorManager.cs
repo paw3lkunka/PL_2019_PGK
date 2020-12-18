@@ -158,8 +158,9 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
     private void MoveShootTargetPositionIndicator()
     {
-        shootDirection = (MainCursor.transform.position - LocationManager.Instance.cultLeader.transform.position).normalized;
-        shootTargetPositionIndicator.transform.rotation = Quaternion.LookRotation(shootDirection, Vector3.up);
+        var direction = (MainCursor.transform.position - LocationManager.Instance.cultLeader.transform.position).normalized;
+        // This is basically a hack, but for some reason Quaternion.LookRotation didn't give a shit that we always want to rotate according to Vector3.up
+        shootTargetPositionIndicator.transform.rotation = Quaternion.Euler(0.0f, Quaternion.LookRotation(direction, Vector3.up).eulerAngles.y, 0.0f);
     }
 
     private void SetWalkTargetIndicator(InputAction.CallbackContext ctx)

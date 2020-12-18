@@ -214,25 +214,27 @@ public class Detection : MonoBehaviour
 
     private bool IsDetected(Component enemy, out float distance)
     {
-        var vectorToEnemy = enemy.transform.position - transform.position;
-        var angleToEnemy = Vector3.Angle(vectorToEnemy, detectionDirection);
-
-        distance = vectorToEnemy.magnitude;
-
-        if (distance < DetectionRange && angleToEnemy < detectionHalfAngle)
+        if(enemy != null)
         {
-            if (includeRaycastTest)
-            {
-                Physics.Raycast(transform.position, vectorToEnemy, out RaycastHit hitInfo, distance + 1.0f, raycastLayerMask);
+            var vectorToEnemy = enemy.transform.position - transform.position;
+            var angleToEnemy = Vector3.Angle(vectorToEnemy, detectionDirection);
 
-                return hitInfo.collider.gameObject == enemy.gameObject;
-            }
-            else
+            distance = vectorToEnemy.magnitude;
+
+            if (distance < DetectionRange && angleToEnemy < detectionHalfAngle)
             {
-                return true;
+                if (includeRaycastTest)
+                {
+                    Physics.Raycast(transform.position, vectorToEnemy, out RaycastHit hitInfo, distance + 1.0f, raycastLayerMask);
+                    return hitInfo.collider.gameObject == enemy.gameObject;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
-
+        distance = float.PositiveInfinity;
         return false;
     }
 
