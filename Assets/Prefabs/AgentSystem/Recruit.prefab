@@ -163,7 +163,6 @@ GameObject:
   - component: {fileID: 6973377715876538307}
   - component: {fileID: 6973377715876538304}
   - component: {fileID: 9115973654448271275}
-  - component: {fileID: 6973377715876538305}
   m_Layer: 16
   m_Name: Recruit
   m_TagString: Recruit
@@ -299,19 +298,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recruitmentBar: {fileID: 1739493054487027410}
   cantRecruitImage: {fileID: 627082910559982018}
---- !u!135 &6973377715876538305
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6973377715876538310}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6973377716003413570
 GameObject:
   m_ObjectHideFlags: 0

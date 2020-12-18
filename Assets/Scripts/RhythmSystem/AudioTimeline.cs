@@ -367,7 +367,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     // ---- Timeline control methods ----------------------
     #region TimelineControl
 
-#if UNITY_EDITOR
+
     // HACK: Loading the scene takes too much time for first beat to sync in editor, so i hacked it ~fmazurek
     private void TimelineInit(Scene arg0, LoadSceneMode loadSceneMode)
     {
@@ -383,16 +383,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
         greatTolerance = ApplicationManager.Instance.GreatTolerance;
         SequenceStartHandler();
     }
-#else
-    private void TimelineInit(Scene arg0, LoadSceneMode loadSceneMode)
-    {
-        beatDuration = 60.0d / songBpm;
-        maxBarSubdivDuration = (beatDuration * beatsPerBar) / maxBarSubdivision;
-        goodTolerance = ApplicationManager.Instance.GoodTolerance;
-        greatTolerance = ApplicationManager.Instance.GreatTolerance;
-        SequenceStartHandler();
-    }
-#endif
+
     private void EvaluateBar()
     {
         int good = 0, great = 0, perfect = 0, bad = 0, none = 0;
