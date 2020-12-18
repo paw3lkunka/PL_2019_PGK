@@ -218,16 +218,17 @@ public class Detection : MonoBehaviour
     {
         if(enemy != null)
         {
-            var vectorToEnemy = (enemy.transform.position - transform.position).normalized;
-            var angleToEnemy = Vector3.Angle(vectorToEnemy, detectionDirection);
+            var vectorToEnemy = enemy.transform.position - transform.position;
 
             distance = vectorToEnemy.magnitude;
+            var vectorToEnemyNormalized = vectorToEnemy.normalized;
+            var angleToEnemy = Vector3.Angle(vectorToEnemyNormalized, detectionDirection);
 
             if (distance < DetectionRange && angleToEnemy < detectionHalfAngle)
             {
                 if (includeRaycastTest)
                 {
-                    Physics.Raycast(transform.position, vectorToEnemy, out RaycastHit hitInfo, distance + 1.0f, raycastLayerMask);
+                    Physics.Raycast(transform.position, vectorToEnemyNormalized, out RaycastHit hitInfo, distance + 1.0f, raycastLayerMask);
                     return hitInfo.collider.gameObject == enemy.gameObject;
                 }
                 else
