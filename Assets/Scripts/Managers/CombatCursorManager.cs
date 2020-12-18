@@ -188,8 +188,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
                     if(isJoystickLeanOut)
                     {
                         var cursorPos = MainCursor.transform.position;
-                        cultLeaderPosition.y += 1.0f;
-                        cursorPos.y += 1.0f;
+                        cultLeaderPosition.y += 3.0f;
+                        cursorPos.y += 3.0f;
 
                         RaycastHit rayHit;
                         int layerMask = LayerMask.GetMask("Default");
@@ -197,12 +197,18 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
                         {
                             cursorPos = Vector3.MoveTowards(rayHit.point, cultLeaderPosition, 0.5f);
                             cursorPos.y = 1000.0f;
-                            Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, layerMask);
-                            cursorPos = rayHit.point;
+                            if(Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, layerMask))
+                            {
+                                cursorPos = rayHit.point;
+                            }
                         }
                         else
                         {
-                            cursorPos = (cursorPos - cultLeaderPosition) * 1000.0f;
+                            cursorPos = MainCursor.transform.position;
+                            if(Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, layerMask))
+                            {
+                                cursorPos = rayHit.point;
+                            }
                         }
 
                         walkTargetIndicator.transform.position = cursorPos;
