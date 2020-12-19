@@ -188,16 +188,15 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
                     if(isJoystickLeanOut)
                     {
                         var cursorPos = MainCursor.transform.position;
-                        cultLeaderPosition.y += 2.0f;
-                        cursorPos.y += 2.0f;
+                        cultLeaderPosition.y += 1.0f;
+                        cursorPos.y += 1.0f;
 
                         RaycastHit rayHit;
-                        int layerMask = LayerMask.GetMask("Default");
-                        if(Physics.Raycast(cultLeaderPosition, cursorPos - cultLeaderPosition , out rayHit, Mathf.Infinity, layerMask))
+                        if(Physics.Raycast(cultLeaderPosition, cursorPos - cultLeaderPosition , out rayHit, Mathf.Infinity, LayerMask.GetMask("Obstacles", "GroundObstacles")))
                         {
                             cursorPos = Vector3.MoveTowards(rayHit.point, cultLeaderPosition, 0.5f);
                             cursorPos.y = 1000.0f;
-                            if(Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, layerMask))
+                            if(Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, LayerMask.GetMask("Default")))
                             {
                                 cursorPos = rayHit.point;
                             }
@@ -205,7 +204,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
                         else
                         {
                             cursorPos = MainCursor.transform.position;
-                            if(Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, layerMask))
+                            if(Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, LayerMask.GetMask("Default")))
                             {
                                 cursorPos = rayHit.point;
                             }
