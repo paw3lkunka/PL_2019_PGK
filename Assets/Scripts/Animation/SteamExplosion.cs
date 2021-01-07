@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Obsolete]
 public class SteamExplosion : MonoBehaviour
 {
 #pragma warning disable
@@ -14,7 +15,7 @@ public class SteamExplosion : MonoBehaviour
     {
         if (AudioTimeline.Instance)
         {
-            AudioTimeline.Instance.OnBeatFail += ExplosionHandler;
+            //AudioTimeline.Instance.OnBeatFail += ExplosionHandler;
         }
     }
 
@@ -22,19 +23,19 @@ public class SteamExplosion : MonoBehaviour
     {
         if (AudioTimeline.Instance)
         {
-            AudioTimeline.Instance.OnBeatFail -= ExplosionHandler;
+            //AudioTimeline.Instance.OnBeatFail -= ExplosionHandler;
         }
     }
 
-    private void ExplosionHandler()
-    {
-        if (LocationManager.Instance.CanStun)
-        {
-            bigExplosion.Play();
-        }
-        else
-        {
-            smallExplosion.Play();
-        }
-    }
+    //private void ExplosionHandler()
+    //{
+    //    if (LocationManager.Instance.CanStun)
+    //    {
+    //        bigExplosion.Play();
+    //    }
+    //    else
+    //    {
+    //        smallExplosion.Play();
+    //    }
+    //}
 }

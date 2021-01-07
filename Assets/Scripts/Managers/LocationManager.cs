@@ -147,9 +147,9 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
         }
     }
 
-    private void OnBeatFail()
+    private void OnBeatFail(bool reset)
     {
-        if (CanStun)
+        if (CanStun && reset)
         {
             IEnumerator Routine()
             {

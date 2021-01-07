@@ -158,14 +158,19 @@ public class AdaptiveMusicMaster : MonoBehaviour
         }
     }
 
-    private void StopPlayback(bool keepCombo)
+    private void StopPlayback(bool reset)
     {
-        StopPlayback();
+        if (reset)
+        {
+            StopPlayback();
+        }
     }
 
     private void StopPlayback()
     {
+        StopAllCoroutines();
         drumsSource.Stop();
+        lightMusicSource.Stop();
         heavyMusicSource.Stop();
         lightMusicSource.volume = 1.0f;
         heavyMusicSource.volume = 0.0f;

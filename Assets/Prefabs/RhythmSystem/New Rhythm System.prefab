@@ -40,7 +40,8 @@ AudioSource:
   m_GameObject: {fileID: 4482779334138351978}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2409388092344626425, guid: ce9894db5895bb84b85e89335efde9af,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -184,7 +185,8 @@ AudioSource:
   m_GameObject: {fileID: 4482779334171101488}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5689361844543535146, guid: ce9894db5895bb84b85e89335efde9af,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -311,7 +313,8 @@ AudioSource:
   m_GameObject: {fileID: 4482779334211056993}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2409388092344626425, guid: ce9894db5895bb84b85e89335efde9af,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0
@@ -548,6 +551,7 @@ MonoBehaviour:
   canFail: 1
   songBpm: 90
   beatsPerBar: 4
+  maxBarSubdivision: 32
   failedBeatResetOffset: 0
 --- !u!114 &4482779334685485249
 MonoBehaviour:
@@ -605,7 +609,8 @@ AudioSource:
   m_GameObject: {fileID: 4482779334809664965}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2409388092344626425, guid: ce9894db5895bb84b85e89335efde9af,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -739,7 +744,7 @@ MonoBehaviour:
   goodBeatHitSound: {fileID: 8300000, guid: 48eabc641327bde43adce37a7a6382ff, type: 3}
   greatBeatHitSound: {fileID: 8300000, guid: ad816e6824891bf4fbb4f9d46b9e897c, type: 3}
   badBeatHitSound: {fileID: 8300000, guid: d7277d5750376c546824005a4bd93c9e, type: 3}
-  failSound: {fileID: 8300000, guid: ee299a129fd7bd34299d40e345c51c27, type: 3}
+  failSound: {fileID: 0}
 --- !u!82 &4482779335140122505
 AudioSource:
   m_ObjectHideFlags: 0
@@ -749,7 +754,8 @@ AudioSource:
   m_GameObject: {fileID: 4482779335140122508}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5689361844543535146, guid: ce9894db5895bb84b85e89335efde9af,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.731

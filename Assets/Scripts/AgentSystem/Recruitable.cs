@@ -12,6 +12,7 @@ public class Recruitable : MonoBehaviour
     private const float RecruitmentChance = 0.5f;
     private const float RecruitmentSpeed = 0.2f;
     private bool isAffectedByCult;
+    private bool wasAffectedThisFrame = false;
     public string recruitmentTriggerTag = "RecruitTrigger";
     public bool CanBeRecruited { get; private set; } = false;
     public bool WasAffectedOnce { get; private set; } = false;
@@ -28,39 +29,38 @@ public class Recruitable : MonoBehaviour
                 CanBeRecruited = RecruitmentChance < Random.Range(0.0f, 1.0f);
                 WasAffectedOnce = true;
             }
-            isAffectedByCult = true;
+            wasAffectedThisFrame = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag(recruitmentTriggerTag))
         {
-            isAffectedByCult = false;
+            wasAffectedThisFrame = true;
         }
     }
 
-    private bool Recruit()
+    private void Recruit()
     {
         var newCultist = new CultistEntityInfo(ApplicationManager.Instance.PrefabDatabase.cultists[0]);
         newCultist.Instantiate(transform.position, transform.rotation);
         GameplayManager.Instance.cultistInfos.Add(newCultist);
 
         Destroy(gameObject);
-        return true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (CanBeRecruited)
         {
-            if (isAffectedByCult && RecruitmentProgress <= 1.0f)
+            if (wasAffectedThisFrame && RecruitmentProgress <= 1.0f)
             {
-                RecruitmentProgress += RecruitmentSpeed * Time.deltaTime;
+                RecruitmentProgress += RecruitmentSpeed * Time.fixedDeltaTime;
             }
-            else if (!isAffectedByCult && RecruitmentProgress > 0.0f)
+            else if (!wasAffectedThisFrame && RecruitmentProgress > 0.0f)
             {
-                RecruitmentProgress -= RecruitmentSpeed * Time.deltaTime; ;
+                RecruitmentProgress -= RecruitmentSpeed * Time.fixedDeltaTime;
             }
 
             if (RecruitmentProgress >= 1.0f)
@@ -68,6 +68,7 @@ public class Recruitable : MonoBehaviour
                 Recruit();
             }
 
+            wasAffectedThisFrame = false;
             Mathf.Clamp01(RecruitmentProgress);
         }
     }

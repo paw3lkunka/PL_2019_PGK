@@ -247,12 +247,12 @@ public class Detection : MonoBehaviour
         if (gameObject.layer == LayerMask.NameToLayer("PlayerCrew"))
         {
             enemies = LocationManager.Instance.enemies;
-            raycastLayerMask = LayerMask.GetMask("Obstacles", "Enemies");
+            raycastLayerMask = LayerMask.GetMask("Obstacles", "GroundObstacles", "Enemies");
         }
         else if (gameObject.layer == LayerMask.NameToLayer("Enemies"))
         {
             enemies = LocationManager.Instance.ourCrew;
-            raycastLayerMask = LayerMask.GetMask("Obstacles", "PlayerCrew");
+            raycastLayerMask = LayerMask.GetMask("Obstacles", "GroundObstacles", "PlayerCrew");
         }
         else
         {
