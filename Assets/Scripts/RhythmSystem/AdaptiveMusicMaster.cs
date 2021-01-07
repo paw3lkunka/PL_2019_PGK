@@ -168,7 +168,9 @@ public class AdaptiveMusicMaster : MonoBehaviour
 
     private void StopPlayback()
     {
+        StopAllCoroutines();
         drumsSource.Stop();
+        lightMusicSource.Stop();
         heavyMusicSource.Stop();
         lightMusicSource.volume = 1.0f;
         heavyMusicSource.volume = 0.0f;
