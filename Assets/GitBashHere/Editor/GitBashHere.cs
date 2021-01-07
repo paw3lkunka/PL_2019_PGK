@@ -22,7 +22,7 @@ public class GitBashHere
         {
             using (var stream = new StreamReader("Assets/GitBashHere/gitpath.txt"))
             {
-                Process.Start(stream.ReadLine());
+                Process.Start(stream.ReadLine(), stream.ReadLine());
             }
         }
     }
