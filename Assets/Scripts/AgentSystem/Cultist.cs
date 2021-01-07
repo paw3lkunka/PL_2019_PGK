@@ -66,7 +66,7 @@ public class Cultist : MonoBehaviour
 
     #region Event handlers
 
-    private void FailBit()
+    private void FailBit(bool reset)
     {
         attack?.HoldFire();
     }

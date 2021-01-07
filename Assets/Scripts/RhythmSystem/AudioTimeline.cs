@@ -96,7 +96,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     public delegate void BarEndEvent(BarState barState);
     public event BeatEvent OnBeat;
     public event BeatHitEvent OnBeatHit;
-    public event Action OnBeatFail;
+    public event Action<bool> OnBeatFail;
     public event BarEndEvent OnBarEnd;
     public event Action OnSequenceStart;
     public event Action OnCountupEnd;

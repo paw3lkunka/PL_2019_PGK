@@ -33,9 +33,9 @@ public class StunBarController : MonoBehaviour
         }
     }
 
-    private void OnBeatFail()
+    private void OnBeatFail(bool reset)
     {
-        if (LocationManager.Instance.CanStun)
+        if (LocationManager.Instance.CanStun && reset)
         {
             Show = true;
 

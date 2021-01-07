@@ -158,9 +158,12 @@ public class AdaptiveMusicMaster : MonoBehaviour
         }
     }
 
-    private void StopPlayback(bool keepCombo)
+    private void StopPlayback(bool reset)
     {
-        StopPlayback();
+        if (reset)
+        {
+            StopPlayback();
+        }
     }
 
     private void StopPlayback()

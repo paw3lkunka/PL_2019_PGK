@@ -190,7 +190,7 @@ public class RhythmMechanics : Singleton<RhythmMechanics, ForbidLazyInstancing>
         OnComboChange(Combo);
     }
 
-    private void ResetCombo()
+    private void ResetCombo(bool reset)
     {
         Combo = 0;
         OnComboChange(Combo);
