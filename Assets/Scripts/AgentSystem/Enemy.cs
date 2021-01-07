@@ -82,9 +82,9 @@ public class Enemy : MonoBehaviour
         blindChaseMode = false;
     }
 
-    public void EnterStun()
+    public void EnterStun(bool reset)
     {
-        if (LocationManager.Instance.CanStun)
+        if (LocationManager.Instance.CanStun && reset)
         {
             attack.HoldFire();
             moveable.Stop();
