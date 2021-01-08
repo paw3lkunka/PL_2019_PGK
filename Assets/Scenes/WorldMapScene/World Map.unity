@@ -4167,6 +4167,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
+      propertyPath: debug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
+        type: 3}
       propertyPath: initAfterSceneLoadObjects.Array.size
       value: 7
       objectReference: {fileID: 0}
@@ -4208,7 +4213,7 @@ PrefabInstance:
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
       propertyPath: disableBeforeSceneLoadObjects.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
@@ -4220,6 +4225,11 @@ PrefabInstance:
       propertyPath: disableBeforeSceneLoadObjects.Array.data[1]
       value: 
       objectReference: {fileID: 1245746751}
+    - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
+        type: 3}
+      propertyPath: disableBeforeSceneLoadObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 2111866507}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd1c0ddb1efbcb54d9e1d358cb57506c, type: 3}
 --- !u!1001 &4117883744993056547

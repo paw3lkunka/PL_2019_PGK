@@ -41,7 +41,7 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
 
         if (!GameplayManager.Instance.firstTimeOnMap)
         {
-            Vector3 exitOffset = LocationCentre.exitDirection * GameplayManager.Instance.lastLocationRadius;
+            Vector3 exitOffset = LocationEnterExitController.exitDirection * GameplayManager.Instance.lastLocationRadius;
             Leader.GetComponent<NavMeshAgent>().Warp(GameplayManager.Instance.lastLocationPosition + exitOffset);
         }
 

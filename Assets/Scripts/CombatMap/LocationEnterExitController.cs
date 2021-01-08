@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocationCentre : MonoBehaviour
+public class LocationEnterExitController : MonoBehaviour
 {
-    static public Vector3 enterDirection;
-    static public Vector3 exitDirection;
+    public static Vector3 enterDirection;
+    public static Vector3 exitDirection;
 
 #pragma warning disable
     [SerializeField] private float locationRadius;
+    [SerializeField] private float exitTime = 3.0f;
 #pragma warning restore
 
+    public float ExitProgress { get; private set; }
+    public float ExitProgressNormalized => ExitProgress / exitTime;
+    [HideInInspector] public bool isExiting = false;
     private GameObject cultLeader;
 
     private void OnValidate()
@@ -54,13 +58,29 @@ public class LocationCentre : MonoBehaviour
 
     private void Update()
     {
-        if (Vector3.Distance(cultLeader.transform.position, transform.position) > locationRadius)
+        if (Vector3.Distance(cultLeader.transform.position, transform.position) > locationRadius || isExiting)
         {
-            Vector3 vec = cultLeader.transform.position - transform.position;
-            vec.y = 0;
-            exitDirection = vec.normalized;
-            GameplayManager.Instance.ExitLocation();
+            ExitProgress += Time.deltaTime;
         }
+        else
+        {
+            ExitProgress -= Time.deltaTime;
+        }
+
+        ExitProgress = Mathf.Clamp(ExitProgress, 0.0f, exitTime);
+
+        if (ExitProgress >= exitTime)
+        {
+            Exit();
+        }
+    }
+
+    private void Exit()
+    {
+        Vector3 vec = cultLeader.transform.position - transform.position;
+        vec.y = 0;
+        exitDirection = vec.normalized;
+        GameplayManager.Instance.ExitLocation();
     }
 
     private void OnDrawGizmos()

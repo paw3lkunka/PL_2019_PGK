@@ -6,16 +6,27 @@ public class SceneObjectsManager : Singleton<SceneObjectsManager, ForbidLazyInst
 {
     public GameObject[] initAfterSceneLoadObjects;
     public GameObject[] disableBeforeSceneLoadObjects;
-    [Tooltip("Activates all objects in InitAfterSceneLoad array")]
-    public bool debug = false;
+    //[Tooltip("Activates all objects in InitAfterSceneLoad array")]
+#if UNITY_EDITOR
+    private static bool debug = true;
+#endif
 
-    void Start()
+    void Awake()
     {
+#if UNITY_EDITOR
         if(debug)
         {
+            Debug.LogWarning("Initializing without scene loading");
             InitAfterSceneLoad();
-            initAfterSceneLoadObjects[0].GetComponentInChildren<AudioTimeline>().TimelineInit();
+            if(initAfterSceneLoadObjects.Length > 0)
+            {
+                initAfterSceneLoadObjects[0].GetComponentInChildren<AudioTimeline>()?.TimelineInit();
+            }
+            // HACK: because SOMEONE made circular dependency in initializing code
+            FindObjectOfType<ExitLocationUIController>().Setup();
+            debug = false;
         }
+#endif
     }
 
     public void InitAfterSceneLoad()

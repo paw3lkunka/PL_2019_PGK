@@ -1998,7 +1998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &285005937
 Transform:
   m_ObjectHideFlags: 0
@@ -8384,7 +8384,7 @@ PrefabInstance:
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
       propertyPath: initAfterSceneLoadObjects.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
@@ -8418,8 +8418,13 @@ PrefabInstance:
       objectReference: {fileID: 150786466}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
+      propertyPath: initAfterSceneLoadObjects.Array.data[6]
+      value: 
+      objectReference: {fileID: 285005936}
+    - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
+        type: 3}
       propertyPath: disableBeforeSceneLoadObjects.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
@@ -8431,6 +8436,11 @@ PrefabInstance:
       propertyPath: disableBeforeSceneLoadObjects.Array.data[1]
       value: 
       objectReference: {fileID: 811970481}
+    - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
+        type: 3}
+      propertyPath: disableBeforeSceneLoadObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 698599724}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd1c0ddb1efbcb54d9e1d358cb57506c, type: 3}
 --- !u!1001 &1192587863

@@ -1655,7 +1655,7 @@ PrefabInstance:
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
       propertyPath: initAfterSceneLoadObjects.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
@@ -1684,14 +1684,29 @@ PrefabInstance:
       objectReference: {fileID: 233877477}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
+      propertyPath: initAfterSceneLoadObjects.Array.data[5]
+      value: 
+      objectReference: {fileID: 2096499549}
+    - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
+        type: 3}
       propertyPath: disableBeforeSceneLoadObjects.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
       propertyPath: disableBeforeSceneLoadObjects.Array.data[0]
       value: 
       objectReference: {fileID: 1508528531}
+    - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
+        type: 3}
+      propertyPath: disableBeforeSceneLoadObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 972012555}
+    - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
+        type: 3}
+      propertyPath: disableBeforeSceneLoadObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 388964806}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd1c0ddb1efbcb54d9e1d358cb57506c, type: 3}
 --- !u!1 &188981583
@@ -33875,6 +33890,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4df24f1b20056de40826ff2093d55aca, type: 3}
+--- !u!1 &2096499549 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3143279563993299375, guid: 4df24f1b20056de40826ff2093d55aca,
+    type: 3}
+  m_PrefabInstance: {fileID: 2096499548}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &2096834846
 Mesh:
   m_ObjectHideFlags: 0

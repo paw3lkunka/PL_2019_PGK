@@ -27437,8 +27437,13 @@ PrefabInstance:
       objectReference: {fileID: 1234080979}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
+      propertyPath: initAfterSceneLoadObjects.Array.data[5]
+      value: 
+      objectReference: {fileID: 1234080979}
+    - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
+        type: 3}
       propertyPath: disableBeforeSceneLoadObjects.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
@@ -27448,6 +27453,11 @@ PrefabInstance:
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
       propertyPath: disableBeforeSceneLoadObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 1334159164}
+    - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
+        type: 3}
+      propertyPath: disableBeforeSceneLoadObjects.Array.data[2]
       value: 
       objectReference: {fileID: 1987343358}
     m_RemovedComponents: []
