@@ -24,8 +24,7 @@ public class LoadingScreen : Singleton<LoadingScreen, ForbidLazyInstancing>
             loadingBar.fillAmount = currentLoadingOperation.progress;
             if(currentLoadingOperation.isDone)
             {
-                Hide();
-                SceneObjectsManager.Instance?.InitAfterSceneLoad();
+                StartCoroutine(EndLoading());
             }
         }
     }
@@ -35,6 +34,15 @@ public class LoadingScreen : Singleton<LoadingScreen, ForbidLazyInstancing>
         gameObject.SetActive(false);
         currentLoadingOperation = null;
         isLoading = false;
+    }
+
+    private IEnumerator EndLoading()
+    {
+        SceneObjectsManager.Instance?.InitAfterSceneLoad();
+        loadingBar.fillAmount = 1.0f;
+        yield return new WaitForSeconds(0.5f);
+        SceneObjectsManager.Instance?.initAfterSceneLoadObjects[0].GetComponentInChildren<AudioTimeline>().TimelineInit();
+        Hide();
     }
 
     public void Show(AsyncOperation loadingOperation)

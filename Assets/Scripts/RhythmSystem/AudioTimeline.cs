@@ -134,8 +134,6 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
         input.Gameplay.Pause.performed += PauseResumeInputHandler;
         input.Gameplay.Pause.Enable();
-
-        TimelineInit();
     }
 
     private void OnDisable()
@@ -368,14 +366,19 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
     //// HACK: Loading the scene takes too much time for first beat to sync in editor, so i hacked it ~fmazurek
     // It's not a hack anymore ;3 ~Ziemniak
-    private void TimelineInit()
+    public void TimelineInit()
     {
-        StartCoroutine(InitDelay());
+        //StartCoroutine(InitDelay());
+        beatDuration = 60.0d / songBpm;
+        maxBarSubdivDuration = (beatDuration * beatsPerBar) / maxBarSubdivision;
+        goodTolerance = ApplicationManager.Instance.GoodTolerance;
+        greatTolerance = ApplicationManager.Instance.GreatTolerance;
+        SequenceStartHandler();
     }
 
     private IEnumerator InitDelay()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(0.5f);
         beatDuration = 60.0d / songBpm;
         maxBarSubdivDuration = (beatDuration * beatsPerBar) / maxBarSubdivision;
         goodTolerance = ApplicationManager.Instance.GoodTolerance;
