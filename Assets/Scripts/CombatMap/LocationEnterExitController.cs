@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class LocationEnterExitController : MonoBehaviour
 {
-    public static Vector3 enterDirection;
-    public static Vector3 exitDirection;
-
 #pragma warning disable
     [SerializeField] private float locationRadius;
     [SerializeField] private float exitTime = 3.0f;
@@ -27,28 +24,7 @@ public class LocationEnterExitController : MonoBehaviour
 
     private void Awake()
     {
-        EnterZone[] enterZones = FindObjectsOfType<EnterZone>();
-        float[] angles = new float[enterZones.Length];
-        Vector3 direction;
-        for (int i = 0; i < enterZones.Length; i++)
-        {
-            direction = transform.position - enterZones[i].transform.position;
-            direction.y = 0.0f;
-            direction = direction.normalized;
-            angles[i] = Vector3.Angle(enterDirection, direction);
-        }
-
-        float smallestAngle = angles[0];
-        int bestIndex = 0;
-        for (int i = 0; i < angles.Length; i++)
-        {
-            if (angles[i] < smallestAngle)
-            {
-                smallestAngle = angles[i];
-                bestIndex = i;
-            }
-        }
-        cultLeader = Instantiate(ApplicationManager.Instance.PrefabDatabase.cultLeader, enterZones[bestIndex].transform.position, Quaternion.identity);
+        
         ExitZone[] exitZones = FindObjectsOfType<ExitZone>();
         foreach(var obj in exitZones)
         {
@@ -58,7 +34,7 @@ public class LocationEnterExitController : MonoBehaviour
 
     private void Update()
     {
-        if (Vector3.Distance(cultLeader.transform.position, transform.position) > locationRadius || isExiting)
+        if (Vector3.Distance(LocationManager.Instance.cultLeader.transform.position, transform.position) > locationRadius || isExiting)
         {
             ExitProgress += Time.deltaTime;
         }
@@ -79,7 +55,7 @@ public class LocationEnterExitController : MonoBehaviour
     {
         Vector3 vec = cultLeader.transform.position - transform.position;
         vec.y = 0;
-        exitDirection = vec.normalized;
+        LocationManager.exitDirection = vec.normalized;
         GameplayManager.Instance.ExitLocation();
     }
 

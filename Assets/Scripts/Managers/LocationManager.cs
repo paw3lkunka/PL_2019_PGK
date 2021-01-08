@@ -9,6 +9,9 @@ public enum LocationMode { Neutral, Hostile, Friendly }
 /// </summary>
 public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 {
+    public static Vector3 enterDirection;
+    public static Vector3 exitDirection;
+
     [Header("Base config")]
     public LocationMode sceneMode;
     public List<Damageable> enemies;
@@ -76,6 +79,29 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
         enemies.Clear();
         ourCrew.Clear();
+
+        EnterZone[] enterZones = FindObjectsOfType<EnterZone>();
+        float[] angles = new float[enterZones.Length];
+        Vector3 direction;
+        for (int i = 0; i < enterZones.Length; i++)
+        {
+            direction = transform.position - enterZones[i].transform.position;
+            direction.y = 0.0f;
+            direction = direction.normalized;
+            angles[i] = Vector3.Angle(enterDirection, direction);
+        }
+
+        float smallestAngle = angles[0];
+        int bestIndex = 0;
+        for (int i = 0; i < angles.Length; i++)
+        {
+            if (angles[i] < smallestAngle)
+            {
+                smallestAngle = angles[i];
+                bestIndex = i;
+            }
+        }
+        cultLeader = Instantiate(ApplicationManager.Instance.PrefabDatabase.cultLeader, enterZones[bestIndex].transform.position, Quaternion.identity).GetComponent<CultLeader>();
 
         Vector3 leaderPosition = FindObjectOfType<CultLeader>().transform.position;
         int length = GameplayManager.Instance.cultistInfos.Count;

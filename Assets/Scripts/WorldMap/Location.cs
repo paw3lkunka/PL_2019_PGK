@@ -127,7 +127,7 @@ public class Location : MonoBehaviour
             {
                 Vector3 vec = transform.position - cultistLeader.transform.position;
                 vec.y = 0;
-                LocationEnterExitController.enterDirection = vec.normalized;
+                LocationManager.enterDirection = vec.normalized;
                 GameplayManager.Instance.EnterLocation(this);
 
                 visited = true;

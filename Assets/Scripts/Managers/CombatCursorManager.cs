@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,6 +26,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
     public Vector3 shootDirection;
     public float shootHalfAngle;
+
+    public event Action OnSetWalkTarget;
 
     /// <summary>
     /// Is shootTargetIndicator placed
@@ -177,50 +180,51 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     {
         // TODO: Check mouse over gui
         switch (ApplicationManager.Instance.CurrentInputScheme)
-            {
-                case InputSchemeEnum.MouseKeyboard:
-                    walkTargetIndicator.transform.position = MainCursor.transform.position;
-                    break;
+        {
+            case InputSchemeEnum.MouseKeyboard:
+                walkTargetIndicator.transform.position = MainCursor.transform.position;
+                break;
 
-                case InputSchemeEnum.Gamepad:
-                case InputSchemeEnum.JoystickKeyboard:
-                    var cultLeaderPosition = LocationManager.Instance.cultLeader.transform.position;
-                    if(isJoystickLeanOut)
+            case InputSchemeEnum.Gamepad:
+            case InputSchemeEnum.JoystickKeyboard:
+                var cultLeaderPosition = LocationManager.Instance.cultLeader.transform.position;
+                if(isJoystickLeanOut)
+                {
+                    var cursorPos = MainCursor.transform.position;
+                    cultLeaderPosition.y += 1.0f;
+                    cursorPos.y += 1.0f;
+
+                    RaycastHit rayHit;
+                    if(Physics.Raycast(cultLeaderPosition, cursorPos - cultLeaderPosition , out rayHit, Mathf.Infinity, LayerMask.GetMask("Obstacles", "GroundObstacles")))
                     {
-                        var cursorPos = MainCursor.transform.position;
-                        cultLeaderPosition.y += 1.0f;
-                        cursorPos.y += 1.0f;
-
-                        RaycastHit rayHit;
-                        if(Physics.Raycast(cultLeaderPosition, cursorPos - cultLeaderPosition , out rayHit, Mathf.Infinity, LayerMask.GetMask("Obstacles", "GroundObstacles")))
+                        cursorPos = Vector3.MoveTowards(rayHit.point, cultLeaderPosition, 0.5f);
+                        cursorPos.y = 1000.0f;
+                        if(Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, LayerMask.GetMask("Default")))
                         {
-                            cursorPos = Vector3.MoveTowards(rayHit.point, cultLeaderPosition, 0.5f);
-                            cursorPos.y = 1000.0f;
-                            if(Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, LayerMask.GetMask("Default")))
-                            {
-                                cursorPos = rayHit.point;
-                            }
+                            cursorPos = rayHit.point;
                         }
-                        else
-                        {
-                            cursorPos = MainCursor.transform.position;
-                            if(Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, LayerMask.GetMask("Default")))
-                            {
-                                cursorPos = rayHit.point;
-                            }
-                        }
-
-                        walkTargetIndicator.transform.position = cursorPos;
                     }
                     else
                     {
-                        walkTargetIndicator.transform.position = cultLeaderPosition;
+                        cursorPos = MainCursor.transform.position;
+                        if(Physics.Raycast(cursorPos, Vector3.down, out rayHit, Mathf.Infinity, LayerMask.GetMask("Default")))
+                        {
+                            cursorPos = rayHit.point;
+                        }
                     }
-                    break;
 
-                case InputSchemeEnum.Touchscreen:
-                    break;
-            }
+                    walkTargetIndicator.transform.position = cursorPos;
+                }
+                else
+                {
+                    walkTargetIndicator.transform.position = cultLeaderPosition;
+                }
+                break;
+
+            case InputSchemeEnum.Touchscreen:
+                break;
+        }
+        OnSetWalkTarget?.Invoke();
     }
 
     private void SetShootTargetIndicator(InputAction.CallbackContext ctx)

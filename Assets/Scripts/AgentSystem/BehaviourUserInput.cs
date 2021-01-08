@@ -17,7 +17,7 @@ public class BehaviourUserInput : MonoBehaviour, IBehaviour
         moveable.Go(target ?? cursor);
     }
 
-    private void GoToCursorPosition(InputAction.CallbackContext ctx)
+    private void GoToCursorPosition()
     {
         if (controlEnabled)
         {
@@ -36,12 +36,12 @@ public class BehaviourUserInput : MonoBehaviour, IBehaviour
 
     private void OnEnable()
     {
-        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
+        CombatCursorManager.Instance.OnSetWalkTarget += GoToCursorPosition;
     }
 
     private void OnDisable()
     {
-        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed -= GoToCursorPosition;
+        CombatCursorManager.Instance.OnSetWalkTarget -= GoToCursorPosition;
     }
 
     #endregion
