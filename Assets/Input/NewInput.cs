@@ -114,7 +114,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ShowHideInfoLog"",
+                    ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""eeab1485-5897-4f47-95a2-b7d3322bd800"",
                     ""expectedControlType"": """",
@@ -256,7 +256,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MouseKeyboard;JoystickKeyboard"",
-                    ""action"": ""ShowHideInfoLog"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -267,7 +267,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ShowHideInfoLog"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -278,7 +278,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ShowHideInfoLog"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -289,7 +289,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MouseKeyboard;JoystickKeyboard"",
-                    ""action"": ""ShowHideInfoLog"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -838,7 +838,7 @@ public class @NewInput : IInputActionCollection, IDisposable
         m_Gameplay_MoveCursor = m_Gameplay.FindAction("MoveCursor", throwIfNotFound: true);
         m_Gameplay_SetWalkTarget = m_Gameplay.FindAction("SetWalkTarget", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
-        m_Gameplay_ShowHideInfoLog = m_Gameplay.FindAction("ShowHideInfoLog", throwIfNotFound: true);
+        m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_RotateCamera = m_Gameplay.FindAction("RotateCamera", throwIfNotFound: true);
         m_Gameplay_ZoomCamera = m_Gameplay.FindAction("ZoomCamera", throwIfNotFound: true);
         // UI
@@ -933,7 +933,7 @@ public class @NewInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_MoveCursor;
     private readonly InputAction m_Gameplay_SetWalkTarget;
     private readonly InputAction m_Gameplay_Pause;
-    private readonly InputAction m_Gameplay_ShowHideInfoLog;
+    private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_RotateCamera;
     private readonly InputAction m_Gameplay_ZoomCamera;
     public struct GameplayActions
@@ -943,7 +943,7 @@ public class @NewInput : IInputActionCollection, IDisposable
         public InputAction @MoveCursor => m_Wrapper.m_Gameplay_MoveCursor;
         public InputAction @SetWalkTarget => m_Wrapper.m_Gameplay_SetWalkTarget;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
-        public InputAction @ShowHideInfoLog => m_Wrapper.m_Gameplay_ShowHideInfoLog;
+        public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @RotateCamera => m_Wrapper.m_Gameplay_RotateCamera;
         public InputAction @ZoomCamera => m_Wrapper.m_Gameplay_ZoomCamera;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
@@ -964,9 +964,9 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
-                @ShowHideInfoLog.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShowHideInfoLog;
-                @ShowHideInfoLog.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShowHideInfoLog;
-                @ShowHideInfoLog.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShowHideInfoLog;
+                @Interact.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
                 @RotateCamera.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotateCamera;
                 @RotateCamera.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotateCamera;
                 @RotateCamera.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotateCamera;
@@ -986,9 +986,9 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
-                @ShowHideInfoLog.started += instance.OnShowHideInfoLog;
-                @ShowHideInfoLog.performed += instance.OnShowHideInfoLog;
-                @ShowHideInfoLog.canceled += instance.OnShowHideInfoLog;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
                 @RotateCamera.started += instance.OnRotateCamera;
                 @RotateCamera.performed += instance.OnRotateCamera;
                 @RotateCamera.canceled += instance.OnRotateCamera;
@@ -1109,7 +1109,7 @@ public class @NewInput : IInputActionCollection, IDisposable
         void OnMoveCursor(InputAction.CallbackContext context);
         void OnSetWalkTarget(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnShowHideInfoLog(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
         void OnRotateCamera(InputAction.CallbackContext context);
         void OnZoomCamera(InputAction.CallbackContext context);
     }

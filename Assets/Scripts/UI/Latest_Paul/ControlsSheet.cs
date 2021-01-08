@@ -18,8 +18,8 @@ public class ControlsSheet : MonoBehaviour
     public KeyboardButtons[] shootMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] interactMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] pauseMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
-    public KeyboardButtons[] cameraMoveMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
-    public KeyboardButtons[] cameraZoomMouseKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
+    public Sprite cameraMoveMouseKeyboardBinding;
+    public Sprite cameraZoomMouseKeyboardBinding;
     public Sprite uiNavigateMouseKeyboardBinding;
     public Sprite uiSubmitMouseKeyboardBinding;
     public Sprite uiCancelMouseKeyboardBinding;
@@ -29,8 +29,8 @@ public class ControlsSheet : MonoBehaviour
     public KeyboardButtons[] shootJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] interactJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
     public KeyboardButtons[] pauseJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
-    public KeyboardButtons[] cameraMoveJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
-    public KeyboardButtons[] cameraZoomJoystickKeyboardBinding = { KeyboardButtons.unknown, KeyboardButtons.unknown };
+    public Sprite cameraMoveJoystickKeyboardBinding;
+    public Sprite cameraZoomJoystickKeyboardBinding;
     public Sprite uiNavigateJoystickKeyboardBinding;
     public Sprite uiSubmitJoystickKeyboardBinding;
     public Sprite uiCancelJoystickKeyboardBinding;
@@ -40,8 +40,8 @@ public class ControlsSheet : MonoBehaviour
     public GamepadButtons[] shootGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
     public GamepadButtons[] interactGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
     public GamepadButtons[] pauseGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
-    public GamepadButtons[] cameraMoveGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
-    public GamepadButtons[] cameraZoomGamepadBinding = { GamepadButtons.unknown, GamepadButtons.unknown };
+    public Sprite cameraMoveGamepadBinding;
+    public Sprite cameraZoomGamepadBinding;
     public Sprite uiNavigateGamepadBinding;
     public Sprite uiSubmitGamepadBinding;
     public Sprite uiCancelGamepadBinding;
@@ -71,21 +71,13 @@ public class ControlsSheet : MonoBehaviour
         walkJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.SetWalkTarget, "Joystick");
         walkGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.SetWalkTarget, "Gamepad");
 
-        interactMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.ShowHideInfoLog, "Mouse");
-        interactJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.ShowHideInfoLog, "Joystick");
-        interactGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.ShowHideInfoLog, "Gamepad");
+        interactMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Interact, "Mouse");
+        interactJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Interact, "Joystick");
+        interactGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.Interact, "Gamepad");
 
         pauseMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Pause, "Mouse");
         pauseJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Pause, "Joystick");
         pauseGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.Pause, "Gamepad");
-
-        cameraMoveMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.RotateCamera, "Mouse");
-        cameraMoveJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.RotateCamera, "Joystick");
-        cameraMoveGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.RotateCamera, "Gamepad");
-
-        cameraZoomMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.ZoomCamera, "Mouse");
-        cameraZoomJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.ZoomCamera, "Joystick");
-        cameraZoomGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.ZoomCamera, "Gamepad");
     }
 
     private void OnEnable()
@@ -169,12 +161,14 @@ public class ControlsSheet : MonoBehaviour
                         break;
 
                     case ButtonActionType.CameraMove:
-                        keyboardButton = cameraMoveMouseKeyboardBinding[prior];
-                        break;
+                        image.sprite = cameraMoveMouseKeyboardBinding;
+                        textMesh.text = "";
+                        return;
 
                     case ButtonActionType.CameraZoom:
-                        keyboardButton = cameraZoomMouseKeyboardBinding[prior];
-                        break;
+                        image.sprite = cameraZoomMouseKeyboardBinding;
+                        textMesh.text = "";
+                        return;
 
                     case ButtonActionType.UINavigate:
                         image.sprite = uiNavigateMouseKeyboardBinding;
@@ -231,6 +225,16 @@ public class ControlsSheet : MonoBehaviour
                     case ButtonActionType.Pause:
                         joystickButton = pauseJoystickKeyboardBinding[prior];
                         break;
+                        
+                     case ButtonActionType.CameraMove:
+                        image.sprite = cameraMoveMouseKeyboardBinding;
+                        textMesh.text = "";
+                        return;
+
+                    case ButtonActionType.CameraZoom:
+                        image.sprite = cameraZoomMouseKeyboardBinding;
+                        textMesh.text = "";
+                        return;
 
                     case ButtonActionType.UINavigate:
                         image.sprite = uiNavigateJoystickKeyboardBinding;
@@ -245,7 +249,7 @@ public class ControlsSheet : MonoBehaviour
                     case ButtonActionType.UICancel:
                         image.sprite = uiCancelJoystickKeyboardBinding;
                         textMesh.text = "";
-                        return;
+                        break;
                 }
 
                 if(joystickButton >= KeyboardButtons.first_standard_noChange && joystickButton <= KeyboardButtons.last_standard_noChange)
@@ -287,6 +291,16 @@ public class ControlsSheet : MonoBehaviour
                     case ButtonActionType.Pause:
                         gamepadButton = pauseGamepadBinding[prior];
                         break;
+
+                    case ButtonActionType.CameraMove:
+                        image.sprite = cameraMoveGamepadBinding;
+                        textMesh.text = "";
+                        return;
+
+                    case ButtonActionType.CameraZoom:
+                        image.sprite = cameraZoomGamepadBinding;
+                        textMesh.text = "";
+                        return;
 
                     case ButtonActionType.UINavigate:
                         image.sprite = uiNavigateGamepadBinding;
@@ -362,7 +376,7 @@ public class ControlsSheet : MonoBehaviour
                         break;
                     
                     case ButtonActionType.Interact:
-                        interactMouseKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.ShowHideInfoLog, "Mouse")[prior];
+                        interactMouseKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Interact, "Mouse")[prior];
                         break;
                     
                     case ButtonActionType.Pause:
@@ -383,7 +397,7 @@ public class ControlsSheet : MonoBehaviour
                         break;
                     
                     case ButtonActionType.Interact:
-                        interactGamepadBinding[prior] = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.ShowHideInfoLog, "Gamepad")[prior];
+                        interactGamepadBinding[prior] = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.Interact, "Gamepad")[prior];
                         break;
                     
                     case ButtonActionType.Pause:
@@ -404,7 +418,7 @@ public class ControlsSheet : MonoBehaviour
                         break;
                     
                     case ButtonActionType.Interact:
-                        interactJoystickKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.ShowHideInfoLog, "Joystick")[prior];
+                        interactJoystickKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Interact, "Joystick")[prior];
                         break;
                     
                     case ButtonActionType.Pause:
