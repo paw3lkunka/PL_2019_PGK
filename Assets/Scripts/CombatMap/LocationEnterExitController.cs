@@ -53,7 +53,7 @@ public class LocationEnterExitController : MonoBehaviour
 
     private void Exit()
     {
-        Vector3 vec = cultLeader.transform.position - transform.position;
+        Vector3 vec = LocationManager.Instance.cultLeader.transform.position - transform.position;
         vec.y = 0;
         LocationManager.exitDirection = vec.normalized;
         GameplayManager.Instance.ExitLocation();
