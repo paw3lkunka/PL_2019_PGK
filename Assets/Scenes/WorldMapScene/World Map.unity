@@ -165,6 +165,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 612310319641057915, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1765525545220807674, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
       propertyPath: <FaithDepletionRate>k__BackingField
@@ -255,15 +260,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: CultistLeader_WorldMap
       objectReference: {fileID: 0}
+    - target: {fileID: 4309431322862038221, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525095909565941212, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5014429964150843982, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6248261802258718360, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6496265821441446644, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6573072300843149125, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695547830620636963, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: antialiasingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9020436243410463687, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2033328545, guid: 197240aff88368644ab7b10f68c34db0, type: 3}
@@ -3721,7 +3756,7 @@ RectTransform:
   m_Children:
   - {fileID: 1161141215}
   m_Father: {fileID: 2033328545}
-  m_RootOrder: 11
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
