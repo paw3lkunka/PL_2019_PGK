@@ -6,6 +6,16 @@ public class SceneObjectsManager : Singleton<SceneObjectsManager, ForbidLazyInst
 {
     public GameObject[] initAfterSceneLoadObjects;
     public GameObject[] disableBeforeSceneLoadObjects;
+    [Tooltip("Activates all objects in InitAfterSceneLoad array")]
+    public bool debug = false;
+
+    void Start()
+    {
+        if(debug)
+        {
+            InitAfterSceneLoad();
+        }
+    }
 
     public void InitAfterSceneLoad()
     {

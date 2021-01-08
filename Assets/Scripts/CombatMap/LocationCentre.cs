@@ -45,6 +45,11 @@ public class LocationCentre : MonoBehaviour
             }
         }
         cultLeader = Instantiate(ApplicationManager.Instance.PrefabDatabase.cultLeader, enterZones[bestIndex].transform.position, Quaternion.identity);
+        ExitZone[] exitZones = FindObjectsOfType<ExitZone>();
+        foreach(var obj in exitZones)
+        {
+            obj.center = this;
+        }
     }
 
     private void Update()

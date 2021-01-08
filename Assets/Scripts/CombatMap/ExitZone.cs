@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class ExitZone : MonoBehaviour
 {
-    LocationCentre center;
+    public LocationCentre center;
 
-    private void Start()
-    {
-        center = FindObjectOfType<LocationCentre>();
-    }
     
     private void OnTriggerEnter(Collider other)
     {

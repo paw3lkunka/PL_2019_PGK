@@ -366,15 +366,11 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     #region TimelineControl
 
 
-    // HACK: Loading the scene takes too much time for first beat to sync in editor, so i hacked it ~fmazurek
+    //// HACK: Loading the scene takes too much time for first beat to sync in editor, so i hacked it ~fmazurek
+    // It's not a hack anymore ;3 ~Ziemniak
     private void TimelineInit()
     {
-        //StartCoroutine(InitDelay());
-        beatDuration = 60.0d / songBpm;
-        maxBarSubdivDuration = (beatDuration * beatsPerBar) / maxBarSubdivision;
-        goodTolerance = ApplicationManager.Instance.GoodTolerance;
-        greatTolerance = ApplicationManager.Instance.GreatTolerance;
-        SequenceStartHandler();
+        StartCoroutine(InitDelay());
     }
 
     private IEnumerator InitDelay()
