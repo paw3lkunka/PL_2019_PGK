@@ -14,6 +14,7 @@ public class SceneObjectsManager : Singleton<SceneObjectsManager, ForbidLazyInst
         if(debug)
         {
             InitAfterSceneLoad();
+            initAfterSceneLoadObjects[0].GetComponentInChildren<AudioTimeline>().TimelineInit();
         }
     }
 
@@ -21,7 +22,10 @@ public class SceneObjectsManager : Singleton<SceneObjectsManager, ForbidLazyInst
     {
         foreach(var obj in initAfterSceneLoadObjects)
         {
-            obj.SetActive(true);
+            if(!obj.activeInHierarchy)
+            {
+                obj.SetActive(true);
+            }
         }
     }
 
