@@ -33,6 +33,7 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
             mainCanvas = canvasObject.AddComponent<Canvas>();
             mainCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
         }
+
         if (baseUILayer)
         {
             guiObjects.Push((baseUILayer, PushBehaviour.Nothing));

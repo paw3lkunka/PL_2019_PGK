@@ -71,6 +71,7 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!114 &3400001999571193406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,8 +90,10 @@ MonoBehaviour:
   shootMouseKeyboardBinding: 0000000000000000
   interactMouseKeyboardBinding: 0000000000000000
   pauseMouseKeyboardBinding: 0000000000000000
-  cameraMoveMouseKeyboardBinding: 0000000000000000
-  cameraZoomMouseKeyboardBinding: 0000000000000000
+  cameraMoveMouseKeyboardBinding: {fileID: 21300000, guid: ecea3903bc5559c08b426c4153de74fd,
+    type: 3}
+  cameraZoomMouseKeyboardBinding: {fileID: 21300000, guid: e01354d9573cd8e4f86d66035402b80d,
+    type: 3}
   uiNavigateMouseKeyboardBinding: {fileID: 21300000, guid: cf5620cb2355b2dad920ca5189d35d95,
     type: 3}
   uiSubmitMouseKeyboardBinding: {fileID: 21300000, guid: 0ff0e1c53e1217e6d9e00b3f56f8161e,
@@ -101,8 +104,8 @@ MonoBehaviour:
   shootJoystickKeyboardBinding: 0000000000000000
   interactJoystickKeyboardBinding: 0000000000000000
   pauseJoystickKeyboardBinding: 0000000000000000
-  cameraMoveJoystickKeyboardBinding: 0000000000000000
-  cameraZoomJoystickKeyboardBinding: 0000000000000000
+  cameraMoveJoystickKeyboardBinding: {fileID: 0}
+  cameraZoomJoystickKeyboardBinding: {fileID: 0}
   uiNavigateJoystickKeyboardBinding: {fileID: 21300000, guid: cf5620cb2355b2dad920ca5189d35d95,
     type: 3}
   uiSubmitJoystickKeyboardBinding: {fileID: 21300000, guid: 0ff0e1c53e1217e6d9e00b3f56f8161e,
@@ -113,8 +116,10 @@ MonoBehaviour:
   shootGamepadBinding: 0000000000000000
   interactGamepadBinding: 0000000000000000
   pauseGamepadBinding: 0000000000000000
-  cameraMoveGamepadBinding: 0000000000000000
-  cameraZoomGamepadBinding: 0000000000000000
+  cameraMoveGamepadBinding: {fileID: 21300000, guid: 6423654bf08ba17568a5ea5d32b9fbc1,
+    type: 3}
+  cameraZoomGamepadBinding: {fileID: 21300000, guid: a3f54cb40f3b03664be71c9835b920dd,
+    type: 3}
   uiNavigateGamepadBinding: {fileID: 21300000, guid: 363ba9110ccf9711997183e71cfd6ffe,
     type: 3}
   uiSubmitGamepadBinding: {fileID: 21300000, guid: 95107495bdae298d195f7dd12eaa37e4,
@@ -124,51 +129,51 @@ MonoBehaviour:
   standardKeyboardSprite: {fileID: 21300000, guid: 8f4c79074028e4c13b025178feed8590,
     type: 3}
   normalKeyboardChanges:
-  - button: 82
-    text: PgDn
-  - button: 83
-    text: PgUp
-  - button: 84
-    text: Del
-  - button: 85
-    text: Pause
   - button: 86
-    text: NumLk
+    text: PgDn
   - button: 87
-    text: PrtSc
+    text: PgUp
   - button: 88
-    text: ScrLk
+    text: Del
   - button: 89
-    text: Num /
+    text: Pause
   - button: 90
-    text: Num *
+    text: NumLk
   - button: 91
-    text: Num +
+    text: PrtSc
   - button: 92
-    text: Num -
+    text: ScrLk
   - button: 93
-    text: Num .
+    text: Num /
   - button: 94
-    text: Num =
+    text: Num *
   - button: 95
-    text: Num 1
+    text: Num +
   - button: 96
-    text: Num 2
+    text: Num -
   - button: 97
-    text: Num 3
+    text: Num .
   - button: 98
-    text: Num 4
+    text: Num =
   - button: 99
-    text: Num 5
+    text: Num 1
   - button: 100
-    text: Num 6
+    text: Num 2
   - button: 101
-    text: Num 7
+    text: Num 3
   - button: 102
-    text: Num 8
+    text: Num 4
   - button: 103
-    text: Num 9
+    text: Num 5
   - button: 104
+    text: Num 6
+  - button: 105
+    text: Num 7
+  - button: 106
+    text: Num 8
+  - button: 107
+    text: Num 9
+  - button: 108
     text: Num 0
   specialKeyboardSprites:
   - button: 1

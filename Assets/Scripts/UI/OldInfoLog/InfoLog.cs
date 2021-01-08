@@ -63,16 +63,16 @@ public class InfoLog : MonoBehaviour
     {
         ApplicationManager.Instance.InputSchemeChange += OnInputSchemeChange;
 
-        input.Gameplay.ShowHideInfoLog.performed += ShowHideInputHandler;
-        input.Gameplay.ShowHideInfoLog.Enable();
+        input.Gameplay.Interact.performed += ShowHideInputHandler;
+        input.Gameplay.Interact.Enable();
     }
 
     private void OnDisable()
     {
         ApplicationManager.Instance.InputSchemeChange -= OnInputSchemeChange;
 
-        input.Gameplay.ShowHideInfoLog.performed -= ShowHideInputHandler;
-        input.Gameplay.ShowHideInfoLog.Disable();
+        input.Gameplay.Interact.performed -= ShowHideInputHandler;
+        input.Gameplay.Interact.Disable();
     }
 
     private void Update()

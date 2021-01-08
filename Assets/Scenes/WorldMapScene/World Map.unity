@@ -167,26 +167,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1765525545220807674, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
-      propertyPath: _faithDepletionRate
-      value: 0.005
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765525545220807674, guid: 197240aff88368644ab7b10f68c34db0,
-        type: 3}
-      propertyPath: _waterDepletionRate
-      value: 0.005
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765525545220807674, guid: 197240aff88368644ab7b10f68c34db0,
-        type: 3}
-      propertyPath: shouldDepleteHealth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765525545220807674, guid: 197240aff88368644ab7b10f68c34db0,
-        type: 3}
-      propertyPath: _healthDepletionRate
-      value: 0.005
-      objectReference: {fileID: 0}
-    - target: {fileID: 1765525545220807674, guid: 197240aff88368644ab7b10f68c34db0,
-        type: 3}
       propertyPath: <FaithDepletionRate>k__BackingField
       value: 0.005
       objectReference: {fileID: 0}
@@ -215,11 +195,6 @@ PrefabInstance:
       propertyPath: furthestPoint
       value: 
       objectReference: {fileID: 1939749280}
-    - target: {fileID: 3865262323239329021, guid: 197240aff88368644ab7b10f68c34db0,
-        type: 3}
-      propertyPath: mouseScrollSensitivity
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 3968320175676017217, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
       propertyPath: m_RootOrder
@@ -285,15 +260,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5477192852651823502, guid: 197240aff88368644ab7b10f68c34db0,
+    - target: {fileID: 6496265821441446644, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
-      propertyPath: <SpeedBase>k__BackingField
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5477192852651823502, guid: 197240aff88368644ab7b10f68c34db0,
-        type: 3}
-      propertyPath: <SpeedBoosted>k__BackingField
-      value: 8
+      propertyPath: m_RootOrder
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2033328545, guid: 197240aff88368644ab7b10f68c34db0, type: 3}
@@ -444,7 +414,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4972150
+  m_Name: pb_Mesh-712792
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1578,7 +1548,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh149798
+  m_Name: pb_Mesh90424
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1742,7 +1712,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4972152
+  m_Name: pb_Mesh-712794
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

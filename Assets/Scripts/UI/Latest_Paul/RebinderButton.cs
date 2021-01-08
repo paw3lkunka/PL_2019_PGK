@@ -75,7 +75,7 @@ public class RebinderButton : MonoBehaviour
                 break;
 
             case ButtonActionType.Interact:
-                action = ApplicationManager.Instance.Input.Gameplay.ShowHideInfoLog;
+                action = ApplicationManager.Instance.Input.Gameplay.Interact;
                 break;
 
             case ButtonActionType.Pause:
