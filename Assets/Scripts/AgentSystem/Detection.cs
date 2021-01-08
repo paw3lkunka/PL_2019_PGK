@@ -58,7 +58,7 @@ public class Detection : MonoBehaviour
 
     public float detectionHalfAngle = 181.0f;
 
-    public bool includeRaycastTest = false;
+    public bool includeRaycastTest = true;
 
     private int raycastLayerMask;
 
