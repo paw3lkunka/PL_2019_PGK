@@ -61,7 +61,11 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
                 ControlsSheet.gameObject.SetActive(true);
                 break;
             case PushBehaviour.Lock:
-                guiObjects.Push((Instantiate(ApplicationManager.Instance.PrefabDatabase.lockGUI, mainCanvas.transform), PushBehaviour.Lock));
+                // guiObjects.Push((Instantiate(ApplicationManager.Instance.PrefabDatabase.lockGUI, mainCanvas.transform), PushBehaviour.Lock));
+                foreach( Selectable s in guiObjects.Peek().Item1.GetComponentsInChildren<Selectable>() )
+                {
+                    s.interactable = false;
+                }
                 break;
         }
         GameObject instantiated = Instantiate(guiPrefab, mainCanvas.transform);
@@ -92,7 +96,10 @@ public class UIOverlayManager : Singleton<UIOverlayManager, AllowLazyInstancing>
                 break;
             case PushBehaviour.Lock:
                 Destroy(guiObjects.Pop().Item1);
-                Destroy(guiObjects.Pop().Item1);
+                foreach( Selectable s in guiObjects.Peek().Item1.GetComponentsInChildren<Selectable>() )
+                {
+                    s.interactable = true;
+                }
                 break;
         }
 
