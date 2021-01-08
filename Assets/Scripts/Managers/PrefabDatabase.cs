@@ -35,6 +35,7 @@ public class PrefabDatabase : ScriptableObject
     public GameObject controlsSheetElement;
     public GameObject recruitGUI;
     public GameObject insufficientFundsDialog;
+    public GameObject loadingScreen;
 
     [Header("World space UI")]
     public GameObject healthBar;

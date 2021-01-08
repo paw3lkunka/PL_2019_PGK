@@ -128,7 +128,7 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
     public void MainMenu()
     {
         Destroy(GameplayManager.Instance.gameObject);
-        SceneManager.LoadScene(menuScene);
+        LoadScene(menuScene);
     }
 
     public void StartGame(GameMode mode, Difficulty difficulty)
@@ -138,7 +138,7 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
         {
             case GameMode.Debug:
                 // Load appropriate scene
-                SceneManager.LoadScene(debugScene);
+                LoadScene(debugScene);
                 break;
 
             case GameMode.Normal:
@@ -167,9 +167,18 @@ public class ApplicationManager : Singleton<ApplicationManager, AllowLazyInstanc
         }
     }
 
-#endregion
+    public static void LoadScene(string scene)
+    {
+        LoadingScreen.Instance.Show(SceneManager.LoadSceneAsync(scene));
+    }
+    public static void LoadScene(int scene)
+    {
+        LoadingScreen.Instance.Show(SceneManager.LoadSceneAsync(scene));
+    }
 
-#region EventHandlers
+    #endregion
+
+    #region EventHandlers
 
     private void OnInputSchemeChange(PlayerInput obj)
     {

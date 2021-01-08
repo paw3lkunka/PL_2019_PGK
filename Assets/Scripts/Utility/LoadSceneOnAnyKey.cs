@@ -12,7 +12,7 @@ public class LoadSceneOnAnyKey : MonoBehaviour
 
     public void StartScene()
     {
-        SceneManager.LoadScene(sceneIndex);
+        ApplicationManager.LoadScene(sceneIndex);
     }
 
     public void Update()
