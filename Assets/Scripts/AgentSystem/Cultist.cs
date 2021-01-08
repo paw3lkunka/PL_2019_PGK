@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Damageable),typeof(Detection))]
+[RequireComponent(typeof(Damageable),typeof(Detection),typeof(Moveable))]
+[RequireComponent(typeof(IAttack),typeof(Detection),typeof(Moveable))]
 public class Cultist : MonoBehaviour
 {
+    private Moveable moveable;
     private Damageable damageable;
     private Detection detection;
     private IAttack attack;
     private IBoostable[] boostables;
     public CultistEntityInfo info;
+
+    public Vector2 attackMinMax;
+    public Vector2 speedMinMax;
 
     public MonoBehaviour normalBehaviour;
     [UnityEngine.Serialization.FormerlySerializedAs("fanaticBehaviour")]
@@ -142,6 +147,7 @@ public class Cultist : MonoBehaviour
     {
         damageable = GetComponent<Damageable>();
         detection = GetComponent<Detection>();
+        moveable = GetComponent<Moveable>();
         attack = GetComponent<IAttack>();
         boostables = GetComponentsInChildren<IBoostable>();
 
@@ -150,7 +156,12 @@ public class Cultist : MonoBehaviour
 
     private void Update()
     {
+        float faith = GameplayManager.Instance.Faith.Normalized;
 
+        moveable.SpeedBase = Mathf.Lerp(speedMinMax.x, speedMinMax.y, faith);
+        attack.DamageBaseMultiplier = Mathf.Lerp(attackMinMax.x, attackMinMax.y, faith);
+
+        Debug.Log($"Relal speed: {moveable.SpeedBase}, attack {attack.DamageBaseMultiplier}");
     }
 
     private void OnEnable()

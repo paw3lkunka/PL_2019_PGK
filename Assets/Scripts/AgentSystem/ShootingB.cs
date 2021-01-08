@@ -19,7 +19,7 @@ public class ShootingB : Shooting, IBoostable
     [field: Header("Boosted")]
 
     [field: SerializeField, GUIName("DamageBoost")]
-    public float DamageBoost { get; set; } = 1;
+    public float DamageBoostedMultiplier { get; set; } = 1;
 
     [field: SerializeField, GUIName("RangeMultiplierBoost")]
     public float RangeMultiplierBoost { get; set; } = 1;
@@ -30,7 +30,7 @@ public class ShootingB : Shooting, IBoostable
     [field: Header("Decresed")]
 
     [field: SerializeField, GUIName("DamageDecrese")]
-    public float DamageDecrese { get; set; } = 1;
+    public float DamageDecresedMultiplier { get; set; } = 1;
 
     [field: SerializeField, GUIName("RangeMultiplierDecrese")]
     public float RangeMultiplierDecrese { get; set; } = 1;
@@ -103,15 +103,15 @@ public class ShootingB : Shooting, IBoostable
 
             if (IsBoosted)
             {
-                projectile.damageMin *= DamageBoost;
-                projectile.damageMax *= DamageBoost;
+                projectile.damageMin *= DamageBoostedMultiplier;
+                projectile.damageMax *= DamageBoostedMultiplier;
                 projectile.range *= RangeMultiplierBoost;
                 SetLayerMask(projectile);
                 return projectile;
             }
             else
-            {   projectile.damageMin *= DamageDecrese;
-                projectile.damageMax *= DamageDecrese;
+            {   projectile.damageMin *= DamageDecresedMultiplier;
+                projectile.damageMax *= DamageDecresedMultiplier;
                 projectile.range *= RangeMultiplierDecrese;
                 SetLayerMask(projectile);
                 return projectile;

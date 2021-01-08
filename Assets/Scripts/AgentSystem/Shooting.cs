@@ -29,7 +29,7 @@ public class Shooting : MonoBehaviour, IAttack
     [field: Header("Normal")]
 
     [field: SerializeField, GUIName("DamageMultiplier")]
-    public float DamageMultiplier { get; set; } = 1;
+    public float DamageBaseMultiplier { get; set; } = 1;
 
     [field: SerializeField, GUIName("RangeMultiplier")]
     public float RangeMultiplier { get; set; } = 1;
@@ -80,8 +80,8 @@ public class Shooting : MonoBehaviour, IAttack
     protected virtual Projectile CreateProjectile()
     {
         var projectile = Instantiate(ApplicationManager.Instance.PrefabDatabase.projectile, transform.position, Quaternion.identity).GetComponent<Projectile>();
-        projectile.damageMin *= DamageMultiplier;
-        projectile.damageMax *= DamageMultiplier;
+        projectile.damageMin *= DamageBaseMultiplier;
+        projectile.damageMax *= DamageBaseMultiplier;
         projectile.range *= RangeMultiplier;
         SetLayerMask(projectile);
         return projectile;
