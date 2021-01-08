@@ -6,16 +6,21 @@ public class SceneObjectsManager : Singleton<SceneObjectsManager, ForbidLazyInst
 {
     public GameObject[] initAfterSceneLoadObjects;
     public GameObject[] disableBeforeSceneLoadObjects;
-    [Tooltip("Activates all objects in InitAfterSceneLoad array")]
-    public bool debug = false;
+    //[Tooltip("Activates all objects in InitAfterSceneLoad array")]
+#if UNITY_EDITOR
+    private static bool debug = true;
+#endif
 
     void Start()
     {
+#if UNITY_EDITOR
         if(debug)
         {
             InitAfterSceneLoad();
             initAfterSceneLoadObjects[0].GetComponentInChildren<AudioTimeline>().TimelineInit();
+            debug = false;
         }
+#endif
     }
 
     public void InitAfterSceneLoad()
