@@ -160,8 +160,6 @@ public class Cultist : MonoBehaviour
 
         moveable.SpeedBase = Mathf.Lerp(speedMinMax.x, speedMinMax.y, faith);
         attack.DamageBaseMultiplier = Mathf.Lerp(attackMinMax.x, attackMinMax.y, faith);
-
-        Debug.Log($"Relal speed: {moveable.SpeedBase}, attack {attack.DamageBaseMultiplier}");
     }
 
     private void OnEnable()
