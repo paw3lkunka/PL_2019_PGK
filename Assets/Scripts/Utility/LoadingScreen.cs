@@ -40,10 +40,13 @@ public class LoadingScreen : Singleton<LoadingScreen, ForbidLazyInstancing>
     {
         SceneObjectsManager.Instance?.InitAfterSceneLoad();
         // HACK: because SOMEONE made circular dependency in initializing code
-        FindObjectOfType<ExitLocationUIController>().Setup();
+        FindObjectOfType<ExitLocationUIController>()?.Setup();
         loadingBar.fillAmount = 1.0f;
         yield return new WaitForSeconds(0.5f);
-        SceneObjectsManager.Instance?.initAfterSceneLoadObjects[0].GetComponentInChildren<AudioTimeline>().TimelineInit();
+        if(SceneObjectsManager.Instance?.initAfterSceneLoadObjects.Length > 0)
+        {
+            SceneObjectsManager.Instance?.initAfterSceneLoadObjects[0].GetComponentInChildren<AudioTimeline>().TimelineInit();
+        }
         Hide();
     }
 

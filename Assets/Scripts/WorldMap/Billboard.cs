@@ -17,21 +17,24 @@ public class Billboard : MonoBehaviour
 
     void Update()
     {
-        Vector3 camRotation = mainCam.transform.rotation.eulerAngles;
-        Vector3 thisRotation = transform.rotation.eulerAngles;
-        if (!X)
+        if(mainCam)
         {
-            camRotation.x = thisRotation.x;
-        }
-        if (!Y)
-        {
-            camRotation.y = thisRotation.y;
-        }
-        if (!Z)
-        {
-            camRotation.z = thisRotation.z;
-        }
+            Vector3 camRotation = mainCam.transform.rotation.eulerAngles;
+            Vector3 thisRotation = transform.rotation.eulerAngles;
+            if (!X)
+            {
+                camRotation.x = thisRotation.x;
+            }
+            if (!Y)
+            {
+                camRotation.y = thisRotation.y;
+            }
+            if (!Z)
+            {
+                camRotation.z = thisRotation.z;
+            }
 
-        transform.rotation = Quaternion.Euler(camRotation);
+            transform.rotation = Quaternion.Euler(camRotation);
+        }
     }
 }
