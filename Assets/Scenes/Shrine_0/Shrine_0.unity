@@ -13951,6 +13951,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4df24f1b20056de40826ff2093d55aca, type: 3}
+--- !u!1 &1243268885 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3143279563993299375, guid: 4df24f1b20056de40826ff2093d55aca,
+    type: 3}
+  m_PrefabInstance: {fileID: 1243268884}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1251272966
 Mesh:
   m_ObjectHideFlags: 0
@@ -35794,7 +35800,7 @@ PrefabInstance:
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
       propertyPath: initAfterSceneLoadObjects.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
@@ -35825,10 +35831,15 @@ PrefabInstance:
         type: 3}
       propertyPath: initAfterSceneLoadObjects.Array.data[5]
       value: 
-      objectReference: {fileID: 64457148}
+      objectReference: {fileID: 1243268885}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
       propertyPath: initAfterSceneLoadObjects.Array.data[6]
+      value: 
+      objectReference: {fileID: 64457148}
+    - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
+        type: 3}
+      propertyPath: initAfterSceneLoadObjects.Array.data[7]
       value: 
       objectReference: {fileID: 2100558268}
     - target: {fileID: 5188548497903778586, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
