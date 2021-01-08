@@ -32,12 +32,18 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     [SerializeField]
     private bool canShoot = false;
     public bool CanShoot => canShoot;
+    public bool hideSTIOnOverfaith = true;
+
+    private bool CanShowSTI
+    {
+        get => canShoot && !(GameplayManager.Instance.Faith.IsOverflowed && hideSTIOnOverfaith);
+    }
 
     private Camera mainCamera;
 
     private bool isJoystickLeanOut = false;
 
-    #region MonoBehaviour
+#region MonoBehaviour
 
     protected void Start()
     {
@@ -45,7 +51,6 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
         mainCamera = Camera.main;
         shootCancelRange.transform.localScale = new Vector3(ShootingCancelRange * 2, 0.3f, ShootingCancelRange * 2);
     }
-
     private void OnEnable() 
     {
         InitializeCursor();
@@ -54,7 +59,9 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
         ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Enable();
 
         ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
-        
+
+        GameplayManager.Instance.OverfaithStart += OnOverfaithStart;
+
         if (LocationManager.Instance.sceneMode == LocationMode.Hostile)
         {
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Enable();
@@ -71,6 +78,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= SetShootTargetIndicator;
             ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Disable();
         }
+
+        GameplayManager.Instance.OverfaithStart -= OnOverfaithStart;
     }
 
     private void Update() 
@@ -236,10 +245,15 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
             canShoot = false;
         }
 
-        shootTargetIndicator.SetActive(canShoot);
+        shootTargetIndicator.SetActive(CanShowSTI);
         shootDirection = (MainCursor.transform.position - LocationManager.Instance.cultLeader.transform.position).normalized;
         shootTargetIndicator.transform.rotation = Quaternion.LookRotation(shootDirection, Vector3.up);
     }
-    
+
+    private void OnOverfaithStart()
+    {
+        shootTargetIndicator.SetActive(false);
+    }
+
 #endregion
 }

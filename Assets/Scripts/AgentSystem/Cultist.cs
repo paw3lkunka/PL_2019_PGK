@@ -99,10 +99,11 @@ public class Cultist : MonoBehaviour
     {
         //normalBehaviour.enabled = false;
         //overfaithBehaviour.enabled = true;
-        //DetectInFullCircle = true;
+        
+        DetectInFullCircle = true;
 
-        //AudioTimeline.Instance.OnBeat -= AttackInDirection;
-        //AudioTimeline.Instance.OnBeat += AttackNearbyEnemy;
+        AudioTimeline.Instance.OnBeat -= AttackInDirection;
+        AudioTimeline.Instance.OnBeat += AttackNearbyEnemy;
 
         foreach (var item in boostables)
         {
@@ -114,10 +115,11 @@ public class Cultist : MonoBehaviour
     {
         //normalBehaviour.enabled = true;
         //overfaithBehaviour.enabled = false;
-        //DetectInFullCircle = false;
+        
+        DetectInFullCircle = false;
 
-        //AudioTimeline.Instance.OnBeat += AttackInDirection;
-        //AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
+        AudioTimeline.Instance.OnBeat += AttackInDirection;
+        AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
 
         foreach (var item in boostables)
         {
