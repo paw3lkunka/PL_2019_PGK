@@ -5,37 +5,67 @@ using UnityEngine;
 
 public class RecruitController : MonoBehaviour
 {
-    public Color projectorOnColor = Color.yellow;
     public float fadeSpeed = 0.05f;
+    public MeshRenderer[] meshesToFade;
     private Collider triggerCollider;
-    private Projector projector;
 
     private void Awake()
     {
         triggerCollider = GetComponent<Collider>();
-        projector = GetComponentInChildren<Projector>();
+    }
+
+    private void Start()
+    {
+        if (LocationManager.Instance.sceneMode == LocationMode.Neutral)
+        {
+            foreach (var meshRenderer in meshesToFade)
+            {
+                meshRenderer.enabled = true;
+                Color targetColor = meshRenderer.material.color;
+                targetColor.a = 0.0f;
+                meshRenderer.material.color = targetColor;
+            }
+        }
+        else
+        {
+            triggerCollider.enabled = false;
+            foreach (var meshRenderer in meshesToFade)
+            {
+                meshRenderer.enabled = false;
+            }
+        }
     }
 
     private void Update()
     {
         if (LocationManager.Instance.sceneMode == LocationMode.Neutral)
         {
-            projector.enabled = true;
+            foreach (var meshRenderer in meshesToFade)
+            {
+                meshRenderer.enabled = true;
+            }
+
             if (RhythmMechanics.Instance && RhythmMechanics.Instance.Combo > 0)
             {
                 triggerCollider.enabled = true;
-                projector.material.color = Color.Lerp(projector.material.color, projectorOnColor, fadeSpeed);
+                foreach (var meshRenderer in meshesToFade)
+                {
+                    Color targetColor = meshRenderer.material.color;
+                    targetColor.a = 1.0f;
+                    meshRenderer.material.color = Color.Lerp(meshRenderer.material.color, targetColor, fadeSpeed);
+                }
             }
             else
             {
                 triggerCollider.enabled = false;
-                projector.material.color = Color.Lerp(projector.material.color, Color.black, fadeSpeed);
+                foreach (var meshRenderer in meshesToFade)
+                {
+                    Color targetColor = meshRenderer.material.color;
+                    targetColor.a = 0.0f;
+                    meshRenderer.material.color = Color.Lerp(meshRenderer.material.color, targetColor, fadeSpeed);
+                }
             }
         }
-        else
-        {
-            triggerCollider.enabled = false;
-            projector.enabled = false;
-        }
+        
     }
 }
