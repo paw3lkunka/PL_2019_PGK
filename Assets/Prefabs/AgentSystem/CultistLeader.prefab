@@ -481,7 +481,7 @@ MonoBehaviour:
   flags: 1
   <SpeedBase>k__BackingField: 4
   <SpeedBoosted>k__BackingField: 5.5
-  <SpeedDecresed>k__BackingField: 0
+  <SpeedDecresed>k__BackingField: 2
   bState: 0
   <CanBeBoosted>k__BackingField: 1
   <CanBeDecresed>k__BackingField: 0
@@ -497,6 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7349583da3b164a9eace07e971208a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedMinMax: {x: 3, y: 4}
 --- !u!114 &7784000477819536368
 MonoBehaviour:
   m_ObjectHideFlags: 0

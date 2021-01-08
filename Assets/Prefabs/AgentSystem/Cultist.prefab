@@ -337,6 +337,8 @@ MonoBehaviour:
       current: 10
       max: 10
       overflowable: 0
+  attackMinMax: {x: 0.2, y: 0.4}
+  speedMinMax: {x: 3, y: 4}
   normalBehaviour: {fileID: 5771701300516187836}
   overfaithBehaviour: {fileID: 394580946}
 --- !u!114 &5771701300516187836
@@ -368,16 +370,16 @@ MonoBehaviour:
   audioSource: {fileID: 7444858349146137581}
   shootingSound: {fileID: 8300000, guid: ca667b265298ba348bd4da6d5314e8f9, type: 3}
   <SyncWithRhythm>k__BackingField: 1
-  <DamageMultiplier>k__BackingField: 0.25
+  <DamageBaseMultiplier>k__BackingField: 0.25
   <RangeMultiplier>k__BackingField: 1.5
   <IntervalBase>k__BackingField: 4
   bState: 0
   <CanBeBoosted>k__BackingField: 1
   <CanBeDecresed>k__BackingField: 1
-  <DamageBoost>k__BackingField: 0.75
+  <DamageBoostedMultiplier>k__BackingField: 0.75
   <RangeMultiplierBoost>k__BackingField: 0.125
   <IntervalBoost>k__BackingField: 8
-  <DamageDecrese>k__BackingField: 1
+  <DamageDecresedMultiplier>k__BackingField: 1
   <RangeMultiplierDecrese>k__BackingField: 1
   <IntervalDecrese>k__BackingField: 1
 --- !u!114 &7425834142536354765
@@ -419,7 +421,7 @@ MonoBehaviour:
   flags: 1
   <SpeedBase>k__BackingField: 4
   <SpeedBoosted>k__BackingField: 5.5
-  <SpeedDecresed>k__BackingField: 0
+  <SpeedDecresed>k__BackingField: 2
   bState: 0
   <CanBeBoosted>k__BackingField: 1
   <CanBeDecresed>k__BackingField: 0
