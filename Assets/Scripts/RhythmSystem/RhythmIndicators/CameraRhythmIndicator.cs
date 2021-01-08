@@ -62,6 +62,10 @@ public class CameraRhythmIndicator : MonoBehaviour
         {
             AudioTimeline.Instance.OnBeatHit += VisualizeBeatHit;
         }
+        else
+        {
+            Debug.LogError("No AudioTimeline!!!!!");
+        }
 
         if (RhythmMechanics.Instance)
         {
@@ -69,6 +73,10 @@ public class CameraRhythmIndicator : MonoBehaviour
 
             RhythmMechanics.Instance.OnRageStart += StartRageAnimation;
             RhythmMechanics.Instance.OnRageStop += StopRageAnimation;
+        }
+        else
+        {
+            Debug.LogError("No RhythmMechanics!!!!!");
         }
     }
 

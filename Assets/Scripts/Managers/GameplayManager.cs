@@ -266,14 +266,14 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
             lastLocationPosition = location.transform.position;
             lastLocationRadius = location.radius * Mathf.Max(location.transform.localScale.x, location.transform.localScale.z);
             lastLocationId = location.id;
-            SceneManager.LoadScene(location.SceneName);
+            ApplicationManager.LoadScene(location.SceneName);
         }
     }
 
     public void ExitLocation()
     {
         OnLocationExitInvoke();
-        SceneManager.LoadScene(ApplicationManager.Instance.worldMapScene);
+        ApplicationManager.LoadScene(ApplicationManager.Instance.worldMapScene);
     }
 
     public void OnLocationExitInvoke() => OnLocationExit?.Invoke();
