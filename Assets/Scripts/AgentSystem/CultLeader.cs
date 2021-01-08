@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CultLeader : MonoBehaviour
 {
-    private Moveable moveable;
+    private MoveableB moveableB;
 
     public Vector2 speedMinMax;
 
@@ -12,15 +12,36 @@ public class CultLeader : MonoBehaviour
     private void Awake()
     {
         LocationManager.Instance.cultLeader = this;
-        moveable = GetComponent<Moveable>();
+        moveableB = GetComponent<MoveableB>();
     }
 
     private void Update()
     {
         float faith = GameplayManager.Instance.Faith.Normalized;
 
-        moveable.SpeedBase = Mathf.Lerp(speedMinMax.x, speedMinMax.y, faith);
+        moveableB.SpeedBase = Mathf.Lerp(speedMinMax.x, speedMinMax.y, faith);
+    }
+
+    private void OnEnable()
+    {
+        GameplayManager.Instance.LowFaithLevelStart += OnLowFaithStart;
+        GameplayManager.Instance.LowFaithLevelEnd += OnNormalFaithStart;
+        GameplayManager.Instance.OverfaithStart += OnOverfaithStart;
+        GameplayManager.Instance.OverfaithEnd += OnNormalFaithStart;
+    }
+
+    private void OnDisable()
+    {
+        GameplayManager.Instance.LowFaithLevelStart -= OnLowFaithStart;
+        GameplayManager.Instance.LowFaithLevelEnd -= OnNormalFaithStart;
+        GameplayManager.Instance.OverfaithStart -= OnOverfaithStart;
+        GameplayManager.Instance.OverfaithEnd -= OnNormalFaithStart;
     }
 
     #endregion
+
+    private void OnOverfaithStart() => moveableB.BState = BoostableState.boosted;
+    private void OnLowFaithStart() => moveableB.BState = BoostableState.decresed;
+    private void OnNormalFaithStart() => moveableB.BState = BoostableState.normal;
+
 }
