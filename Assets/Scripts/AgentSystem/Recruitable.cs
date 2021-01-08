@@ -16,7 +16,7 @@ public class Recruitable : MonoBehaviour
     public string recruitmentTriggerTag = "RecruitTrigger";
     public bool CanBeRecruited { get; private set; } = false;
     public bool WasAffectedOnce { get; private set; } = false;
-
+    public bool IsBeingRecruited => wasAffectedThisFrame && CanBeRecruited;
     public float RecruitmentProgress { get; private set; } = 0.0f;
 
     private void OnTriggerEnter(Collider other)
@@ -26,7 +26,7 @@ public class Recruitable : MonoBehaviour
             if (!WasAffectedOnce)
             {
                 // Randomize if the recruit can be recruited at all
-                CanBeRecruited = RecruitmentChance < Random.Range(0.0f, 1.0f);
+                CanBeRecruited = GameplayManager.Instance.Faith.Normalized > Random.Range(0.0f, 1.0f);
                 WasAffectedOnce = true;
             }
             wasAffectedThisFrame = true;
