@@ -132,15 +132,15 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private class Roulette
+    private class Roulette<T>
     {
-        public Roulette(IList<GameObject> prefabs, IList<int> spawnChances, int emptyChance = 0)
+        public Roulette(IList<T> objects, IList<int> spawnChances, int emptyChance = 0)
         {
-            this.prefabs = prefabs;
+            this.objects = objects;
             this.chances = new List<int>();
             this.range = 0;
 
-            for (int i = 0; i < prefabs.Count; i++)
+            for (int i = 0; i < objects.Count; i++)
             {
                 int chance = spawnChances[i];
                 range += chance;
@@ -151,21 +151,21 @@ public class MapGenerator : MonoBehaviour
             chances.Add(emptyChance);
         }
 
-        public GameObject RandomizePrefab()
+        public T GetRandom()
         {
             int randomNumber = Random.Range(0, range + 1);
             int index = 0;
 
-            while (index < prefabs.Count && chances[index] < randomNumber)
+            while (index < objects.Count && chances[index] < randomNumber)
             {
                 randomNumber -= chances[index];
                 index++;
             }
 
-            return index < prefabs.Count ? prefabs[index] : null;
+            return index < objects.Count ? objects[index] : default;
         }
 
-        private IList<GameObject> prefabs;
+        private IList<T> objects;
         private List<int> chances;
         private int range;
     }
@@ -235,7 +235,7 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Gets location prefabs from prefab database without Application Manager
     /// </summary>
-    public List<GameObject> Locations { get; private set; }
+    public List<LocationsPool> Locations { get; private set; }
     public List<GameObject> Shrines { get; private set; }
     public List<GameObject> Enviro { get; private set; }
 
@@ -281,7 +281,7 @@ public class MapGenerator : MonoBehaviour
 
     private void Initialize()
     {
-        Locations = new List<GameObject>();
+        Locations = new List<LocationsPool>();
         Locations.AddRange(PrefabDatabase.Load.stdLocations);
 
         Shrines = new List<GameObject>();
@@ -303,14 +303,17 @@ public class MapGenerator : MonoBehaviour
     [ContextMenu("Validate")]
     public void ValidatePrefabs()
     {
-        foreach (GameObject prefab in Locations)
+        foreach (LocationsPool pool in Locations)
         {
-            int scriptsCount = prefab.GetComponentsInChildren<Location>().Length;
-
-            if (scriptsCount != 1)
+            foreach (var prefab in pool.locations)
             {
-                IsValid = false;
-                throw new LocationValidationException(prefab, scriptsCount);
+                int scriptsCount = prefab.GetComponentsInChildren<Location>().Length;
+
+                if (scriptsCount != 1)
+                {
+                    IsValid = false;
+                    throw new LocationValidationException(prefab, scriptsCount);
+                }
             }
         }
         foreach (GameObject prefab in Enviro)
@@ -338,9 +341,9 @@ public class MapGenerator : MonoBehaviour
 
         Random.InitState(seed);
 
-        var locationRandomizer = new Roulette(Locations, locationSpawnChances, emptyChance);
-        var shrineRandomizer = new Roulette(Shrines, shrinesSpawnChances);
-        var enviroRandomizer = new Roulette(Enviro, enviroSpawnChances);
+        var locationRandomizer = new Roulette<LocationsPool>(Locations, locationSpawnChances, emptyChance);
+        var shrineRandomizer = new Roulette<GameObject>(Shrines, shrinesSpawnChances);
+        var enviroRandomizer = new Roulette<GameObject>(Enviro, enviroSpawnChances);
 
         var locInstances = new Stack<GameObject>();
 
@@ -390,7 +393,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void GenerateObject(Cell cell, Roulette randomizer, Stack<GameObject> instances, bool limitOffset, bool addToInstances)
+    void GenerateObject<T>(Cell cell, Roulette<T> randomizer, Stack<GameObject> instances, bool limitOffset, bool addToInstances)
     {
         Vector2 maxOffset;
 
@@ -407,9 +410,24 @@ public class MapGenerator : MonoBehaviour
             maxOffset = cell.size / 2.0f;
         }
 
-        GameObject prefab = randomizer.RandomizePrefab();
+        T randomObj = randomizer.GetRandom();
 
-        if (prefab)
+        if (randomObj is GameObject)
+        {
+            Spawn(randomObj as GameObject);
+        }
+        else if (randomObj is LocationsPool)
+        {
+            var pool = randomObj as LocationsPool;
+            
+            Spawn(pool.locations[Random.Range(0, pool.locations.Count)]);
+        }
+        else if (randomObj != null)
+        {
+            Debug.LogError($"Type of randomizer: {randomizer.GetType()} is invalid, only supperted types is Roulette<GameObjct> and Roulette<LocationsPool>");
+        }
+
+        void Spawn(GameObject prefab)
         {
             var locationPosition = new Vector3
             (

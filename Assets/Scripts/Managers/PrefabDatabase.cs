@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+[System.Serializable]
+public class LocationsPool
+{
+    public List<GameObject> locations = new List<GameObject>();
+}
+
 [CreateAssetMenu(fileName = "PrefabDatabase", menuName = "Database/PrefabDatabase", order = 0)]
 public class PrefabDatabase : ScriptableObject
 {
@@ -44,7 +50,7 @@ public class PrefabDatabase : ScriptableObject
     public GameObject floatingTextResourceGained;
 
     [Header("Locations and enviro")]
-    public List<GameObject> stdLocations;
+    public List<LocationsPool> stdLocations;
     public List<GameObject> shrines;
     public List<GameObject> enviro;
     public GameObject shrineMarker;
