@@ -27,7 +27,7 @@ public class MapGenerator : MonoBehaviour
         public Vector2 position;
         public Vector2 size;
 
-        public int Zone => 0;
+        public int zone = 0;
 
         public Cell(Vector2 position, Vector2 size)
         {
@@ -81,6 +81,8 @@ public class MapGenerator : MonoBehaviour
 
         public Vector2 FarCellSize = new Vector2(150, 150);
 
+        public float[] zonesBounds = new float[ZONES - 1];
+
         public Vector2 CentralIndex { get => (CellsNumber - Vector2.one) / 2.0f; }
 
         public void Validate()
@@ -122,6 +124,22 @@ public class MapGenerator : MonoBehaviour
             foreach (var cell in Cells)
             {
                 cell.Position3 -= (new Vector3(FarCellSize.x, 0, FarCellSize.y) + Cells.Last().Position3 - position) / 2;
+
+                int zone = 0;
+                float distance = Vector3.Distance(cell.Position3, position);
+
+                foreach (var bound in zonesBounds)
+                {
+                    if (distance > bound)
+                        zone++;
+                    else
+                        break;
+                }
+
+                Debug.Log(distance);
+                Debug.Log(zone);
+
+                cell.zone = zone;
             }
         }
 
@@ -241,9 +259,9 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Chances of spawning objecton specific index in prefab array
     /// </summary>
-    [HideInInspector] public List<MapGenerator.SpawnChance> locationSpawnChances = new List<MapGenerator.SpawnChance>();
-    [HideInInspector] public List<MapGenerator.SpawnChance> shrinesSpawnChances = new List<MapGenerator.SpawnChance>();
-    [HideInInspector] public List<MapGenerator.SpawnChance> enviroSpawnChances = new List<MapGenerator.SpawnChance>();
+    [HideInInspector] public List<SpawnChance> locationSpawnChances = new List<SpawnChance>();
+    [HideInInspector] public List<SpawnChance> shrinesSpawnChances = new List<SpawnChance>();
+    [HideInInspector] public List<SpawnChance> enviroSpawnChances = new List<SpawnChance>();
 
     /// <summary>
     /// Gets location prefabs from prefab database without Application Manager
@@ -423,7 +441,7 @@ public class MapGenerator : MonoBehaviour
             maxOffset = cell.size / 2.0f;
         }
 
-        T randomObj = randomizer.GetRandom(cell.Zone);
+        T randomObj = randomizer.GetRandom(cell.zone);
 
         if (randomObj is GameObject)
         {
