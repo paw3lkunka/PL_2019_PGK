@@ -80,12 +80,22 @@ public class MapGeneratorEditor : Editor
         }
     }
 
-    private void DrawSpawnChances(IList<GameObject> prefabs, IList<int> chances)
+    private void DrawSpawnChances<T>(IList<T> objects, IList<int> chances)
     {
         int index = 0;
-        foreach (GameObject prefab in prefabs)
+        foreach (T obj in objects)
         {
-            var location = prefab.GetComponent<EnviroObject>();
+            string name = "Unknown";
+
+            if (obj is GameObject)
+            {
+                name = (obj as GameObject).name;
+            }
+            else if (obj is LocationsPool)
+            {
+                name = "Pool: " + (obj as LocationsPool).locations[0].name;
+            }
+
             int value;
             try
             {
@@ -95,7 +105,7 @@ public class MapGeneratorEditor : Editor
             {
                 value = 0;
             }
-            int newValue = EditorGUILayout.IntField(prefab.name, value);
+            int newValue = EditorGUILayout.IntField(name, value);
             chances[index] = newValue > 0 ? newValue : 0;
             index++;
         }
