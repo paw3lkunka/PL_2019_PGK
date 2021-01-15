@@ -27,6 +27,8 @@ public class MapGenerator : MonoBehaviour
         public Vector2 position;
         public Vector2 size;
 
+        public int Zone => 0;
+
         public Cell(Vector2 position, Vector2 size)
         {
             this.position = position;
@@ -134,31 +136,35 @@ public class MapGenerator : MonoBehaviour
 
     private class Roulette<T>
     {
-        public Roulette(IList<T> objects, IList<int> spawnChances, int emptyChance = 0)
+        public Roulette(IList<T> objects, IList<SpawnChance> spawnChances, SpawnChance emptyChance = null)
         {
             this.objects = objects;
-            this.chances = new List<int>();
-            this.range = 0;
+            this.chances = new List<SpawnChance>();
 
             for (int i = 0; i < objects.Count; i++)
             {
-                int chance = spawnChances[i];
-                range += chance;
+                SpawnChance chance = spawnChances[i];
                 chances.Add(chance);
             }
 
-            range += emptyChance;
-            chances.Add(emptyChance);
+            chances.Add(emptyChance ?? new SpawnChance());
         }
 
-        public T GetRandom()
+        public T GetRandom(int zone)
         {
-            int randomNumber = Random.Range(0, range + 1);
+            int range = 1;
+
+            foreach (var ch in chances)
+            {
+                range += ch.forZone[zone];
+            }
+
+            int randomNumber = Random.Range(0, range);
             int index = 0;
 
-            while (index < objects.Count && chances[index] < randomNumber)
+            while (index < objects.Count && chances[index].forZone[zone] < randomNumber)
             {
-                randomNumber -= chances[index];
+                randomNumber -= chances[index].forZone[zone];
                 index++;
             }
 
@@ -166,8 +172,15 @@ public class MapGenerator : MonoBehaviour
         }
 
         private IList<T> objects;
-        private List<int> chances;
-        private int range;
+        private List<MapGenerator.SpawnChance> chances;
+    }
+
+    public const int ZONES = 3;
+
+    [System.Serializable]
+    public class SpawnChance
+    {
+        public int[] forZone = new int[3];
     }
 
     [field: SerializeField] public Grid GeneralGrid { get; private set; }
@@ -218,7 +231,7 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Chance of creating empty cell
     /// </summary>
-    [HideInInspector] public int emptyChance;
+    [HideInInspector] public SpawnChance emptyChance;
 
     /// <summary>
     /// Inform if all prefabs in list are valid
@@ -228,9 +241,9 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// Chances of spawning objecton specific index in prefab array
     /// </summary>
-    [HideInInspector] public List<int> locationSpawnChances = new List<int>();
-    [HideInInspector] public List<int> shrinesSpawnChances = new List<int>();
-    [HideInInspector] public List<int> enviroSpawnChances = new List<int>();
+    [HideInInspector] public List<MapGenerator.SpawnChance> locationSpawnChances = new List<MapGenerator.SpawnChance>();
+    [HideInInspector] public List<MapGenerator.SpawnChance> shrinesSpawnChances = new List<MapGenerator.SpawnChance>();
+    [HideInInspector] public List<MapGenerator.SpawnChance> enviroSpawnChances = new List<MapGenerator.SpawnChance>();
 
     /// <summary>
     /// Gets location prefabs from prefab database without Application Manager
@@ -290,9 +303,9 @@ public class MapGenerator : MonoBehaviour
         Enviro = new List<GameObject>();
         Enviro.AddRange(PrefabDatabase.Load.enviro);
 
-        locationSpawnChances.Resize(Locations.Count, 0);
-        shrinesSpawnChances.Resize(Locations.Count, 0);
-        enviroSpawnChances.Resize(Enviro.Count, 0);
+        locationSpawnChances.Resize(Locations.Count, new SpawnChance());
+        shrinesSpawnChances.Resize(Locations.Count, new SpawnChance());
+        enviroSpawnChances.Resize(Enviro.Count, new SpawnChance());
 
         ValidatePrefabs();
 
@@ -410,7 +423,7 @@ public class MapGenerator : MonoBehaviour
             maxOffset = cell.size / 2.0f;
         }
 
-        T randomObj = randomizer.GetRandom();
+        T randomObj = randomizer.GetRandom(cell.Zone);
 
         if (randomObj is GameObject)
         {

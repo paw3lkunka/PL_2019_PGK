@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using System.Linq;
 
 [CustomEditor(typeof(MapGenerator))]
 public class MapGeneratorEditor : Editor
@@ -57,7 +58,7 @@ public class MapGeneratorEditor : Editor
         {
             showSpawnChances = !showSpawnChances;
         }
-
+        
         if(showSpawnChances)
         {
             EditorGUI.indentLevel++;
@@ -65,8 +66,8 @@ public class MapGeneratorEditor : Editor
                 GUILayout.Label("Locations:", EditorStyles.boldLabel);
                     DrawSpawnChances(generator.Locations, generator.locationSpawnChances);
                     EditorGUILayout.Space();
-                
-                    generator.emptyChance = EditorGUILayout.IntField("empty cell", generator.emptyChance);
+
+                    SpawnChancesFields(generator.emptyChance, "Empty cell");
 
                 GUILayout.Label("Shrines:", EditorStyles.boldLabel);
                     DrawSpawnChances(generator.Shrines, generator.shrinesSpawnChances);
@@ -80,34 +81,50 @@ public class MapGeneratorEditor : Editor
         }
     }
 
-    private void DrawSpawnChances<T>(IList<T> objects, IList<int> chances)
+    private void SpawnChancesFields(MapGenerator.SpawnChance spawnChances, string name)
     {
-        int index = 0;
-        foreach (T obj in objects)
+        for (int i = 0; i < MapGenerator.ZONES; i++)
         {
-            string name = "Unknown";
-
-            if (obj is GameObject)
-            {
-                name = (obj as GameObject).name;
-            }
-            else if (obj is LocationsPool)
-            {
-                name = "Pool: " + (obj as LocationsPool).locations[0].name;
-            }
-
             int value;
             try
             {
-                value = chances[index];
+                value = spawnChances.forZone[i];
             }
             catch
             {
                 value = 0;
             }
-            int newValue = EditorGUILayout.IntField(name, value);
-            chances[index] = newValue > 0 ? newValue : 0;
-            index++;
+            int newValue = EditorGUILayout.IntField($"Z{i} - {name}", value);
+            spawnChances.forZone[i] = newValue > 0 ? newValue : 0;
+        }
+
+        EditorGUILayout.Space();
+    }
+    
+    private class DSCPair<T>
+    {
+        public T obj;
+        public MapGenerator.SpawnChance chance;
+    }
+
+    private void DrawSpawnChances<T>(IList<T> objects, IList<MapGenerator.SpawnChance> chances)
+    {
+        var pairs = objects.Zip(chances, (o, c) => new DSCPair<T> { obj = o, chance = c });
+        foreach (var pair in pairs)
+        {
+            string name = "Unknown";
+
+            if (pair.obj is GameObject)
+            {
+                name = (pair.obj as GameObject).name;
+            }
+            else if (pair.obj is LocationsPool)
+            {
+                name = "Pool: " + (pair.obj as LocationsPool).locations[0].name;
+            }
+
+            SpawnChancesFields(pair.chance, name);
+
         }
     }
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8614273931205973247}
-  - component: {fileID: 8614273931205973246}
+  - component: {fileID: 6592111845753028346}
   m_Layer: 0
   m_Name: Map Generator
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8614273931205973246
+--- !u!114 &6592111845753028346
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,11 +53,26 @@ MonoBehaviour:
     FarCellSize: {x: 500, y: 500}
   useCustomSeed: 1
   seed: -1158453099
-  gEmptyCentreSize: {x: 150, y: 150}
-  cuttingSettings: 2
+  gEmptyCentreSize: {x: 200, y: 200}
+  cuttingSettings: 0
   scalingFactor: 0.75
   enviroObjectsInCell: {x: 5, y: 15}
-  emptyChance: 15
-  locationSpawnChances: 05000000050000000600000003000000
-  shrinesSpawnChances: 01000000010000000100000000000000
-  enviroSpawnChances: 050000000800000001000000010000000100000001000000
+  emptyChance:
+    forZone: 020000000100000001000000
+  locationSpawnChances:
+  - forZone: 010000000000000000000000
+  - forZone: 010000000000000000000000
+  - forZone: 010000000000000000000000
+  - forZone: 010000000000000000000000
+  shrinesSpawnChances:
+  - forZone: 000000000000000000000000
+  - forZone: 000000000000000000000000
+  - forZone: 000000000000000000000000
+  - forZone: 000000000000000000000000
+  enviroSpawnChances:
+  - forZone: 000000000000000000000000
+  - forZone: 000000000000000000000000
+  - forZone: 000000000000000000000000
+  - forZone: 000000000000000000000000
+  - forZone: 000000000000000000000000
+  - forZone: 000000000000000000000000
