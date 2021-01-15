@@ -47,10 +47,16 @@ MonoBehaviour:
     CellsNumber: {x: 20, y: 20}
     NearCellSize: {x: 100, y: 100}
     FarCellSize: {x: 150, y: 150}
+    zonesBounds:
+    - 550
+    - 1000
   <ShrinesGrid>k__BackingField:
     CellsNumber: {x: 5, y: 5}
     NearCellSize: {x: 300, y: 300}
     FarCellSize: {x: 500, y: 500}
+    zonesBounds:
+    - 0
+    - 0
   useCustomSeed: 1
   seed: -1158453099
   gEmptyCentreSize: {x: 200, y: 200}
@@ -58,21 +64,21 @@ MonoBehaviour:
   scalingFactor: 0.75
   enviroObjectsInCell: {x: 5, y: 15}
   emptyChance:
-    forZone: 020000000100000001000000
+    forZone: 0f0000000f0000000f000000
   locationSpawnChances:
   - forZone: 010000000000000000000000
-  - forZone: 010000000000000000000000
-  - forZone: 010000000000000000000000
-  - forZone: 010000000000000000000000
+  - forZone: 010000000500000000000000
+  - forZone: 010000000000000005000000
+  - forZone: 010000000100000001000000
   shrinesSpawnChances:
   - forZone: 000000000000000000000000
   - forZone: 000000000000000000000000
   - forZone: 000000000000000000000000
   - forZone: 000000000000000000000000
   enviroSpawnChances:
-  - forZone: 000000000000000000000000
-  - forZone: 000000000000000000000000
-  - forZone: 000000000000000000000000
-  - forZone: 000000000000000000000000
-  - forZone: 000000000000000000000000
-  - forZone: 000000000000000000000000
+  - forZone: 0f0000000100000001000000
+  - forZone: 0f0000000300000001000000
+  - forZone: 020000000600000000000000
+  - forZone: 030000000600000000000000
+  - forZone: 020000000600000000000000
+  - forZone: 020000000600000000000000
