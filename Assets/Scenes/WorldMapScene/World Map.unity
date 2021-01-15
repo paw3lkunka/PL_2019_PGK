@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.9150943, g: 0.7145358, b: 0.366901, a: 1}
-  m_FogMode: 3
-  m_FogDensity: 0.0025
+  m_FogMode: 2
+  m_FogDensity: 0.002
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.5427966, g: 0.5634746, b: 0.61, a: 1}
@@ -208,7 +208,7 @@ PrefabInstance:
     - target: {fileID: 3968320175676017217, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.64
+      value: 5.4
       objectReference: {fileID: 0}
     - target: {fileID: 3968320175676017217, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
@@ -294,6 +294,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695547830620636961, guid: 197240aff88368644ab7b10f68c34db0,
+        type: 3}
+      propertyPath: far clip plane
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 8695547830620636963, guid: 197240aff88368644ab7b10f68c34db0,
         type: 3}
@@ -896,7 +901,7 @@ Transform:
   m_GameObject: {fileID: 690717982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 400, y: 1, z: 400}
+  m_LocalScale: {x: 1200, y: 1, z: 1200}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 14
@@ -1492,7 +1497,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: e344eca8092dd0349a85e98f63c2ab3d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 33.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e344eca8092dd0349a85e98f63c2ab3d,
         type: 3}
@@ -1502,7 +1507,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: e344eca8092dd0349a85e98f63c2ab3d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.24
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e344eca8092dd0349a85e98f63c2ab3d,
         type: 3}
