@@ -9,7 +9,7 @@ public class Compass : MonoBehaviour
 
     private Transform cameraPivot;
 
-    private void Awake()
+    private void Start()
     {
         cameraPivot = Camera.main.GetComponentInParent<Transform>();
     }
