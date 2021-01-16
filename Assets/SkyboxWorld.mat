@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: sand_world_map
-  m_Shader: {fileID: 4800000, guid: 70027186bdae721448f1078c063b0ffd, type: 3}
-  m_ShaderKeywords: 
+  m_Name: SkyboxWorld
+  m_Shader: {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _SUNDISK_NONE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -37,11 +37,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 100, y: 100}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e939e724fa8b95d4eb151228e96b9dd7, type: 3}
-        m_Scale: {x: 100, y: 100}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -55,43 +55,31 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Zone1Tex:
-        m_Texture: {fileID: 2800000, guid: 7bf4d115acf5ba449950d026cb6a234c, type: 3}
-        m_Scale: {x: 400, y: 400}
-        m_Offset: {x: 0, y: 0}
-    - _Zone2Tex:
-        m_Texture: {fileID: 2800000, guid: b8166b59a4699844895bf2bc08426036, type: 3}
-        m_Scale: {x: 400, y: 400}
-        m_Offset: {x: 0, y: 0}
-    - _Zone3Tex:
-        m_Texture: {fileID: 2800000, guid: 0a8c2ab32ba7e3c45a5fc0b689ab750e, type: 3}
-        m_Scale: {x: 400, y: 400}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AtmosphereThickness: 1.1
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _Exposure: 1
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _SmoothingFactor: 600
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _SunDisk: 0
+    - _SunSize: 0.04
+    - _SunSizeConvergence: 5
     - _UVSec: 0
     - _ZWrite: 1
-    - _Zone1WorldSize: 1400
-    - _Zone2WorldSize: 3500
-    - _Zone3WorldSize: 10000
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Zone1Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Zone2Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Zone3Color: {r: 1, g: 1, b: 1, a: 1}
+    - _GroundColor: {r: 0.949, g: 0.74127895, b: 0.38285834, a: 1}
+    - _SkyTint: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
   m_BuildTextureStacks: []

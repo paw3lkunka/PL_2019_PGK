@@ -16,6 +16,6 @@ public class Compass : MonoBehaviour
 
     void Update()
     {
-        shield.rotation = Quaternion.Euler(0.0f, 0.0f, cameraPivot.rotation.eulerAngles.y);
+        shield.localRotation = Quaternion.Euler(0.0f, 0.0f, cameraPivot.rotation.eulerAngles.y);
     }
 }

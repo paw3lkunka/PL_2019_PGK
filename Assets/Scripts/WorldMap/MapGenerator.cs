@@ -136,9 +136,6 @@ public class MapGenerator : MonoBehaviour
                         break;
                 }
 
-                Debug.Log(distance);
-                Debug.Log(zone);
-
                 cell.zone = zone;
             }
         }
@@ -430,11 +427,20 @@ public class MapGenerator : MonoBehaviour
 
         if (limitOffset)
         {
-#           if UNITY_EDITOR
-                maxOffset = (cell.size - Vector2.one * FindObjectOfType<GameplayManager>().lastLocationRadius) / 2.0f;
-#           else
+#if UNITY_EDITOR
+            if (Application.isPlaying)
+            {
                 maxOffset = (cell.size - Vector2.one * GameplayManager.Instance.lastLocationRadius ) / 2.0f;
-#           endif
+            }
+            else
+            {
+                maxOffset = (cell.size - Vector2.one * FindObjectOfType<GameplayManager>().lastLocationRadius) / 2.0f;
+            }
+            // DON"T FORGET TO CHANGE THE BUILD LINE ALSO!!!!
+#else
+            
+            maxOffset = (cell.size - Vector2.one * GameplayManager.Instance.lastLocationRadius ) / 2.0f;
+#endif
         }
         else
         {
@@ -535,6 +541,6 @@ public class MapGenerator : MonoBehaviour
         return true;
     }
 
-    #endregion
+#endregion
 }
 

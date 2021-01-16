@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: sand_world_map
+  m_Name: sand_world_map_small
   m_Shader: {fileID: 4800000, guid: 70027186bdae721448f1078c063b0ffd, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -79,15 +79,15 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _SmoothingFactor: 600
+    - _SmoothingFactor: 200
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _Zone1WorldSize: 1400
-    - _Zone2WorldSize: 3500
-    - _Zone3WorldSize: 10000
+    - _Zone1WorldSize: 500
+    - _Zone2WorldSize: 1000
+    - _Zone3WorldSize: 3000
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
