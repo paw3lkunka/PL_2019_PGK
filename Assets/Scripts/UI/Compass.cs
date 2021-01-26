@@ -9,13 +9,13 @@ public class Compass : MonoBehaviour
 
     private Transform cameraPivot;
 
-    private void Awake()
+    private void Start()
     {
         cameraPivot = Camera.main.GetComponentInParent<Transform>();
     }
 
     void Update()
     {
-        shield.rotation = Quaternion.Euler(0.0f, 0.0f, cameraPivot.rotation.eulerAngles.y);
+        shield.localRotation = Quaternion.Euler(0.0f, 0.0f, cameraPivot.rotation.eulerAngles.y);
     }
 }
