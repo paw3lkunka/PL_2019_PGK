@@ -24,11 +24,12 @@ public class Enemy : MonoBehaviour
         moveable = GetComponent<Moveable>();
     }
 
-    // CAnnot be on on enable / disable
+    // Cannot be on on enable / disable
     private void Start()
     {
         AudioTimeline.Instance.OnBeatFail += EnterStun;
     }
+
     private void OnDestroy()
     {
         if(AudioTimeline.Instance)

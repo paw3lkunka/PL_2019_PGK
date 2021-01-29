@@ -5,13 +5,11 @@ using UnityEngine;
 
 public class ExitZone : MonoBehaviour
 {
-    public LocationEnterExitController center;
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Leader"))
         {
-            center.isExiting = true;
+            LocationManager.Instance.isExiting = true;
         }
     }
 
@@ -19,7 +17,7 @@ public class ExitZone : MonoBehaviour
     {
         if (other.CompareTag("Leader"))
         {
-            center.isExiting = false;
+            LocationManager.Instance.isExiting = false;
         }
     }
 }

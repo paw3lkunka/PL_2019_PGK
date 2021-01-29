@@ -22,8 +22,6 @@ public class SceneObjectsManager : Singleton<SceneObjectsManager, ForbidLazyInst
             {
                 initAfterSceneLoadObjects[0].GetComponentInChildren<AudioTimeline>()?.TimelineInit();
             }
-            // HACK: because SOMEONE made circular dependency in initializing code
-            FindObjectOfType<ExitLocationUIController>()?.Setup();
             debug = false;
         }
 #endif

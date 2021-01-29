@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6671453847892862790}
   - component: {fileID: 6671453847892862791}
+  - component: {fileID: 4465172171351857499}
   m_Layer: 5
   m_Name: ResourceGainedFloatingText
   m_TagString: Untagged
@@ -52,6 +53,21 @@ MonoBehaviour:
   speedAcc: 0.015
   entropyAcc: 0.01
   amplitudeAcc: 0.01
+--- !u!114 &4465172171351857499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6671453847892862788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd76a58e1d89ff9469c412cc83c4baea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  X: 1
+  Y: 1
+  Z: 1
 --- !u!1 &6671453848841189809
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,14 +228,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6671453849105794424}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 6671453848841189808}
   m_Father: {fileID: 6671453847892862790}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -268,6 +284,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6671453849105794426
 MonoBehaviour:
   m_ObjectHideFlags: 0

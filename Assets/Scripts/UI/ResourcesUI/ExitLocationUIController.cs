@@ -11,18 +11,12 @@ public class ExitLocationUIController : MonoBehaviour
     public TextMeshProUGUI text;
     public Image progressBarFrame;
     public Image progressBar;
-    private LocationEnterExitController locationEnterExit;
-
-    public void Setup()
-    {
-        locationEnterExit = FindObjectOfType<LocationEnterExitController>();
-    }
 
     private void Update()
     {
-        if(locationEnterExit)
+        if(LocationManager.Instance)
         {
-            if (locationEnterExit.ExitProgressNormalized > 0.0f)
+            if (LocationManager.Instance.ExitProgressNormalized > 0.0f)
             {
                 Color tempColor;
                 tempColor = text.color;
@@ -49,7 +43,7 @@ public class ExitLocationUIController : MonoBehaviour
                 progressBar.color = Color.Lerp(progressBar.color, tempColor, fadeSpeed);
             }
 
-            progressBar.fillAmount = locationEnterExit.ExitProgressNormalized;
+            progressBar.fillAmount = LocationManager.Instance.ExitProgressNormalized;
         }
     }
 }

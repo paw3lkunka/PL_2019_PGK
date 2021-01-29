@@ -368,7 +368,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     // It's not a hack anymore ;3 ~Ziemniak
     public void TimelineInit()
     {
-        //StartCoroutine(InitDelay());
+        StartCoroutine(InitDelay());
         beatDuration = 60.0d / songBpm;
         maxBarSubdivDuration = (beatDuration * beatsPerBar) / maxBarSubdivision;
         goodTolerance = ApplicationManager.Instance.GoodTolerance;

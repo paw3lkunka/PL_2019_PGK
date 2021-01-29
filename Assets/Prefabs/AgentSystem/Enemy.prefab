@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 1709671222698723062}
   - component: {fileID: 1709671222698723063}
   - component: {fileID: 360785589714141212}
+  - component: {fileID: 4599105479043600190}
   m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
@@ -217,12 +218,28 @@ MonoBehaviour:
   threshold: 0.005
   frames: 13
   animationSpeed: 5
+  useParentAsReference: 0
   rotationOffset: 0
   up: {fileID: 2100000, guid: 729e9c35aec0c704997d7eb255cec267, type: 2}
   down: {fileID: 2100000, guid: 0d12488566d09c04c919321522409ca1, type: 2}
   useNegativeScale: 0
   left: {fileID: 2100000, guid: 60b6d1ee033cb2445830b07c9fe1bf4d, type: 2}
   right: {fileID: 2100000, guid: f3434544787b0354e8e8fbe609b0e03f, type: 2}
+--- !u!114 &4599105479043600190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709671222698723061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd76a58e1d89ff9469c412cc83c4baea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  X: 0
+  Y: 1
+  Z: 0
 --- !u!1 &1709671222968350148
 GameObject:
   m_ObjectHideFlags: 0

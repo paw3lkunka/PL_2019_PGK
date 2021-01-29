@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoadingScreen : Singleton<LoadingScreen, ForbidLazyInstancing>
+public class LoadingScreen : Singleton<LoadingScreen, AllowLazyInstancing>
 {
     private AsyncOperation currentLoadingOperation;
     private bool isLoading;
-    [SerializeField]
-    private Image loadingBar;
+    private LoadingScreenElements loadingScreenElements;
 
     protected override void Awake()
     {
@@ -21,7 +20,7 @@ public class LoadingScreen : Singleton<LoadingScreen, ForbidLazyInstancing>
     {
         if(isLoading)
         {
-            loadingBar.fillAmount = currentLoadingOperation.progress;
+            loadingScreenElements.loadingBar.fillAmount = currentLoadingOperation.progress;
             if(currentLoadingOperation.isDone)
             {
                 StartCoroutine(EndLoading());
@@ -39,9 +38,7 @@ public class LoadingScreen : Singleton<LoadingScreen, ForbidLazyInstancing>
     private IEnumerator EndLoading()
     {
         SceneObjectsManager.Instance?.InitAfterSceneLoad();
-        // HACK: because SOMEONE made circular dependency in initializing code
-        FindObjectOfType<ExitLocationUIController>()?.Setup();
-        loadingBar.fillAmount = 1.0f;
+        loadingScreenElements.loadingBar.fillAmount = 1.0f;
         yield return new WaitForSeconds(0.5f);
         if(SceneObjectsManager.Instance?.initAfterSceneLoadObjects.Length > 0)
         {
@@ -52,11 +49,14 @@ public class LoadingScreen : Singleton<LoadingScreen, ForbidLazyInstancing>
 
     public void Show(AsyncOperation loadingOperation)
     {
+        if (!loadingScreenElements)
+        {
+            loadingScreenElements = Instantiate(ApplicationManager.Instance.PrefabDatabase.loadingScreen, transform).GetComponentInChildren<LoadingScreenElements>();
+        }
         SceneObjectsManager.Instance?.DisableBeforeSceneLoad();
         gameObject.SetActive(true);
         currentLoadingOperation = loadingOperation;
-        //currentLoadingOperation.allowSceneActivation = false;
-        loadingBar.fillAmount = 0.0f;
+        loadingScreenElements.loadingBar.fillAmount = 0.0f;
         isLoading = true;
     }
 }

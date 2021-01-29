@@ -15,18 +15,18 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.9150943, g: 0.7145358, b: 0.366901, a: 1}
+  m_FogColor: {r: 0.92, g: 0.75371855, b: 0.3588, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.003
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5427966, g: 0.5634746, b: 0.61, a: 1}
-  m_AmbientEquatorColor: {r: 0.462, g: 0.5145, b: 0.546, a: 1}
-  m_AmbientGroundColor: {r: 0.29799998, g: 0.27734652, b: 0.22718811, a: 1}
+  m_AmbientSkyColor: {r: 0.8745098, g: 0.8745098, b: 0.8745098, a: 1}
+  m_AmbientEquatorColor: {r: 0.6156863, g: 0.68235296, b: 0.72156864, a: 1}
+  m_AmbientGroundColor: {r: 1.1529412, g: 1.0588236, b: 0.8627451, a: 1}
   m_AmbientIntensity: 1.33
-  m_AmbientMode: 0
+  m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: bbcf02b1124daa547a26d2d69b1118e1, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 058c62174cc8a7a4eac908d9a6ed85e5, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,8 +37,8 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18231443, g: 0.22802131, b: 0.30732682, a: 1}
+  m_Sun: {fileID: 302478074}
+  m_IndirectSpecularColor: {r: 0.5913589, g: 0.45137465, b: 0.31076026, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -645,8 +645,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1.2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -693,6 +693,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &302478075
@@ -973,7 +974,7 @@ Transform:
   m_LocalScale: {x: 1200, y: 1, z: 1200}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &723989938
 GameObject:
@@ -1175,7 +1176,7 @@ PrefabInstance:
     - target: {fileID: 4482779334437213216, guid: 2c7217f1c5abb954fae106c34383e101,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4482779334437213216, guid: 2c7217f1c5abb954fae106c34383e101,
         type: 3}
@@ -1644,7 +1645,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1245746752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1684,6 +1685,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1245746754
 Canvas:
   m_ObjectHideFlags: 0
@@ -1701,7 +1703,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1788,7 +1790,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
-  serializedVersion: 2
+  serializedVersion: 3
   m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 0
   m_EnableRealtimeLightmaps: 0
@@ -1810,7 +1812,7 @@ LightingSettings:
   m_MixedBakeMode: 2
   m_LightmapsBakeMode: 1
   m_FilterMode: 1
-  m_LightmapParameters: {fileID: 0}
+  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
   m_ExportTrainingData: 0
   m_TrainingDataDestination: TrainingData
   m_RealtimeResolution: 2
@@ -1827,7 +1829,7 @@ LightingSettings:
   m_PVREnvironmentReferencePointCount: 2048
   m_LightProbeSampleCountMultiplier: 4
   m_PVRBounces: 2
-  m_PVRRussianRouletteStartBounce: 2
+  m_PVRMinBounces: 1
   m_PVREnvironmentMIS: 1
   m_PVRFilteringMode: 1
   m_PVRDenoiserTypeDirect: 1
@@ -1848,7 +1850,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh116820
+  m_Name: pb_Mesh468122
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4083,7 +4085,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1782839331
 GameObject:
@@ -4163,6 +4165,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1782839335
 Canvas:
   m_ObjectHideFlags: 0
@@ -4240,7 +4243,7 @@ PrefabInstance:
     - target: {fileID: 3143279563993299373, guid: 4df24f1b20056de40826ff2093d55aca,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3143279563993299373, guid: 4df24f1b20056de40826ff2093d55aca,
         type: 3}
@@ -4441,7 +4444,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2118459195
 PrefabInstance:
@@ -4463,7 +4466,7 @@ PrefabInstance:
     - target: {fileID: 5021509566103956903, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5021509566103956903, guid: dd1c0ddb1efbcb54d9e1d358cb57506c,
         type: 3}
@@ -4592,7 +4595,7 @@ PrefabInstance:
     - target: {fileID: 4117883744508132881, guid: 4a1bc5eb034ee1f4f98db9ab2f8863d5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4117883744508132881, guid: 4a1bc5eb034ee1f4f98db9ab2f8863d5,
         type: 3}
@@ -4702,7 +4705,7 @@ PrefabInstance:
     - target: {fileID: 8398079782269082740, guid: 0cf7e9c19a3c23c4bb5d400cb9f85215,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8398079782269082740, guid: 0cf7e9c19a3c23c4bb5d400cb9f85215,
         type: 3}

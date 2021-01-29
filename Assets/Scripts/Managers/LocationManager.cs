@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
     public static Vector3 exitDirection;
 
     [Header("Base config")]
+    public float locationRadius;
+    public float exitTime = 3.0f;
     public LocationMode sceneMode;
     public List<Damageable> enemies;
     public List<Damageable> ourCrew;
@@ -24,6 +27,12 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
     [Tooltip("If checked, manager automatically removes null emements from $ourCrew and $enemies")]
     public bool cleanLists = true;
+
+    public float ExitProgress { get; private set; }
+    public float ExitProgressNormalized => ExitProgress / exitTime;
+    [HideInInspector] public bool isExiting = false;
+
+    private Vector3 toCenter;
 
     public void CalculateOffsets()
     {
@@ -80,6 +89,8 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
         enemies.Clear();
         ourCrew.Clear();
 
+        ExitZone[] exitZones = FindObjectsOfType<ExitZone>();
+
         EnterZone[] enterZones = FindObjectsOfType<EnterZone>();
         float[] angles = new float[enterZones.Length];
         Vector3 direction;
@@ -101,7 +112,13 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
                 bestIndex = i;
             }
         }
-        cultLeader = Instantiate(ApplicationManager.Instance.PrefabDatabase.cultLeader, enterZones[bestIndex].transform.position, Quaternion.identity).GetComponent<CultLeader>();
+
+        toCenter = transform.position - enterZones[bestIndex].transform.position;
+        toCenter.Normalize();
+        float yRotationToCenter = Vector3.SignedAngle(Vector3.left, toCenter.normalized, Vector3.up);
+        Debug.Log($"<color=green>{yRotationToCenter}</color>");
+        Quaternion rotation = Quaternion.AngleAxis(yRotationToCenter, Vector3.up);
+        cultLeader = Instantiate(ApplicationManager.Instance.PrefabDatabase.cultLeader, enterZones[bestIndex].transform.position, rotation).GetComponent<CultLeader>();
 
         Vector3 leaderPosition = FindObjectOfType<CultLeader>().transform.position;
         int length = GameplayManager.Instance.cultistInfos.Count;
@@ -146,6 +163,22 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
     private void Update()
     {
         stunCounter -= Time.deltaTime;
+
+        if (Vector3.Distance(cultLeader.transform.position, transform.position) > locationRadius || isExiting)
+        {
+            ExitProgress += Time.deltaTime;
+        }
+        else
+        {
+            ExitProgress -= Time.deltaTime;
+        }
+
+        ExitProgress = Mathf.Clamp(ExitProgress, 0.0f, exitTime);
+
+        if (ExitProgress >= exitTime)
+        {
+            Exit();
+        }
     }
 
     private void LateUpdate()
@@ -187,5 +220,21 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
         }
     }
 
-#endregion
+    private void Exit()
+    {
+        Vector3 vec = LocationManager.Instance.cultLeader.transform.position - transform.position;
+        vec.y = 0;
+        LocationManager.exitDirection = vec.normalized;
+        GameplayManager.Instance.ExitLocation();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, locationRadius);
+        if (cultLeader)
+            Gizmos.DrawLine(cultLeader.transform.position, cultLeader.transform.position + toCenter);
+    }
+
+    #endregion
 }

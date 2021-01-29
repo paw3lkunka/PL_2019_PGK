@@ -6,7 +6,6 @@ using UnityEngine;
 public class Compass : MonoBehaviour
 {
     public Transform shield;
-
     private Transform cameraPivot;
 
     private void Start()

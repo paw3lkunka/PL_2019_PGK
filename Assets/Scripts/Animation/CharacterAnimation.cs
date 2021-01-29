@@ -16,7 +16,8 @@ public class CharacterAnimation : MonoBehaviour
     [SerializeField] private float threshold = 0.05f;
     [SerializeField] private int frames = 13;
     [SerializeField] private float animationSpeed = 1.0f;
-    [Header("Animated materials")]
+    [Header("Animated materials")] 
+    [SerializeField] private bool useParentAsReference = false;
     [SerializeField] private float rotationOffset = 0.0f;
     [SerializeField] private Material up;
     [SerializeField] private Material down;
@@ -50,7 +51,7 @@ public class CharacterAnimation : MonoBehaviour
     private void Update()
     {
         Vector3 deltaPos = transform.position - lastFramePos;
-        deltaPos =  Quaternion.AngleAxis(rotationOffset, Vector3.up) * Quaternion.Inverse(transform.parent.rotation) * deltaPos;
+        deltaPos =  Quaternion.AngleAxis(rotationOffset, Vector3.up) * Quaternion.Inverse(useParentAsReference ? transform.parent.rotation : transform.rotation) * deltaPos;
         float magnitude = deltaPos.magnitude;
         if (magnitude > threshold)
         {
