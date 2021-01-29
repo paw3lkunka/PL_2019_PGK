@@ -232,6 +232,7 @@ public class MapGenerator : MonoBehaviour
     public bool useCustomSeed = false;
 
     public int seed;
+    public float locationScaleFactor = 0.35f;
         
 
     public Vector2 gEmptyCentreSize = new Vector2(120, 120);
@@ -457,14 +458,14 @@ public class MapGenerator : MonoBehaviour
         {
             var pool = randomObj as LocationsPool;
             
-            Spawn(pool.locations[Random.Range(0, pool.locations.Count)]);
+            Spawn(pool.locations[Random.Range(0, pool.locations.Count)], true);
         }
         else if (randomObj != null)
         {
             Debug.LogError($"Type of randomizer: {randomizer.GetType()} is invalid, only supperted types is Roulette<GameObjct> and Roulette<LocationsPool>");
         }
 
-        void Spawn(GameObject prefab)
+        void Spawn(GameObject prefab, bool isLocation = false)
         {
             var locationPosition = new Vector3
             (
@@ -474,6 +475,8 @@ public class MapGenerator : MonoBehaviour
             );
 
             var instance = Instantiate(prefab, locationPosition, Quaternion.identity, transform);
+            if (isLocation)
+                instance.transform.localScale *= locationScaleFactor;
 
             if (IntersectionTest(instance, instances))
             {

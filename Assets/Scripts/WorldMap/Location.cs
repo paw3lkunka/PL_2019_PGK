@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(SphereCollider))]
 public class Location : MonoBehaviour
 {
 #pragma warning disable
@@ -11,7 +12,7 @@ public class Location : MonoBehaviour
     public string SceneName { get; private set; }
     [SerializeField] private float enterDelay = 3.0f;
     [SerializeField] private float locationResetTime = 120.0f;
-    [SerializeField] private GameObject locationVisitedIndicator;
+    //[SerializeField] private GameObject locationVisitedIndicator;
 #pragma warning restore
 
     [Header("Saved in prefs")]
@@ -22,10 +23,8 @@ public class Location : MonoBehaviour
     public MapGenerator generatedBy;
     public int id;
 
-    [Header("Radius")]
+    [HideInInspector]
     public float radius;
-    public bool setFromSphereCollider = true;
-
     private float timeElapsedToEnter = 0.0f;
     private Image enterProgressBar;
     private GameObject cultistLeader;
@@ -67,14 +66,12 @@ public class Location : MonoBehaviour
     private void Awake()
     {
         enterProgressBar = GetComponentInChildren<Image>();
-        if (setFromSphereCollider)
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        if (sphereCollider)
         {
-            SphereCollider sphereCollider = GetComponent<SphereCollider>();
-            if (sphereCollider)
-            {
-                radius = sphereCollider.radius;
-            }
+            radius = sphereCollider.radius;
         }
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -107,14 +104,15 @@ public class Location : MonoBehaviour
             timeToRefill -= Time.deltaTime;
         }
 
-        if (visited)
-        {
-            locationVisitedIndicator.SetActive(true);
-        }
-        else
-        {
-            locationVisitedIndicator.SetActive(false);
-        }
+        // Disabled temporarily ~fmazurek
+        //if (visited)
+        //{
+        //    locationVisitedIndicator.SetActive(true);
+        //}
+        //else
+        //{
+        //    locationVisitedIndicator.SetActive(false);
+        //}
     }
 
     private IEnumerator EnterLocationRoutine()
