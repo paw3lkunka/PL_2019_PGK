@@ -52,7 +52,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     {
         InitShootTargetPositionIndicator();
         mainCamera = Camera.main;
-        shootCancelRange.transform.localScale = new Vector3(ShootingCancelRange * 2, 0.3f, ShootingCancelRange * 2);
+        shootCancelRange.transform.localScale = new Vector3(ShootingCancelRange * 2, 1.0f, ShootingCancelRange * 2);
     }
     private void OnEnable() 
     {
@@ -172,9 +172,9 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
     private void InitShootTargetPositionIndicator()
     {
-        shootTargetPositionIndicator.transform.SetParent(LocationManager.Instance.cultLeader.transform, false);
-        shootTargetIndicator.transform.SetParent(LocationManager.Instance.cultLeader.transform, false);
-        shootCancelRange.transform.SetParent(LocationManager.Instance.cultLeader.transform, false);
+        shootTargetPositionIndicator.GetComponent<FollowObjectOnUpdate>().objectToFollow = LocationManager.Instance.cultLeader.gameObject;
+        shootTargetIndicator.GetComponent<FollowObjectOnUpdate>().objectToFollow = LocationManager.Instance.cultLeader.gameObject;
+        shootCancelRange.GetComponent<FollowObjectOnUpdate>().objectToFollow = LocationManager.Instance.cultLeader.gameObject;
         shootTargetIndicator.SetActive(false);
     }
 
