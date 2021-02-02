@@ -27,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595295468787082702}
-  m_LocalRotation: {x: -0.26603052, y: 0.6551549, z: -0.26603064, w: -0.6551546}
-  m_LocalPosition: {x: 28.8, y: 27.8, z: 0}
+  m_LocalRotation: {x: -0.37622407, y: 0.0000015795231, z: -0.00000064074993, w: -0.9265287}
+  m_LocalPosition: {x: 0.00008392334, y: 27.8, z: -28.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5187142443108444333}
@@ -188,13 +188,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595295469290311761}
-  m_LocalRotation: {x: -0.061628412, y: 0.70441604, z: -0.061628412, w: -0.70441604}
+  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
   m_LocalPosition: {x: 0.055, y: 2.461, z: 0}
   m_LocalScale: {x: 4, y: 5, z: 4}
   m_Children: []
   m_Father: {fileID: 5187142443108444333}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!33 &595295469290311756
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
   frames: 13
   animationSpeed: 5
   useParentAsReference: 1
-  rotationOffset: 0
+  rotationOffset: -90
   up: {fileID: 2100000, guid: 2ba0a63ebbe361442807f5cd86c6a60d, type: 2}
   down: {fileID: 2100000, guid: 893b3a9bb002d1442a65f4fdf685a451, type: 2}
   useNegativeScale: 0
@@ -389,6 +389,7 @@ GameObject:
   - component: {fileID: 6692315016006903435}
   - component: {fileID: 7784000477819536368}
   - component: {fileID: 7525031864083970326}
+  - component: {fileID: 5133499787982054991}
   m_Layer: 8
   m_Name: CultistLeader
   m_TagString: Leader
@@ -530,6 +531,19 @@ MonoBehaviour:
   _waterDepletionRate: 0.0001
   _faithDepletionRate: 0.0001
   _healthDepletionRate: 0
+--- !u!114 &5133499787982054991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187142443108444329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80bf9c717de4c6c4996c6ab1bdcee7e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 0.01
 --- !u!1 &5625603792204307124
 GameObject:
   m_ObjectHideFlags: 0

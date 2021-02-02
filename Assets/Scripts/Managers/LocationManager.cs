@@ -115,8 +115,7 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
         toCenter = transform.position - enterZones[bestIndex].transform.position;
         toCenter.Normalize();
-        float yRotationToCenter = Vector3.SignedAngle(Vector3.left, toCenter.normalized, Vector3.up);
-        Debug.Log($"<color=green>{yRotationToCenter}</color>");
+        float yRotationToCenter = Vector3.SignedAngle(Vector3.forward, toCenter.normalized, Vector3.up);
         Quaternion rotation = Quaternion.AngleAxis(yRotationToCenter, Vector3.up);
         cultLeader = Instantiate(ApplicationManager.Instance.PrefabDatabase.cultLeader, enterZones[bestIndex].transform.position, rotation).GetComponent<CultLeader>();
 
