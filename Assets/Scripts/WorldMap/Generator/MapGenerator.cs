@@ -3,216 +3,16 @@ using System.Linq;
 using System.Security;
 using UnityEngine;
 
-class LocationValidationException : System.Exception
-{
-    public LocationValidationException(GameObject obj, int number)
-        : base( number == 0 ? obj + " is not a location" : obj + " has multiple Location scripts (" + number + ")")
-    { 
-        
-    }
-}
-
 public class MapGenerator : MonoBehaviour
 {
-    [System.Flags] public enum Cut
-    {
-        XAxisP = 0b0001,
-        XAxisN = 0b0010,
-        ZAxisP = 0b0100,
-        ZAxisN = 0b1000,
-    }
-
-    public class Cell
-    {
-        public Vector2 position;
-        public Vector2 size;
-
-        public int zone = 0;
-
-        public Cell(Vector2 position, Vector2 size)
-        {
-            this.position = position;
-            this.size = size;
-        }
-        public Cell(Vector3 position, Vector2 size)
-        {
-            this.position = new Vector2(position.x, position.z);
-            this.size = size;
-        }
-
-        public Vector3 Position3 
-        { 
-            get => new Vector3(position.x, 0, position.y);
-            set { position.x = value.x; position.y = value.z; }
-        }
-
-        public Vector3 Corner(int i)
-        {
-            switch(i % 4)
-            {
-                case 0:
-                    return new Vector3(position.x + size.x / 2, 0, position.y + size.y / 2);
-                case 1:
-                    return new Vector3(position.x + size.x / 2, 0, position.y + size.y / -2);
-                case 2:
-                    return new Vector3(position.x + size.x / -2, 0, position.y + size.y / -2);
-                case 3:
-                    return new Vector3(position.x + size.x / -2, 0, position.y + size.y / 2);
-            }
-
-            throw new System.Exception("This should never happen.");
-        }
-    }
-    
-    [System.Serializable]
-    public class Grid
-    {
-        public List<Cell> Cells { get; private set; } = new List<Cell>();
-
-        /// <summary>
-        /// Size of grid cells
-        /// </summary>
-        public Vector2Int CellsNumber = new Vector2Int(20, 20);
-
-        /// <summary>
-        /// Size of single cell
-        /// </summary>
-        public Vector2 NearCellSize = new Vector2(100, 100);
-
-        public Vector2 FarCellSize = new Vector2(150, 150);
-
-        public float[] zonesBounds = new float[ZONES - 1];
-
-        public Vector2 CentralIndex { get => (CellsNumber - Vector2.one) / 2.0f; }
-
-        public void Validate()
-        {
-            CellsNumber = Vector2Int.Max(CellsNumber, Vector2Int.one);
-            NearCellSize = Vector2.Max(NearCellSize, Vector2.zero);
-            FarCellSize = Vector2.Max(FarCellSize, Vector2.zero);
-        }
-
-        public void Generate(Vector3 position, Cut cuttingSettings)
-        {
-            Cells.Clear();
-
-            Vector3 newPos = position;
-            Vector2 cellSize = FarCellSize;
-
-            for (int i = 0; i < CellsNumber.x; i++)
-            {
-                newPos.z = position.z;
-
-                newPos.x += cellSize.x / 2;
-                cellSize.x = Mathf.Lerp(NearCellSize.x, FarCellSize.x, Mathf.Abs(CentralIndex.x - i) / CentralIndex.x);
-                newPos.x += cellSize.x / 2;
-
-                for (int j = 0; j < CellsNumber.y; j++)
-                {
-                    newPos.z += cellSize.y / 2;
-                    cellSize.y = Mathf.Lerp(NearCellSize.y, FarCellSize.y, Mathf.Abs(CentralIndex.y - j) / CentralIndex.y);
-                    newPos.z += cellSize.y / 2;
-
-                    if (!ShouldBeCutOff(cuttingSettings, i, j))
-                    {
-                        Cells.Add(new Cell(newPos, cellSize));
-                    }
-                }
-            }
-
-            // Fix position
-            foreach (var cell in Cells)
-            {
-                cell.Position3 -= (new Vector3(FarCellSize.x, 0, FarCellSize.y) + Cells.Last().Position3 - position) / 2;
-
-                int zone = 0;
-                float distance = Vector3.Distance(cell.Position3, position);
-
-                foreach (var bound in zonesBounds)
-                {
-                    if (distance > bound)
-                        zone++;
-                    else
-                        break;
-                }
-
-                cell.zone = zone;
-            }
-        }
-
-        private bool ShouldBeCutOff(Cut cuttingSettings, int x, int y)
-        {
-            return x * 2 > CellsNumber.x && (cuttingSettings & Cut.XAxisP) != 0
-                || x * 2 < CellsNumber.x && (cuttingSettings & Cut.XAxisN) != 0
-                || y * 2 > CellsNumber.y && (cuttingSettings & Cut.ZAxisP) != 0
-                || y * 2 < CellsNumber.y && (cuttingSettings & Cut.ZAxisN) != 0;
-        }
-    }
-
-    private class Roulette<T>
-    {
-        public Roulette(IList<T> objects, IList<SpawnChance> spawnChances, SpawnChance emptyChance = null)
-        {
-            this.objects = objects;
-            this.chances = new List<SpawnChance>();
-
-            for (int i = 0; i < objects.Count; i++)
-            {
-                SpawnChance chance = spawnChances[i];
-                chances.Add(chance);
-            }
-
-            chances.Add(emptyChance ?? new SpawnChance());
-        }
-
-        public T GetRandom(int zone)
-        {
-            int range = 1;
-
-            foreach (var ch in chances)
-            {
-                range += ch.forZone[zone];
-            }
-
-            int randomNumber = Random.Range(0, range);
-            int index = 0;
-
-            while (index < objects.Count && chances[index].forZone[zone] < randomNumber)
-            {
-                randomNumber -= chances[index].forZone[zone];
-                index++;
-            }
-
-            return index < objects.Count ? objects[index] : default;
-        }
-
-        private IList<T> objects;
-        private List<MapGenerator.SpawnChance> chances;
-    }
-
+   
     public const int ZONES = 3;
 
-    [System.Serializable]
-    public class SpawnChance
-    {
-        public int[] forZone = new int[3];
-    }
 
     [field: SerializeField] public Grid GeneralGrid { get; private set; }
-    [field: SerializeField] public Grid ShrinesGrid { get; private set; }
 
     private void OnDrawGizmos()
     {
-        Color saveColor = Gizmos.color;
-        Gizmos.color = Color.black;
-        foreach (var item in ShrinesGrid.Cells)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                Gizmos.DrawLine(item.Corner(i), item.Corner(i + 1));
-            }
-        }
-
         Gizmos.color = Color.white;
         foreach (var item in GeneralGrid.Cells)
         {
@@ -221,7 +21,6 @@ public class MapGenerator : MonoBehaviour
                 Gizmos.DrawLine(item.Corner(i), item.Corner(i + 1));
             }
         }
-        Gizmos.color = saveColor;
     }
 
     #region Variables
@@ -258,14 +57,12 @@ public class MapGenerator : MonoBehaviour
     /// Chances of spawning objecton specific index in prefab array
     /// </summary>
     [HideInInspector] public List<SpawnChance> locationSpawnChances = new List<SpawnChance>();
-    [HideInInspector] public List<SpawnChance> shrinesSpawnChances = new List<SpawnChance>();
     [HideInInspector] public List<SpawnChance> enviroSpawnChances = new List<SpawnChance>();
 
     /// <summary>
     /// Gets location prefabs from prefab database without Application Manager
     /// </summary>
     public List<LocationsPool> Locations { get; private set; }
-    public List<GameObject> Shrines { get; private set; }
     public List<GameObject> Enviro { get; private set; }
 
     private int nextId;
@@ -313,20 +110,15 @@ public class MapGenerator : MonoBehaviour
         Locations = new List<LocationsPool>();
         Locations.AddRange(PrefabDatabase.Load.stdLocations);
 
-        Shrines = new List<GameObject>();
-        Shrines.AddRange(PrefabDatabase.Load.shrines);
-
         Enviro = new List<GameObject>();
         Enviro.AddRange(PrefabDatabase.Load.enviro);
 
         locationSpawnChances.Resize(Locations.Count, new SpawnChance());
-        shrinesSpawnChances.Resize(Locations.Count, new SpawnChance());
         enviroSpawnChances.Resize(Enviro.Count, new SpawnChance());
 
         ValidatePrefabs();
 
         GeneralGrid.Validate();
-        ShrinesGrid.Validate();
     }
 
     [ContextMenu("Validate")]
@@ -371,18 +163,11 @@ public class MapGenerator : MonoBehaviour
         Random.InitState(seed);
 
         var locationRandomizer = new Roulette<LocationsPool>(Locations, locationSpawnChances, emptyChance);
-        var shrineRandomizer = new Roulette<GameObject>(Shrines, shrinesSpawnChances);
         var enviroRandomizer = new Roulette<GameObject>(Enviro, enviroSpawnChances);
 
         var locInstances = new Stack<GameObject>();
 
         GeneralGrid.Generate(transform.position, cuttingSettings);
-        ShrinesGrid.Generate(transform.position, cuttingSettings);
-
-        foreach (var cell in ShrinesGrid.Cells)
-        {
-            GenerateObject(cell, shrineRandomizer, locInstances, true, true);
-        }
 
         foreach (var cell in GeneralGrid.Cells)
         {

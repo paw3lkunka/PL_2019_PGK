@@ -51,7 +51,6 @@ public class PrefabDatabase : ScriptableObject
 
     [Header("Locations and enviro")]
     public List<LocationsPool> stdLocations;
-    public List<GameObject> shrines;
     public List<GameObject> enviro;
     public GameObject shrineMarker;
 

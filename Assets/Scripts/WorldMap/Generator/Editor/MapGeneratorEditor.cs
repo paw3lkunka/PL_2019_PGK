@@ -69,9 +69,6 @@ public class MapGeneratorEditor : Editor
 
                     SpawnChancesFields(generator.emptyChance, "Empty cell");
 
-                GUILayout.Label("Shrines:", EditorStyles.boldLabel);
-                    DrawSpawnChances(generator.Shrines, generator.shrinesSpawnChances);
-
                 GUILayout.Label("Enviro:", EditorStyles.boldLabel);
                     DrawSpawnChances(generator.Enviro, generator.enviroSpawnChances);
 
@@ -81,7 +78,7 @@ public class MapGeneratorEditor : Editor
         }
     }
 
-    private void SpawnChancesFields(MapGenerator.SpawnChance spawnChances, string name)
+    private void SpawnChancesFields(SpawnChance spawnChances, string name)
     {
         for (int i = 0; i < MapGenerator.ZONES; i++)
         {
@@ -104,10 +101,10 @@ public class MapGeneratorEditor : Editor
     private class DSCPair<T>
     {
         public T obj;
-        public MapGenerator.SpawnChance chance;
+        public SpawnChance chance;
     }
 
-    private void DrawSpawnChances<T>(IList<T> objects, IList<MapGenerator.SpawnChance> chances)
+    private void DrawSpawnChances<T>(IList<T> objects, IList<SpawnChance> chances)
     {
         var pairs = objects.Zip(chances, (o, c) => new DSCPair<T> { obj = o, chance = c });
         foreach (var pair in pairs)
