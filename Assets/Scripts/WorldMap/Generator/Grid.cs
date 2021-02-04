@@ -54,7 +54,8 @@ public class Grid
 
                 if (!ShouldBeCutOff(cuttingSettings, i, j))
                 {
-                    var gobj = MonoBehaviour.Instantiate(new GameObject(), parent);
+                    var gobj = new GameObject();
+                    gobj.transform.SetParent(parent);
                     gobj.name = $"cell {i} {j}";
                     var cell = gobj.AddComponent(typeof(Cell)) as Cell;
                     cell.Set(newPos, cellSize);
