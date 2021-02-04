@@ -97,7 +97,7 @@ public class Location : MonoBehaviour
 
     private void Update()
     {
-        enterProgressBar.fillAmount = timeElapsedToEnter / enterDelay;
+        //enterProgressBar.fillAmount = timeElapsedToEnter / enterDelay;
 
         if (timeToRefill > 0)
         {
