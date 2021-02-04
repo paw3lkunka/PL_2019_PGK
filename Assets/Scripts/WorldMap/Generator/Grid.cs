@@ -31,7 +31,7 @@ public class Grid
         FarCellSize = Vector2.Max(FarCellSize, Vector2.zero);
     }
 
-    public void Generate(Vector3 position, Cut cuttingSettings)
+    public void Generate(Transform parent, Vector3 position, Cut cuttingSettings)
     {
         Cells.Clear();
 
@@ -54,7 +54,11 @@ public class Grid
 
                 if (!ShouldBeCutOff(cuttingSettings, i, j))
                 {
-                    Cells.Add(new Cell(newPos, cellSize));
+                    var gobj = MonoBehaviour.Instantiate(new GameObject(), parent);
+                    gobj.name = $"cell {i} {j}";
+                    var cell = gobj.AddComponent(typeof(Cell)) as Cell;
+                    cell.Set(newPos, cellSize);
+                    Cells.Add(cell);
                 }
             }
         }

@@ -4,10 +4,8 @@ using System.Security;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
-{
-   
+{   
     public const int ZONES = 3;
-
 
     [field: SerializeField] public Grid GeneralGrid { get; private set; }
 
@@ -167,7 +165,7 @@ public class MapGenerator : MonoBehaviour
 
         var locInstances = new Stack<GameObject>();
 
-        GeneralGrid.Generate(transform.position, cuttingSettings);
+        GeneralGrid.Generate(transform, transform.position, cuttingSettings);
 
         foreach (var cell in GeneralGrid.Cells)
         {
@@ -196,7 +194,12 @@ public class MapGenerator : MonoBehaviour
     [ContextMenu("Clear")]
     public void Clear()
     {
-        foreach (var child in GetComponentsInChildren<Location>())
+        foreach (var child in GetComponentsInChildren<Cell>())
+        {
+            DestroyImmediate(child.gameObject);
+        }
+
+        foreach (var child in GetComponentsInChildren<EnviroObject>())
         {
             DestroyImmediate(child.gameObject);
         }
@@ -237,20 +240,20 @@ public class MapGenerator : MonoBehaviour
 
         if (randomObj is GameObject)
         {
-            Spawn(randomObj as GameObject);
+            Spawn(randomObj as GameObject, cell.transform);
         }
         else if (randomObj is LocationsPool)
         {
             var pool = randomObj as LocationsPool;
             
-            Spawn(pool.locations[Random.Range(0, pool.locations.Count)], true);
+            Spawn(pool.locations[Random.Range(0, pool.locations.Count)], cell.transform, true);
         }
         else if (randomObj != null)
         {
             Debug.LogError($"Type of randomizer: {randomizer.GetType()} is invalid, only supperted types is Roulette<GameObjct> and Roulette<LocationsPool>");
         }
 
-        void Spawn(GameObject prefab, bool isLocation = false)
+        void Spawn(GameObject prefab, Transform parent, bool isLocation = false)
         {
             var locationPosition = new Vector3
             (
@@ -259,7 +262,7 @@ public class MapGenerator : MonoBehaviour
                 cell.position.y + Random.Range(-maxOffset.y, maxOffset.y)
             );
 
-            var instance = Instantiate(prefab, locationPosition, Quaternion.identity, transform);
+            var instance = Instantiate(prefab, locationPosition, Quaternion.identity, parent);
             if (isLocation)
                 instance.transform.localScale *= locationScaleFactor;
 

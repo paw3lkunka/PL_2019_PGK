@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cell
+public class Cell : MonoBehaviour
 {
     public Vector2 position;
     public Vector2 size;
 
     public int zone = 0;
 
-    public Cell(Vector2 position, Vector2 size)
+    public void Set(Vector2 position, Vector2 size)
     {
         this.position = position;
         this.size = size;
     }
-    public Cell(Vector3 position, Vector2 size)
+    public void Set(Vector3 position, Vector2 size)
     {
         this.position = new Vector2(position.x, position.z);
         this.size = size;
