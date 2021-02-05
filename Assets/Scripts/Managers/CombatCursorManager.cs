@@ -54,6 +54,7 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
         mainCamera = Camera.main;
         shootCancelRange.transform.localScale = new Vector3(ShootingCancelRange * 2, 1.0f, ShootingCancelRange * 2);
     }
+
     private void OnEnable() 
     {
         InitializeCursor();
@@ -240,9 +241,11 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     {
         float cursorDistance = Vector3.Distance(MainCursor.transform.position, LocationManager.Instance.cultLeader.transform.position);
 
-        if(!canShoot && cursorDistance > ShootingCancelRange)
+        if(cursorDistance > ShootingCancelRange)
         {
             canShoot = true;
+            shootDirection = (MainCursor.transform.position - LocationManager.Instance.cultLeader.transform.position).normalized;
+            shootTargetIndicator.transform.rotation = Quaternion.Euler(0.0f, Quaternion.LookRotation(shootDirection, Vector3.up).eulerAngles.y, 0.0f);
         }
         else if(cursorDistance < ShootingCancelRange)
         {
@@ -250,9 +253,6 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
         }
 
         shootTargetIndicator.SetActive(CanShowSTI);
-        shootDirection = (MainCursor.transform.position - LocationManager.Instance.cultLeader.transform.position).normalized;
-        //shootTargetIndicator.transform.rotation = Quaternion.LookRotation(shootDirection, Vector3.up);
-        shootTargetIndicator.transform.rotation = Quaternion.Euler(0.0f, Quaternion.LookRotation(shootDirection, Vector3.up).eulerAngles.y, 0.0f);
     }
 
     private void OnOverfaithStart()
