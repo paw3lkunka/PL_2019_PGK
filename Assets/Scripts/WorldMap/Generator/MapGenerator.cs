@@ -54,6 +54,7 @@ public class MapGenerator : MonoBehaviour
     public List<GameObject> Enviro { get; private set; }
 
     private List<Cell> generatedCells;
+    private int lastCellHash;
 
     #endregion
 
@@ -62,6 +63,19 @@ public class MapGenerator : MonoBehaviour
     private void OnValidate() => Initialize();
 
     private void Awake() => Initialize();
+
+    private void Update()
+    {
+        var currCell = GeneralGrid.GetNear(WorldSceneManager.Instance.Leader.transform.position)[0];
+        var currCellHash = currCell.name.GetHashCode();
+
+        if (lastCellHash != currCellHash)
+        {
+            Debug.Log($"{lastCellHash} =/= {currCellHash}");
+            lastCellHash = currCellHash;
+            Generate(currCell.transform.position, true);
+        }
+    }
 
     #endregion
 
@@ -155,26 +169,39 @@ public class MapGenerator : MonoBehaviour
 
         GeneralGrid.Generate(transform, transform.position, cuttingSettings);
 
+        var newCells = new List<Cell>();
+
         if (radiusLimit)
         {
             var oldCells = generatedCells;
-            var newCells = GeneralGrid.GetNear(origin, chunkRadius);
+            var nearCells = GeneralGrid.GetNear(origin, chunkRadius);
 
-            generatedCells = oldCells.Except(newCells).ToList();
-            generatedCells.AddRange(newCells);
+            generatedCells = oldCells.Except(nearCells).ToList();
+            generatedCells.AddRange(nearCells);
+
+            //TODO: do it better
+            newCells = nearCells.Except(oldCells).ToList();
 
             int overflow = generatedCells.Count - chunksLimit;
             if (overflow > 0)
             {
+                for (int i = 0; i < overflow; i++)
+                {
+                    Destroy(generatedCells[i].gameObject);
+                }
                 generatedCells.RemoveRange(0, overflow);
             }
         }
         else
         {
-            generatedCells = GeneralGrid.Cells;
+            if (generatedCells != GeneralGrid.Cells)
+            {
+                generatedCells = GeneralGrid.Cells;
+                newCells = generatedCells;
+            }
         }
 
-        foreach (var cell in generatedCells)
+        foreach (var cell in newCells)
         {
             Random.InitState(seed * cell.gameObject.name.GetHashCode()); // determinism guarantion
             
@@ -216,7 +243,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    void GenerateObject<T>(Cell cell, Roulette<T> randomizer, Stack<GameObject> instances, bool limitOffset, bool addToInstances)
+    private void GenerateObject<T>(Cell cell, Roulette<T> randomizer, Stack<GameObject> instances, bool limitOffset, bool addToInstances)
     {
         Vector2 maxOffset;
 
