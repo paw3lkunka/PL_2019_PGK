@@ -18,7 +18,9 @@ public class MapGenerator : MonoBehaviour
 
     public int seed;
     public float locationScaleFactor = 0.35f;
-        
+
+    public int chunkRadius = 3;
+    public int chunksLimit = 20;
 
     public Vector2 gEmptyCentreSize = new Vector2(120, 120);
     public Cut cuttingSettings = 0;
@@ -51,7 +53,7 @@ public class MapGenerator : MonoBehaviour
     public List<LocationsPool> Locations { get; private set; }
     public List<GameObject> Enviro { get; private set; }
 
-    private int nextId;
+    private List<Cell> generatedCells;
 
     #endregion
 
@@ -105,6 +107,8 @@ public class MapGenerator : MonoBehaviour
         ValidatePrefabs();
 
         GeneralGrid.Validate();
+
+        generatedCells = new List<Cell>();
     }
 
     [ContextMenu("Validate")]
@@ -137,10 +141,8 @@ public class MapGenerator : MonoBehaviour
     }
 
     [ContextMenu("Generate")]
-    public void Generate(Vector3 origin, int radius = -1)
+    public void Generate(Vector3 origin, bool radiusLimit)
     {
-        nextId = 1;
-
         if (!useCustomSeed)
         {
             seed = Random.Range(int.MinValue, int.MaxValue);
@@ -153,12 +155,28 @@ public class MapGenerator : MonoBehaviour
 
         GeneralGrid.Generate(transform, transform.position, cuttingSettings);
 
-        var cells = radius < 0 ? GeneralGrid.Cells : GeneralGrid.GetNear(origin, radius);
+        if (radiusLimit)
+        {
+            var oldCells = generatedCells;
+            var newCells = GeneralGrid.GetNear(origin, chunkRadius);
 
-        foreach (var cell in cells)
+            generatedCells = oldCells.Except(newCells).ToList();
+            generatedCells.AddRange(newCells);
+
+            int overflow = generatedCells.Count - chunksLimit;
+            if (overflow > 0)
+            {
+                generatedCells.RemoveRange(0, overflow);
+            }
+        }
+        else
+        {
+            generatedCells = GeneralGrid.Cells;
+        }
+
+        foreach (var cell in generatedCells)
         {
             Random.InitState(seed * cell.gameObject.name.GetHashCode()); // determinism guarantion
-            Debug.Log($"{cell.gameObject.name} - {cell.gameObject.name.GetHashCode()}");
             
             GenerateObject(cell, locationRandomizer, locInstances, true, true);
 
@@ -265,7 +283,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (instance.TryGetComponent(out Location loc))
                 {
-                    loc.id = nextId++;
+                    loc.id = cell.name.GetHashCode();
                     loc.generatedBy = this;
                 }
 
