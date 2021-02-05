@@ -115,12 +115,12 @@ public class WorldMapCamera : MonoBehaviour
         if (zoom < 0.5f)
         {
             targetPosition = Vector3.Lerp(closestPoint.position, middlePoint.position, zoom * 2.0f);
-            targetRotation = Quaternion.Slerp(closestPoint.rotation, middlePoint.rotation, zoom * 2.0f);
+            targetRotation = Quaternion.Lerp(closestPoint.rotation, middlePoint.rotation, zoom * 2.0f);
         }
         else
         {
             targetPosition = Vector3.Lerp(middlePoint.position, furthestPoint.position, (zoom - 0.5f) * 2.0f);
-            targetRotation = Quaternion.Slerp(middlePoint.rotation, furthestPoint.rotation, (zoom - 0.5f) * 2.0f);
+            targetRotation = Quaternion.Lerp(middlePoint.rotation, furthestPoint.rotation, (zoom - 0.5f) * 2.0f);
         }
 
         if (isRotating)
@@ -149,6 +149,6 @@ public class WorldMapCamera : MonoBehaviour
         }
 
         mapCamera.transform.position = Vector3.Lerp(mapCamera.transform.position, targetPosition, smoothing);
-        mapCamera.transform.rotation = Quaternion.Slerp(mapCamera.transform.rotation, targetRotation, smoothing);
+        mapCamera.transform.rotation = Quaternion.Lerp(mapCamera.transform.rotation, targetRotation, smoothing);
     }
 }
