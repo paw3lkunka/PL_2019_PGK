@@ -63,13 +63,13 @@ public class ControlsSheet : MonoBehaviour
     {
         input = ApplicationManager.Instance.Input;
 
-        shootMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.CombatMode.SetShootTarget, "Mouse");
-        shootJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.CombatMode.SetShootTarget, "Joystick");
-        shootGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.CombatMode.SetShootTarget, "Gamepad");
+        shootMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.SecondaryAction, "Mouse");
+        shootJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.SecondaryAction, "Joystick");
+        shootGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.SecondaryAction, "Gamepad");
 
-        walkMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.SetWalkTarget, "Mouse");
-        walkJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.SetWalkTarget, "Joystick");
-        walkGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.SetWalkTarget, "Gamepad");
+        walkMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.PrimaryAction, "Mouse");
+        walkJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.PrimaryAction, "Joystick");
+        walkGamepadBinding = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.PrimaryAction, "Gamepad");
 
         interactMouseKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Interact, "Mouse");
         interactJoystickKeyboardBinding = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.Interact, "Joystick");
@@ -368,11 +368,11 @@ public class ControlsSheet : MonoBehaviour
                 switch(action)
                 {
                     case ButtonActionType.Walk:
-                        walkMouseKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.SetWalkTarget, "Mouse")[prior];
+                        walkMouseKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.PrimaryAction, "Mouse")[prior];
                         break;
                     
                     case ButtonActionType.Shoot:
-                        shootMouseKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.CombatMode.SetShootTarget, "Mouse")[prior];
+                        shootMouseKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.SecondaryAction, "Mouse")[prior];
                         break;
                     
                     case ButtonActionType.Interact:
@@ -389,11 +389,11 @@ public class ControlsSheet : MonoBehaviour
                 switch(action)
                 {
                     case ButtonActionType.Walk:
-                        walkGamepadBinding[prior] = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.SetWalkTarget, "Gamepad")[prior];
+                        walkGamepadBinding[prior] = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.PrimaryAction, "Gamepad")[prior];
                         break;
                     
                     case ButtonActionType.Shoot:
-                        shootGamepadBinding[prior] = GetBindingsEnumsForAction<GamepadButtons>(input.CombatMode.SetShootTarget, "Gamepad")[prior];
+                        shootGamepadBinding[prior] = GetBindingsEnumsForAction<GamepadButtons>(input.Gameplay.SecondaryAction, "Gamepad")[prior];
                         break;
                     
                     case ButtonActionType.Interact:
@@ -410,11 +410,11 @@ public class ControlsSheet : MonoBehaviour
                 switch(action)
                 {
                     case ButtonActionType.Walk:
-                        walkJoystickKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.SetWalkTarget, "Joystick")[prior];
+                        walkJoystickKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.PrimaryAction, "Joystick")[prior];
                         break;
                     
                     case ButtonActionType.Shoot:
-                        shootJoystickKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.CombatMode.SetShootTarget, "Joystick")[prior];
+                        shootJoystickKeyboardBinding[prior] = GetBindingsEnumsForAction<KeyboardButtons>(input.Gameplay.SecondaryAction, "Joystick")[prior];
                         break;
                     
                     case ButtonActionType.Interact:

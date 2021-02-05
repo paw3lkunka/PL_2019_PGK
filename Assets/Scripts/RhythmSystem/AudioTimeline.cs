@@ -50,7 +50,6 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     public double NextBarSubdivMoment { get; private set; }
     private int currentBeatNumber = 0;
     public int CountupCounter { get; private set; } = 0;
-    private int pauseCounter = 0;
     private bool hasEncounteredPerfect = false;
     private bool wasCurrentBeatHit = false;
     private bool hittingStarted = false;
@@ -127,10 +126,10 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
     private void OnEnable()
     {
-        input.Gameplay.SetWalkTarget.performed += PrimaryBeatHitInputHandler;
-        input.Gameplay.SetWalkTarget.Enable();
-        input.CombatMode.SetShootTarget.performed += SecondaryBeatHitInputHandler;
-        input.CombatMode.SetShootTarget.Enable();
+        input.Gameplay.PrimaryAction.performed += PrimaryBeatHitInputHandler;
+        input.Gameplay.PrimaryAction.Enable();
+        input.Gameplay.SecondaryAction.performed += SecondaryBeatHitInputHandler;
+        input.Gameplay.SecondaryAction.Enable();
 
         input.Gameplay.Pause.performed += PauseResumeInputHandler;
         input.Gameplay.Pause.Enable();
@@ -138,10 +137,10 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
     private void OnDisable()
     {
-        input.Gameplay.SetWalkTarget.performed -= PrimaryBeatHitInputHandler;
-        input.Gameplay.SetWalkTarget.Disable();
-        input.CombatMode.SetShootTarget.performed -= SecondaryBeatHitInputHandler;
-        input.CombatMode.SetShootTarget.Disable();
+        input.Gameplay.PrimaryAction.performed -= PrimaryBeatHitInputHandler;
+        input.Gameplay.PrimaryAction.Disable();
+        input.Gameplay.SecondaryAction.performed -= SecondaryBeatHitInputHandler;
+        input.Gameplay.SecondaryAction.Disable();
 
         input.Gameplay.Pause.performed -= PauseResumeInputHandler;
         input.Gameplay.Pause.Disable();

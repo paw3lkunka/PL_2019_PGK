@@ -58,16 +58,16 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     {
         InitializeCursor();
 
-        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += SetWalkTargetIndicator;
-        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Enable();
+        ApplicationManager.Instance.Input.Gameplay.PrimaryAction.performed += SetWalkTargetIndicator;
+        ApplicationManager.Instance.Input.Gameplay.PrimaryAction.Enable();
 
-        ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed += SetShootTargetIndicator;
+        ApplicationManager.Instance.Input.Gameplay.SecondaryAction.performed += SetShootTargetIndicator;
 
         GameplayManager.Instance.OverfaithStart += OnOverfaithStart;
 
         if (LocationManager.Instance.sceneMode == LocationMode.Hostile)
         {
-            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Enable();
+            ApplicationManager.Instance.Input.Gameplay.SecondaryAction.Enable();
         }
     }
 
@@ -75,11 +75,11 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
     {
         if (ApplicationManager.Instance.Input != null)
         {
-            ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed -= SetWalkTargetIndicator;
-            ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Disable();
+            ApplicationManager.Instance.Input.Gameplay.PrimaryAction.performed -= SetWalkTargetIndicator;
+            ApplicationManager.Instance.Input.Gameplay.PrimaryAction.Disable();
 
-            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.performed -= SetShootTargetIndicator;
-            ApplicationManager.Instance.Input.CombatMode.SetShootTarget.Disable();
+            ApplicationManager.Instance.Input.Gameplay.SecondaryAction.performed -= SetShootTargetIndicator;
+            //ApplicationManager.Instance.Input.Gameplay.SecondaryAction.Disable();
         }
 
         GameplayManager.Instance.OverfaithStart -= OnOverfaithStart;

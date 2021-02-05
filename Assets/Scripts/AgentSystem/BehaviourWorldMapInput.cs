@@ -32,8 +32,8 @@ public class BehaviourWorldMapInput : MonoBehaviour
 
     private void Start()
     {
-        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed += GoToCursorPosition;
-        ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Enable();
+        ApplicationManager.Instance.Input.Gameplay.PrimaryAction.performed += GoToCursorPosition;
+        ApplicationManager.Instance.Input.Gameplay.PrimaryAction.Enable();
         target = transform.position;
     }
 
@@ -49,8 +49,8 @@ public class BehaviourWorldMapInput : MonoBehaviour
     {
         if (ApplicationManager.Instance)
         {
-            ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.performed -= GoToCursorPosition;
-            ApplicationManager.Instance.Input.Gameplay.SetWalkTarget.Disable();
+            ApplicationManager.Instance.Input.Gameplay.PrimaryAction.performed -= GoToCursorPosition;
+            ApplicationManager.Instance.Input.Gameplay.PrimaryAction.Disable();
         }
     }
 

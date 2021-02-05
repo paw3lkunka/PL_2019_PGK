@@ -2,77 +2,6 @@
     "name": "NewInput",
     "maps": [
         {
-            "name": "CombatMode",
-            "id": "3e4e1317-a05d-432b-ba93-9ba5a123c632",
-            "actions": [
-                {
-                    "name": "SetShootTarget",
-                    "type": "Button",
-                    "id": "f852d4ee-ebdc-4263-b8eb-9423cf3bacdc",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press(pressPoint=0.05)"
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "c4e49b92-25e3-4839-b7e2-9c0555c9b658",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "SetShootTarget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5d14c759-aaf3-4718-90e9-67958ef52f96",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "SetShootTarget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b4e107d0-5298-44a8-b313-38f6c3208f76",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "MouseKeyboard",
-                    "action": "SetShootTarget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ce4c3741-1bd5-4f6f-b6a0-57a69318523b",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "JoystickKeyboard;MouseKeyboard",
-                    "action": "SetShootTarget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "56bf41b6-4c1c-4320-986e-79655ab57df4",
-                    "path": "<Joystick>/trigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "JoystickKeyboard",
-                    "action": "SetShootTarget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "Gameplay",
             "id": "927fdd73-c6de-4111-8477-5fb2d3cd12f6",
             "actions": [
@@ -85,7 +14,15 @@
                     "interactions": ""
                 },
                 {
-                    "name": "SetWalkTarget",
+                    "name": "SecondaryAction",
+                    "type": "Button",
+                    "id": "06413c80-48d9-457c-9432-28e3554d9d19",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(pressPoint=0.05)"
+                },
+                {
+                    "name": "PrimaryAction",
                     "type": "Button",
                     "id": "5099243b-0a5d-4979-830c-5104fc7c9a30",
                     "expectedControlType": "",
@@ -166,7 +103,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "SetWalkTarget",
+                    "action": "PrimaryAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -177,7 +114,7 @@
                     "interactions": "Press(pressPoint=0.05)",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "SetWalkTarget",
+                    "action": "PrimaryAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -188,7 +125,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "MouseKeyboard",
-                    "action": "SetWalkTarget",
+                    "action": "PrimaryAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -199,7 +136,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "JoystickKeyboard;MouseKeyboard",
-                    "action": "SetWalkTarget",
+                    "action": "PrimaryAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -367,6 +304,61 @@
                     "action": "ZoomCamera",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "79cdf4dd-a37e-41f5-811a-2d60cba8126e",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SecondaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e959f23-b040-4bd4-b153-e2da5314e1a5",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SecondaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74473733-ca5c-4c35-990d-e2cea8873012",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyboard",
+                    "action": "SecondaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2e6c0e6-bdc3-4fda-8915-3cb78ebceac5",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "JoystickKeyboard;MouseKeyboard",
+                    "action": "SecondaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "318adf44-ccbc-45b0-af20-6e37ab217a9e",
+                    "path": "<Joystick>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "JoystickKeyboard",
+                    "action": "SecondaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

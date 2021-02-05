@@ -21,10 +21,7 @@ public partial class AudioTimeline
         {
             case BeatState.None:
             case BeatState.Bad:
-                //if (canFail)
-                //{
                     BeatFailHandler();
-                //}
                 break;
             case BeatState.Good:
             case BeatState.Great:
@@ -121,8 +118,6 @@ public partial class AudioTimeline
 
     private void SequenceResumeHandler()
     {
-        pauseCounter = 0;
-        
         for (int i = 0; i < barBeatStates.Length; i++)
         {
             barBeatStates[i] = BeatState.None;
