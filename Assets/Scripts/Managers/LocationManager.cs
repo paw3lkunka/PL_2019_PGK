@@ -142,11 +142,6 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
         CalculateOffsets();
 
-        //if (sceneMode != LocationMode.Hostile)
-        //{
-        //    Cursor.visible = true;
-        //}
-
         UIOverlayManager.Instance.ControlsSheet.Clear();
         UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Walk");
 

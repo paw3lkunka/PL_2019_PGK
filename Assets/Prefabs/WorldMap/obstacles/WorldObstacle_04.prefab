@@ -100,6 +100,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3091893753070551601}
     m_Modifications:
+    - target: {fileID: 227137107912526176, guid: 765f0f48e09ed6448aa7b5afc38e50d2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6052624cc7b5e04aacb4e9f65c0700f, type: 2}
     - target: {fileID: 1400020403357774351, guid: 765f0f48e09ed6448aa7b5afc38e50d2,
         type: 3}
       propertyPath: m_RootOrder
@@ -265,6 +270,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SandRocks1_LOD1
       objectReference: {fileID: 0}
+    - target: {fileID: 8356053370072667631, guid: d2edd753c0de40145a532d25a370d68d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6052624cc7b5e04aacb4e9f65c0700f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2edd753c0de40145a532d25a370d68d, type: 3}
 --- !u!4 &4606513926764462887 stripped

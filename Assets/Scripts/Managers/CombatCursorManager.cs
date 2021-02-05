@@ -251,7 +251,8 @@ public class CombatCursorManager : Singleton<CombatCursorManager, ForbidLazyInst
 
         shootTargetIndicator.SetActive(CanShowSTI);
         shootDirection = (MainCursor.transform.position - LocationManager.Instance.cultLeader.transform.position).normalized;
-        shootTargetIndicator.transform.rotation = Quaternion.LookRotation(shootDirection, Vector3.up);
+        //shootTargetIndicator.transform.rotation = Quaternion.LookRotation(shootDirection, Vector3.up);
+        shootTargetIndicator.transform.rotation = Quaternion.Euler(0.0f, Quaternion.LookRotation(shootDirection, Vector3.up).eulerAngles.y, 0.0f);
     }
 
     private void OnOverfaithStart()
