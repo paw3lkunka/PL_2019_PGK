@@ -118,8 +118,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     // * ===== Location variables ==========================================
 
-    [HideInInspector]
-    public bool firstTimeOnMap = true;
+    [HideInInspector] public bool firstTimeOnMap = true;
     /// <summary>
     /// Saved position from world map scene
     /// </summary>

@@ -67,11 +67,11 @@ public class RebinderButton : MonoBehaviour
         switch(actionType)
         {
             case ButtonActionType.Walk:
-                action = ApplicationManager.Instance.Input.Gameplay.SetWalkTarget;
+                action = ApplicationManager.Instance.Input.Gameplay.PrimaryAction;
                 break;
 
             case ButtonActionType.Shoot:
-                action = ApplicationManager.Instance.Input.CombatMode.SetShootTarget;
+                action = ApplicationManager.Instance.Input.Gameplay.SecondaryAction;
                 break;
 
             case ButtonActionType.Interact:

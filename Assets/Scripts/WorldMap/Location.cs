@@ -10,10 +10,10 @@ public class Location : MonoBehaviour
     [field: Tooltip("Name of location should be equal to location's scene name")]
     [field: GUIName("SceneName"), SerializeField] 
     public string SceneName { get; private set; }
-    [SerializeField] private float enterDelay = 3.0f;
     [SerializeField] private float locationResetTime = 120.0f;
-    //[SerializeField] private GameObject locationVisitedIndicator;
 #pragma warning restore
+
+    private bool isEntering = false;
 
     [Header("Saved in prefs")]
     public float timeToRefill;
@@ -25,9 +25,6 @@ public class Location : MonoBehaviour
 
     [HideInInspector]
     public float radius;
-    private float timeElapsedToEnter = 0.0f;
-    private Image enterProgressBar;
-    private GameObject cultistLeader;
 
     private string PrefsKey(string key) => "Loc" + id + key;
 
@@ -65,7 +62,6 @@ public class Location : MonoBehaviour
 
     private void Awake()
     {
-        enterProgressBar = GetComponentInChildren<Image>();
         SphereCollider sphereCollider = GetComponent<SphereCollider>();
         if (sphereCollider)
         {
@@ -80,8 +76,8 @@ public class Location : MonoBehaviour
         {
             if (WorldSceneManager.Instance.CanEnterLocations)
             {
-                cultistLeader = other.gameObject;
-                StartCoroutine(EnterLocationRoutine());
+                isEntering = true;
+                EnterExitLocationManager.Instance.IsEnteringExiting = true;
             }
         }
     }
@@ -90,51 +86,34 @@ public class Location : MonoBehaviour
     {
         if (other.CompareTag("Leader"))
         {
-            StopAllCoroutines();
-            timeElapsedToEnter = 0.0f;
+            isEntering = false;
+            EnterExitLocationManager.Instance.IsEnteringExiting = false;
         }
     }
 
     private void Update()
     {
-        //enterProgressBar.fillAmount = timeElapsedToEnter / enterDelay;
-
         if (timeToRefill > 0)
         {
             timeToRefill -= Time.deltaTime;
         }
 
-        // Disabled temporarily ~fmazurek
-        //if (visited)
-        //{
-        //    locationVisitedIndicator.SetActive(true);
-        //}
-        //else
-        //{
-        //    locationVisitedIndicator.SetActive(false);
-        //}
+        if (EnterExitLocationManager.Instance.EnterExitProgressNormalized >= 1.0f && isEntering)
+        {
+            EnterLocation();
+        }
     }
 
-    private IEnumerator EnterLocationRoutine()
+    private void EnterLocation()
     {
-        while(true)
-        {
-            timeElapsedToEnter += Time.deltaTime;
+        Vector3 vec = transform.position - WorldSceneManager.Instance.Leader.transform.position;
+        vec.y = 0;
+        LocationManager.enterDirection = vec.normalized;
+        GameplayManager.Instance.EnterLocation(this);
 
-            if (timeElapsedToEnter >= enterDelay)
-            {
-                Vector3 vec = transform.position - cultistLeader.transform.position;
-                vec.y = 0;
-                LocationManager.enterDirection = vec.normalized;
-                GameplayManager.Instance.EnterLocation(this);
+        visited = true;
+        timeToRefill = locationResetTime;
 
-                visited = true;
-                timeToRefill = locationResetTime;
-
-                generatedBy?.SaveState();
-            }
-
-            yield return new WaitForEndOfFrame();
-        }
+        generatedBy?.SaveState();
     }
 }

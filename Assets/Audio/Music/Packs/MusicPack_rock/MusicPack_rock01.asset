@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5c0440fdf08254bb74d4ae5553fc0e, type: 3}
+  m_Name: MusicPack_rock01
+  m_EditorClassIdentifier: 
+  mainClipLight: {fileID: 8300000, guid: 9748daa44c5fe4a4e8c76eae38984563, type: 3}
+  mainClipHeavy: {fileID: 8300000, guid: c8fcc4641b7219d41b36d1423174e6a7, type: 3}
+  secondaryClipsLight:
+  - {fileID: 8300000, guid: bbcbdafdb1a36ab45bd00b5343728412, type: 3}
+  - {fileID: 8300000, guid: c22bc74971ace6b4093798d6c268b30c, type: 3}
+  secondaryClipsHeavy:
+  - {fileID: 8300000, guid: 35aa65f9363b4b14b8545fa4a7abdd7d, type: 3}
+  - {fileID: 8300000, guid: 006c8298083f1b04695ca47277c12bf8, type: 3}
+  secondaryClipsChances: []

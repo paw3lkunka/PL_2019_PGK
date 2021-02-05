@@ -11,8 +11,9 @@ public class SceneObjectsManager : Singleton<SceneObjectsManager, ForbidLazyInst
     private static bool debug = true;
 #endif
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
 #if UNITY_EDITOR
         if(debug)
         {

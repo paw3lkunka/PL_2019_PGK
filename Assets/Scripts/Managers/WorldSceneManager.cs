@@ -62,16 +62,6 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.CameraZoom, "Zoom camera");
     }
 
-    private void OnEnable()
-    {
-        ApplicationManager.Instance.Input.CombatMode.Disable();
-    }
-
-    private void OnDisable()
-    {
-        ApplicationManager.Instance.Input.CombatMode.Enable();
-    }
-
     private void Update()
     {
         if (Leader.transform.position.magnitude >= GameplayManager.Instance.escapeDistance)

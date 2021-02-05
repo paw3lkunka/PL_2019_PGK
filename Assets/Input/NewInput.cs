@@ -15,77 +15,6 @@ public class @NewInput : IInputActionCollection, IDisposable
     ""name"": ""NewInput"",
     ""maps"": [
         {
-            ""name"": ""CombatMode"",
-            ""id"": ""3e4e1317-a05d-432b-ba93-9ba5a123c632"",
-            ""actions"": [
-                {
-                    ""name"": ""SetShootTarget"",
-                    ""type"": ""Button"",
-                    ""id"": ""f852d4ee-ebdc-4263-b8eb-9423cf3bacdc"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Press(pressPoint=0.05)""
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""c4e49b92-25e3-4839-b7e2-9c0555c9b658"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""SetShootTarget"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5d14c759-aaf3-4718-90e9-67958ef52f96"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""SetShootTarget"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b4e107d0-5298-44a8-b313-38f6c3208f76"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""MouseKeyboard"",
-                    ""action"": ""SetShootTarget"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ce4c3741-1bd5-4f6f-b6a0-57a69318523b"",
-                    ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""JoystickKeyboard;MouseKeyboard"",
-                    ""action"": ""SetShootTarget"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""56bf41b6-4c1c-4320-986e-79655ab57df4"",
-                    ""path"": ""<Joystick>/trigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""JoystickKeyboard"",
-                    ""action"": ""SetShootTarget"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""Gameplay"",
             ""id"": ""927fdd73-c6de-4111-8477-5fb2d3cd12f6"",
             ""actions"": [
@@ -98,7 +27,15 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""SetWalkTarget"",
+                    ""name"": ""SecondaryAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""06413c80-48d9-457c-9432-28e3554d9d19"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press(pressPoint=0.05)""
+                },
+                {
+                    ""name"": ""PrimaryAction"",
                     ""type"": ""Button"",
                     ""id"": ""5099243b-0a5d-4979-830c-5104fc7c9a30"",
                     ""expectedControlType"": """",
@@ -179,7 +116,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""SetWalkTarget"",
+                    ""action"": ""PrimaryAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -190,7 +127,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(pressPoint=0.05)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""SetWalkTarget"",
+                    ""action"": ""PrimaryAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -201,7 +138,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MouseKeyboard"",
-                    ""action"": ""SetWalkTarget"",
+                    ""action"": ""PrimaryAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -212,7 +149,7 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""JoystickKeyboard;MouseKeyboard"",
-                    ""action"": ""SetWalkTarget"",
+                    ""action"": ""PrimaryAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -380,6 +317,61 @@ public class @NewInput : IInputActionCollection, IDisposable
                     ""action"": ""ZoomCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79cdf4dd-a37e-41f5-811a-2d60cba8126e"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SecondaryAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e959f23-b040-4bd4-b153-e2da5314e1a5"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SecondaryAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74473733-ca5c-4c35-990d-e2cea8873012"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard"",
+                    ""action"": ""SecondaryAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2e6c0e6-bdc3-4fda-8915-3cb78ebceac5"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""JoystickKeyboard;MouseKeyboard"",
+                    ""action"": ""SecondaryAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""318adf44-ccbc-45b0-af20-6e37ab217a9e"",
+                    ""path"": ""<Joystick>/trigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""JoystickKeyboard"",
+                    ""action"": ""SecondaryAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -830,13 +822,11 @@ public class @NewInput : IInputActionCollection, IDisposable
         }
     ]
 }");
-        // CombatMode
-        m_CombatMode = asset.FindActionMap("CombatMode", throwIfNotFound: true);
-        m_CombatMode_SetShootTarget = m_CombatMode.FindAction("SetShootTarget", throwIfNotFound: true);
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_MoveCursor = m_Gameplay.FindAction("MoveCursor", throwIfNotFound: true);
-        m_Gameplay_SetWalkTarget = m_Gameplay.FindAction("SetWalkTarget", throwIfNotFound: true);
+        m_Gameplay_SecondaryAction = m_Gameplay.FindAction("SecondaryAction", throwIfNotFound: true);
+        m_Gameplay_PrimaryAction = m_Gameplay.FindAction("PrimaryAction", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_RotateCamera = m_Gameplay.FindAction("RotateCamera", throwIfNotFound: true);
@@ -894,44 +884,12 @@ public class @NewInput : IInputActionCollection, IDisposable
         asset.Disable();
     }
 
-    // CombatMode
-    private readonly InputActionMap m_CombatMode;
-    private ICombatModeActions m_CombatModeActionsCallbackInterface;
-    private readonly InputAction m_CombatMode_SetShootTarget;
-    public struct CombatModeActions
-    {
-        private @NewInput m_Wrapper;
-        public CombatModeActions(@NewInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @SetShootTarget => m_Wrapper.m_CombatMode_SetShootTarget;
-        public InputActionMap Get() { return m_Wrapper.m_CombatMode; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(CombatModeActions set) { return set.Get(); }
-        public void SetCallbacks(ICombatModeActions instance)
-        {
-            if (m_Wrapper.m_CombatModeActionsCallbackInterface != null)
-            {
-                @SetShootTarget.started -= m_Wrapper.m_CombatModeActionsCallbackInterface.OnSetShootTarget;
-                @SetShootTarget.performed -= m_Wrapper.m_CombatModeActionsCallbackInterface.OnSetShootTarget;
-                @SetShootTarget.canceled -= m_Wrapper.m_CombatModeActionsCallbackInterface.OnSetShootTarget;
-            }
-            m_Wrapper.m_CombatModeActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @SetShootTarget.started += instance.OnSetShootTarget;
-                @SetShootTarget.performed += instance.OnSetShootTarget;
-                @SetShootTarget.canceled += instance.OnSetShootTarget;
-            }
-        }
-    }
-    public CombatModeActions @CombatMode => new CombatModeActions(this);
-
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_MoveCursor;
-    private readonly InputAction m_Gameplay_SetWalkTarget;
+    private readonly InputAction m_Gameplay_SecondaryAction;
+    private readonly InputAction m_Gameplay_PrimaryAction;
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_RotateCamera;
@@ -941,7 +899,8 @@ public class @NewInput : IInputActionCollection, IDisposable
         private @NewInput m_Wrapper;
         public GameplayActions(@NewInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveCursor => m_Wrapper.m_Gameplay_MoveCursor;
-        public InputAction @SetWalkTarget => m_Wrapper.m_Gameplay_SetWalkTarget;
+        public InputAction @SecondaryAction => m_Wrapper.m_Gameplay_SecondaryAction;
+        public InputAction @PrimaryAction => m_Wrapper.m_Gameplay_PrimaryAction;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @RotateCamera => m_Wrapper.m_Gameplay_RotateCamera;
@@ -958,9 +917,12 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @MoveCursor.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveCursor;
                 @MoveCursor.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveCursor;
                 @MoveCursor.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveCursor;
-                @SetWalkTarget.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSetWalkTarget;
-                @SetWalkTarget.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSetWalkTarget;
-                @SetWalkTarget.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSetWalkTarget;
+                @SecondaryAction.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSecondaryAction;
+                @SecondaryAction.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSecondaryAction;
+                @SecondaryAction.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSecondaryAction;
+                @PrimaryAction.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPrimaryAction;
+                @PrimaryAction.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPrimaryAction;
+                @PrimaryAction.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPrimaryAction;
                 @Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
@@ -980,9 +942,12 @@ public class @NewInput : IInputActionCollection, IDisposable
                 @MoveCursor.started += instance.OnMoveCursor;
                 @MoveCursor.performed += instance.OnMoveCursor;
                 @MoveCursor.canceled += instance.OnMoveCursor;
-                @SetWalkTarget.started += instance.OnSetWalkTarget;
-                @SetWalkTarget.performed += instance.OnSetWalkTarget;
-                @SetWalkTarget.canceled += instance.OnSetWalkTarget;
+                @SecondaryAction.started += instance.OnSecondaryAction;
+                @SecondaryAction.performed += instance.OnSecondaryAction;
+                @SecondaryAction.canceled += instance.OnSecondaryAction;
+                @PrimaryAction.started += instance.OnPrimaryAction;
+                @PrimaryAction.performed += instance.OnPrimaryAction;
+                @PrimaryAction.canceled += instance.OnPrimaryAction;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -1100,14 +1065,11 @@ public class @NewInput : IInputActionCollection, IDisposable
             return asset.controlSchemes[m_JoystickKeyboardSchemeIndex];
         }
     }
-    public interface ICombatModeActions
-    {
-        void OnSetShootTarget(InputAction.CallbackContext context);
-    }
     public interface IGameplayActions
     {
         void OnMoveCursor(InputAction.CallbackContext context);
-        void OnSetWalkTarget(InputAction.CallbackContext context);
+        void OnSecondaryAction(InputAction.CallbackContext context);
+        void OnPrimaryAction(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnRotateCamera(InputAction.CallbackContext context);
