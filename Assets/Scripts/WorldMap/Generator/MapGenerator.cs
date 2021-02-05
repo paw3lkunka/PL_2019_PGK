@@ -137,7 +137,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     [ContextMenu("Generate")]
-    public void Generate()
+    public void Generate(Vector3 origin, int radius = -1)
     {
         nextId = 1;
 
@@ -146,8 +146,6 @@ public class MapGenerator : MonoBehaviour
             seed = Random.Range(int.MinValue, int.MaxValue);
         }
 
-        Random.InitState(seed);
-
         var locationRandomizer = new Roulette<LocationsPool>(Locations, locationSpawnChances, emptyChance);
         var enviroRandomizer = new Roulette<GameObject>(Enviro, enviroSpawnChances);
 
@@ -155,13 +153,15 @@ public class MapGenerator : MonoBehaviour
 
         GeneralGrid.Generate(transform, transform.position, cuttingSettings);
 
-        foreach (var cell in GeneralGrid.Cells)
-        {
-            GenerateObject(cell, locationRandomizer, locInstances, true, true);
-        }
+        var cells = radius < 0 ? GeneralGrid.Cells : GeneralGrid.GetNear(origin, radius);
 
-        foreach (var cell in GeneralGrid.Cells)
+        foreach (var cell in cells)
         {
+            Random.InitState(seed * cell.gameObject.name.GetHashCode()); // determinism guarantion
+            Debug.Log($"{cell.gameObject.name} - {cell.gameObject.name.GetHashCode()}");
+            
+            GenerateObject(cell, locationRandomizer, locInstances, true, true);
+
             int envObjects = Random.Range(enviroObjectsInCell.x, enviroObjectsInCell.y + 1);
 
             for (int k = 0; k < envObjects; k++)

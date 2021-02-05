@@ -27,7 +27,7 @@ public class MapGeneratorEditor : Editor
         {
             if (GUILayout.Button("Generate"))
             {
-                generator.Generate();
+                generator.Generate(generator.transform.position);
                 EditorUtility.SetDirty(target);
             }
 
