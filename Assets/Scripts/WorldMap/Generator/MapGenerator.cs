@@ -18,7 +18,9 @@ public class MapGenerator : MonoBehaviour
 
     public int seed;
     public float locationScaleFactor = 0.35f;
-        
+
+    public int chunkRadius = 3;
+    public int chunksLimit = 20;
 
     public Vector2 gEmptyCentreSize = new Vector2(120, 120);
     public Cut cuttingSettings = 0;
@@ -51,7 +53,7 @@ public class MapGenerator : MonoBehaviour
     public List<LocationsPool> Locations { get; private set; }
     public List<GameObject> Enviro { get; private set; }
 
-    private int nextId;
+    private List<Cell> generatedCells;
 
     #endregion
 
@@ -105,6 +107,8 @@ public class MapGenerator : MonoBehaviour
         ValidatePrefabs();
 
         GeneralGrid.Validate();
+
+        generatedCells = new List<Cell>();
     }
 
     [ContextMenu("Validate")]
@@ -137,16 +141,12 @@ public class MapGenerator : MonoBehaviour
     }
 
     [ContextMenu("Generate")]
-    public void Generate()
+    public void Generate(Vector3 origin, bool radiusLimit)
     {
-        nextId = 1;
-
         if (!useCustomSeed)
         {
             seed = Random.Range(int.MinValue, int.MaxValue);
         }
-
-        Random.InitState(seed);
 
         var locationRandomizer = new Roulette<LocationsPool>(Locations, locationSpawnChances, emptyChance);
         var enviroRandomizer = new Roulette<GameObject>(Enviro, enviroSpawnChances);
@@ -155,13 +155,31 @@ public class MapGenerator : MonoBehaviour
 
         GeneralGrid.Generate(transform, transform.position, cuttingSettings);
 
-        foreach (var cell in GeneralGrid.Cells)
+        if (radiusLimit)
         {
-            GenerateObject(cell, locationRandomizer, locInstances, true, true);
+            var oldCells = generatedCells;
+            var newCells = GeneralGrid.GetNear(origin, chunkRadius);
+
+            generatedCells = oldCells.Except(newCells).ToList();
+            generatedCells.AddRange(newCells);
+
+            int overflow = generatedCells.Count - chunksLimit;
+            if (overflow > 0)
+            {
+                generatedCells.RemoveRange(0, overflow);
+            }
+        }
+        else
+        {
+            generatedCells = GeneralGrid.Cells;
         }
 
-        foreach (var cell in GeneralGrid.Cells)
+        foreach (var cell in generatedCells)
         {
+            Random.InitState(seed * cell.gameObject.name.GetHashCode()); // determinism guarantion
+            
+            GenerateObject(cell, locationRandomizer, locInstances, true, true);
+
             int envObjects = Random.Range(enviroObjectsInCell.x, enviroObjectsInCell.y + 1);
 
             for (int k = 0; k < envObjects; k++)
@@ -265,7 +283,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (instance.TryGetComponent(out Location loc))
                 {
-                    loc.id = nextId++;
+                    loc.id = cell.name.GetHashCode();
                     loc.generatedBy = this;
                 }
 
