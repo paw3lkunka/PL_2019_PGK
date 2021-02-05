@@ -165,16 +165,14 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
         if (Vector3.Distance(cultLeader.transform.position, transform.position) > locationRadius || isExiting)
         {
-            ExitProgress += Time.deltaTime;
+            EnterExitLocationManager.Instance.IsEnteringExiting = true;
         }
         else
         {
-            ExitProgress -= Time.deltaTime;
+            EnterExitLocationManager.Instance.IsEnteringExiting = false;
         }
 
-        ExitProgress = Mathf.Clamp(ExitProgress, 0.0f, exitTime);
-
-        if (ExitProgress >= exitTime)
+        if (EnterExitLocationManager.Instance.EnterExitProgressNormalized >= 0.99f)
         {
             Exit();
         }

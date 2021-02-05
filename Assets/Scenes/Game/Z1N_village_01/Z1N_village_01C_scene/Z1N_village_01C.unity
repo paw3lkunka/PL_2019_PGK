@@ -10674,13 +10674,9 @@ MonoBehaviour:
   internalMusicClipVariation: 0.593
   transitionStings: {fileID: 0}
   drumPacks:
-  - {fileID: 11400000, guid: 979f4fd8aaeb12248ad8d8c9f0644613, type: 2}
-  - {fileID: 11400000, guid: dc3bc9b156bc6db4ca45a7e0d63aa861, type: 2}
-  - {fileID: 11400000, guid: f99598864636e18469bfb447255f0456, type: 2}
-  musicPacks:
-  - {fileID: 11400000, guid: 61c59c06f7156bb4d927bbfb207fbde1, type: 2}
-  - {fileID: 11400000, guid: a911b44b617c24c4ebe21cee8e798084, type: 2}
-  - {fileID: 11400000, guid: 77a063a50e209cd4a84e302a98ba2cf4, type: 2}
+  - {fileID: 11400000, guid: 2082c8f0f4cdcec4ba8fdc2d37f9353b, type: 2}
+  - {fileID: 11400000, guid: 2e65e9d7160925445bb3568a19633760, type: 2}
+  musicPacks: []
   packRandomizer: 1
   clipRandomizer: 0
   stingsEnabled: 0
@@ -10765,7 +10761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 0
-  canFail: 1
+  canFail: 0
   songBpm: 90
   beatsPerBar: 4
   maxBarSubdivision: 32

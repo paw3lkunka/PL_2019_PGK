@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1647235735}
-  m_IndirectSpecularColor: {r: 0.59325343, g: 0.4525996, b: 0.31046772, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -29060,6 +29060,28 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482779334441948633, guid: 2c7217f1c5abb954fae106c34383e101,
+        type: 3}
+      propertyPath: musicPacks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482779334441948633, guid: 2c7217f1c5abb954fae106c34383e101,
+        type: 3}
+      propertyPath: musicPacks.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 317acb3c59c7f0b4d9bf656ea0cfc5a9,
+        type: 2}
+    - target: {fileID: 4482779334441948633, guid: 2c7217f1c5abb954fae106c34383e101,
+        type: 3}
+      propertyPath: musicPacks.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 69f82fcf25a06404ca9f783980357624,
+        type: 2}
+    - target: {fileID: 4482779334441948633, guid: 2c7217f1c5abb954fae106c34383e101,
+        type: 3}
+      propertyPath: musicPacks.Array.data[2]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4482779334685485249, guid: 2c7217f1c5abb954fae106c34383e101,
         type: 3}

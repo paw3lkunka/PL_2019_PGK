@@ -14,36 +14,34 @@ public class ExitLocationUIController : MonoBehaviour
 
     private void Update()
     {
-        if(LocationManager.Instance)
+        if (EnterExitLocationManager.Instance.EnterExitProgressNormalized > 0.0f)
         {
-            if (LocationManager.Instance.ExitProgressNormalized > 0.0f)
-            {
-                Color tempColor;
-                tempColor = text.color;
-                tempColor.a = 1.0f;
-                text.color = Color.Lerp(text.color, tempColor, fadeSpeed);
-                tempColor = progressBarFrame.color;
-                tempColor.a = 1.0f;
-                progressBarFrame.color = Color.Lerp(progressBarFrame.color, tempColor, fadeSpeed);
-                tempColor = progressBar.color;
-                tempColor.a = 1.0f;
-                progressBar.color = Color.Lerp(progressBar.color, tempColor, fadeSpeed);
-            }
-            else
-            {
-                Color tempColor;
-                tempColor = text.color;
-                tempColor.a = 0.0f;
-                text.color = Color.Lerp(text.color, tempColor, fadeSpeed);
-                tempColor = progressBarFrame.color;
-                tempColor.a = 0.0f;
-                progressBarFrame.color = Color.Lerp(progressBarFrame.color, tempColor, fadeSpeed);
-                tempColor = progressBar.color;
-                tempColor.a = 0.0f;
-                progressBar.color = Color.Lerp(progressBar.color, tempColor, fadeSpeed);
-            }
-
-            progressBar.fillAmount = LocationManager.Instance.ExitProgressNormalized;
+            Color tempColor;
+            tempColor = text.color;
+            tempColor.a = 1.0f;
+            text.color = Color.Lerp(text.color, tempColor, fadeSpeed);
+            tempColor = progressBarFrame.color;
+            tempColor.a = 1.0f;
+            progressBarFrame.color = Color.Lerp(progressBarFrame.color, tempColor, fadeSpeed);
+            tempColor = progressBar.color;
+            tempColor.a = 1.0f;
+            progressBar.color = Color.Lerp(progressBar.color, tempColor, fadeSpeed);
         }
+        else
+        {
+            Color tempColor;
+            tempColor = text.color;
+            tempColor.a = 0.0f;
+            text.color = Color.Lerp(text.color, tempColor, fadeSpeed);
+            tempColor = progressBarFrame.color;
+            tempColor.a = 0.0f;
+            progressBarFrame.color = Color.Lerp(progressBarFrame.color, tempColor, fadeSpeed);
+            tempColor = progressBar.color;
+            tempColor.a = 0.0f;
+            progressBar.color = Color.Lerp(progressBar.color, tempColor, fadeSpeed);
+        }
+
+        progressBar.fillAmount = EnterExitLocationManager.Instance.EnterExitProgressNormalized;
     }
+    
 }

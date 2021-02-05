@@ -6,7 +6,7 @@ public abstract class Singleton<T, K> : Singleton where T : MonoBehaviour where 
 {
     private static T _instance;
     private static readonly object Lock = new object();
-    [SerializeField] private bool _persistent = true;
+    [SerializeField] protected bool _persistent = true;
 
     public static T Instance
     {
