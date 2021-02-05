@@ -15,7 +15,6 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
     [Header("Base config")]
     public float locationRadius;
-    public float exitTime = 3.0f;
     public LocationMode sceneMode;
     public List<Damageable> enemies;
     public List<Damageable> ourCrew;
@@ -25,11 +24,9 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
     public float stunCounter;
     public bool CanStun { get => stunCounter <= 0; }
 
-    [Tooltip("If checked, manager automatically removes null emements from $ourCrew and $enemies")]
+    [Tooltip("If checked, manager automatically removes null elements from $ourCrew and $enemies")]
     public bool cleanLists = true;
 
-    public float ExitProgress { get; private set; }
-    public float ExitProgressNormalized => ExitProgress / exitTime;
     [HideInInspector] public bool isExiting = false;
 
     private Vector3 toCenter;
@@ -142,11 +139,6 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
         CalculateOffsets();
 
-        //if (sceneMode != LocationMode.Hostile)
-        //{
-        //    Cursor.visible = true;
-        //}
-
         UIOverlayManager.Instance.ControlsSheet.Clear();
         UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Walk");
 
@@ -219,9 +211,9 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
     private void Exit()
     {
-        Vector3 vec = LocationManager.Instance.cultLeader.transform.position - transform.position;
+        Vector3 vec = cultLeader.transform.position - transform.position;
         vec.y = 0;
-        LocationManager.exitDirection = vec.normalized;
+        exitDirection = vec.normalized;
         GameplayManager.Instance.ExitLocation();
     }
 

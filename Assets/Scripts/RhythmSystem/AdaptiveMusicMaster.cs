@@ -179,72 +179,85 @@ public class AdaptiveMusicMaster : MonoBehaviour
     private void RandomizeClips()
     {
         // ----- PACK RANDOMIZATION -----------------------------------------------------
-        // Randomize if the next DRUMS bar should use next internal variation of the pack
-        if (drumPacks.Length > 0 && Random.Range(0.0f, 1.0f) < nextRhythmPackChance)
+        if (drumsEnabled)
         {
-            switch (packRandomizer)
+            // Randomize if the next DRUMS bar should use next internal variation of the pack
+            if (drumPacks.Length > 0 && Random.Range(0.0f, 1.0f) < nextRhythmPackChance)
             {
-                case Randomizer.Random:
-                    // Pure random drum pack selection
-                    currentDrumPack = drumPacks[Random.Range(0, drumPacks.Length)];
-                    break;
-                case Randomizer.Roulette:
-                    // Roulette pack selection
-                    currentDrumPack = drumPacks[RouletteAlgorithm(ref drumPacksChances)];
-                    break;
+                switch (packRandomizer)
+                {
+                    case Randomizer.Random:
+                        // Pure random drum pack selection
+                        currentDrumPack = drumPacks[Random.Range(0, drumPacks.Length)];
+                        break;
+                    case Randomizer.Roulette:
+                        // Roulette pack selection
+                        currentDrumPack = drumPacks[RouletteAlgorithm(ref drumPacksChances)];
+                        break;
+                }
             }
         }
-        // Randomize if the next MUSIC bar should use next internal variation of the pack
-        if (musicPacks.Length > 0 && Random.Range(0.0f, 1.0f) < nextMusicPackChance)
+
+        if (musicEnabled)
         {
-            switch (packRandomizer)
+            // Randomize if the next MUSIC bar should use next internal variation of the pack
+            if (musicPacks.Length > 0 && Random.Range(0.0f, 1.0f) < nextMusicPackChance)
             {
-                case Randomizer.Random:
-                    currentMusicPack = musicPacks[Random.Range(0, musicPacks.Length)];
-                    break;
-                case Randomizer.Roulette:
-                    currentMusicPack = musicPacks[RouletteAlgorithm(ref musicPacksChances)];
-                    break;
+                switch (packRandomizer)
+                {
+                    case Randomizer.Random:
+                        currentMusicPack = musicPacks[Random.Range(0, musicPacks.Length)];
+                        break;
+                    case Randomizer.Roulette:
+                        currentMusicPack = musicPacks[RouletteAlgorithm(ref musicPacksChances)];
+                        break;
+                }
             }
         }
 
         // ----- CLIP RANDOMIZATION -----------------------------------------------------
-        if (currentDrumPack.secondaryClips.Length > 0 && Random.Range(0.0f, 1.0f) < internalRhythmClipVariation)
+        if (drumsEnabled)
         {
-            switch (clipRandomizer)
+            if (currentDrumPack.secondaryClips.Length > 0 && Random.Range(0.0f, 1.0f) < internalRhythmClipVariation)
             {
-                case Randomizer.Random:
-                    CurrentDrumClip = currentDrumPack.secondaryClips[Random.Range(0, currentDrumPack.secondaryClips.Length)];
-                    break;
-                case Randomizer.Roulette:
-                    CurrentDrumClip = currentDrumPack.secondaryClips[RouletteAlgorithm(ref currentDrumPack.secondaryClipsChances)];
-                    break;
+                switch (clipRandomizer)
+                {
+                    case Randomizer.Random:
+                        CurrentDrumClip = currentDrumPack.secondaryClips[Random.Range(0, currentDrumPack.secondaryClips.Length)];
+                        break;
+                    case Randomizer.Roulette:
+                        CurrentDrumClip = currentDrumPack.secondaryClips[RouletteAlgorithm(ref currentDrumPack.secondaryClipsChances)];
+                        break;
+                }
+            }
+            else
+            {
+                CurrentDrumClip = currentDrumPack.mainClip;
             }
         }
-        else
-        {
-            CurrentDrumClip = currentDrumPack.mainClip;
-        }
 
-        if (Random.Range(0.0f, 1.0f) < internalMusicClipVariation)
+        if (musicEnabled)
         {
-            int index = 0;
-            switch (clipRandomizer)
+            if (Random.Range(0.0f, 1.0f) < internalMusicClipVariation)
             {
-                case Randomizer.Random:
-                    index = Random.Range(0, currentMusicPack.secondaryClipsHeavy.Length);
-                    break;
+                int index = 0;
+                switch (clipRandomizer)
+                {
+                    case Randomizer.Random:
+                        index = Random.Range(0, currentMusicPack.secondaryClipsHeavy.Length);
+                        break;
 
-                case Randomizer.Roulette:
-                    index = RouletteAlgorithm(ref currentMusicPack.secondaryClipsChances);
-                    break;
+                    case Randomizer.Roulette:
+                        index = RouletteAlgorithm(ref currentMusicPack.secondaryClipsChances);
+                        break;
+                }
+
+                CurrentMusicClip = new System.Tuple<AudioClip, AudioClip>(currentMusicPack.secondaryClipsLight[index], currentMusicPack.secondaryClipsHeavy[index]);
             }
-
-            CurrentMusicClip = new System.Tuple<AudioClip, AudioClip>(currentMusicPack.secondaryClipsLight[index], currentMusicPack.secondaryClipsHeavy[index]);
-        }
-        else
-        {
-            CurrentMusicClip = new System.Tuple<AudioClip, AudioClip>(currentMusicPack.mainClipLight, currentMusicPack.mainClipHeavy);
+            else
+            {
+                CurrentMusicClip = new System.Tuple<AudioClip, AudioClip>(currentMusicPack.mainClipLight, currentMusicPack.mainClipHeavy);
+            }
         }
     }
 

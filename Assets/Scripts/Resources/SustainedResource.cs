@@ -36,8 +36,11 @@ public class SustainedResource : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        textEmitter = null;
-        StopAllCoroutines();
+        if (other.CompareTag("Leader"))
+        {
+            textEmitter = null;
+            StopAllCoroutines();
+        }
     }
 
     private IEnumerator ResourceRoutine()

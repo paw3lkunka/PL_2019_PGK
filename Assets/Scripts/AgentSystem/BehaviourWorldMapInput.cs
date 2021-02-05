@@ -9,18 +9,18 @@ using UnityEngine.InputSystem;
 public class BehaviourWorldMapInput : MonoBehaviour
 {
     private Moveable moveable;
-    //todo position in formation
     private Vector3 target;
-
-    public Vector3 formationOffset = Vector3.zero;
 
     private LineRenderer lineRenderer;
 
     private void GoToCursorPosition(InputAction.CallbackContext ctx)
     {
         moveable.Go(target = WorldSceneManager.Instance.Cursor.transform.position);
+        if (target != transform.position)
+        {
+            lineRenderer.gameObject.SetActive(true);
+        }
     }
-
 
     #region MonoBehaviour
 
@@ -35,16 +35,17 @@ public class BehaviourWorldMapInput : MonoBehaviour
         ApplicationManager.Instance.Input.Gameplay.PrimaryAction.performed += GoToCursorPosition;
         ApplicationManager.Instance.Input.Gameplay.PrimaryAction.Enable();
         target = transform.position;
+        lineRenderer.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        if(target != transform.position)
+        if (lineRenderer.gameObject.activeInHierarchy)
         {
             SGUtils.DrawNavLine(lineRenderer, transform.position, target, out _);
         }
     }
-
+    
     private void OnDisable()
     {
         if (ApplicationManager.Instance)

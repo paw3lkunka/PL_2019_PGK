@@ -6,6 +6,7 @@ using UnityEngine;
 public class RecruitController : MonoBehaviour
 {
     public float fadeSpeed = 0.05f;
+    public float targetAlpha = 0.5f;
     public MeshRenderer[] meshesToFade;
     private Collider triggerCollider;
 
@@ -51,7 +52,7 @@ public class RecruitController : MonoBehaviour
                 foreach (var meshRenderer in meshesToFade)
                 {
                     Color targetColor = meshRenderer.material.color;
-                    targetColor.a = 1.0f;
+                    targetColor.a = targetAlpha;
                     meshRenderer.material.color = Color.Lerp(meshRenderer.material.color, targetColor, fadeSpeed);
                 }
             }
