@@ -9,18 +9,6 @@ public class MapGenerator : MonoBehaviour
 
     [field: SerializeField] public Grid GeneralGrid { get; private set; }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.white;
-        foreach (var item in GeneralGrid.Cells)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                Gizmos.DrawLine(item.Corner(i), item.Corner(i + 1));
-            }
-        }
-    }
-
     #region Variables
 
     /// <summary>
@@ -257,9 +245,9 @@ public class MapGenerator : MonoBehaviour
         {
             var locationPosition = new Vector3
             (
-                cell.position.x + Random.Range(-maxOffset.x, maxOffset.x),
+                cell.Position.x + Random.Range(-maxOffset.x, maxOffset.x),
                 prefab.transform.position.y,
-                cell.position.y + Random.Range(-maxOffset.y, maxOffset.y)
+                cell.Position.y + Random.Range(-maxOffset.y, maxOffset.y)
             );
 
             var instance = Instantiate(prefab, locationPosition, Quaternion.identity, parent);

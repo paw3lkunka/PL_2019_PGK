@@ -57,6 +57,7 @@ public class Grid
                     var gobj = new GameObject();
                     gobj.transform.SetParent(parent);
                     gobj.name = $"cell {i} {j}";
+
                     var cell = gobj.AddComponent(typeof(Cell)) as Cell;
                     cell.Set(newPos, cellSize);
                     Cells.Add(cell);
@@ -67,10 +68,10 @@ public class Grid
         // Fix position
         foreach (var cell in Cells)
         {
-            cell.Position3 -= (new Vector3(FarCellSize.x, 0, FarCellSize.y) + Cells.Last().Position3 - position) / 2;
+            cell.transform.position -= (new Vector3(FarCellSize.x, 0, FarCellSize.y) + Cells.Last().transform.position - position) / 2;
 
             int zone = 0;
-            float distance = Vector3.Distance(cell.Position3, position);
+            float distance = Vector3.Distance(cell.transform.position, position);
 
             foreach (var bound in zonesBounds)
             {
@@ -82,6 +83,33 @@ public class Grid
 
             cell.zone = zone;
         }
+    }
+
+    public List<Cell> GetNear(Vector3 point, int range = 0)
+    {
+        var ret = new List<Cell>();
+
+        int index = 0;
+        for (int i = 1; i < Cells.Count; i++)
+        {
+            if (Vector3.Distance(point, Cells[index].transform.position) > Vector3.Distance(point, Cells[i].transform.position))
+            {
+                index = i;
+            }
+        }
+
+        int x = index % CellsNumber.x;
+        int y = index / CellsNumber.x;
+
+        for (int i = Mathf.Max(0, x - range); i <= Mathf.Min(CellsNumber.x, x + range); i++)
+        {
+            for (int j = Mathf.Max(0, y - range); j <= Mathf.Min(CellsNumber.y, y + range); j++)
+            {
+                ret.Add(Cells[j * CellsNumber.x + i]);
+            }
+        }
+
+        return ret;
     }
 
     private bool ShouldBeCutOff(Cut cuttingSettings, int x, int y)
