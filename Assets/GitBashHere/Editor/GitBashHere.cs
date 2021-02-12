@@ -11,7 +11,6 @@ public class GitBashHere
     static GitBashHere()
     {
         ToolbarExtender.LeftToolbarGUI.Add(OnToolbarGUI);
-
     }
 
     static void OnToolbarGUI()
@@ -22,7 +21,7 @@ public class GitBashHere
         {
             using (var stream = new StreamReader("Assets/GitBashHere/gitpath.txt"))
             {
-                Process.Start(stream.ReadLine(), stream.ReadLine());
+                Process.Start(stream.ReadLine(), "");
             }
         }
     }
