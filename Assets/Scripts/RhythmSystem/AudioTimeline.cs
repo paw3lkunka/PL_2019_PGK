@@ -31,6 +31,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     public double SongBpm => songBpm;
     public int BeatsPerBar => beatsPerBar;
     public int FailedBeatResetOffset => failedBeatResetOffset;
+    public double nextBarSubdivOffset = 0.0d;
 #pragma warning restore
 
     public TimelineState TimelineState { get; private set; } = TimelineState.None;
@@ -168,10 +169,11 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
         // ---- Shooting rhythm check ----
         // This part fires the rhythm events with bar subdivision parameter
-        if (TimeSinceSequenceStart >= NextBarSubdivMoment)
+        if (TimeSinceSequenceStart >= NextBarSubdivMoment + nextBarSubdivOffset)
         {
             BarSubdivHandler();
-            currentSubdivNumber = ++currentSubdivNumber % maxBarSubdivision;
+            currentSubdivNumber++;
+            currentSubdivNumber %= maxBarSubdivision;
             NextBarSubdivMoment += maxBarSubdivDuration;
         }
 
@@ -268,7 +270,8 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
             hasEncounteredPerfect = true;
         }
 
-        //Debug.Log($"<color=green>Next beat: {NextBeatMoment}; Next subdiv: {NextBarSubdivMoment}</color>");
+        //Debug.Log($"<color=green>Next beat - next subdiv: {NextBeatMoment - NextBarSubdivMoment}</color>");
+        //Debug.Log($"<color=green>Next beat: {NextBeatMoment}, next subdiv: {NextBarSubdivMoment}</color>");
     }
 
     #endregion

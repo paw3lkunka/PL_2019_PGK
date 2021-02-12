@@ -56,10 +56,11 @@
             float3 zone2 = tex2D(_Zone2Tex, IN.uv_Zone2Tex) * _Zone2Color;
             float3 zone3 = tex2D(_Zone3Tex, IN.uv_Zone3Tex) * _Zone3Color;
             float dist = distance(float3(0.0, 0.0, 0.0), IN.worldPos);
-            float zone1dist = smoothstep(dist, dist + _SmoothingFactor, _Zone1WorldSize);
-            float zone2dist = smoothstep(dist, dist + _SmoothingFactor, _Zone2WorldSize);
-            float zone3dist = smoothstep(dist, dist + _SmoothingFactor, _Zone3WorldSize);
-            o.Albedo = zone1dist * zone1 + (zone2dist - zone1dist) * zone2 + (zone3dist - zone1dist - zone2dist) * zone3;
+            float zone1dist = saturate(smoothstep(dist, dist + _SmoothingFactor, _Zone1WorldSize));
+            float zone2dist = saturate(smoothstep(dist, dist + _SmoothingFactor, _Zone2WorldSize));
+            float zone3dist = saturate(smoothstep(dist, dist + _SmoothingFactor, _Zone3WorldSize));
+            o.Albedo = zone1 * zone1dist + (zone2dist - zone1dist) * zone2 + (zone3dist - zone1dist - zone2dist) * zone3;
+        	//o.Albedo = zone1dist * zone1 + (zone2dist - zone1dist) * zone2 + (zone3dist - zone1dist - zone2dist) * zone3;
             //o.Albedo = float3(zone1dist, zone2dist - zone1dist, zone3dist - zone1dist - zone2dist);
         	// Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;

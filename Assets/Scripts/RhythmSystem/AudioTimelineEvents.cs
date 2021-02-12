@@ -65,6 +65,7 @@ public partial class AudioTimeline
             noteMod /= 2;
             noteSubdiv *= 2;
         }
+        //Debug.Log($"Note subdiv: {noteSubdiv}");
         OnSubdiv?.Invoke(noteSubdiv);
     }
 

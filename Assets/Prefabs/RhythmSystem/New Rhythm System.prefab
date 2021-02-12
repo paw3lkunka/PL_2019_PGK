@@ -551,8 +551,9 @@ MonoBehaviour:
   canFail: 1
   songBpm: 90
   beatsPerBar: 4
-  maxBarSubdivision: 32
+  maxBarSubdivision: 4
   failedBeatResetOffset: 0
+  nextBarSubdivOffset: -0.25
 --- !u!114 &4482779334685485249
 MonoBehaviour:
   m_ObjectHideFlags: 0

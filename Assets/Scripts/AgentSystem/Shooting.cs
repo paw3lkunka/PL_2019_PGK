@@ -132,7 +132,7 @@ public class Shooting : MonoBehaviour, IAttack
     {
         if (subdiv <= IntervalInt)
         {
-        //Debug.Log($"O: {name} - shoot on subdiv = {subdiv}");
+            //Debug.Log($"O: {name} - shoot on subdiv = {subdiv}");
             Shoot();
         }
     }
