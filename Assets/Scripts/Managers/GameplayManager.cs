@@ -329,5 +329,11 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
 
     public void DecreseFaithByCultistWounded() => faith -= cultistWoundedFaith;
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, escapeDistance);
+    }
+
     #endregion
 }

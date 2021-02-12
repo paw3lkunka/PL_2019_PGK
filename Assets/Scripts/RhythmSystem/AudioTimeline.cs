@@ -262,6 +262,12 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
             }
         }
 
+        // A failsafe for situations when a single frame takes too long for perfect frame to be reset properly
+        if (TimeSinceSequenceStart > NextBeatMoment + goodTolerance)
+        {
+            hasEncounteredPerfect = true;
+        }
+
         //Debug.Log($"<color=green>Next beat: {NextBeatMoment}; Next subdiv: {NextBarSubdivMoment}</color>");
     }
 
@@ -363,11 +369,9 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
     #region TimelineControl
 
 
-    //// HACK: Loading the scene takes too much time for first beat to sync in editor, so i hacked it ~fmazurek
-    // It's not a hack anymore ;3 ~Ziemniak
     public void TimelineInit()
     {
-        StartCoroutine(InitDelay());
+        //StartCoroutine(InitDelay());
         beatDuration = 60.0d / songBpm;
         maxBarSubdivDuration = (beatDuration * beatsPerBar) / maxBarSubdivision;
         goodTolerance = ApplicationManager.Instance.GoodTolerance;

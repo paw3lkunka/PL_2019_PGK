@@ -36,6 +36,12 @@ public class MapGeneratorEditor : Editor
                 generator.Clear();
                 EditorUtility.SetDirty(target);
             }
+
+            if (GUILayout.Button("Initialize"))
+            {
+                generator.Initialize();
+                EditorUtility.SetDirty(target);
+            }
         }
         GUILayout.EndHorizontal();
     

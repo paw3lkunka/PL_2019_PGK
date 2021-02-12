@@ -107,7 +107,7 @@ public class MapGenerator : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         Locations = new List<LocationsPool>();
         Locations.AddRange(PrefabDatabase.Load.stdLocations);
