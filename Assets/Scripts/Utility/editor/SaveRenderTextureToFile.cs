@@ -57,11 +57,5 @@ public class SaveRenderTextureToFile
         AssetDatabase.ImportAsset(path);
         Debug.Log("Saved to " + path);
     }
-
-    [MenuItem("Assets/Save RenderTexture to file", true)]
-    public static bool SaveRTToFileValidation()
-    {
-        return Selection.activeGameObject.GetComponent<Camera>() is Camera;
-    }
 }
 #endif
