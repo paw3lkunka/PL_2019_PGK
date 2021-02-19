@@ -27,6 +27,7 @@ public class BehaviourGuard : MonoBehaviour, IBehaviour
 
     private void Awake()
     {
+        post = transform.position;
         moveable = GetComponent<Moveable>();
     }
 
