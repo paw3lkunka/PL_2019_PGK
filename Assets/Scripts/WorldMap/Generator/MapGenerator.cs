@@ -18,6 +18,7 @@ public class MapGenerator : MonoBehaviour
 
     public int seed;
     public float locationScaleFactor = 0.35f;
+    public float obstacleScaleFactor = 0.75f;
 
     public int chunkRadius = 3;
     public int chunksLimit = 20;
@@ -298,6 +299,8 @@ public class MapGenerator : MonoBehaviour
             var instance = Instantiate(prefab, locationPosition, Quaternion.identity, parent);
             if (isLocation)
                 instance.transform.localScale *= locationScaleFactor;
+            else
+                instance.transform.localScale *= obstacleScaleFactor;
 
             if (IntersectionTest(instance, instances))
             {
