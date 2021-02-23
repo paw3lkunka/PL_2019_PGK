@@ -20,7 +20,7 @@ public class Roulette<T>
 
     public T GetRandom(int zone)
     {
-        int range = 1;
+        int range = 0;
 
         foreach (var ch in chances)
         {
@@ -30,7 +30,7 @@ public class Roulette<T>
         int randomNumber = Random.Range(0, range);
         int index = 0;
 
-        while (index < objects.Count && chances[index].forZone[zone] < randomNumber)
+        while (index < objects.Count  && chances[index].forZone[zone] > 0 && chances[index].forZone[zone] < randomNumber)
         {
             randomNumber -= chances[index].forZone[zone];
             index++;
