@@ -10,8 +10,6 @@ public class MapGenerator : MonoBehaviour
     public int spawnRadius = 2;
     public int seed;
 
-    public GameObject PLACEHOLDER;
-
     public float locationsScale = 1;
 
     public Grid grid;
@@ -36,10 +34,8 @@ public class MapGenerator : MonoBehaviour
         var currCellIndex = grid.GetNear(WorldSceneManager.Instance.Leader.transform.position);
         var currCellHash = currCellIndex.GetHashCode();
 
-        Debug.LogWarning(currCellIndex);
         if (lastCellHash != currCellHash)
         {
-            Debug.Log($"{lastCellHash} =/= {currCellHash}");
             lastCellHash = currCellHash;
             SpawnCell(currCellIndex.x, currCellIndex.y);
         }
@@ -98,24 +94,24 @@ public class MapGenerator : MonoBehaviour
         lookupPositions = new List<Vector3>[X, Y];
         lookupRotations = new List<float>[X, Y];
 
-        for (int i = 0; i < X; i += 1)
+        for (int i = 0; i < X; i++)
         {
-            //   PPPP   L       AAA    CCCC  EEEEE  H   H    OOO   L      DDDD   EEEEE  RRRR             
-            //   P   P  L      A   A  C      E      H   H   O   O  L      D   D  E      R   R            
-            //   P   P  L      A   A  C      E      H   H   O   O  L      D   D  E      R   R            
-            //   PPPP   L      AAAAA  C      EEE    HHHHH   O   O  L      D   D  EEE    RRRR             
-            //   P      L      A   A  C      E      H   H   O   O  L      D   D  E      R   R            
-            //   P      LLLLL  A   A   CCCC  EEEEE  H   H    OOO   LLLLL  DDDD   EEEEE  R   R            
-            
-            for (int j = 0; j < Y; j += 1)
+            for (int j = 0; j < Y; j++)
             {
                 lookupPrefabs[i, j] = new List<GameObject>();
                 lookupPositions[i, j] = new List<Vector3>();
                 lookupRotations[i, j] = new List<float>();
 
-                lookupPrefabs[i, j].Add(PLACEHOLDER);
+                var cell = grid.Cells[i, j];
+                lookupPrefabs[i, j].Add(GetRandom(prefabsPerZone[cell.zone].locations));
                 lookupPositions[i, j].Add(grid.Cells[i, j].transform.position);
                 lookupRotations[i, j].Add(Random.Range(0.0f, 360.0f));
+
+                if (cell.zone == 0)
+                {
+                    Debug.Log(lookupPrefabs[i, j].Last());
+                }
+
             }
         }
     }
@@ -123,6 +119,26 @@ public class MapGenerator : MonoBehaviour
     private void GeneriteRuntime()
     {
 
+    }
+
+    static public GameObject GetRandom(List<PrefabWrapper> pairs)
+    {
+        float range = 0;
+
+        foreach (var pair in pairs)
+        {
+            range += pair.spawnChance;
+        }
+
+        float randomNumber = Random.Range(0, range);
+        int index = 0;
+
+        while (randomNumber > 0)
+        {
+            randomNumber -= pairs[index++].spawnChance;  
+        }
+
+        return pairs[--index].prefab;
     }
 
     #region old
