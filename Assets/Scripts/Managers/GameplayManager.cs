@@ -93,6 +93,8 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public float maxAvoidingFightTime = 240.0f;
     public float avoidingFightsFaithDebuf = 0.6f;
 
+    public bool dontMoveOnFail = true;
+
     // * ===== Pause handling =======================================
 
     public bool IsPaused { get; private set; }

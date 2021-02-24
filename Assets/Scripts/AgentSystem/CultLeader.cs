@@ -13,6 +13,7 @@ public class CultLeader : MonoBehaviour
     {
         LocationManager.Instance.cultLeader = this;
         moveableB = GetComponent<MoveableB>();
+        moveableB.flags = Moveable.Flags.nothing;
     }
 
     private void Update()
@@ -28,6 +29,8 @@ public class CultLeader : MonoBehaviour
         GameplayManager.Instance.LowFaithLevelEnd += OnNormalFaithStart;
         GameplayManager.Instance.OverfaithStart += OnOverfaithStart;
         GameplayManager.Instance.OverfaithEnd += OnNormalFaithStart;
+        AudioTimeline.Instance.OnBeatFail += OnBeatFailed;
+        AudioTimeline.Instance.OnBeat += OnBeatMove;
     }
 
     private void OnDisable()
@@ -36,6 +39,8 @@ public class CultLeader : MonoBehaviour
         GameplayManager.Instance.LowFaithLevelEnd -= OnNormalFaithStart;
         GameplayManager.Instance.OverfaithStart -= OnOverfaithStart;
         GameplayManager.Instance.OverfaithEnd -= OnNormalFaithStart;
+        AudioTimeline.Instance.OnBeatFail -= OnBeatFailed;
+        AudioTimeline.Instance.OnBeat -= OnBeatMove;
     }
 
     #endregion
@@ -44,4 +49,13 @@ public class CultLeader : MonoBehaviour
     private void OnLowFaithStart() => moveableB.BState = BoostableState.decresed;
     private void OnNormalFaithStart() => moveableB.BState = BoostableState.normal;
 
+    private void OnBeatFailed(bool _)
+    {
+        if (GameplayManager.Instance.dontMoveOnFail)
+        {
+            moveableB.flags = Moveable.Flags.nothing;
+            moveableB.Stop();
+        }
+    }
+    private void OnBeatMove(bool _) => moveableB.flags = Moveable.Flags.canMove;
 }
