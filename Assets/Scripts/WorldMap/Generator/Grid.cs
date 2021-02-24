@@ -6,69 +6,46 @@ using UnityEngine;
 [System.Serializable]
 public class Grid
 {
-    public List<Cell> Cells { get; private set; } = new List<Cell>();
+    public Cell[,] Cells { get; private set; }
 
-    /// <summary>
-    /// Size of grid cells
-    /// </summary>
-    public Vector2Int CellsNumber = new Vector2Int(20, 20);
-
-    /// <summary>
-    /// Size of single cell
-    /// </summary>
-    public Vector2 NearCellSize = new Vector2(100, 100);
-
-    public Vector2 FarCellSize = new Vector2(150, 150);
+    public Vector2Int cellsNumber = new Vector2Int(20, 20);
+    public Vector2 cellSize = new Vector2(100, 100);
 
     public float[] zonesBounds = new float[MapGenerator.ZONES - 1];
 
-    public Vector2 CentralIndex { get => (CellsNumber - Vector2.one) / 2.0f; }
+    public Vector2 CentralIndex { get => (cellsNumber - Vector2.one) / 2.0f; }
 
-    public void Validate()
-    {
-        CellsNumber = Vector2Int.Max(CellsNumber, Vector2Int.one);
-        NearCellSize = Vector2.Max(NearCellSize, Vector2.zero);
-        FarCellSize = Vector2.Max(FarCellSize, Vector2.zero);
-    }
 
-    public void Generate(Transform parent, Vector3 position, Cut cuttingSettings)
+    public void Generate(Transform parent, Vector3 position)
     {
-        Cells.Clear();
+        Cells = new Cell[cellsNumber.x, cellsNumber.y];
 
         Vector3 newPos = position;
-        Vector2 cellSize = FarCellSize;
 
-        for (int i = 0; i < CellsNumber.x; i++)
+        for (int i = 0; i < cellsNumber.x; i++)
         {
             newPos.z = position.z;
 
-            newPos.x += cellSize.x / 2;
-            cellSize.x = Mathf.Lerp(NearCellSize.x, FarCellSize.x, Mathf.Abs(CentralIndex.x - i) / CentralIndex.x);
-            newPos.x += cellSize.x / 2;
+            newPos.x += cellSize.x;
 
-            for (int j = 0; j < CellsNumber.y; j++)
+            for (int j = 0; j < cellsNumber.y; j++)
             {
-                newPos.z += cellSize.y / 2;
-                cellSize.y = Mathf.Lerp(NearCellSize.y, FarCellSize.y, Mathf.Abs(CentralIndex.y - j) / CentralIndex.y);
-                newPos.z += cellSize.y / 2;
+                newPos.z += cellSize.y;
 
-                if (!ShouldBeCutOff(cuttingSettings, i, j))
-                {
-                    var gobj = new GameObject();
-                    gobj.transform.SetParent(parent);
-                    gobj.name = $"cell {i} {j}";
+                var gobj = new GameObject();
+                gobj.transform.SetParent(parent);
+                gobj.name = $"cell {i} {j}";
 
-                    var cell = gobj.AddComponent(typeof(Cell)) as Cell;
-                    cell.Set(newPos, cellSize);
-                    Cells.Add(cell);
-                }
+                var cell = gobj.AddComponent(typeof(Cell)) as Cell;
+                cell.Set(newPos, cellSize);
+                Cells[i,j] = cell;
             }
         }
 
         // Fix position
         foreach (var cell in Cells)
         {
-            cell.transform.position -= (new Vector3(FarCellSize.x, 0, FarCellSize.y) + Cells.Last().transform.position - position) / 2;
+            cell.transform.position -= (new Vector3(cellSize.x, 0, cellSize.y) + Cells[cellsNumber.x - 1, cellsNumber.y - 1].transform.position - position) / 2;
 
             int zone = 0;
             float distance = Vector3.Distance(cell.transform.position, position);
@@ -89,34 +66,30 @@ public class Grid
     {
         var ret = new List<Cell>();
 
-        int index = 0;
-        for (int i = 1; i < Cells.Count; i++)
+        int x = 0;
+        int y = 0;
+
+        for (int i = 0; i < Cells.GetLength(0); i++)
         {
-            if (Vector3.Distance(point, Cells[index].transform.position) > Vector3.Distance(point, Cells[i].transform.position))
+
+            for (int j = 0; j < Cells.GetLength(1); j++)
             {
-                index = i;
+                if (Vector3.Distance(point, Cells[i, j].transform.position) > Vector3.Distance(point, Cells[i, j].transform.position))
+                {
+                    x = i;
+                    y = j;
+                }
             }
         }
 
-        int x = index % CellsNumber.x;
-        int y = index / CellsNumber.x;
-
-        for (int i = Mathf.Max(0, x - range); i <= Mathf.Min(CellsNumber.x, x + range); i++)
+        for (int i = Mathf.Max(0, x - range); i <= Mathf.Min(cellsNumber.x, x + range); i++)
         {
-            for (int j = Mathf.Max(0, y - range); j <= Mathf.Min(CellsNumber.y, y + range); j++)
+            for (int j = Mathf.Max(0, y - range); j <= Mathf.Min(cellsNumber.y, y + range); j++)
             {
-                ret.Add(Cells[j * CellsNumber.x + i]);
+                ret.Add(Cells[i,j]);
             }
         }
 
         return ret;
-    }
-
-    private bool ShouldBeCutOff(Cut cuttingSettings, int x, int y)
-    {
-        return x * 2 > CellsNumber.x && (cuttingSettings & Cut.XAxisP) != 0
-            || x * 2 < CellsNumber.x && (cuttingSettings & Cut.XAxisN) != 0
-            || y * 2 > CellsNumber.y && (cuttingSettings & Cut.ZAxisP) != 0
-            || y * 2 < CellsNumber.y && (cuttingSettings & Cut.ZAxisN) != 0;
     }
 }

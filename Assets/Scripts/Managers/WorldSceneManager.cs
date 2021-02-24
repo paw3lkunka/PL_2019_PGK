@@ -49,8 +49,7 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         StartCoroutine(LocationCooldown(locationCooldown));
 
         mapGenerator.seed = GameplayManager.Instance.mapGenerationSeed;
-        mapGenerator.useCustomSeed = true;
-        mapGenerator.Generate(Leader.transform.position, true);
+        mapGenerator.Generate(Leader.transform.position);
 
         MarkShrine();
 

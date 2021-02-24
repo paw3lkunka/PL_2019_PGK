@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class Roulette<T>
 {
-    public Roulette(IList<T> objects, IList<SpawnChance> spawnChances, SpawnChance emptyChance = null)
+    public Roulette(IList<T> objects, IList<int> spawnChances)
     {
         this.objects = objects;
-        this.chances = new List<SpawnChance>();
+        this.chances = new List<int>();
 
         for (int i = 0; i < objects.Count; i++)
         {
-            SpawnChance chance = spawnChances[i];
+            int chance = spawnChances[i];
             chances.Add(chance);
         }
-
-        chances.Add(emptyChance ?? new SpawnChance());
     }
 
     public T GetRandom(int zone)
@@ -24,15 +22,15 @@ public class Roulette<T>
 
         foreach (var ch in chances)
         {
-            range += ch.forZone[zone];
+            range += ch;
         }
 
         int randomNumber = Random.Range(0, range);
         int index = 0;
 
-        while (index < objects.Count  && chances[index].forZone[zone] > 0 && chances[index].forZone[zone] < randomNumber)
+        while (index < objects.Count  && chances[index] > 0 && chances[index] < randomNumber)
         {
-            randomNumber -= chances[index].forZone[zone];
+            randomNumber -= chances[index];
             index++;
         }
 
@@ -40,5 +38,5 @@ public class Roulette<T>
     }
 
     private IList<T> objects;
-    private List<SpawnChance> chances;
+    private List<int> chances;
 }
