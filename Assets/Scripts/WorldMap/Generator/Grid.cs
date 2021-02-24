@@ -62,31 +62,20 @@ public class Grid
         }
     }
 
-    public List<Cell> GetNear(Vector3 point, int range = 0)
+    public Vector2Int GetNear(Vector3 point)
     {
-        var ret = new List<Cell>();
+        var ret = new Vector2Int(0, 0);
 
-        int x = 0;
-        int y = 0;
-
-        for (int i = 0; i < Cells.GetLength(0); i++)
+        for (int i = 0; i < cellsNumber.x; i++)
         {
 
-            for (int j = 0; j < Cells.GetLength(1); j++)
+            for (int j = 0; j < cellsNumber.y; j++)
             {
-                if (Vector3.Distance(point, Cells[i, j].transform.position) > Vector3.Distance(point, Cells[i, j].transform.position))
+                if (Vector3.Distance(point, Cells[i, j].transform.position) < Vector3.Distance(point, Cells[ret.x, ret.y].transform.position))
                 {
-                    x = i;
-                    y = j;
+                    ret.x = i;
+                    ret.y = j;
                 }
-            }
-        }
-
-        for (int i = Mathf.Max(0, x - range); i <= Mathf.Min(cellsNumber.x, x + range); i++)
-        {
-            for (int j = Mathf.Max(0, y - range); j <= Mathf.Min(cellsNumber.y, y + range); j++)
-            {
-                ret.Add(Cells[i,j]);
             }
         }
 
