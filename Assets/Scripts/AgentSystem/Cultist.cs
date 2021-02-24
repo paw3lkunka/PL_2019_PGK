@@ -99,7 +99,7 @@ public class Cultist : MonoBehaviour
     {
         //normalBehaviour.enabled = false;
         //overfaithBehaviour.enabled = true;
-        
+
         DetectInFullCircle = true;
 
         AudioTimeline.Instance.OnBeat -= AttackInDirection;
@@ -115,7 +115,7 @@ public class Cultist : MonoBehaviour
     {
         //normalBehaviour.enabled = true;
         //overfaithBehaviour.enabled = false;
-        
+
         DetectInFullCircle = false;
 
         AudioTimeline.Instance.OnBeat += AttackInDirection;

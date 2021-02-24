@@ -53,7 +53,7 @@ public class ResourcesUIController : MonoBehaviour
 
         var faith = GameplayManager.Instance.Faith.Normalized;
         faithBar.fillAmount = faith;
-        faithBar.color = faith > 1 ? faithBarOvrfColor : faithBarNormColor;
+        faithBar.color = GameplayManager.Instance.overfaith ? faithBarOvrfColor : faithBarNormColor;
         faithAmount.text = System.Math.Round(GameplayManager.Instance.Faith, 1).ToString("0.0");
         
         healthBar.fillAmount = GameplayManager.Instance.Health / GameplayManager.Instance.MaxHealth;

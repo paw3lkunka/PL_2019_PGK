@@ -416,7 +416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7536332df08e9c748842356c32e0a8f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  formationOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &3865262323239329021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,6 +753,11 @@ PrefabInstance:
         type: 3}
       propertyPath: isTimeBased
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525031864083970326, guid: 4c5622ccf73091341ab49c8be7f87851,
+        type: 3}
+      propertyPath: leaveCultTime
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7525031864083970326, guid: 4c5622ccf73091341ab49c8be7f87851,
         type: 3}
