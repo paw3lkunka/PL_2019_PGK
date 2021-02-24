@@ -13,6 +13,8 @@ public class Cell : MonoBehaviour
     public Vector2 size;
 
     public int zone = 0;
+    public bool spawned = false;
+
 
     public void Set(Vector2 position, Vector2 size)
     {

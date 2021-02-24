@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security;
 using UnityEngine;
 
+
 public class MapGenerator : MonoBehaviour
 {
     public const int ZONES = 3;
@@ -21,6 +22,9 @@ public class MapGenerator : MonoBehaviour
     private static List<float>[,] lookupRotations;
 
     private int lastCellHash;
+    [NonReorderable]
+    public List<Zone> prefabsPerZone;
+
 
     private void Start()
     {
@@ -29,10 +33,8 @@ public class MapGenerator : MonoBehaviour
 
     private void Update()
     {
-
         var currCellIndex = grid.GetNear(WorldSceneManager.Instance.Leader.transform.position);
-        var currCell = grid.Cells[currCellIndex.x, currCellIndex.y];
-        var currCellHash = currCell.name.GetHashCode();
+        var currCellHash = currCellIndex.GetHashCode();
 
         Debug.LogWarning(currCellIndex);
         if (lastCellHash != currCellHash)
@@ -40,10 +42,6 @@ public class MapGenerator : MonoBehaviour
             Debug.Log($"{lastCellHash} =/= {currCellHash}");
             lastCellHash = currCellHash;
             SpawnCell(currCellIndex.x, currCellIndex.y);
-        }
-        else
-        {
-            Debug.Log($"{lastCellHash} == {currCellHash}");
         }
     }
 
@@ -59,31 +57,35 @@ public class MapGenerator : MonoBehaviour
 
         int X = grid.cellsNumber.x;
         int Y = grid.cellsNumber.y;
-
-        //for (int i = 0; i < X; i++)
-        //{
-        //    for (int j = 0; j < Y; j++)
-        //    {
-        //        SpawnCell(i, j);
-        //    }
-        //}
     }
 
     private void SpawnCell(int x, int y)
     {
-        for (int i = 0; i < lookupPrefabs[x, y].Count; i++)
+        if (!grid.Cells[x,y].spawned)
         {
-            var obj = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x, y].transform);
-            obj.transform.localScale *= locationsScale;
+            for (int i = 0; i < lookupPrefabs[x, y].Count; i++)
+            {
+                var obj = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x, y].transform);
+                obj.transform.localScale *= locationsScale;
+            }
+
+            grid.Cells[x, y].spawned = true;
         }
+
     }
 
     private void DespawnCell(int x, int y)
     {
-        var transform = grid.Cells[x, y].transform;
-        for (int i = 0; i < transform.childCount; i++)
+        if (grid.Cells[x, y].spawned)
         {
-            Destroy(transform.GetChild(i).gameObject);
+            var transform = grid.Cells[x, y].transform;
+            
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Destroy(transform.GetChild(i).gameObject);
+            }
+
+            grid.Cells[x, y].spawned = false;
         }
     }
 

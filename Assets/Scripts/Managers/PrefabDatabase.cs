@@ -49,10 +49,5 @@ public class PrefabDatabase : ScriptableObject
     public GameObject floatingTextResourceLost;
     public GameObject floatingTextResourceGained;
 
-    [Header("Locations and enviro")]
-    public List<LocationsPool> stdLocations;
-    public List<GameObject> enviro;
-    public GameObject shrineMarker;
-
     public static PrefabDatabase Load {get => Resources.Load("PrefabDatabase") as PrefabDatabase;}
 }
