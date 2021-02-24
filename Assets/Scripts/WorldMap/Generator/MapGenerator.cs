@@ -37,7 +37,18 @@ public class MapGenerator : MonoBehaviour
         if (lastCellHash != currCellHash)
         {
             lastCellHash = currCellHash;
-            SpawnCell(currCellIndex.x, currCellIndex.y);
+
+            for (int i = currCellIndex.x - spawnRadius; i <= currCellIndex.x + spawnRadius; i++)
+            {
+                for (int j = currCellIndex.y - spawnRadius; j <= currCellIndex.y + spawnRadius; j++)
+                {
+                    if ( i > 0 && j > 0 && i < grid.cellSize.x && j < grid.cellSize.y)
+                    {
+                        SpawnCell(i, j);
+                    }
+                }
+            }
+
         }
     }
 
