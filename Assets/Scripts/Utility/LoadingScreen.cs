@@ -18,7 +18,7 @@ public class LoadingScreen : Singleton<LoadingScreen, AllowLazyInstancing>
 
     private void Update()
     {
-        if(isLoading)
+        if(isLoading && currentLoadingOperation != null)
         {
             loadingScreenElements.loadingBar.fillAmount = currentLoadingOperation.progress;
             if(currentLoadingOperation.isDone)
