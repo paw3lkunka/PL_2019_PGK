@@ -205,7 +205,6 @@ public class MapGenerator : MonoBehaviour
         foreach (var cell in newCells)
         {
             Random.InitState(seed * cell.gameObject.name.GetHashCode()); // determinism guarantion
-            
             GenerateObject(cell, locationRandomizer, locInstances, true, true);
 
             int envObjects = Random.Range(enviroObjectsInCell.x, enviroObjectsInCell.y + 1);
@@ -337,15 +336,20 @@ public class MapGenerator : MonoBehaviour
             Transform child = transform.GetChild(i);
 
             if (Mathf.Abs(child.position.x - transform.position.x) < gEmptyCentreSize.x / 2.0f
-             && Mathf.Abs(child.position.z - transform.position.z) < gEmptyCentreSize.y / 2.0f)
+             || Mathf.Abs(child.position.z - transform.position.z) < gEmptyCentreSize.y / 2.0f)
             {
-                if (child.GetComponent<EnviroObstacle>())
+                Debug.Log($"Bitch {i} is here: {child.localPosition}");
+                if (child.GetComponent<EnviroObstacle>() != null)
                 {
+                    Debug.Log($"Bitch {i} is out");
                     SGUtils.SafeDestroy(child.gameObject);
+                    i--;
                 }
-                else if(child.GetComponent<Location>())
+                else if(child.GetComponent<Location>() != null)
                 {
+                    Debug.Log($"Bitch {i} is out");
                     SGUtils.SafeDestroy(child.gameObject);
+                    i--;
                 }
             }
         }
