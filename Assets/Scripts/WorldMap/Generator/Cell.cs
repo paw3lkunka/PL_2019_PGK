@@ -10,37 +10,35 @@ public class Cell : MonoBehaviour
         set => transform.position = new Vector3(value.x, transform.position.y, value.y);
     }
 
-    public Vector2 size;
-
+    Grid grid;
     public int zone = 0;
+    public bool spawned = false;
 
-    public void Set(Vector2 position, Vector2 size)
+    public void Set(Grid grid, Vector2 position)
     {
+        this.grid = grid;
         this.Position = position;
-        this.size = size;
     }
 
-    public void Set(Vector3 position, Vector2 size)
+    public void Set(Grid grid, Vector3 position)
     {
-        this.Position = new Vector2(position.x, position.z);
-        this.size = size;
+        this.grid = grid;
+        position.y = transform.position.y;
+        transform.position = position;
     }
 
     public Vector3 Corner(int i)
     {
-        switch (i % 4)
-        {
-            case 0:
-                return new Vector3(Position.x + size.x / 2, 0, Position.y + size.y / 2);
-            case 1:
-                return new Vector3(Position.x + size.x / 2, 0, Position.y + size.y / -2);
-            case 2:
-                return new Vector3(Position.x + size.x / -2, 0, Position.y + size.y / -2);
-            case 3:
-                return new Vector3(Position.x + size.x / -2, 0, Position.y + size.y / 2);
-        }
+        var size = grid.cellSize;
 
-        throw new System.Exception("This should never happen.");
+        return (i % 4) switch
+        {
+            0 => new Vector3(Position.x + size / 2, 0, Position.y + size / 2),
+            1 => new Vector3(Position.x + size / 2, 0, Position.y + size / -2),
+            2 => new Vector3(Position.x + size / -2, 0, Position.y + size / -2),
+            3 => new Vector3(Position.x + size / -2, 0, Position.y + size / 2),
+            _ => throw new System.Exception("This should never happen."),
+        };
     }
 
     private void OnDrawGizmos()

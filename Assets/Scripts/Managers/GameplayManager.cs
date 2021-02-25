@@ -84,15 +84,16 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
     public int initialCultistsNumber = 4;
     public float faithPerCultist = 20.0f;
     public float cultistWoundedFaith = 0.1f;
-    public float overfaithDeplitionMultiplier = 2.0f;
-
-    public float CurrentFaithMultiplier => faith.Normalized > 1.0f ? overfaithDeplitionMultiplier : 1.0f;
+    public float overfaithDepletionMultiplierBase = 2.0f;
+    public bool overfaith = false;
 
     public float lowWaterLevel = 0.2f;
     public float lowFaithLevel = 0.1f;
 
     public float maxAvoidingFightTime = 240.0f;
     public float avoidingFightsFaithDebuf = 0.6f;
+
+    public bool dontMoveOnFail = true;
 
     // * ===== Pause handling =======================================
 
@@ -223,7 +224,7 @@ public class GameplayManager : Singleton<GameplayManager, AllowLazyInstancing>
         if (faith.Normalized > 1.0f && faithPercentLastFrame <= 1.0f)
             OverfaithStart?.Invoke();
 
-        if (faith.Normalized < 1.0f && faithPercentLastFrame >= 1.0f)
+        if (faith.Normalized < 0.9f && faithPercentLastFrame >= 0.9f)
             OverfaithEnd?.Invoke();
 
         waterPercentLastFrame = water.Normalized;

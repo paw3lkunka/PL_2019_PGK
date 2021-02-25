@@ -1,86 +1,231 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 using UnityEngine;
+using UnityEngine.AI;
+
 
 public class MapGenerator : MonoBehaviour
-{   
+{
     public const int ZONES = 3;
-
-    [field: SerializeField] public Grid GeneralGrid { get; private set; }
-
-    #region Variables
-
-    /// <summary>
-    /// Determine, if Generate function should randomize new seed.
-    /// </summary>
-    public bool useCustomSeed = false;
-
+    public int spawnRadius = 2;
     public int seed;
-    public float locationScaleFactor = 0.35f;
-    public float obstacleScaleFactor = 0.75f;
 
-    public int chunkRadius = 3;
-    public int chunksLimit = 20;
+    public float locationsScale = 1;
+    public float obstaclesScale = 1;
 
-    public Vector2 gEmptyCentreSize = new Vector2(120, 120);
-    public Cut cuttingSettings = 0;
+    public Grid grid;
 
-    public float scalingFactor = 1.0f;
-    /// <summary>
-    /// Amount of enviro objects to place in each cell.
-    /// </summary>
-    public Vector2Int enviroObjectsInCell = new Vector2Int(0, 5);
+    [NonReorderable]
+    public List<Zone> prefabsPerZone;
+    
+    private static bool gridGeneraed = false;
+    private static List<GameObject>[,] lookupPrefabs;
+    private static List<Vector3>[,] lookupPositions;
+    private static List<float>[,] lookupRotations;
 
-    /// <summary>
-    /// Chance of creating empty cell
-    /// </summary>
-    [HideInInspector] public SpawnChance emptyChance;
-
-    /// <summary>
-    /// Inform if all prefabs in list are valid
-    /// </summary>
-    public bool IsValid { get; private set; }
-
-    /// <summary>
-    /// Chances of spawning objecton specific index in prefab array
-    /// </summary>
-    [HideInInspector] public List<SpawnChance> locationSpawnChances = new List<SpawnChance>();
-    [HideInInspector] public List<SpawnChance> enviroSpawnChances = new List<SpawnChance>();
-
-    /// <summary>
-    /// Gets location prefabs from prefab database without Application Manager
-    /// </summary>
-    public List<LocationsPool> Locations { get; private set; }
-    public List<GameObject> Enviro { get; private set; }
-
-    private List<Cell> generatedCells;
     private int lastCellHash;
 
-    #endregion
 
-    #region MonoBehaviour
+    private void Start()
+    {
+    }
 
-    private void OnValidate() => Initialize();
-
-    private void Awake() => Initialize();
 
     private void Update()
     {
-        var currCell = GeneralGrid.GetNear(WorldSceneManager.Instance.Leader.transform.position)[0];
-        var currCellHash = currCell.name.GetHashCode();
+        var currCellIndex = grid.GetNear(WorldSceneManager.Instance.Leader.transform.position);
+        var currCellHash = currCellIndex.GetHashCode();
 
         if (lastCellHash != currCellHash)
         {
-            Debug.Log($"{lastCellHash} =/= {currCellHash}");
             lastCellHash = currCellHash;
-            Generate(currCell.transform.position, true);
+
+            for (int i = currCellIndex.x - spawnRadius; i <= currCellIndex.x + spawnRadius; i++)
+            {
+                for (int j = currCellIndex.y - spawnRadius; j <= currCellIndex.y + spawnRadius; j++)
+                {
+                    if ( i > 0 && j > 0 && i < grid.cellSize && j < grid.cellSize)
+                    {
+                        SpawnCell(i, j);
+                    }
+                }
+            }
+
         }
     }
 
-    #endregion
+    public void Generate(Vector3 position)
+    {
+        grid.Generate(transform, transform.position);
 
-    #region Component
+        if (!gridGeneraed)
+        {
+            GenerateOffline();
+            gridGeneraed = true;
+        }
+    }
+
+    private void SpawnCell(int x, int y)
+    {
+        if (!grid.Cells[x,y].spawned)
+        {
+            var obj = Instantiate(lookupPrefabs[x, y][0], lookupPositions[x, y][0], Quaternion.AngleAxis(lookupRotations[x, y][0], Vector3.up), grid.Cells[x, y].transform);
+            obj.transform.localScale *= locationsScale;
+
+            for (int i = 1; i < lookupPrefabs[x, y].Count; i++)
+            {
+                obj = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x, y].transform);
+                obj.transform.localScale *= obstaclesScale;
+            }
+
+            grid.Cells[x, y].spawned = true;
+        }
+    }
+
+    private void DespawnCell(int x, int y)
+    {
+        if (grid.Cells[x, y].spawned)
+        {
+            var transform = grid.Cells[x, y].transform;
+            
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Destroy(transform.GetChild(i).gameObject);
+            }
+
+            grid.Cells[x, y].spawned = false;
+        }
+    }
+
+    private void GenerateOffline()
+    {
+        Random.InitState(seed);
+
+        int X = grid.cellsInRow;
+        int Y = grid.cellsInRow;
+
+        lookupPrefabs = new List<GameObject>[X, Y];
+        lookupPositions = new List<Vector3>[X, Y];
+        lookupRotations = new List<float>[X, Y];
+
+        for (int i = 0; i < X; i++)
+        {
+            for (int j = 0; j < Y; j++)
+            {
+                lookupPrefabs[i, j] = new List<GameObject>();
+                lookupPositions[i, j] = new List<Vector3>();
+                lookupRotations[i, j] = new List<float>();
+
+                var cell = grid.Cells[i, j];
+                var prefab = GetRandom(prefabsPerZone[cell.zone].locations);
+                var position = grid.Cells[i, j].transform.position;
+                var offset = new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f) * grid.cellSize;
+
+                lookupPrefabs[i, j].Add(prefab);
+                lookupPositions[i, j].Add(position + offset);
+                lookupRotations[i, j].Add(Random.Range(0.0f, 360.0f));
+
+                int zone = cell.zone;
+                int obstacles = Random.Range(prefabsPerZone[zone].minObsacles, prefabsPerZone[zone].maxObstacles + 1);
+
+                for (int k = 0; k < obstacles; k++)
+                {
+                    prefab = GetRandom(prefabsPerZone[cell.zone].obstacles);
+                    position = grid.Cells[i, j].transform.position;
+                    offset = new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f) * grid.cellSize;
+
+<<<<<<< HEAD
+        foreach (var cell in newCells)
+        {
+            Random.InitState(seed * cell.gameObject.name.GetHashCode()); // determinism guarantion
+            GenerateObject(cell, locationRandomizer, locInstances, true, true);
+=======
+                    lookupPrefabs[i, j].Add(prefab);
+                    lookupPositions[i, j].Add(position + offset);
+                    lookupRotations[i, j].Add(Random.Range(0.0f, 360.0f));
+                }
+>>>>>>> 3961da2ff389abf81f53defee0bc3a285044191e
+
+                if (cell.zone == 0)
+                {
+                    Debug.Log(lookupPrefabs[i, j].Last());
+                }
+
+            }
+        }
+    }
+
+    private void GeneriteRuntime()
+    {
+
+    }
+
+    static public GameObject GetRandom(List<PrefabWrapper> pairs)
+    {
+        float range = 0;
+
+        foreach (var pair in pairs)
+        {
+            range += pair.spawnChance;
+        }
+
+        float randomNumber = Random.Range(0, range);
+        int index = 0;
+
+        while (randomNumber > 0)
+        {
+            randomNumber -= pairs[index++].spawnChance;  
+        }
+
+        return pairs[--index].prefab;
+    }
+
+<<<<<<< HEAD
+    private void FreeCentre()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+
+            if (Mathf.Abs(child.position.x - transform.position.x) < gEmptyCentreSize.x / 2.0f
+             || Mathf.Abs(child.position.z - transform.position.z) < gEmptyCentreSize.y / 2.0f)
+            {
+                Debug.Log($"Bitch {i} is here: {child.localPosition}");
+                if (child.GetComponent<EnviroObstacle>() != null)
+                {
+                    Debug.Log($"Bitch {i} is out");
+                    SGUtils.SafeDestroy(child.gameObject);
+                    i--;
+                }
+                else if(child.GetComponent<Location>() != null)
+                {
+                    Debug.Log($"Bitch {i} is out");
+                    SGUtils.SafeDestroy(child.gameObject);
+                    i--;
+                }
+            }
+        }
+    }
+=======
+    #region old
+>>>>>>> 3961da2ff389abf81f53defee0bc3a285044191e
+
+    private bool IntersectionTest(GameObject envObject, IEnumerable<GameObject> locInstances)
+    {
+        foreach (GameObject instance in locInstances)
+        {
+            var colliders = envObject.GetComponentsInChildren<Collider>();
+
+            foreach (var collider in colliders)
+            {
+                if (instance.GetComponent<Collider>().bounds.Intersects(collider.bounds))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public void SaveState()
     {
@@ -108,270 +253,6 @@ public class MapGenerator : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void Initialize()
-    {
-        Locations = new List<LocationsPool>();
-        Locations.AddRange(PrefabDatabase.Load.stdLocations);
-
-        Enviro = new List<GameObject>();
-        Enviro.AddRange(PrefabDatabase.Load.enviro);
-
-        locationSpawnChances.Resize(Locations.Count, new SpawnChance());
-        enviroSpawnChances.Resize(Enviro.Count, new SpawnChance());
-
-        ValidatePrefabs();
-
-        GeneralGrid.Validate();
-
-        generatedCells = new List<Cell>();
-    }
-
-    [ContextMenu("Validate")]
-    public void ValidatePrefabs()
-    {
-        foreach (LocationsPool pool in Locations)
-        {
-            foreach (var prefab in pool.locations)
-            {
-                int scriptsCount = prefab.GetComponentsInChildren<Location>().Length;
-
-                if (scriptsCount != 1)
-                {
-                    IsValid = false;
-                    throw new LocationValidationException(prefab, scriptsCount);
-                }
-            }
-        }
-        foreach (GameObject prefab in Enviro)
-        {
-            int scriptsCount = prefab.GetComponentsInChildren<EnviroObject>().Length;
-
-            if (scriptsCount != 1)
-            {
-                IsValid = false;
-                throw new LocationValidationException(prefab, scriptsCount);
-            }
-        }
-        IsValid = true;
-    }
-
-    [ContextMenu("Generate")]
-    public void Generate(Vector3 origin, bool radiusLimit)
-    {
-        if (!useCustomSeed)
-        {
-            seed = Random.Range(int.MinValue, int.MaxValue);
-        }
-
-        var locationRandomizer = new Roulette<LocationsPool>(Locations, locationSpawnChances, emptyChance);
-        var enviroRandomizer = new Roulette<GameObject>(Enviro, enviroSpawnChances);
-
-        var locInstances = new Stack<GameObject>();
-
-        GeneralGrid.Generate(transform, transform.position, cuttingSettings);
-
-        var newCells = new List<Cell>();
-
-        if (radiusLimit)
-        {
-            var oldCells = generatedCells;
-            var nearCells = GeneralGrid.GetNear(origin, chunkRadius);
-
-            generatedCells = oldCells.Except(nearCells).ToList();
-            generatedCells.AddRange(nearCells);
-
-            //TODO: do it better
-            newCells = nearCells.Except(oldCells).ToList();
-
-            int overflow = generatedCells.Count - chunksLimit;
-            if (overflow > 0)
-            {
-                for (int i = 0; i < overflow; i++)
-                {
-                    Destroy(generatedCells[i].gameObject);
-                }
-                generatedCells.RemoveRange(0, overflow);
-            }
-        }
-        else
-        {
-            if (generatedCells != GeneralGrid.Cells)
-            {
-                generatedCells = GeneralGrid.Cells;
-                newCells = generatedCells;
-            }
-        }
-
-        foreach (var cell in newCells)
-        {
-            Random.InitState(seed * cell.gameObject.name.GetHashCode()); // determinism guarantion
-            GenerateObject(cell, locationRandomizer, locInstances, true, true);
-
-            int envObjects = Random.Range(enviroObjectsInCell.x, enviroObjectsInCell.y + 1);
-
-            for (int k = 0; k < envObjects; k++)
-            {
-                GenerateObject(cell, enviroRandomizer, locInstances, false, false);
-            }
-        }
-
-        if (!Mathf.Approximately(gEmptyCentreSize.magnitude, 0.0f))
-        {
-            FreeCentre();
-        }
-
-        LoadState();
-        ClearSave();
-    }
-
-    [ContextMenu("Clear")]
-    public void Clear()
-    {
-        foreach (var child in GetComponentsInChildren<Cell>())
-        {
-            DestroyImmediate(child.gameObject);
-        }
-
-        foreach (var child in GetComponentsInChildren<EnviroObject>())
-        {
-            DestroyImmediate(child.gameObject);
-        }
-
-        foreach (var child in GetComponentsInChildren<EnviroObject>())
-        {
-            DestroyImmediate(child.gameObject);
-        }
-    }
-
-    private void GenerateObject<T>(Cell cell, Roulette<T> randomizer, Stack<GameObject> instances, bool limitOffset, bool addToInstances)
-    {
-        Vector2 maxOffset;
-
-        if (limitOffset)
-        {
-#if UNITY_EDITOR
-            if (Application.isPlaying)
-            {
-                maxOffset = (cell.size - Vector2.one * GameplayManager.Instance.lastLocationRadius ) / 2.0f;
-            }
-            else
-            {
-                maxOffset = (cell.size - Vector2.one * FindObjectOfType<GameplayManager>().lastLocationRadius) / 2.0f;
-            }
-            // DON"T FORGET TO CHANGE THE BUILD LINE ALSO!!!!
-#else
-            
-            maxOffset = (cell.size - Vector2.one * GameplayManager.Instance.lastLocationRadius ) / 2.0f;
-#endif
-        }
-        else
-        {
-            maxOffset = cell.size / 2.0f;
-        }
-
-        T randomObj = randomizer.GetRandom(cell.zone);
-
-        if (randomObj is GameObject)
-        {
-            Spawn(randomObj as GameObject, cell.transform);
-        }
-        else if (randomObj is LocationsPool)
-        {
-            var pool = randomObj as LocationsPool;
-            
-            Spawn(pool.locations[Random.Range(0, pool.locations.Count)], cell.transform, true);
-        }
-        else if (randomObj != null)
-        {
-            Debug.LogError($"Type of randomizer: {randomizer.GetType()} is invalid, only supperted types is Roulette<GameObjct> and Roulette<LocationsPool>");
-        }
-
-        void Spawn(GameObject prefab, Transform parent, bool isLocation = false)
-        {
-            var locationPosition = new Vector3
-            (
-                cell.Position.x + Random.Range(-maxOffset.x, maxOffset.x),
-                prefab.transform.position.y,
-                cell.Position.y + Random.Range(-maxOffset.y, maxOffset.y)
-            );
-
-            var instance = Instantiate(prefab, locationPosition, Quaternion.identity, parent);
-            if (isLocation)
-                instance.transform.localScale *= locationScaleFactor;
-            else
-                instance.transform.localScale *= obstacleScaleFactor;
-
-            if (IntersectionTest(instance, instances))
-            {
-                instance.transform.localScale *= scalingFactor;
-
-                if (addToInstances)
-                {
-                    instances.Push(instance);
-                }
-
-                if (instance.TryGetComponent(out Location loc))
-                {
-                    loc.id = cell.name.GetHashCode();
-                    loc.generatedBy = this;
-                }
-
-                if (instance.TryGetComponent(out EnviroObject env))
-                {
-                    env.Randomize();
-                }
-            }
-            else
-            {
-                SGUtils.SafeDestroy(instance);
-            }
-
-        }
-    }
-
-    private void FreeCentre()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-
-            if (Mathf.Abs(child.position.x - transform.position.x) < gEmptyCentreSize.x / 2.0f
-             || Mathf.Abs(child.position.z - transform.position.z) < gEmptyCentreSize.y / 2.0f)
-            {
-                Debug.Log($"Bitch {i} is here: {child.localPosition}");
-                if (child.GetComponent<EnviroObstacle>() != null)
-                {
-                    Debug.Log($"Bitch {i} is out");
-                    SGUtils.SafeDestroy(child.gameObject);
-                    i--;
-                }
-                else if(child.GetComponent<Location>() != null)
-                {
-                    Debug.Log($"Bitch {i} is out");
-                    SGUtils.SafeDestroy(child.gameObject);
-                    i--;
-                }
-            }
-        }
-    }
-
-    private bool IntersectionTest(GameObject envObject, IEnumerable<GameObject> locInstances)
-    {
-        foreach (GameObject instance in locInstances)
-        {
-            var colliders = envObject.GetComponentsInChildren<Collider>();
-
-            foreach (var collider in colliders)
-            {
-                if (instance.GetComponent<Collider>().bounds.Intersects(collider.bounds))
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-#endregion
+    #endregion
 }
 

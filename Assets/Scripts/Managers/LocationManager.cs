@@ -26,10 +26,13 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
     [Tooltip("If checked, manager automatically removes null elements from $ourCrew and $enemies")]
     public bool cleanLists = true;
+    [Range(0.0f, 1.0f), Tooltip("How many % of enemies must be killed to end the location")]
+    public float locationEndKillPercantage = 0.8f;
 
     [HideInInspector] public bool isExiting = false;
 
     private Vector3 toCenter;
+    private int startEnemies;
 
     public void CalculateOffsets()
     {
@@ -136,19 +139,11 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
                 enemies.Add(d);
             }
         }
+        startEnemies = enemies.Count;
 
         CalculateOffsets();
 
-        UIOverlayManager.Instance.ControlsSheet.Clear();
-        UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Walk");
-
-        if(sceneMode == LocationMode.Hostile)
-        {
-            UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Shoot, "Shoot");
-        }
-
-
-        UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Pause, "Pause");
+        RepaintUI();
     }
 
     private void Update()
@@ -177,6 +172,22 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
             enemies.RemoveAll((item) => !item || item == null);
             ourCrew.RemoveAll((item) => !item || item == null);
         }
+
+        if((enemies.Count / (float)startEnemies) < (1.0f - locationEndKillPercantage))
+        {
+            for(int i = 0; i < enemies.Count; ++i)
+            {
+                var pos = enemies[i].gameObject.transform.position;
+                var rot = enemies[i].gameObject.transform.rotation;
+                var parent = enemies[i].transform.parent;
+                enemies[i].gameObject.SetActive(false);
+                Instantiate(ApplicationManager.Instance.PrefabDatabase.recruit, pos, rot, parent);
+                Destroy(enemies[i].gameObject);
+            }
+            enemies.Clear();
+            sceneMode = LocationMode.Neutral;
+            RepaintUI();
+        }
     }
 
     private void OnEnable() 
@@ -194,6 +205,14 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
             AudioTimeline.Instance.OnBeatFail -= OnBeatFail;
         }
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, locationRadius);
+        if (cultLeader)
+            Gizmos.DrawLine(cultLeader.transform.position, cultLeader.transform.position + toCenter);
+    }
+    #endregion
 
     private void OnBeatFail(bool reset)
     {
@@ -217,13 +236,19 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
         GameplayManager.Instance.ExitLocation();
     }
 
-    private void OnDrawGizmos()
+
+    private void RepaintUI()
     {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, locationRadius);
-        if (cultLeader)
-            Gizmos.DrawLine(cultLeader.transform.position, cultLeader.transform.position + toCenter);
+        UIOverlayManager.Instance.ControlsSheet.Clear();
+        UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Walk");
+
+        if(sceneMode == LocationMode.Hostile)
+        {
+            UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Shoot, "Shoot");
+        }
+
+        UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Pause, "Pause");
     }
 
-    #endregion
+
 }

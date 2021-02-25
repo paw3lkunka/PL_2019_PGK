@@ -51,15 +51,14 @@ public class Cultist : MonoBehaviour
         {
             Vector3 target = detected.Value;
             target.y = transform.position.y;
-
             if (RhythmMechanics.Instance.Combo > 0)
             {
                 attack?.Attack(target);
-                if (detection.Func() == null)
-                {
-                    attack?.HoldFire();
-                }
             }
+        }
+        else if (detected == null)
+        {
+            attack?.HoldFire();
         }
     }
 
@@ -74,7 +73,14 @@ public class Cultist : MonoBehaviour
     private void FailBit(bool reset)
     {
         attack?.HoldFire();
+        if (GameplayManager.Instance.dontMoveOnFail)
+        {
+            moveable.flags = Moveable.Flags.nothing;
+            moveable.Stop();
+        }
     }
+
+    private void OnBeatMove(bool _) => moveable.flags = Moveable.Flags.canMove;
 
     private void OnLowFaithStart()
     {
@@ -99,7 +105,7 @@ public class Cultist : MonoBehaviour
     {
         //normalBehaviour.enabled = false;
         //overfaithBehaviour.enabled = true;
-        
+
         DetectInFullCircle = true;
 
         AudioTimeline.Instance.OnBeat -= AttackInDirection;
@@ -115,7 +121,7 @@ public class Cultist : MonoBehaviour
     {
         //normalBehaviour.enabled = true;
         //overfaithBehaviour.enabled = false;
-        
+
         DetectInFullCircle = false;
 
         AudioTimeline.Instance.OnBeat += AttackInDirection;
@@ -152,7 +158,7 @@ public class Cultist : MonoBehaviour
         moveable = GetComponent<Moveable>();
         attack = GetComponent<IAttack>();
         boostables = GetComponentsInChildren<IBoostable>();
-
+        moveable.flags = Moveable.Flags.nothing;
         //AudioTimeline.Instance.OnBeat += AttackInDirection;
     }
 
@@ -171,6 +177,7 @@ public class Cultist : MonoBehaviour
         {
             AudioTimeline.Instance.OnBeatFail += FailBit;
             AudioTimeline.Instance.OnBeat += AttackInDirection;
+            AudioTimeline.Instance.OnBeat += OnBeatMove;
         }
         else
         {
@@ -193,6 +200,7 @@ public class Cultist : MonoBehaviour
         {
             AudioTimeline.Instance.OnBeatFail -= FailBit;
             AudioTimeline.Instance.OnBeat -= AttackInDirection;
+            AudioTimeline.Instance.OnBeat -= OnBeatMove;
             //AudioTimeline.Instance.OnBeat -= AttackNearbyEnemy;
         }
 

@@ -25,6 +25,7 @@ public class PrefabDatabase : ScriptableObject
     public GameObject cultLeader;
     public List<GameObject> cultists;
     public List<GameObject> enemies;
+    public GameObject recruit;
 
     [Header("Main menu")]
     public GameObject mainMenuGUI;
@@ -48,11 +49,6 @@ public class PrefabDatabase : ScriptableObject
     public GameObject floatingTextEmitter;
     public GameObject floatingTextResourceLost;
     public GameObject floatingTextResourceGained;
-
-    [Header("Locations and enviro")]
-    public List<LocationsPool> stdLocations;
-    public List<GameObject> enviro;
-    public GameObject shrineMarker;
 
     public static PrefabDatabase Load {get => Resources.Load("PrefabDatabase") as PrefabDatabase;}
 }

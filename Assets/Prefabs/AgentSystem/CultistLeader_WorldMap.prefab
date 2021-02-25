@@ -203,6 +203,55 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &2366202004256590899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968320175676017221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536332df08e9c748842356c32e0a8f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3865262323239329021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968320175676017221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ac4b4518f04234e9e104f59f7bd10d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapCamera: {fileID: 8695547830620636961}
+  closestPoint: {fileID: 4525095909565941212}
+  middlePoint: {fileID: 612310319641057915}
+  furthestPoint: {fileID: 9020436243410463687}
+  rotationSpeed: 2
+  smoothing: 0.1
+  mousePointerSensitivity: 5
+  mouseScrollSensitivity: 0.05
+  joystickSensivity: 20
+  bumpersSensitivity: 0.4
+--- !u!114 &4562957200260902563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968320175676017221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bc09ca658fd5ac4ab299c290d3661e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthAddPerCultist: 0.5
+  waterSubtractPerCultist: 1.5
+  faithSubtractPerCultist: 0.5
 --- !u!1 &4226876222137742032
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,56 +453,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &2366202004256590899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3968320175676017221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7536332df08e9c748842356c32e0a8f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  formationOffset: {x: 0, y: 0, z: 0}
---- !u!114 &3865262323239329021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3968320175676017221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45ac4b4518f04234e9e104f59f7bd10d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapCamera: {fileID: 8695547830620636961}
-  closestPoint: {fileID: 4525095909565941212}
-  middlePoint: {fileID: 612310319641057915}
-  furthestPoint: {fileID: 9020436243410463687}
-  rotationSpeed: 2
-  smoothing: 0.1
-  mousePointerSensitivity: 5
-  mouseScrollSensitivity: 0.05
-  joystickSensivity: 20
-  bumpersSensitivity: 0.4
---- !u!114 &4562957200260902563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3968320175676017221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bc09ca658fd5ac4ab299c290d3661e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthAddPerCultist: 0.1
-  waterSubtractPerCultist: 0.3
-  faithSubtractPerCultist: 0.1
 --- !u!1 &8326871725445523970
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,6 +753,11 @@ PrefabInstance:
         type: 3}
       propertyPath: isTimeBased
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525031864083970326, guid: 4c5622ccf73091341ab49c8be7f87851,
+        type: 3}
+      propertyPath: leaveCultTime
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7525031864083970326, guid: 4c5622ccf73091341ab49c8be7f87851,
         type: 3}
