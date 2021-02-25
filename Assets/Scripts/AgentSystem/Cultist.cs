@@ -51,15 +51,14 @@ public class Cultist : MonoBehaviour
         {
             Vector3 target = detected.Value;
             target.y = transform.position.y;
-
             if (RhythmMechanics.Instance.Combo > 0)
             {
                 attack?.Attack(target);
-                if (detection.Func() == null)
-                {
-                    attack?.HoldFire();
-                }
             }
+        }
+        else if (detected == null)
+        {
+            attack?.HoldFire();
         }
     }
 
