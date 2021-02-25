@@ -134,17 +134,10 @@ public class MapGenerator : MonoBehaviour
                     position = grid.Cells[i, j].transform.position;
                     offset = new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f) * grid.cellSize;
 
-<<<<<<< HEAD
-        foreach (var cell in newCells)
-        {
-            Random.InitState(seed * cell.gameObject.name.GetHashCode()); // determinism guarantion
-            GenerateObject(cell, locationRandomizer, locInstances, true, true);
-=======
                     lookupPrefabs[i, j].Add(prefab);
                     lookupPositions[i, j].Add(position + offset);
                     lookupRotations[i, j].Add(Random.Range(0.0f, 360.0f));
                 }
->>>>>>> 3961da2ff389abf81f53defee0bc3a285044191e
 
                 if (cell.zone == 0)
                 {
@@ -180,35 +173,7 @@ public class MapGenerator : MonoBehaviour
         return pairs[--index].prefab;
     }
 
-<<<<<<< HEAD
-    private void FreeCentre()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-
-            if (Mathf.Abs(child.position.x - transform.position.x) < gEmptyCentreSize.x / 2.0f
-             || Mathf.Abs(child.position.z - transform.position.z) < gEmptyCentreSize.y / 2.0f)
-            {
-                Debug.Log($"Bitch {i} is here: {child.localPosition}");
-                if (child.GetComponent<EnviroObstacle>() != null)
-                {
-                    Debug.Log($"Bitch {i} is out");
-                    SGUtils.SafeDestroy(child.gameObject);
-                    i--;
-                }
-                else if(child.GetComponent<Location>() != null)
-                {
-                    Debug.Log($"Bitch {i} is out");
-                    SGUtils.SafeDestroy(child.gameObject);
-                    i--;
-                }
-            }
-        }
-    }
-=======
     #region old
->>>>>>> 3961da2ff389abf81f53defee0bc3a285044191e
 
     private bool IntersectionTest(GameObject envObject, IEnumerable<GameObject> locInstances)
     {
