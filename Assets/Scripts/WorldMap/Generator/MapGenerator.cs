@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 public class MapGenerator : MonoBehaviour
@@ -11,17 +11,19 @@ public class MapGenerator : MonoBehaviour
     public int seed;
 
     public float locationsScale = 1;
+    public float obstaclesScale = 1;
 
     public Grid grid;
 
+    [NonReorderable]
+    public List<Zone> prefabsPerZone;
+    
     private static bool gridGeneraed = false;
     private static List<GameObject>[,] lookupPrefabs;
     private static List<Vector3>[,] lookupPositions;
     private static List<float>[,] lookupRotations;
 
     private int lastCellHash;
-    [NonReorderable]
-    public List<Zone> prefabsPerZone;
 
 
     private void Start()
@@ -42,7 +44,7 @@ public class MapGenerator : MonoBehaviour
             {
                 for (int j = currCellIndex.y - spawnRadius; j <= currCellIndex.y + spawnRadius; j++)
                 {
-                    if ( i > 0 && j > 0 && i < grid.cellSize.x && j < grid.cellSize.y)
+                    if ( i > 0 && j > 0 && i < grid.cellSize && j < grid.cellSize)
                     {
                         SpawnCell(i, j);
                     }
@@ -61,24 +63,23 @@ public class MapGenerator : MonoBehaviour
             GenerateOffline();
             gridGeneraed = true;
         }
-
-        int X = grid.cellsNumber.x;
-        int Y = grid.cellsNumber.y;
     }
 
     private void SpawnCell(int x, int y)
     {
         if (!grid.Cells[x,y].spawned)
         {
-            for (int i = 0; i < lookupPrefabs[x, y].Count; i++)
+            var obj = Instantiate(lookupPrefabs[x, y][0], lookupPositions[x, y][0], Quaternion.AngleAxis(lookupRotations[x, y][0], Vector3.up), grid.Cells[x, y].transform);
+            obj.transform.localScale *= locationsScale;
+
+            for (int i = 1; i < lookupPrefabs[x, y].Count; i++)
             {
-                var obj = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x, y].transform);
-                obj.transform.localScale *= locationsScale;
+                obj = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x, y].transform);
+                obj.transform.localScale *= obstaclesScale;
             }
 
             grid.Cells[x, y].spawned = true;
         }
-
     }
 
     private void DespawnCell(int x, int y)
@@ -98,8 +99,10 @@ public class MapGenerator : MonoBehaviour
 
     private void GenerateOffline()
     {
-        int X = grid.cellsNumber.x;
-        int Y = grid.cellsNumber.y;
+        Random.InitState(seed);
+
+        int X = grid.cellsInRow;
+        int Y = grid.cellsInRow;
 
         lookupPrefabs = new List<GameObject>[X, Y];
         lookupPositions = new List<Vector3>[X, Y];
@@ -114,9 +117,27 @@ public class MapGenerator : MonoBehaviour
                 lookupRotations[i, j] = new List<float>();
 
                 var cell = grid.Cells[i, j];
-                lookupPrefabs[i, j].Add(GetRandom(prefabsPerZone[cell.zone].locations));
-                lookupPositions[i, j].Add(grid.Cells[i, j].transform.position);
+                var prefab = GetRandom(prefabsPerZone[cell.zone].locations);
+                var position = grid.Cells[i, j].transform.position;
+                var offset = new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f) * grid.cellSize;
+
+                lookupPrefabs[i, j].Add(prefab);
+                lookupPositions[i, j].Add(position + offset);
                 lookupRotations[i, j].Add(Random.Range(0.0f, 360.0f));
+
+                int zone = cell.zone;
+                int obstacles = Random.Range(prefabsPerZone[zone].minObsacles, prefabsPerZone[zone].maxObstacles + 1);
+
+                for (int k = 0; k < obstacles; k++)
+                {
+                    prefab = GetRandom(prefabsPerZone[cell.zone].obstacles);
+                    position = grid.Cells[i, j].transform.position;
+                    offset = new Vector3(Random.value - 0.5f, 0, Random.value - 0.5f) * grid.cellSize;
+
+                    lookupPrefabs[i, j].Add(prefab);
+                    lookupPositions[i, j].Add(position + offset);
+                    lookupRotations[i, j].Add(Random.Range(0.0f, 360.0f));
+                }
 
                 if (cell.zone == 0)
                 {

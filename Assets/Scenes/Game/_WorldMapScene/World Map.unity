@@ -911,8 +911,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8271621568051065511, guid: 8c2b1f9446faa1d4e9be200d7b6a6ab2,
         type: 3}
+      propertyPath: spawnRadius
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271621568051065511, guid: 8c2b1f9446faa1d4e9be200d7b6a6ab2,
+        type: 3}
       propertyPath: locationsScale
-      value: 0.3
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271621568051065511, guid: 8c2b1f9446faa1d4e9be200d7b6a6ab2,
+        type: 3}
+      propertyPath: obstaclesScale
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8271621568051065511, guid: 8c2b1f9446faa1d4e9be200d7b6a6ab2,
         type: 3}
@@ -1003,6 +1013,31 @@ PrefabInstance:
         type: 3}
       propertyPath: prefabs.Array.data[0].list.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271621568051065511, guid: 8c2b1f9446faa1d4e9be200d7b6a6ab2,
+        type: 3}
+      propertyPath: prefabsPerZone.Array.data[1].minObsacles
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271621568051065511, guid: 8c2b1f9446faa1d4e9be200d7b6a6ab2,
+        type: 3}
+      propertyPath: prefabsPerZone.Array.data[2].minObsacles
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271621568051065511, guid: 8c2b1f9446faa1d4e9be200d7b6a6ab2,
+        type: 3}
+      propertyPath: prefabsPerZone.Array.data[0].maxObstacles
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271621568051065511, guid: 8c2b1f9446faa1d4e9be200d7b6a6ab2,
+        type: 3}
+      propertyPath: prefabsPerZone.Array.data[1].maxObstacles
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271621568051065511, guid: 8c2b1f9446faa1d4e9be200d7b6a6ab2,
+        type: 3}
+      propertyPath: prefabsPerZone.Array.data[2].maxObstacles
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8271621568051065511, guid: 8c2b1f9446faa1d4e9be200d7b6a6ab2,
         type: 3}

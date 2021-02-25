@@ -5,6 +5,8 @@ using UnityEngine;
 [Serializable]
 public class Zone
 {
+    public int minObsacles;
+    public int maxObstacles;
     public List<PrefabWrapper> locations;
     public List<PrefabWrapper> obstacles;
 }
