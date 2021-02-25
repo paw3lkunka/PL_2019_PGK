@@ -25,6 +25,7 @@ public class PrefabDatabase : ScriptableObject
     public GameObject cultLeader;
     public List<GameObject> cultists;
     public List<GameObject> enemies;
+    public GameObject recruit;
 
     [Header("Main menu")]
     public GameObject mainMenuGUI;

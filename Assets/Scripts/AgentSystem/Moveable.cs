@@ -27,7 +27,7 @@ public class Moveable : MonoBehaviour
     /// <returns>If destination was setted, ergo, if can move.</returns>
     public bool Go(Vector3 target)
     {
-        if( (flags & Flags.canMove) != 0 )
+        if( (flags & Flags.canMove) != 0 && navMeshAgent != null)
         {
             navMeshAgent.SetDestination(target);
             return true;
@@ -46,7 +46,7 @@ public class Moveable : MonoBehaviour
 
     #region MonoBehaviour
 
-    protected NavMeshAgent navMeshAgent;
+    protected NavMeshAgent navMeshAgent = null;
 
     protected void OnValidate()
     {
