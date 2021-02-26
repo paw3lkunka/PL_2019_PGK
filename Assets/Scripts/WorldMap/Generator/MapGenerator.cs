@@ -68,13 +68,23 @@ public class MapGenerator : MonoBehaviour
     {
         if (!grid.Cells[x,y].spawned)
         {
-            var obj = Instantiate(lookupPrefabs[x,y][0], lookupPositions[x,y][0], Quaternion.AngleAxis(lookupRotations[x,y][0], Vector3.up), grid.Cells[x,y].transform);
-            obj.transform.localScale *= locationsScale;
+            var location = Instantiate(lookupPrefabs[x,y][0], lookupPositions[x,y][0], Quaternion.AngleAxis(lookupRotations[x,y][0], Vector3.up), grid.Cells[x,y].transform);
+            location.transform.localScale *= locationsScale;
 
             for (int i = 1; i < lookupPrefabs[x, y].Count; i++)
             {
-                obj = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x,y].transform);
-                obj.transform.localScale *= obstaclesScale;
+                var obstacle = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x,y].transform);
+                obstacle.transform.localScale *= obstaclesScale;
+
+                if (IntersectionTest(location, obstacle))
+                {
+                    Debug.Log("Intersection");
+                    Destroy(obstacle);
+                    lookupPrefabs[x, y].RemoveAt(i);
+                    lookupPositions[x, y].RemoveAt(i);
+                    lookupRotations[x, y].RemoveAt(i);
+                    i--;
+                }
             }
 
             grid.Cells[x, y].spawned = true;
@@ -192,24 +202,22 @@ public class MapGenerator : MonoBehaviour
         return pairs[--index].prefab;
     }
 
-    #region old
-
-    private bool IntersectionTest(GameObject envObject, IEnumerable<GameObject> locInstances)
+    private bool IntersectionTest(GameObject location, GameObject obstacle)
     {
-        foreach (GameObject instance in locInstances)
-        {
-            var colliders = envObject.GetComponentsInChildren<Collider>();
+        var collider1 = location.GetComponent<Collider>();
+        var colliders = obstacle.GetComponentsInChildren<Collider>();
 
-            foreach (var collider in colliders)
+        foreach (var collider2 in colliders)
+        {
+            if (collider1.bounds.Intersects(collider2.bounds))
             {
-                if (instance.GetComponent<Collider>().bounds.Intersects(collider.bounds))
-                {
-                    return false;
-                }
+                return true;
             }
         }
-        return true;
+        return false;
     }
+
+    #region old
 
     public void SaveState()
     {
