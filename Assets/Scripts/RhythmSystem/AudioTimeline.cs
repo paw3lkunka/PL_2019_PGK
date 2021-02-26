@@ -20,7 +20,7 @@ public partial class AudioTimeline : Singleton<AudioTimeline, ForbidLazyInstanci
 
 #pragma warning disable
     [Header("Timeline setup")]
-    [SerializeField] private bool canFail = true;
+    public bool canFail = true;
     [SerializeField] private double songBpm = 80;
     [SerializeField] private int beatsPerBar = 4;
     [Header("Must be a power of two")]

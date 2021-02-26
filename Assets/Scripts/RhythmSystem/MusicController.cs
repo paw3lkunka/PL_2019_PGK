@@ -8,7 +8,7 @@ public class MusicController : MonoBehaviour
     public void MuteMusic()
     {
         var sources = GetComponentsInChildren<AudioSource>();
-        foreach(var src in sources)
+        foreach(var src in sources) 
         {
             StartCoroutine(MuteCouroutine(src));
         }

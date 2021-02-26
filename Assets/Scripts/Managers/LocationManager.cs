@@ -263,5 +263,6 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
         var controller = FindObjectOfType<MusicController>();
         Destroy(controller.gameObject);
         Instantiate(ApplicationManager.Instance.PrefabDatabase.musicNeutral, controller.transform.parent);
+        AudioTimeline.Instance.canFail = false;
     }
 }
