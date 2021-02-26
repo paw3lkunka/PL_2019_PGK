@@ -2,6 +2,8 @@
 {
     Properties
     {
+        _ClippingTexture("Clipping Texture", 2D) = "white" {}
+    	_Cutoff ("Cutoff", Float) = 0.5
     	_SmoothingFactor ("Smoothing Factor", Float) = 30
     	_Zone1WorldSize ("Zone1 Size", Float) = 10
         _Zone1Color ("Zone1 Color", Color) = (1,1,1,1)
@@ -17,24 +19,27 @@
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "Queue" = "AlphaTest" "RenderType" = "TransparentCutout" "RenderType"="Opaque" }
         LOD 200
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows
+        #pragma surface surf Standard fullforwardshadows alphatest:_Cutoff
 
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
-
+        
         struct Input
         {
+            float2 uv_ClippingTexture;
             float2 uv_Zone1Tex;
             float2 uv_Zone2Tex;
             float2 uv_Zone3Tex;
             float3 worldPos;
         };
 
+        sampler2D _ClippingTexture;
+        
         float _SmoothingFactor;
         
         float _Zone1WorldSize;
@@ -65,6 +70,7 @@
         	// Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
+            o.Alpha = tex2D(_ClippingTexture, IN.uv_ClippingTexture);
         }
         ENDCG
     }
