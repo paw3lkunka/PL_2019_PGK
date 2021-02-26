@@ -49,7 +49,7 @@ public class WorldSceneManager : Singleton<WorldSceneManager, ForbidLazyInstanci
         StartCoroutine(LocationCooldown(locationCooldown));
 
         mapGenerator.seed = GameplayManager.Instance.mapGenerationSeed;
-        mapGenerator.Generate(Leader.transform.position);
+        mapGenerator.Generate();
 
         UIOverlayManager.Instance?.ControlsSheet.Clear();
         UIOverlayManager.Instance?.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Choose destination");

@@ -15,7 +15,6 @@ public class MapGenerator : MonoBehaviour
 
     public Grid grid;
 
-    [NonReorderable]
     public List<Zone> prefabsPerZone;
     
     private static bool gridGeneraed = false;
@@ -24,12 +23,6 @@ public class MapGenerator : MonoBehaviour
     private static List<float>[,] lookupRotations;
 
     private int lastCellHash;
-
-
-    private void Start()
-    {
-    }
-
 
     private void Update()
     {
@@ -40,21 +33,42 @@ public class MapGenerator : MonoBehaviour
         {
             lastCellHash = currCellHash;
 
-            for (int i = currCellIndex.x - spawnRadius; i <= currCellIndex.x + spawnRadius; i++)
+            for (int i = 0; i < grid.cellsInRow; i++)
             {
-                for (int j = currCellIndex.y - spawnRadius; j <= currCellIndex.y + spawnRadius; j++)
+                for (int j = 0; j < grid.cellsInRow; j++)
                 {
-                    if ( i > 0 && j > 0 && i < grid.cellSize && j < grid.cellSize)
+                    if ( i >= currCellIndex.x - spawnRadius
+                      && i <= currCellIndex.x + spawnRadius
+                      && j >= currCellIndex.y - spawnRadius
+                      && j <= currCellIndex.y + spawnRadius)
                     {
                         SpawnCell(i, j);
+                    }
+                    else
+                    {
+                        DespawnCell(i, j);
                     }
                 }
             }
 
+
+            //for (int i = currCellIndex.x - spawnRadius; i <= currCellIndex.x + spawnRadius; i++)
+            //{
+            //    for (int j = currCellIndex.y - spawnRadius; j <= currCellIndex.y + spawnRadius; j++)
+            //    {
+            //        if ( i > 0 && j > 0 && i < grid.cellSize && j < grid.cellSize)
+            //        {
+            //            SpawnCell(i, j);
+            //        }
+            //    }
+            //}
+
+
         }
+
     }
 
-    public void Generate(Vector3 position)
+    public void Generate()
     {
         grid.Generate(transform, transform.position);
 
@@ -65,36 +79,36 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private void SpawnCell(int x, int y)
+    private bool SpawnCell(int x, int y)
     {
         if (!grid.Cells[x,y].spawned)
         {
-            var obj = Instantiate(lookupPrefabs[x, y][0], lookupPositions[x, y][0], Quaternion.AngleAxis(lookupRotations[x, y][0], Vector3.up), grid.Cells[x, y].transform);
+            var obj = Instantiate(lookupPrefabs[x,y][0], lookupPositions[x,y][0], Quaternion.AngleAxis(lookupRotations[x,y][0], Vector3.up), grid.Cells[x,y].transform);
             obj.transform.localScale *= locationsScale;
 
             for (int i = 1; i < lookupPrefabs[x, y].Count; i++)
             {
-                obj = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x, y].transform);
+                obj = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x,y].transform);
                 obj.transform.localScale *= obstaclesScale;
             }
 
             grid.Cells[x, y].spawned = true;
+            return true;
         }
+
+        return false;
     }
 
     private void DespawnCell(int x, int y)
     {
-        if (grid.Cells[x, y].spawned)
-        {
-            var transform = grid.Cells[x, y].transform;
-            
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                Destroy(transform.GetChild(i).gameObject);
-            }
+        var transform = grid.Cells[x, y].transform;
 
-            grid.Cells[x, y].spawned = false;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
         }
+
+        grid.Cells[x, y].spawned = false;
     }
 
     private void GenerateOffline()
@@ -138,19 +152,8 @@ public class MapGenerator : MonoBehaviour
                     lookupPositions[i, j].Add(position + offset);
                     lookupRotations[i, j].Add(Random.Range(0.0f, 360.0f));
                 }
-
-                if (cell.zone == 0)
-                {
-                    Debug.Log(lookupPrefabs[i, j].Last());
-                }
-
             }
         }
-    }
-
-    private void GeneriteRuntime()
-    {
-
     }
 
     static public GameObject GetRandom(List<PrefabWrapper> pairs)
