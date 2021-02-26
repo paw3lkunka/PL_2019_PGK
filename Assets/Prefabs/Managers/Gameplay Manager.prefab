@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 1
-  escapeDistance: 1200
+  escapeDistance: 2500
   water:
     current: 100
     max: 100
@@ -59,11 +59,13 @@ MonoBehaviour:
   initialCultistsNumber: 4
   faithPerCultist: 10
   cultistWoundedFaith: 0.75
-  overfaithDeplitionMultiplier: 300
+  overfaithDepletionMultiplierBase: 2
+  overfaith: 0
   lowWaterLevel: 0.2
   lowFaithLevel: 0.2
   maxAvoidingFightTime: 240
   avoidingFightsFaithDebuf: 0.6
+  dontMoveOnFail: 1
   cultistInfos: []
   shrinesToVisit: 3
   markedShrineId: 0
