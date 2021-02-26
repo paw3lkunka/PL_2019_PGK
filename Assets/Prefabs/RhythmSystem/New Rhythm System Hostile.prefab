@@ -1,0 +1,194 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3243753074597823992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6286164404407895558}
+  - component: {fileID: 7564305147316946006}
+  - component: {fileID: 1043084211795107951}
+  m_Layer: 0
+  m_Name: Audio Timeline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6286164404407895558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243753074597823992}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1783200998952360539}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7564305147316946006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243753074597823992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1185bc272891042b8a30d12edb70e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistent: 0
+  canFail: 1
+  songBpm: 90
+  beatsPerBar: 4
+  maxBarSubdivision: 4
+  failedBeatResetOffset: 0
+  nextBarSubdivOffset: -0.1
+--- !u!114 &1043084211795107951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243753074597823992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1215e3610c0437a45a432452fef71902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistent: 0
+  countBeats: 1
+  rhythmMechanicsUI: {fileID: 1838188561580660766, guid: f75feb32107d83245857d49b7b1d816f,
+    type: 3}
+--- !u!114 &8592280775155941055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8118531754959168800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d28097bd90ba88346900e54ed261d266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &6253273780904616293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1783200998952360539}
+  m_Layer: 0
+  m_Name: New Rhythm System Hostile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1783200998952360539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6253273780904616293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6286164404407895558}
+  - {fileID: 3435679348562959303}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3851328484681712705
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1783200998952360539}
+    m_Modifications:
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032908115756835169, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+        type: 3}
+      propertyPath: m_Name
+      value: Music Hostile
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 93a6a02d8c3d8da48adcb24989539c8a, type: 3}
+--- !u!1 &8118531754959168800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5032908115756835169, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3851328484681712705}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3435679348562959303 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1936361954120671110, guid: 93a6a02d8c3d8da48adcb24989539c8a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3851328484681712705}
+  m_PrefabAsset: {fileID: 0}

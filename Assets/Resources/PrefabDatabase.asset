@@ -29,6 +29,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 2291516834466926753, guid: a449f89c505448749b9e2b003ef3f4a7, type: 3}
   - {fileID: 8838099999731528073, guid: 542915116b5b4b74c9bd47ede70b7f21, type: 3}
+  recruit: {fileID: 6973377715876538310, guid: d1de541f9df6c4b4ab50c5a477fdbeeb, type: 3}
   mainMenuGUI: {fileID: 3582436752930991861, guid: 804bc138c67d02d4e9d37e68e50557eb,
     type: 3}
   optionsMenuGUI: {fileID: 5575501208778806695, guid: 5058fc24627623741a9d055948dcfbb3,
@@ -62,33 +63,7 @@ MonoBehaviour:
     type: 3}
   floatingTextResourceGained: {fileID: 6671453847892862788, guid: 8c46e1374a32798428e3937c60fe853a,
     type: 3}
-  stdLocations:
-  - locations:
-    - {fileID: 2794560076484338439, guid: 97a639fe9f8b7ca47ad23d6fcdad0b2f, type: 3}
-  - locations:
-    - {fileID: 5857984643764090703, guid: d4011388b424b6648adf9518c04ac83b, type: 3}
-    - {fileID: 8750019016045057301, guid: 5606b57711199db4988af5d73e3ac0a1, type: 3}
-  - locations:
-    - {fileID: 3720088466521676878, guid: 1110a0ac1f7f34743b08523427220d52, type: 3}
-  - locations:
-    - {fileID: 3142115042840233965, guid: 5a8df28343905fd63b39b695ed4eb42c, type: 3}
-    - {fileID: 5179713835333966080, guid: e472c8f76ef7a03458a88a1abe8a5038, type: 3}
-  - locations:
-    - {fileID: 1803933443396708450, guid: e93a139412b68e941a91096d0db789d9, type: 3}
-    - {fileID: 5095890714025515866, guid: bf055d8c133793748af125a091703241, type: 3}
-    - {fileID: 1804202838284671106, guid: 1bb717da43f1c52419b2d16cd5bef7ce, type: 3}
-  enviro:
-  - {fileID: 4818437978819878526, guid: e02d9685a2efd274d9212e84ee90eac7, type: 3}
-  - {fileID: 3377156557506807270, guid: 8a1a9e7a0e98db341b82dc47c49ab07d, type: 3}
-  - {fileID: 1741718001526972196, guid: 6bf021aaaa9ee084b9cc6cacee1f7503, type: 3}
-  - {fileID: 6049327136454038270, guid: 5d3f4c1233b17b64e96a9700a40b2149, type: 3}
-  - {fileID: 3091893753070551614, guid: 94778309d6815fb499e4b83f0ea35473, type: 3}
-  - {fileID: 3377156557506807270, guid: f34ad6e64ce499145bd3b65d08f5af82, type: 3}
-  - {fileID: 1741718001526972196, guid: bad9580044bb92b4dbf57e9750293e45, type: 3}
-  - {fileID: 6049327136454038270, guid: 824b181437f0edd4ca4941452193e005, type: 3}
-  - {fileID: 3091893753070551614, guid: 354cc418e6ab1c44fa0ad66c02bbdb14, type: 3}
-  - {fileID: 3377156557506807270, guid: c1e59dff3fc38f848857b5bc56abeb9b, type: 3}
-  - {fileID: 3377156557506807270, guid: c3df563fd7d59e04abbb218d460be537, type: 3}
-  - {fileID: 3377156557506807270, guid: 287415de9cb41e14e8d5f954ccd43d63, type: 3}
-  shrineMarker: {fileID: 405217654117865321, guid: c7f2063f976a6b944a788e6e5d917923,
+  musicNeutral: {fileID: 4323767796464851174, guid: db0db731c00db2545af78b82c9ab05bb,
+    type: 3}
+  musicHostile: {fileID: 5032908115756835169, guid: 93a6a02d8c3d8da48adcb24989539c8a,
     type: 3}

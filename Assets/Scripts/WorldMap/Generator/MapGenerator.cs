@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 
 
 public class MapGenerator : MonoBehaviour
@@ -50,22 +48,7 @@ public class MapGenerator : MonoBehaviour
                     }
                 }
             }
-
-
-            //for (int i = currCellIndex.x - spawnRadius; i <= currCellIndex.x + spawnRadius; i++)
-            //{
-            //    for (int j = currCellIndex.y - spawnRadius; j <= currCellIndex.y + spawnRadius; j++)
-            //    {
-            //        if ( i > 0 && j > 0 && i < grid.cellSize && j < grid.cellSize)
-            //        {
-            //            SpawnCell(i, j);
-            //        }
-            //    }
-            //}
-
-
         }
-
     }
 
     public void Generate()
@@ -83,13 +66,23 @@ public class MapGenerator : MonoBehaviour
     {
         if (!grid.Cells[x,y].spawned)
         {
-            var obj = Instantiate(lookupPrefabs[x,y][0], lookupPositions[x,y][0], Quaternion.AngleAxis(lookupRotations[x,y][0], Vector3.up), grid.Cells[x,y].transform);
-            obj.transform.localScale *= locationsScale;
+            var location = Instantiate(lookupPrefabs[x,y][0], lookupPositions[x,y][0], Quaternion.AngleAxis(lookupRotations[x,y][0], Vector3.up), grid.Cells[x,y].transform);
+            location.transform.localScale *= locationsScale;
 
             for (int i = 1; i < lookupPrefabs[x, y].Count; i++)
             {
-                obj = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x,y].transform);
-                obj.transform.localScale *= obstaclesScale;
+                var obstacle = Instantiate(lookupPrefabs[x,y][i], lookupPositions[x,y][i], Quaternion.AngleAxis(lookupRotations[x,y][i], Vector3.up), grid.Cells[x,y].transform);
+                obstacle.transform.localScale *= obstaclesScale;
+
+                if (IntersectionTest(location, obstacle))
+                {
+                    Debug.Log("Intersection");
+                    Destroy(obstacle);
+                    lookupPrefabs[x, y].RemoveAt(i);
+                    lookupPositions[x, y].RemoveAt(i);
+                    lookupRotations[x, y].RemoveAt(i);
+                    i--;
+                }
             }
 
             grid.Cells[x, y].spawned = true;
@@ -110,6 +103,37 @@ public class MapGenerator : MonoBehaviour
 
         grid.Cells[x, y].spawned = false;
     }
+
+#if UNITY_EDITOR
+    public void Preview()
+    {
+        if (Application.isEditor)
+        {
+            Generate();
+
+            for (int i = 0; i < grid.cellsInRow; i++)
+            {
+                for (int j = 0; j < grid.cellsInRow; j++)
+                {
+                    SpawnCell(i, j);
+                }
+            }
+        }
+    }
+
+    public void ClearPreview()
+    {
+        if (Application.isEditor)
+        {
+            while (transform.childCount > 0)
+            {
+                DestroyImmediate(transform.GetChild(0).gameObject);
+            }
+
+            gridGeneraed = false;
+        }
+    }
+#endif
 
     private void GenerateOffline()
     {
@@ -176,24 +200,22 @@ public class MapGenerator : MonoBehaviour
         return pairs[--index].prefab;
     }
 
-    #region old
-
-    private bool IntersectionTest(GameObject envObject, IEnumerable<GameObject> locInstances)
+    private bool IntersectionTest(GameObject location, GameObject obstacle)
     {
-        foreach (GameObject instance in locInstances)
-        {
-            var colliders = envObject.GetComponentsInChildren<Collider>();
+        var collider1 = location.GetComponent<Collider>();
+        var colliders = obstacle.GetComponentsInChildren<Collider>();
 
-            foreach (var collider in colliders)
+        foreach (var collider2 in colliders)
+        {
+            if (collider1.bounds.Intersects(collider2.bounds))
             {
-                if (instance.GetComponent<Collider>().bounds.Intersects(collider.bounds))
-                {
-                    return false;
-                }
+                return true;
             }
         }
-        return true;
+        return false;
     }
+
+    #region old
 
     public void SaveState()
     {

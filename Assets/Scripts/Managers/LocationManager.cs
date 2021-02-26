@@ -143,7 +143,7 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
 
         CalculateOffsets();
 
-        RepaintUI();
+        RepaintControlsSheet();
     }
 
     private void Update()
@@ -173,20 +173,17 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
             ourCrew.RemoveAll((item) => !item || item == null);
         }
 
-        if((enemies.Count / (float)startEnemies) < (1.0f - locationEndKillPercantage))
+        if((enemies.Count > 0) && (enemies.Count / (float)startEnemies) < (1.0f - locationEndKillPercantage))
         {
             for(int i = 0; i < enemies.Count; ++i)
             {
-                var pos = enemies[i].gameObject.transform.position;
-                var rot = enemies[i].gameObject.transform.rotation;
-                var parent = enemies[i].transform.parent;
-                enemies[i].gameObject.SetActive(false);
-                Instantiate(ApplicationManager.Instance.PrefabDatabase.recruit, pos, rot, parent);
-                Destroy(enemies[i].gameObject);
+                EnemyToRecruitTransformation(enemies[i].gameObject);
             }
             enemies.Clear();
             sceneMode = LocationMode.Neutral;
-            RepaintUI();
+            GameplayManager.Instance.dontMoveOnFail = false;
+            RepaintControlsSheet();
+            ChangeMusic();
         }
     }
 
@@ -237,7 +234,7 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
     }
 
 
-    private void RepaintUI()
+    private void RepaintControlsSheet()
     {
         UIOverlayManager.Instance.ControlsSheet.Clear();
         UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Walk, "Walk");
@@ -250,5 +247,22 @@ public class LocationManager : Singleton<LocationManager, ForbidLazyInstancing>
         UIOverlayManager.Instance.ControlsSheet.AddSheetElement(ButtonActionType.Pause, "Pause");
     }
 
+    private void EnemyToRecruitTransformation(GameObject enemy)
+    {
+        var pos = enemy.transform.position;
+        var rot = enemy.transform.rotation;
+        var parent = enemy.transform.parent;
+        enemy.SetActive(false);
+        Instantiate(ApplicationManager.Instance.PrefabDatabase.recruit, pos, rot, parent);
+        //Animation?
+        Destroy(enemy);
+    }
 
+    private void ChangeMusic()
+    {
+        var controller = FindObjectOfType<MusicController>();
+        Destroy(controller.gameObject);
+        Instantiate(ApplicationManager.Instance.PrefabDatabase.musicNeutral, controller.transform.parent);
+        AudioTimeline.Instance.canFail = false;
+    }
 }
