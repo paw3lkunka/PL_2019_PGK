@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnableInDistance : MonoBehaviour
 {
-    private readonly float enableDistance = 250.0f;
+    private readonly float enableDistanceNear = 250.0f;
+    private readonly float enableDistanceFar = 350.0f;
     private MeshRenderer meshRenderer;
 
     void Awake()
@@ -14,13 +15,10 @@ public class EnableInDistance : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, WorldSceneManager.Instance.Leader.transform.position) < enableDistance)
-        {
-            meshRenderer.enabled = true;
-        }
-        else
-        {
-            meshRenderer.enabled = false;
-        }
+        var distance = Vector3.Distance(transform.position, WorldSceneManager.Instance.Leader.transform.position);
+        var color = meshRenderer.material.color;
+
+        color.a = Mathf.InverseLerp(enableDistanceFar, enableDistanceNear, distance);
+        meshRenderer.material.color = color;
     }
 }
