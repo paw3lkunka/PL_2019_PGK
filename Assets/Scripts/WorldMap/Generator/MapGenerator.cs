@@ -50,22 +50,7 @@ public class MapGenerator : MonoBehaviour
                     }
                 }
             }
-
-
-            //for (int i = currCellIndex.x - spawnRadius; i <= currCellIndex.x + spawnRadius; i++)
-            //{
-            //    for (int j = currCellIndex.y - spawnRadius; j <= currCellIndex.y + spawnRadius; j++)
-            //    {
-            //        if ( i > 0 && j > 0 && i < grid.cellSize && j < grid.cellSize)
-            //        {
-            //            SpawnCell(i, j);
-            //        }
-            //    }
-            //}
-
-
         }
-
     }
 
     public void Generate()
@@ -110,6 +95,35 @@ public class MapGenerator : MonoBehaviour
 
         grid.Cells[x, y].spawned = false;
     }
+
+#if UNITY_EDITOR
+    public void Preview()
+    {
+        if (Application.isEditor)
+        {
+            Generate();
+
+            for (int i = 0; i < grid.cellsInRow; i++)
+            {
+                for (int j = 0; j < grid.cellsInRow; j++)
+                {
+                    SpawnCell(i, j);
+                }
+            }
+        }
+    }
+
+    public void ClearPreview()
+    {
+        if (Application.isEditor)
+        {
+            while (transform.childCount > 0)
+            {
+                DestroyImmediate(transform.GetChild(0).gameObject);
+            }
+        }
+    }
+#endif
 
     private void GenerateOffline()
     {
