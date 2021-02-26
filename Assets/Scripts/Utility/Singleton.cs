@@ -12,11 +12,12 @@ public abstract class Singleton<T, K> : Singleton where T : MonoBehaviour where 
     {
         get
         {
-            if (Quitting)
-            {
-                Debug.LogWarning($"[{nameof(Singleton)}<{typeof(T)}>] Instance will not be returned because the application is quitting.");
-                return null;
-            }
+            // WHY IS THE STUPID QUITTING SETTING ITSELF TO TRUE???????
+            //if (Quitting)
+            //{
+            //    Debug.LogWarning($"[{nameof(Singleton)}<{typeof(T)}>] Instance will not be returned because the application is quitting.");
+            //    return null;
+            //}
             lock (Lock)
             {
                 if (_instance != null)
@@ -86,11 +87,12 @@ public abstract class Singleton<T, K> : Singleton where T : MonoBehaviour where 
 
 public abstract class Singleton : MonoBehaviour
 {
+    [field:System.NonSerialized]
     public static bool Quitting { get; private set; } = false;
 
     private void OnApplicationQuit() 
     {
-        Quitting = true;    
+        Quitting = true;
     }
 }
 
