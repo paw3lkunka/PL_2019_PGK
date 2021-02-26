@@ -86,7 +86,7 @@ public abstract class Singleton<T, K> : Singleton where T : MonoBehaviour where 
 
 public abstract class Singleton : MonoBehaviour
 {
-    public static bool Quitting { get; private set; }
+    public static bool Quitting { get; private set; } = false;
 
     private void OnApplicationQuit() 
     {
