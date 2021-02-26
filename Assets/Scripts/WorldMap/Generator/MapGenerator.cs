@@ -121,6 +121,8 @@ public class MapGenerator : MonoBehaviour
             {
                 DestroyImmediate(transform.GetChild(0).gameObject);
             }
+
+            gridGeneraed = false;
         }
     }
 #endif
