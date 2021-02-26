@@ -50,5 +50,9 @@ public class PrefabDatabase : ScriptableObject
     public GameObject floatingTextResourceLost;
     public GameObject floatingTextResourceGained;
 
+    [Header("Audio")]
+    public GameObject musicNeutral;
+    public GameObject musicHostile;
+
     public static PrefabDatabase Load {get => Resources.Load("PrefabDatabase") as PrefabDatabase;}
 }
